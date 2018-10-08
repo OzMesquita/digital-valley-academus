@@ -1,8 +1,8 @@
 package br.ufc.russas.n2s.academus.dao;
 
 import br.ufc.russas.n2s.academus.connection.Conexao;
-import br.ufc.russas.n2s.academus.modelo.DisciplinaCursada;
-import br.ufc.russas.n2s.academus.modelo.Solicitacao;
+import br.ufc.russas.n2s.academus.model.DisciplinaCursada;
+import br.ufc.russas.n2s.academus.model.Solicitacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,7 +40,7 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 				DisciplinaCursada aux = new DisciplinaCursada();
 				
 				aux.setSemestre(rs.getString("semestre"));
-				aux.setNota(rs.getFloat("nota"));//Talvez de erro, já que no banco a coluna 'nota' é do tipo double precision
+				aux.setNota(rs.getFloat("nota"));//Talvez de erro, jï¿½ que no banco a coluna 'nota' ï¿½ do tipo double precision
 				aux.setCarga(rs.getInt("carga"));
 				aux.setNome(rs.getString("nome"));
 				

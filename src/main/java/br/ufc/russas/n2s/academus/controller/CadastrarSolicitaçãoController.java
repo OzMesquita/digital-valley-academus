@@ -13,20 +13,20 @@ import br.ufc.russas.n2s.academus.dao.ComponenteCurricularDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCComponenteCurricularDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCSolicitacaoDAO;
 import br.ufc.russas.n2s.academus.dao.SolicitacaoDAO;
-import br.ufc.russas.n2s.academus.modelo.Aluno;
-import br.ufc.russas.n2s.academus.modelo.DisciplinaCursada;
-import br.ufc.russas.n2s.academus.modelo.Solicitacao;
-import br.ufc.russas.n2s.academus.modelo.Status;
+import br.ufc.russas.n2s.academus.model.Aluno;
+import br.ufc.russas.n2s.academus.model.DisciplinaCursada;
+import br.ufc.russas.n2s.academus.model.Solicitacao;
+import br.ufc.russas.n2s.academus.model.Status;
 
 @WebServlet("/ServletCadastroSolicitacao")
-public class CadastrarSolicitaçãoController extends HttpServlet {
+public class CadastrarSolicitaï¿½ï¿½oController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	static LocalDate data;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CadastrarSolicitaçãoController() {
+    public CadastrarSolicitaï¿½ï¿½oController() {
         super();
         // TODO Auto-generated constructor stub
     }

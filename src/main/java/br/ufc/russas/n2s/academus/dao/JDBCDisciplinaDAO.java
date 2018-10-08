@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.Conexao;
-import br.ufc.russas.n2s.academus.modelo.Disciplina;
+import br.ufc.russas.n2s.academus.model.Disciplina;
 
 public class JDBCDisciplinaDAO implements DisciplinaDAO{
 	private Connection connection;

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.Conexao;
-import br.ufc.russas.n2s.academus.modelo.NivelAcademus;
-import br.ufc.russas.n2s.academus.modelo.PerfilAcademus;
+import br.ufc.russas.n2s.academus.model.NivelAcademus;
+import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 
 import dao.DAOFactory;
 import dao.JDBCPessoaDAO;
@@ -66,7 +66,7 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 					perfis.add(temp);
 				}
 				else{
-					//Esta cadastrado no Academus mas não esta na base de dados
+					//Esta cadastrado no Academus mas nï¿½o esta na base de dados
 					//que o JDBCPessoaDAO esta utilizando, se tiver dando erro atualize
 					//o bd.txt no c:\n2s
 				}

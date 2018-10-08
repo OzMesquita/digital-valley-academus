@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ufc.russas.n2s.academus.dao.PerfilDao;
-import br.ufc.russas.n2s.academus.modelo.NivelAcesso;
-import br.ufc.russas.n2s.academus.modelo.Perfil;
-import br.ufc.russas.n2s.academus.modelo.Servidor;
+import br.ufc.russas.n2s.academus.model.NivelAcesso;
+import br.ufc.russas.n2s.academus.model.Perfil;
+import br.ufc.russas.n2s.academus.model.Servidor;
 
 @WebServlet("/ServletPerfil")
 public class PerfilController extends HttpServlet {

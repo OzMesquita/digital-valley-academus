@@ -1,4 +1,4 @@
-package br.ufc.russas.n2s.academus.modelo;
+package br.ufc.russas.n2s.academus.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

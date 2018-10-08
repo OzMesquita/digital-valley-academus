@@ -1,9 +1,9 @@
-package br.ufc.russas.n2s.academus.modelo;
+package br.ufc.russas.n2s.academus.model;
 
 public enum Natureza {
 	
 	OPTATIVO(0, "Optativo"),
-	OBRIGATORIO(1, "Obrigatório");
+	OBRIGATORIO(1, "Obrigatï¿½rio");
 	
 	private final int id;
 	private final String descricao;
@@ -26,7 +26,7 @@ public enum Natureza {
 			return Natureza.OPTATIVO;
 		}
 		
-		if(descricao.equals("Obrigatório")){
+		if(descricao.equals("Obrigatï¿½rio")){
 			return Natureza.OBRIGATORIO;
 		}
 		

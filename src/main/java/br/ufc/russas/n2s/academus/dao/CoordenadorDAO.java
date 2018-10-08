@@ -1,7 +1,7 @@
 package br.ufc.russas.n2s.academus.dao;
 
-import br.ufc.russas.n2s.academus.modelo.Coordenador;
-import br.ufc.russas.n2s.academus.modelo.Curso;
+import br.ufc.russas.n2s.academus.model.Coordenador;
+import br.ufc.russas.n2s.academus.model.Curso;
 
 public interface CoordenadorDAO {
 	

@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCMatrizCurricularDAO;
-import br.ufc.russas.n2s.academus.modelo.ComponenteCurricular;
-import br.ufc.russas.n2s.academus.modelo.Disciplina;
-import br.ufc.russas.n2s.academus.modelo.MatrizCurricular;
+import br.ufc.russas.n2s.academus.model.ComponenteCurricular;
+import br.ufc.russas.n2s.academus.model.Disciplina;
+import br.ufc.russas.n2s.academus.model.MatrizCurricular;
 
 /**
  * Servlet implementation class AtualizarMatrizController

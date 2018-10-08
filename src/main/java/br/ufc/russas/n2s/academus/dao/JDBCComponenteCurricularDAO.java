@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.Conexao;
-import br.ufc.russas.n2s.academus.modelo.Disciplina;
-import br.ufc.russas.n2s.academus.modelo.MatrizCurricular;
-import br.ufc.russas.n2s.academus.modelo.Natureza;
-import br.ufc.russas.n2s.academus.modelo.ComponenteCurricular;
+import br.ufc.russas.n2s.academus.model.Disciplina;
+import br.ufc.russas.n2s.academus.model.MatrizCurricular;
+import br.ufc.russas.n2s.academus.model.Natureza;
+import br.ufc.russas.n2s.academus.model.ComponenteCurricular;
 
 public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 	private Connection connection;

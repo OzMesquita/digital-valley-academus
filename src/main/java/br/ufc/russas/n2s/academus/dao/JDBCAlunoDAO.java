@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.Conexao;
-import br.ufc.russas.n2s.academus.modelo.Aluno;
+import br.ufc.russas.n2s.academus.model.Aluno;
 
 public class JDBCAlunoDAO implements AlunoDAO{
 	
@@ -29,8 +29,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 
 			if(rs.next()){
 				Aluno alu = new Aluno();
-				
-				//Não está terminado
+				//Nï¿½o estï¿½ terminado
 			}
 			
 			

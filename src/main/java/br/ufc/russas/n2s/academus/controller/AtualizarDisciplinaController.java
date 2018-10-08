@@ -7,8 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO;
-import br.ufc.russas.n2s.academus.modelo.Disciplina;
+
 
 /**
  * Servlet implementation class AtualizarDisciplinaController
@@ -37,7 +36,7 @@ public class AtualizarDisciplinaController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("button") == null && request.getParameter("id_disciplina") != null) { // se entrou aqui é porque está editando
+		if(request.getParameter("button") == null && request.getParameter("id_disciplina") != null) { // se entrou aqui ï¿½ porque estï¿½ editando
 			String id = request.getParameter("id_disciplina");
 			String nome = request.getParameter("nome");
 			int carga = Integer.parseInt(request.getParameter("carga"));
@@ -61,7 +60,7 @@ public class AtualizarDisciplinaController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else { // se entrou aqui, é porque está buscando a disciplina para visualizar
+		} else { // se entrou aqui, ï¿½ porque estï¿½ buscando a disciplina para visualizar
 			try { 
 				String ans = request.getParameter("button");
 				request.setAttribute("id", ans);

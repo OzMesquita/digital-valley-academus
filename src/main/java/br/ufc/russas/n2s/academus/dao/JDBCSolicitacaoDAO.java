@@ -7,11 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufc.russas.n2s.academus.modelo.ComponenteCurricular;
-import br.ufc.russas.n2s.academus.modelo.DisciplinaCursada;
-import br.ufc.russas.n2s.academus.modelo.Perfil;
-import br.ufc.russas.n2s.academus.modelo.Solicitacao;
-import br.ufc.russas.n2s.academus.modelo.Status;
+import br.ufc.russas.n2s.academus.model.ComponenteCurricular;
+import br.ufc.russas.n2s.academus.model.DisciplinaCursada;
+import br.ufc.russas.n2s.academus.model.Solicitacao;
+import br.ufc.russas.n2s.academus.model.Status;
 import br.ufc.russas.n2s.academus.connection.Conexao;
 
 public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
@@ -30,15 +29,15 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				
-				//DAO's necessários
+				//DAO's necessï¿½rios
 				PerfilDao pd = new PerfilDao();
 				JDBCComponenteCurricularDAO ccd = new JDBCComponenteCurricularDAO();
-				JDBCDisciplinaCursadaDAO dcd = new JDBCDisciplinaCursadaDAO();
+				DisciplinaCursadaDAO dcd = new JDBCDisciplinaCursadaDAO();
 				
-				//Solicitações pegas do banco
+				//Solicitaï¿½ï¿½es pegas do banco
 				Solicitacao aux = new Solicitacao();
 				
-				//Informações da solicitação
+				//Informaï¿½ï¿½es da solicitaï¿½ï¿½o
 				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
 				aux.setStatus(Status.getStatus(rs.getInt("status")));
 				aux.setSolicitante(pd.buscarAlunoPorId(rs.getInt("id_solicitante")));
@@ -102,7 +101,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			ResultSet rs = ps.executeQuery();
 			rs.next();
 			
-			//DAO's necessários
+			//DAO's necessï¿½rios
 			PerfilDao pd = new PerfilDao();
 			JDBCComponenteCurricularDAO ccd = new JDBCComponenteCurricularDAO();
 			JDBCDisciplinaCursadaDAO dcd = new JDBCDisciplinaCursadaDAO();

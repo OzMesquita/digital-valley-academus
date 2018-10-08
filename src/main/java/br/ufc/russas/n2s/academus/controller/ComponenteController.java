@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.ufc.russas.n2s.academus.dao.JDBCComponenteCurricularDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO;
-import br.ufc.russas.n2s.academus.modelo.Disciplina;
-import br.ufc.russas.n2s.academus.modelo.ComponenteCurricular;
+import br.ufc.russas.n2s.academus.model.Disciplina;
+import br.ufc.russas.n2s.academus.model.ComponenteCurricular;
 
 @WebServlet("/ServletCadastroComponente")
 public class ComponenteController extends HttpServlet {

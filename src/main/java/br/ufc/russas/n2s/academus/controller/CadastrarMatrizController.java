@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ufc.russas.n2s.academus.dao.JDBCMatrizCurricularDAO;
-import br.ufc.russas.n2s.academus.modelo.MatrizCurricular;
+import br.ufc.russas.n2s.academus.model.MatrizCurricular;
 
 @WebServlet("/CadastrarMatriz") 
 public class CadastrarMatrizController extends HttpServlet {

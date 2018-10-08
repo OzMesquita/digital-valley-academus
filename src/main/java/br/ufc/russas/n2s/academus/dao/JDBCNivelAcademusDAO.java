@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import br.ufc.russas.n2s.academus.connection.Conexao;
-import br.ufc.russas.n2s.academus.modelo.NivelAcademus;
+import br.ufc.russas.n2s.academus.model.NivelAcademus;
 
 public class JDBCNivelAcademusDAO implements NivelAcademusDAO{
 	private Connection connection;

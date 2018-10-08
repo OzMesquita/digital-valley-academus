@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.ufc.russas.n2s.academus.modelo.Aluno;
-import br.ufc.russas.n2s.academus.modelo.Coordenador;
-import br.ufc.russas.n2s.academus.modelo.NivelAcademus;
-import br.ufc.russas.n2s.academus.modelo.PerfilAcademus;
+import br.ufc.russas.n2s.academus.model.Aluno;
+import br.ufc.russas.n2s.academus.model.Coordenador;
+import br.ufc.russas.n2s.academus.model.NivelAcademus;
+import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 import model.Servidor;
 
 
@@ -45,7 +45,7 @@ public class InicioController extends HttpServlet {
 			
 			if(per.getPessoa() instanceof Aluno || per.getNivel() == NivelAcademus.ALUNO) {
 				System.out.print("aluno hahah");
-				//ArrayList<Solicitacao> soli = new ArrayList(); nao sei se coloco as solicitacoes aqui ou em outro controller(ListarSolicitacoes(Melhor lá))
+				//ArrayList<Solicitacao> soli = new ArrayList(); nao sei se coloco as solicitacoes aqui ou em outro controller(ListarSolicitacoes(Melhor lï¿½))
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("InicioAluno.jsp");
 				

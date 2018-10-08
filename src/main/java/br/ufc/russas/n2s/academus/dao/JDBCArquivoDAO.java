@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import br.ufc.russas.n2s.academus.connection.Conexao;
-import br.ufc.russas.n2s.academus.modelo.Arquivo;
-import br.ufc.russas.n2s.academus.modelo.Solicitacao;
+import br.ufc.russas.n2s.academus.model.Arquivo;
+import br.ufc.russas.n2s.academus.model.Solicitacao;
 
 public class JDBCArquivoDAO implements ArquivoDAO{
 	

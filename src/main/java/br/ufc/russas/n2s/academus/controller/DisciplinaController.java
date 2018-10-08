@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO;
-import br.ufc.russas.n2s.academus.modelo.Disciplina;
+import br.ufc.russas.n2s.academus.model.Disciplina;
 
 @WebServlet("/ServletCadastroDisciplina")
 public class DisciplinaController extends HttpServlet {

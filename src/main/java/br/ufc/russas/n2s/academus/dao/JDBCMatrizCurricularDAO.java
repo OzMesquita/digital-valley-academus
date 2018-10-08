@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.Conexao;
-import br.ufc.russas.n2s.academus.modelo.ComponenteCurricular;
-import br.ufc.russas.n2s.academus.modelo.MatrizCurricular;
+import br.ufc.russas.n2s.academus.model.ComponenteCurricular;
+import br.ufc.russas.n2s.academus.model.MatrizCurricular;
 
 public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 	private Connection connection;
