@@ -10,7 +10,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import br.ufc.russas.n2s.academus.modelo.PerfilAcademus;
+import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 import model.Pessoa;
 import util.Facade;
 

@@ -1,25 +1,17 @@
-<%@page import="br.ufc.russas.n2s.academus.modelo.Aluno"%>
-<%@page import="br.ufc.russas.n2s.academus.modelo.Disciplina"%>
-<%@page import="br.ufc.russas.n2s.academus.modelo.ComponenteCurricular"%>
-<%@page import="br.ufc.russas.n2s.academus.modelo.DisciplinaCursada"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="br.ufc.russas.n2s.academus.dao.SolicitacaoDao"%>
-<%@ page import="br.ufc.russas.n2s.academus.modelo.Solicitacao" %>
+<%@ page import="br.ufc.russas.n2s.academus.model.Solicitacao" %>
+<%@ page import="br.ufc.russas.n2s.academus.model.DisciplinaCursada" %>
+<%@ page import="br.ufc.russas.n2s.academus.dao.SolicitacaoDAO" %>
+<%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC" %>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
-	Servidor s = new PerfilDao().buscarServidorPorId(2);
-	session.setAttribute("usuario", s);
-	
-	Perfil per = (Perfil) session.getAttribute("usuario");
-	out.print(per == null? "null" : "Não null");
-	
 	
 	Solicitacao solicitacao = new Solicitacao();
-	SolicitacaoDao dao = new SolicitacaoDao();
+	SolicitacaoDAO dao = new DAOFactoryJDBC().criarSolicitacaoDAO();
 	
 	boolean deuCerto = true;
 	try{
@@ -148,25 +140,7 @@
 						<br>
 						
 						<div class="modal-footer">
-							<%
-								
-							%>
-							<div id="botoes" class="controls">
-								<% 
-									if(per != null && per instanceof Aluno){
-										%><button type="submit" class="btn btn-primary">Voltar</button><%
-									} else if(per != null && per instanceof Servidor){
-										Servidor ser = (Servidor) per;
-										
-										if(ser.getCargo() == Cargo.COORDENADOR){
-											%><button type="button" class="btn btn-primary">Cadastrar Resultado</button><%
-										}
-										if(ser.getCargo() == Cargo.SECRETARIO){
-											%><button type="button" class="btn btn-primary">Alterar Status da Solicitação</button><%
-										}
-									}
-								%>
-							</div>
+							<c:import url="botoesVisualizarAluno.jsp" charEncoding="UTF-8"></c:import>
 						</div>
 					</form>	
 				</div>
