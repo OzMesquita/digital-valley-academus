@@ -167,35 +167,6 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 		}
 	}
 
-	@Override
-	public ComponenteCurricular cadastrar(ComponenteCurricular comp) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ComponenteCurricular> listar(MatrizCurricular matriz) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ComponenteCurricular busCarPorId(int idComponente, MatrizCurricular matriz) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ComponenteCurricular buscarPorId(int idComponente) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void inserirPreRequsitos(List<Disciplina> d, int idComponente) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public List<Disciplina> buscarPreRequisitos(int idComponente) {
@@ -224,15 +195,5 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 		}
 	}
 
-	@Override
-	public void excluirPreRequisitos(int idComponente, Disciplina disciplina) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void excluirComponente(ComponenteCurricular comp) {
-		// TODO Auto-generated method stub
-		
-	}
 }
