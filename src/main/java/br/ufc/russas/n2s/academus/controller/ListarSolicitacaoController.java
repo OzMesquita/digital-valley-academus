@@ -7,6 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import br.ufc.russas.n2s.academus.model.PerfilAcademus;
+import br.ufc.russas.n2s.academus.model.NivelAcademus;
 
 @WebServlet("/VisualizarSolicitacoes")
 
@@ -25,7 +29,21 @@ public class ListarSolicitacaoController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
-			javax.servlet.RequestDispatcher dispacher = request.getRequestDispatcher("listarSolicitacao.jsp");
+			HttpSession session = ((HttpServletRequest) request).getSession();
+			PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
+			
+			if (per.getNivel() == NivelAcademus.ALUNO) {
+				
+			} else if(per.getNivel() == NivelAcademus.SECRETARIO) {
+				
+			} else if(per.getNivel() == NivelAcademus.COORDENADOR) {
+				
+			} else if(per.getNivel() == NivelAcademus.INDEFINIDO) {
+				
+			}
+			
+			
+			javax.servlet.RequestDispatcher dispacher = request.getRequestDispatcher("listagemSolicitacao.jsp");
 
 			dispacher.forward(request, response);
 		
