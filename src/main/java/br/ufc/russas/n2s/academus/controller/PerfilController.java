@@ -9,10 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.ufc.russas.n2s.academus.dao.PerfilDao;
-import br.ufc.russas.n2s.academus.model.NivelAcesso;
-import br.ufc.russas.n2s.academus.model.Perfil;
-import br.ufc.russas.n2s.academus.model.Servidor;
+import br.ufc.russas.n2s.academus.dao.PerfilAcademusDAO;
 
 @WebServlet("/ServletPerfil")
 public class PerfilController extends HttpServlet {
@@ -20,7 +17,7 @@ public class PerfilController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
-	PerfilDao daoCadastro = new PerfilDao();
+	PerfilAcademusDAO daoCadastro = new PerfilAcademusDAO();
 
 	public PerfilController() {
 		super();

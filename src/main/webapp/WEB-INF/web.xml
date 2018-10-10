@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>academus</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+
+  <display-name>Archetype Created Web Application</display-name>
+<!--   <filter>
+  	<filter-name>AutenticadoFiltro</filter-name>
+  	<display-name>AutenticadoFiltro</display-name>
+  	<description></description>
+  	<filter-class>br.ufc.russas.n2s.academus.filter.AutenticadoFiltro</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>AutenticadoFiltro</filter-name>
+  	<url-pattern>/AutenticadoFiltro</url-pattern>
+  </filter-mapping> -->
+  <servlet>
+  	<servlet-name>CadastrarSolicitaçãoController</servlet-name>
+  	<display-name>CadastrarSolicitaçãoController</display-name>
+  	<description></description>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.CadastrarSolicitaçãoController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>BuscarMatrizController</servlet-name>
+  	<display-name>BuscarMatrizController</display-name>
+  	<description></description>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.BuscarMatrizController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CadastrarSolicitaçãoController</servlet-name>
+  	<url-pattern>/CadastrarSolicitaçãoController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>BuscarMatrizController</servlet-name>
+  	<url-pattern>/BuscarMatrizController</url-pattern>
+  </servlet-mapping>
+</web-app>

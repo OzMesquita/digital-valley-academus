@@ -29,7 +29,8 @@ public class JDBCAlunoDAO implements AlunoDAO{
 
 			if(rs.next()){
 				Aluno alu = new Aluno();
-				//N�o est� terminado
+				
+				alu.set
 			}
 			
 			
