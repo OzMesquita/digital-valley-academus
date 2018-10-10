@@ -27,7 +27,7 @@
 	<c:import url="jsp/elements/menu-superior.jsp" charEncoding="UTF-8"></c:import>
 	<div class="container-fluid">
 		<div class="row row-offcanvas row-offcanvas-right">
-			<c:import url="jsp/elements/menu-lateral-esquerdo-<%=(String)request.getAttribute("tipo")%>.jsp"
+			<c:import url="jsp/elements/menu-lateral-esquerdo-Aluno.jsp"
 				charEncoding="UTF-8"></c:import>
 			<div class="col-sm-8">
 				<nav aria-label="breadcrumb" role="navigation">
@@ -37,7 +37,7 @@
 					<!-- PREENCHER HREF -->
 				</ol>
 				</nav>	                
-				<!--<c:import url="VisualizarSolicitacoes" charEncoding="UTF-8"></c:import> -->
+				<c:import url="VisualizarSolicitacoes" charEncoding="UTF-8"></c:import>
 			</div>
 		</div>
 	</div>

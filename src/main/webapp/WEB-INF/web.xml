@@ -33,6 +33,10 @@
   	<description></description>
   	<servlet-class>br.ufc.russas.n2s.academus.controller.BuscarMatrizController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>Inicio</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.InicioContoller</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>CadastrarSolicitaçãoController</servlet-name>
   	<url-pattern>/CadastrarSolicitaçãoController</url-pattern>
@@ -40,5 +44,9 @@
   <servlet-mapping>
   	<servlet-name>BuscarMatrizController</servlet-name>
   	<url-pattern>/BuscarMatrizController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Inicio</servlet-name>
+  	<url-pattern>/Inicio</url-pattern>
   </servlet-mapping>
 </web-app>

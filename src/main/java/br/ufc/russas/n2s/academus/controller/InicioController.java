@@ -15,7 +15,7 @@ import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 import model.Servidor;
 
 
-@WebServlet("/Inicio")
+//@WebServlet("/Inicio")
 
 public class InicioController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,7 +30,7 @@ public class InicioController extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//pegar o pessoa do guardiao e colocar em uma pagina de inicio
-		try {/*
+		try {
 			HttpSession session = ((HttpServletRequest) request).getSession();
 			//PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
 			PerfilAcademus per = new PerfilAcademus();
@@ -46,6 +46,10 @@ public class InicioController extends HttpServlet {
 			request.setAttribute("tipo", "aluno");
 			
 			session.setAttribute("usuario", per);
+			
+			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("InicioAluno.jsp");
+			
+			dispatcher.forward(request, response);
 			/*
 			if(per.getPessoa() instanceof Aluno || per.getNivel() == NivelAcademus.ALUNO) {
 				System.out.print("aluno hahah");

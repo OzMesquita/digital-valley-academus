@@ -49,7 +49,7 @@ public class ListarSolicitacaoController extends HttpServlet {
 				
 			}
 			
-			
+			request.setAttribute("listaSol", listaSol);
 			javax.servlet.RequestDispatcher dispacher = request.getRequestDispatcher("listagemSolicitacao.jsp");
 
 			dispacher.forward(request, response);
