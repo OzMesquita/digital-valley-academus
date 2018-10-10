@@ -22,11 +22,11 @@ public enum Natureza {
 	}
 	
 	public static Natureza getNatureza(String descricao) throws IllegalArgumentException{
-		if(descricao.equals("Optativo")){
+		if(descricao.equals("Optativa")){
 			return Natureza.OPTATIVO;
 		}
 		
-		if(descricao.equals("Obrigatï¿½rio")){
+		if(descricao.equals("Obrigatória")){
 			return Natureza.OBRIGATORIO;
 		}
 		

@@ -2,6 +2,7 @@ package br.ufc.russas.n2s.academus.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,18 +16,19 @@ import br.ufc.russas.n2s.academus.dao.JDBCSolicitacaoDAO;
 import br.ufc.russas.n2s.academus.dao.SolicitacaoDAO;
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.DisciplinaCursada;
+import br.ufc.russas.n2s.academus.model.Historico;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
 import br.ufc.russas.n2s.academus.model.Status;
 
 @WebServlet("/ServletCadastroSolicitacao")
-public class CadastrarSolicita��oController extends HttpServlet {
+public class CadastrarSolicitacaoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	static LocalDate data;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CadastrarSolicita��oController() {
+    public CadastrarSolicitacaoController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -57,9 +59,7 @@ public class CadastrarSolicita��oController extends HttpServlet {
 		Solicitacao solicitacao = new Solicitacao();
 		
 		for(int i=0; i<nomeDisciplinas.length; i++){
-			if(verificarSemestre(semestreDisciplinas[i])){
-				disciplinasCursadas.add(new DisciplinaCursada(semestreDisciplinas[i], Float.parseFloat(notaDisciplinas[i]), Integer.parseInt(cargaDisciplinas[i]), nomeDisciplinas[i]));
-			}
+			disciplinasCursadas.add(new DisciplinaCursada(semestreDisciplinas[i], Float.parseFloat(notaDisciplinas[i]), Integer.parseInt(cargaDisciplinas[i]), nomeDisciplinas[i]));
 		}
 		
 		solicitacao.setSolicitante(aluno);
@@ -70,6 +70,10 @@ public class CadastrarSolicita��oController extends HttpServlet {
 		
 		if(disciplinasCursadas.size() > 0){
 			sd.cadastrar(solicitacao);
+			Historico historico = new Historico();
+			historico.setData(LocalDate.now());
+			historico.setHorario(LocalTime.now());
+			
 		}
 		
 		try {

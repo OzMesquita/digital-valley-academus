@@ -187,8 +187,24 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 
 	@Override
 	public Disciplina buscarPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from academus.disciplina where id_disciplina = '"+id+"';";
+		try{
+			PreparedStatement ps = this.connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			Disciplina aux = new Disciplina();
+			aux.setId(rs.getString("id_disciplina"));
+			aux.setNome(rs.getString("nome"));
+			aux.setCarga(rs.getInt("carga"));
+			aux.setCreditos(rs.getInt("creditos"));
+			rs.close();
+			ps.close();
+			return aux;
+		}catch(SQLException e){
+			e.getMessage();
+			System.out.println("passa aki");
+			return null;
+		}
 	}
 
 	@Override
@@ -205,7 +221,12 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 
 	@Override
 	public void excluir(Disciplina dis) {
-		// TODO Auto-generated method stub
-		
+		String sql = "delete from academus.disciplina where id_disciplina = "+dis.getId()+";";
+		try{
+			PreparedStatement ps = this.connection.prepareStatement(sql);
+			ps.execute();
+		}catch(SQLException e){
+			e.getMessage();
+		}
 	}
 }

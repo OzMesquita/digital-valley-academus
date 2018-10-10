@@ -4,30 +4,26 @@
 <%@ page import="br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.DisciplinaDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.AlunoDAO"%>
-<%@ page import="br.ufc.russas.n2s.academus.modelo.Disciplina"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.JDBCMatrizCurricularDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.JDBCComponenteCurricularDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.MatrizCurricularDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.ComponenteCurricularDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactory"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC"%>
-<%@ page import="br.ufc.russas.n2s.academus.modelo.MatrizCurricular"%>
-<%@ page import="br.ufc.russas.n2s.academus.modelo.ComponenteCurricular"%>
-<%@ page import="br.ufc.russas.n2s.academus.modelo.Aluno"%>
-<%@ page import="br.ufc.russas.n2s.academus.modelo.Curso"%>
+<%@ page import="br.ufc.russas.n2s.academus.model.Disciplina"%>
+<%@ page import="br.ufc.russas.n2s.academus.model.MatrizCurricular"%>
+<%@ page import="br.ufc.russas.n2s.academus.model.ComponenteCurricular"%>
+<%@ page import="br.ufc.russas.n2s.academus.model.Aluno"%>
+<%@ page import="br.ufc.russas.n2s.academus.model.Curso"%>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
-	//MatrizCurricular matriz = new MatrizCurricular();
 	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
 	List<MatrizCurricular> matrizes = daoMC.listar();
 	ComponenteCurricularDAO ccdao = new JDBCComponenteCurricularDAO();
-	//int id_matriz = Integer.parseInt(request.getParameter("id_matriz"));
-	//matriz.setId_matriz(id_matriz);
-	//matriz = daoMC.buscarPorId(id_matriz);
-	//System.out.println(matriz.getComponentes().size());
 	DAOFactory df = new DAOFactoryJDBC();
+	
 	Aluno aluno = df.criarAlunoDAO().buscarPorMatricula("375102");
 	Curso c = new Curso();
 	c.setIdCurso(4);
@@ -35,14 +31,6 @@
 	request.getSession().setAttribute("Usuario", aluno);
 	DisciplinaDAO daoD = new JDBCDisciplinaDAO();
 	List<Disciplina> disciplinas = daoD.listar();
-	//ArrayList<ComponenteCurricular> listaComps = matriz.getComponentes();
-%>
-<% 
-	//for(int a=0;a<matrizes.size();a++){
-		//for(int b=0;b<matrizes.get(a).getComponentes().size();a++){
-			//matrizes.get(a).getComponentes().get(b).getDisciplina().getNome(); 
-		//}
-	//}
 %>
 
 <html>
@@ -77,19 +65,15 @@
 							<select id="matrizInput" class="form-control" onchange="listarComponentes()">
 								<option value="" selected="selected" disabled="disabled">Selecione a disciplina para a solicitação</option>
 								<%for(MatrizCurricular matriz : matrizes){%>
-									<option id="matrizOption-<%=matriz.getIdMatriz()%>" value="<%=matriz.getInfoComponentes()%>"><%=matriz.getIdMatriz()+"-"+matriz.getNome()%></option>
+									<option id="matrizOption-<%=matriz.getIdMatriz()%>" value="<%=matriz.getInfoComponentes()%>"><%=matriz.getNome()%></option>
 								<%}%>
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="componenteInput">Disciplina Solicitada</label>
+							<label for="componenteInput">Disciplina Alvo</label>
 							<select id="componenteInput" name="componenteInput" class="form-control">
 								<option value="" selected="selected" disabled="disabled">Selecione a disciplina para a solicitação</option>
 							</select>
-						</div>
-						<div class="form-group">
-							<label for="instituicaoInput">Instituição</label>
-							<input type="text" id="instituicaoInput" name="instituicaoInput" class="form-control">
 						</div>
 						
 						<div class="card">
@@ -97,6 +81,11 @@
 				           <label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">Disciplinas Aproveitadas</label>
 				           </div>
 				           <div class="card-body">
+					           <div class="form-group">
+									<label for="instituicaoInput">Instituição</label>
+									<input type="text" id="instituicaoInput" name="instituicaoInput" style='text-transform:uppercase' class="form-control">
+								</div>
+					           
 					           <table class="table" id="listaDisciplinasAproveitadas">
 							        <thead> 
 							           	<tr>
@@ -112,27 +101,29 @@
 				        </div>   
 						<br>
 						<div class="form-row">
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-5">
 								<label for="disciplinaAproveitada">Nome da Disciplina Aproveitada</label>
-								<input type="text" id="disciplinaAproveitada" class="form-control">
+								<input type="text" id="disciplinaAproveitada" style='text-transform:uppercase' class="form-control">
 							</div>
 							&nbsp;&nbsp;
-							<div class="form-group col-md-2">
+							<div class="form-group col-md-1">
 								<label for="cargaHoraria">Carga Horária</label>
-								<input type="number" id="cargaHoraria" class="form-control">
+								<input type="number" min="1" id="cargaHoraria" class="form-control">
 							</div>
 							&nbsp;&nbsp;
-							<div class="form-group col-md-2">
+							<div class="form-group col-md-1">
 								<label for="nota">Nota</label>
-								<input type="number" id="nota" class="form-control">
+								<input type="number" min="0" max="10" id="nota" class="form-control">
 							</div>
 							&nbsp;&nbsp;
-							<div class="form-group col-md-2">
-								<label for="ano/semestre">Ano/Semestre</label>
-								<div class="row">
-									<input type="number" id="ano" class="form-control">
-									<input type="number" id="semestre" class="form-control">
-								</div>
+							<div class="form-group col-md-1">
+								<label for="ano">Ano</label>
+								<input type="number" min="1900" id="ano" class="form-control">
+							</div>
+							&nbsp;&nbsp;
+							<div class="form-group col-md-1">
+								<label for="semestre">Semestre</label>
+								<input type="number" min="1" max="2" id="semestre" class="form-control">
 							</div>
 							<div class="form-group col-md-2">
 								<input type="button" class="btn btn-secondary col-md-8" onclick="adicionarDisciplinaAproveitada()" value="Adicionar">
@@ -234,17 +225,17 @@
 		}else if((obj.nota == "")){
 			alert("Campo de Nota deve ser preenchido");
 			return false;
-		}else if(!(obj.ano >= 1900 && obj.ano <= data.getFullYear())){
-			alert("O Ano deve ser anterior ao atual");
-			return false;
 		}else if((obj.ano == "")){
 			alert("Ano deve ser preenchido");
 			return false;
-		}else if(!(obj.semestre > 0 && obj.semestre <= 2)){
-			alert("O Semestre deve ser 1 ou 2");
+		}else if(!(obj.ano >= 1900 && obj.ano <= data.getFullYear())){
+			alert("O Ano deve ser anterior ao atual e cabível");
 			return false;
 		}else if((obj.semestre == "")){
 			alert("Semestre deve ser preenchido");
+			return false;
+		}else if(!(obj.semestre > 0 && obj.semestre <= 2)){
+			alert("O Semestre deve ser 1 ou 2");
 			return false;
 		}
 		return true;

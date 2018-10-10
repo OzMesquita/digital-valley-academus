@@ -40,6 +40,9 @@ public class Historico implements Serializable{
 		return serialVersionUID;
 	}
 	
-	
+	public String gerarDescricao(){
+		String string = "";
+		return string;
+	}
 	
 }

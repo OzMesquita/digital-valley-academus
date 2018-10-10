@@ -223,7 +223,7 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 	@Override
 	public List<Disciplina> buscarPreRequisitos(int idComponente) {
 		String sql = "select distinct academus.disciplina.* from academus.disciplina, academus.componente_curricular, academus.disciplina_pre_requisito "
-				+ "where academus.componente_curricular.id_disciplina_matriz = "+busca+" "
+				+ "where academus.componente_curricular.id_disciplina_matriz = "+idComponente+" "
 						+ "and academus.disciplina.id_disciplina = academus.disciplina_pre_requisito.id_disciplina_pre_requisito "
 						+ "and academus.componente_curricular.id_disciplina_matriz = academus.disciplina_pre_requisito.id_disciplina_matriz;";
 		List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();

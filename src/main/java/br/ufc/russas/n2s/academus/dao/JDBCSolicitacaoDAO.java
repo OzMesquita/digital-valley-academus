@@ -64,7 +64,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			String sql = "insert into academus.solicitacao( id_solicitante, resultado, justificativa, matricula_solicitante, status, id_componente, instituicao) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement insert = connection.prepareStatement(sql);
 			
-			insert.setInt(1, s.getSolicitante().getIdPessoaUsuario());
+			insert.setInt(1, s.getSolicitante().getUsuario().getIdPessoaUsuario());
 			insert.setString(2, s.getResultado());
 			insert.setString(3, s.getJustificativa());
 			insert.setString(4, s.getSolicitante().getMatricula());

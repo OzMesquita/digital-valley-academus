@@ -16,8 +16,7 @@ public class JDBCArquivoDAO implements ArquivoDAO{
 	public JDBCArquivoDAO(){
 		this.connection = Conexao.getConexao();
 	}
-	
-	@Override
+
 	public Arquivo cadastrarArquivo(Arquivo arq, Solicitacao sol) {
 		String sql = "INSERT INTO academus.arquivo(caminho, id_solicitacao) VALUES (?, ?);";
 		
@@ -93,5 +92,5 @@ public class JDBCArquivoDAO implements ArquivoDAO{
 			e.getMessage();
 		}
 	}
-
 }
+	

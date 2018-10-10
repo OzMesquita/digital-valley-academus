@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="br.ufc.russas.n2s.academus.dao.MatrizCurricularDao"%>
-<%@ page import="br.ufc.russas.n2s.academus.modelo.MatrizCurricular"%>
+<%@ page import="br.ufc.russas.n2s.academus.dao.MatrizCurricularDAO"%>
+<%@ page import="br.ufc.russas.n2s.academus.dao.JDBCMatrizCurricularDAO"%>
+<%@ page import="br.ufc.russas.n2s.academus.model.MatrizCurricular"%>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -62,7 +63,7 @@
 							</tr>
 						</thead>
 						<%
-							MatrizCurricularDao dao = new MatrizCurricularDao();
+							MatrizCurricularDAO dao = new JDBCMatrizCurricularDAO();
 							List<MatrizCurricular> contatos = dao.ListarMatrizes();
 							for (MatrizCurricular contato : contatos) {
 						%>
