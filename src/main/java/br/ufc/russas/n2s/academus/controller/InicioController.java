@@ -30,10 +30,10 @@ public class InicioController extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//pegar o pessoa do guardiao e colocar em uma pagina de inicio
-		try {
+		try {/*
 			HttpSession session = ((HttpServletRequest) request).getSession();
-			PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
-			//PerfilAcademus per = new PerfilAcademus();
+			//PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
+			PerfilAcademus per = new PerfilAcademus();
 			
 			Aluno alu = new Aluno();
 			alu.setMatricula("1234");
@@ -43,8 +43,10 @@ public class InicioController extends HttpServlet {
 			System.out.print("ihadihsidhaihsdf");
 			per.setNivel(NivelAcademus.ALUNO);
 			
-			session.setAttribute("usuario", per);
+			request.setAttribute("tipo", "aluno");
 			
+			session.setAttribute("usuario", per);
+			/*
 			if(per.getPessoa() instanceof Aluno || per.getNivel() == NivelAcademus.ALUNO) {
 				System.out.print("aluno hahah");
 				
@@ -79,7 +81,7 @@ public class InicioController extends HttpServlet {
 				
 				dispatcher.forward(request, response);
 			}
-			
+			*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

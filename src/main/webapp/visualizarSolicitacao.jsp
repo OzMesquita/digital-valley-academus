@@ -15,7 +15,7 @@
 	
 	boolean deuCerto = true;
 	try{
-		solicitacao = dao.buscarSolicitacaoId(Integer.parseInt((String)(request.getAttribute("id"))));
+		solicitacao = dao.buscarSolicitacaoId(Integer.parseInt((String)(request.getAttribute("01"))));
 	} catch(Exception e){
 		deuCerto = false;
 	}
