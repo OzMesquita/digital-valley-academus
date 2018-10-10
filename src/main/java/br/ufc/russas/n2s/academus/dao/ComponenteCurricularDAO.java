@@ -8,7 +8,7 @@ import br.ufc.russas.n2s.academus.model.MatrizCurricular;
 
 public interface ComponenteCurricularDAO {
 	
-	public ComponenteCurricular cadastrar(ComponenteCurricular comp);
+	public ComponenteCurricular cadastrar(ComponenteCurricular comp, MatrizCurricular matriz);
 	
 	public List<ComponenteCurricular> listar(MatrizCurricular matriz);
 	

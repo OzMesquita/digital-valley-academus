@@ -2,8 +2,8 @@ package br.ufc.russas.n2s.academus.model;
 
 public enum Natureza {
 	
-	OPTATIVO(0, "Optativo"),
-	OBRIGATORIO(1, "Obrigatï¿½rio");
+	OPTATIVO(0, "OPTATIVA"),
+	OBRIGATORIO(1, "OBRIGATÓRIA");
 	
 	private final int id;
 	private final String descricao;

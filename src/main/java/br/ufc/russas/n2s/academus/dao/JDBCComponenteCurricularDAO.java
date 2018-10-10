@@ -20,6 +20,58 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 		connection = Conexao.getConexao();
 	}
 	
+	@Override
+	public ComponenteCurricular cadastrar(ComponenteCurricular comp, MatrizCurricular matriz) {
+		try {
+			String sql = "INSERT INTO academus.componente_curricular(id_matriz, id_disciplina, natureza, semestre) VALUES (?, ?, ?, ?);";			
+			PreparedStatement insert = connection.prepareStatement(sql);
+			
+			insert.setInt(1, matriz.getIdMatriz());			
+			insert.setString(2, comp.getDisciplina().getId());
+			insert.setString(3, Natureza.getDescricao(comp.getNatureza()));
+			
+			insert.execute();
+		} catch (Exception e) {
+			throw new RuntimeException(e);			
+		}
+		return d;
+	}
+
+	@Override
+	public List<ComponenteCurricular> listar(MatrizCurricular matriz) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComponenteCurricular buscarPorId(int idComponente, MatrizCurricular matriz) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ComponenteCurricular buscarPorId(int idComponente) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void inserirPreRequsitos(List<Disciplina> d, int idComponente) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void excluirPreRequisitos(int idComponente, Disciplina disciplina) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void excluirComponente(ComponenteCurricular comp) {
+		// TODO Auto-generated method stub
+		
+	}
 	public ComponenteCurricular insereDisciplinaMatriz(ComponenteCurricular d) {
 		try {
 			String sql = "insert into academus.componente_curricular(id_matriz, id_disciplina, natureza) values (?, ?, ?)";			

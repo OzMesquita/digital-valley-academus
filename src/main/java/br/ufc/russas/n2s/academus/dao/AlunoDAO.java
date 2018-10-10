@@ -13,7 +13,5 @@ public interface AlunoDAO {
 	public List<Aluno> buscarPorNome(String nome);
 	
 	public List<Aluno> listar();
-	
-	public Aluno editar(Aluno aluno);
-	
+		
 }
