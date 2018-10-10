@@ -12,7 +12,7 @@ import br.ufc.russas.n2s.academus.model.Solicitacao;
 import br.ufc.russas.n2s.academus.model.Status;
 
 
-@WebServlet("AnalizarSolicitacao")
+@WebServlet("/AnalizarSolicitacao")
 public class AnalizandoCoordenadorController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
