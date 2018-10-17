@@ -4,7 +4,6 @@ import java.util.List;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +14,6 @@ import br.ufc.russas.n2s.academus.model.Solicitacao;
 import br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC;
 import br.ufc.russas.n2s.academus.dao.SolicitacaoDAO;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
-
-@WebServlet("/VisualizarSolicitacoes")
 
 public class ListarSolicitacaoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

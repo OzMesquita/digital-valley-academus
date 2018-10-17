@@ -11,7 +11,6 @@ import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 
-
 public class InicioController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	

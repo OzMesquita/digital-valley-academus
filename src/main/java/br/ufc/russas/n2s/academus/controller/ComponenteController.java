@@ -3,7 +3,6 @@ package br.ufc.russas.n2s.academus.controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +12,6 @@ import br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO;
 import br.ufc.russas.n2s.academus.model.Disciplina;
 import br.ufc.russas.n2s.academus.model.ComponenteCurricular;
 
-@WebServlet("/ServletCadastroComponente")
 public class ComponenteController extends HttpServlet {
 	
 	

@@ -22,7 +22,6 @@
 		<url-pattern>/AutenticadoFiltro</url-pattern>
 	</filter-mapping> -->
 
-
 	<servlet>
 		<servlet-name>CadastrarSolicitaçãoController</servlet-name>
 		<servlet-class>br.ufc.russas.n2s.academus.controller.CadastrarSolicitaçãoController</servlet-class>
@@ -35,17 +34,33 @@
 		<servlet-name>InicioController</servlet-name>
 		<servlet-class>br.ufc.russas.n2s.academus.controller.InicioController</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>VisualizarSolicitacaoController</servlet-name>
+		<servlet-class>br.ufc.russas.n2s.academus.controller.VisualizarSolicitacaoController</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ListarSolicitacaoController</servlet-name>
+		<servlet-class>br.ufc.russas.n2s.academus.controller.ListarSolicitacaoController</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>CadastrarSolicitaçãoController</servlet-name>
-		<url-pattern>/CadastrarSolicitaçãoController</url-pattern>
+		<url-pattern>/CadastrarSolicitação</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>BuscarMatrizController</servlet-name>
-		<url-pattern>/BuscarMatrizController</url-pattern>
+		<url-pattern>/BuscarMatriz</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>InicioController</servlet-name>
 		<url-pattern>/Inicio</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>VisualizarSolicitacaoController</servlet-name>
+		<url-pattern>/VisualizarSolicitacao</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ListarSolicitacaoController</servlet-name>
+		<url-pattern>/VisualizarSolicitacoes</url-pattern>
 	</servlet-mapping>
 </web-app>

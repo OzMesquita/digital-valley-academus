@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +19,6 @@ import br.ufc.russas.n2s.academus.model.Historico;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
 import br.ufc.russas.n2s.academus.model.Status;
 
-@WebServlet("/ServletCadastroSolicitacao")
 public class CadastrarSolicitacaoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	static LocalDate data;
