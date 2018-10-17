@@ -2,20 +2,15 @@ package br.ufc.russas.n2s.academus.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.ufc.russas.n2s.academus.model.Aluno;
-import br.ufc.russas.n2s.academus.model.Coordenador;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
-import model.Servidor;
 
-
-//@WebServlet("/Inicio")
 
 public class InicioController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

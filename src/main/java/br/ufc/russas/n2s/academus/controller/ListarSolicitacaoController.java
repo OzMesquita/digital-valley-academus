@@ -50,7 +50,7 @@ public class ListarSolicitacaoController extends HttpServlet {
 			}
 			
 			request.setAttribute("listaSol", listaSol);
-			javax.servlet.RequestDispatcher dispacher = request.getRequestDispatcher("listagemSolicitacao.jsp");
+			javax.servlet.RequestDispatcher dispacher = request.getRequestDispatcher("jsp/elements/listagemSolicitacao.jsp");
 
 			dispacher.forward(request, response);
 		
