@@ -37,7 +37,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 		return m;
 	}
 
-	public ArrayList<MatrizCurricular> ListarMatrizes() {
+	public List<MatrizCurricular> listarMatrizes() {
 		JDBCComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		String sql = "select * from academus.matriz_curricular";
 		ArrayList<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
@@ -55,7 +55,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 				aux.setVigente(rs.getBoolean("vigente"));
 				aux.setAtivo(rs.getBoolean("ativo"));
 				aux.setIdCurso(rs.getInt("id_curso"));
-				aux.setComponentes(cc.ListarComponentes(rs.getInt("id_matriz")));
+				aux.setComponentes(cc.listar(rs.getInt("id_matriz")));
 				listaMatrizes.add(aux);
 			}
 			rs.close();
@@ -83,7 +83,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 			aux.setVigente(rs.getBoolean("vigente"));
 			aux.setAtivo(rs.getBoolean("ativo"));
 			aux.setIdCurso(rs.getInt("id_curso"));
-			aux.setComponentes(cc.ListarComponentes(rs.getInt("id_matriz")));
+			aux.setComponentes(cc.listar(rs.getInt("id_matriz")));
 			rs.close();
 			ps.close();
 			return aux;
@@ -144,7 +144,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 	
 	public void gerenciarComponentes(ArrayList<ComponenteCurricular> comps, int id_matriz) {
 		JDBCComponenteCurricularDAO ccdao = new JDBCComponenteCurricularDAO();
-		ArrayList<ComponenteCurricular> listacc = ccdao.ListarComponentes(id_matriz);
+		List<ComponenteCurricular> listacc = ccdao.listar(id_matriz);
 		for(int i=0;i<comps.size();i++) {
 			boolean aux = true;
 			for(int j=0;j<listacc.size();j++) {
@@ -155,11 +155,11 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 				}
 			}
 			if(aux){
-				ccdao.insereDisciplinaMatriz(comps.get(i));
+				//ccdao.insereDisciplinaMatriz(comps.get(i));
 			}
 		}
 		for(int i=0;i<listacc.size();i++) {
-			ccdao.deletarComponente(listacc.get(i).getIdComponente());
+			//ccdao.excluirComponente(listacc.get(i).getIdComponente());
 		}
 	}
 	
@@ -228,7 +228,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 				aux.setVigente(rs.getBoolean("vigente"));
 				aux.setAtivo(rs.getBoolean("ativo"));
 				aux.setIdCurso(rs.getInt("id_curso"));
-				aux.setComponentes(cc.ListarComponentes(rs.getInt("id_matriz")));
+				aux.setComponentes(cc.listar(rs.getInt("id_matriz")));
 				listaMatrizes.add(aux);
 			}
 			rs.close();

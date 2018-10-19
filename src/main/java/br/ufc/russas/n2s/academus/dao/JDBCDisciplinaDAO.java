@@ -106,13 +106,11 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 			aux.setNome(rs.getString("nome"));
 			aux.setCarga(rs.getInt("carga"));
 			aux.setCreditos(rs.getInt("creditos"));
-			//System.out.println("passa aki tbm");
 			rs.close();
 			ps.close();
 			return aux;
 		}catch(SQLException e){
 			e.getMessage();
-			System.out.println("passa aki");
 			return null;
 		}
 	}

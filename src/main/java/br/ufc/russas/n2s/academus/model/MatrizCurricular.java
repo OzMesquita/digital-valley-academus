@@ -2,6 +2,7 @@ package br.ufc.russas.n2s.academus.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MatrizCurricular implements Serializable{
 	
@@ -13,7 +14,7 @@ public class MatrizCurricular implements Serializable{
 	private String periodoLetivo;
 	private boolean vigente;
 	private boolean ativo;
-	private ArrayList<ComponenteCurricular> componentes;
+	private List<ComponenteCurricular> componentes;
 	private int prazoMinimo;
 	private int prazoMaximo;
 	
@@ -63,10 +64,10 @@ public class MatrizCurricular implements Serializable{
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-	public ArrayList<ComponenteCurricular> getComponentes() {
+	public List<ComponenteCurricular> getComponentes() {
 		return componentes;
 	}
-	public void setComponentes(ArrayList<ComponenteCurricular> componentes) {
+	public void setComponentes(List<ComponenteCurricular> componentes) {
 		this.componentes = componentes;
 	}
 	public int getPrazoMinimo() {
@@ -86,7 +87,7 @@ public class MatrizCurricular implements Serializable{
 	}
 	public String getInfoComponentes(){
 		String comps = "";
-		ArrayList<ComponenteCurricular> componentes = getComponentes();
+		List<ComponenteCurricular> componentes = getComponentes();
 		if(componentes.size() > 0){
 			for(int i=0; i<componentes.size();i++){
 				comps += componentes.get(i).getIdComponente()+"-"+componentes.get(i).getDisciplina().getNome()+";";

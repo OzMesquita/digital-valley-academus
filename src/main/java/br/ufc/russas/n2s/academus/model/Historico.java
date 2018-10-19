@@ -40,9 +40,11 @@ public class Historico implements Serializable{
 		return serialVersionUID;
 	}
 	
-	public String gerarDescricao(){
+	public void gerarDescricao(int i){
 		String string = "";
-		return string;
+		if(i == 1) string = getResponsavel().getPessoa().getNome()+" cadastrou uma solicitação";
+		setDescricao(string);
+		//return string;
 	}
 	
 }

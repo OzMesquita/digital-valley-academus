@@ -40,9 +40,9 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 	}
 
 	@Override
-	public List<ComponenteCurricular> listar(MatrizCurricular matriz) {
+	public List<ComponenteCurricular> listar(int idMatriz) {
 		JDBCDisciplinaDAO d = new JDBCDisciplinaDAO();
-		String sql = "SELECT * FROM academus.componente_curricular WHERE id_matriz = "+ matriz.getIdMatriz() +";";
+		String sql = "SELECT * FROM academus.componente_curricular WHERE id_matriz = "+ idMatriz +";";
 		
 		ArrayList<ComponenteCurricular> listaComponentes = new ArrayList<ComponenteCurricular>();
 		try{

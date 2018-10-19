@@ -3,6 +3,7 @@ package br.ufc.russas.n2s.academus.dao;
 import br.ufc.russas.n2s.academus.connection.Conexao;
 import br.ufc.russas.n2s.academus.model.DisciplinaCursada;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
+import br.ufc.russas.n2s.academus.model.Status;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,9 +23,25 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 	
 
 	@Override
-	public void cadasatrar(List<DisciplinaCursada> disciplinas, Solicitacao sol) {
-		// TODO Auto-generated method stub
-		
+	public void cadastrar(List<DisciplinaCursada> ldc, int idSol) {
+		try{
+			DisciplinaCursada dc;
+			while(!ldc.isEmpty()){
+				String sql = "INSERT INTO academus.disciplina_cursada(nome, carga, semestre, nota, id_solicitacao) VALUES (?, ?, ?, ?, ?)";
+				PreparedStatement insert = connection.prepareStatement(sql);
+				dc = ldc.remove(0);
+				insert.setString(1, dc.getNome());
+				insert.setInt(2, dc.getCarga());
+				insert.setString(3, dc.getSemestre());
+				insert.setFloat(4, dc.getNota());
+				insert.setInt(5, idSol);
+				insert.execute();
+				insert.close();
+			}
+			
+		}catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

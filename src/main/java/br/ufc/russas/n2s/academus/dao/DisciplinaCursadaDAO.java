@@ -7,7 +7,7 @@ import br.ufc.russas.n2s.academus.model.Solicitacao;
 
 public interface DisciplinaCursadaDAO {
 	
-	public void cadasatrar(List<DisciplinaCursada> disciplinas, Solicitacao sol);
+	public void cadastrar(List<DisciplinaCursada> disciplinas, int idSol);
 	
 	public List<DisciplinaCursada> buscar(Solicitacao sol);
 	

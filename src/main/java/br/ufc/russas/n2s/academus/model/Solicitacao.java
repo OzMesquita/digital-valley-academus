@@ -2,6 +2,7 @@ package br.ufc.russas.n2s.academus.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Solicitacao implements Serializable{
 	
@@ -11,7 +12,7 @@ public class Solicitacao implements Serializable{
 	private ArrayList<Historico> historicoOperacoes;
 	private Aluno solicitante;
 	private ComponenteCurricular disciplinaAlvo;
-	private ArrayList<DisciplinaCursada> disciplinasCursadas;
+	private List<DisciplinaCursada> disciplinasCursadas;
 	private String resultado;
 	private String justificativa;
 	private String instituicao;
@@ -47,10 +48,10 @@ public class Solicitacao implements Serializable{
 	public void setDisciplinaAlvo(ComponenteCurricular disciplinaAlvo) {
 		this.disciplinaAlvo = disciplinaAlvo;
 	}
-	public ArrayList<DisciplinaCursada> getDisciplinasCursadas() {
+	public List<DisciplinaCursada> getDisciplinasCursadas() {
 		return disciplinasCursadas;
 	}
-	public void setDisciplinasCursadas(ArrayList<DisciplinaCursada> disciplinasCursadas) {
+	public void setDisciplinasCursadas(List<DisciplinaCursada> disciplinasCursadas) {
 		this.disciplinasCursadas = disciplinasCursadas;
 	}
 	public String getResultado() {

@@ -16,7 +16,7 @@ public class PerfilAcademus implements Serializable{
 	
 	public PerfilAcademus(Pessoa pessoa){
 		this.pessoa = pessoa;
-		this.setNivel(NivelAcademus.INDEFINIDO);
+		this.setNivel(verificarNivel(pessoa));
 	}
 	
 	public Pessoa getPessoa() {
@@ -33,6 +33,17 @@ public class PerfilAcademus implements Serializable{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	private NivelAcademus verificarNivel(Pessoa p){
+		if(p instanceof Aluno){
+			return NivelAcademus.ALUNO;
+		}else if(p instanceof Professor){
+			return NivelAcademus.PROFESSOR;
+		}else if(p instanceof Coordenador){
+			return NivelAcademus.COORDENADOR;
+		}else{
+			return NivelAcademus.INDEFINIDO;
+		}
 	}
 	
 	

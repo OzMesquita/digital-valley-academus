@@ -65,7 +65,26 @@ public class JDBCHistoricoDAO implements HistoricoDAO{
 		}
 		return null;
 	}
-
+	public int ultimaSolicitacao() {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql =  "select id_solicitacao from academus.solicitacao order by id_solicitacao desc LIMIT 1";
+		try{
+			ps = connection.prepareStatement(sql);
+			rs = ps.executeQuery();
+			rs.next();
+			int i =  rs.getInt("id_solicitacao");
+			rs.close();
+			ps.close();
+			return i;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			
+		}
+		return -1;
+	}
+	//select id_solicitacao from academus.solicitacao order by id_solicitacao desc LIMIT 1
 	@Override
 	public Historico editar(Historico his) {
 		// TODO Auto-generated method stub

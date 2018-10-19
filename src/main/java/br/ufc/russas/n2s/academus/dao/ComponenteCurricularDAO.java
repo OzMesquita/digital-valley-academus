@@ -10,7 +10,7 @@ public interface ComponenteCurricularDAO {
 	
 	public ComponenteCurricular cadastrar(ComponenteCurricular comp, MatrizCurricular matriz);
 	
-	public List<ComponenteCurricular> listar(MatrizCurricular matriz);
+	public List<ComponenteCurricular> listar(int idMatriz);
 	
 	public ComponenteCurricular buscarPorId(int idComponente, MatrizCurricular matriz);
 	
