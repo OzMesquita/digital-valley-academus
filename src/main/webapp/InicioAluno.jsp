@@ -36,6 +36,7 @@
 					<li class="breadcrumb-item" aria-current="page"><a href="jsp/elements/aviso.jsp">Início</a></li>
 					<!-- PREENCHER HREF -->
 				</ol>
+				<%=(String) request.getAttribute("tipo") %>
 				</nav>	                
 				<c:import url="VisualizarSolicitacoes" charEncoding="UTF-8"></c:import>
 			</div>

@@ -28,6 +28,10 @@
 <div class="form-group">
 					<table class="table table-responsive">
 						<thead>
+							<tr> 
+								<th>Aluno</th>
+							</tr>
+							
 							<tr>
 								<th scope="col">Codigo de Solicitação</th>
 								<th scope="col">Status</th>
@@ -39,7 +43,7 @@
 						<%
 						 
 							
-						List<Solicitacao> solicitacoes = (List<Solicitacao>) request.getAttribute("listaSol");
+						ArrayList<Solicitacao> solicitacoes = (ArrayList<Solicitacao>) request.getAttribute("listaSol");
 								
 						if(solicitacoes != null){
 							for (Solicitacao soli : solicitacoes) {
@@ -48,8 +52,8 @@
 						<tr>
 							<td><%=soli.getIdSolicitacao()%></td>
 							<td><%=soli.getStatus()%></td>
-							<td><%//=soli.getSolicitante().getNome()%></td>
-							<td><%=soli.getDisciplinaAlvo().getDisciplina().getNome()%></td>
+							<td><%=soli.getSolicitante().getNome()%></td>
+							<!-- <td><%=soli.getDisciplinaAlvo().getDisciplina().getNome()%></td>-->
 							<td><%=soli.getResultado()%></td>
 							<form method="POST" action="VisualizarSolicitacao" id="form<%=soli.getIdSolicitacao()%>">
 							<td><button  class="btn btn-primary btn-sm active" form="form<%=soli.getIdSolicitacao()%>"

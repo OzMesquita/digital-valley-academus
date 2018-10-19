@@ -37,7 +37,7 @@
 					<!-- PREENCHER HREF -->
 				</ol>
 				</nav>	                
-				
+				<c:import url="VisualizarSolicitacoes" charEncoding="UTF-8"></c:import>		
 			</div>
 		</div>
 	</div>

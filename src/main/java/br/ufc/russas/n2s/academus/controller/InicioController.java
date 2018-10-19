@@ -34,10 +34,10 @@ public class InicioController extends HttpServlet {
 			//alu.setCurso();
 			alu.setNome("Carlitos Eduardicas");
 			per.setPessoa(alu);
-			System.out.print("ihadihsidhaihsdf");
+			//System.out.print("ihadihsidhaihsdf");
 			per.setNivel(NivelAcademus.ALUNO);
 			
-			request.setAttribute("tipo", "aluno");
+			request.setAttribute("tipo", "Aluno");
 			
 			session.setAttribute("usuario", per);
 			
