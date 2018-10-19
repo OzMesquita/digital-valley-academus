@@ -40,7 +40,7 @@ public class ListarSolicitacaoController extends HttpServlet {
 			ArrayList<Solicitacao> listaSol = new ArrayList<>();// (ArrayList<Solicitacao>) sodao.listar();
 			
 			Aluno a = new Aluno();
-			a.setNome("Eduardo");
+			a.setNome("Eduardo Costa");
 			Aluno b = new Aluno();
 			b.setNome(per.getPessoa().getNome());
 			

@@ -8,8 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.ufc.russas.n2s.academus.model.Aluno;
+import br.ufc.russas.n2s.academus.model.Coordenador;
+import br.ufc.russas.n2s.academus.model.Curso;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
+import model.Servidor;
 
 public class InicioController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,21 +34,23 @@ public class InicioController extends HttpServlet {
 			
 			Aluno alu = new Aluno();
 			alu.setMatricula("1234");
-			//alu.setCurso();
 			alu.setNome("Carlitos Eduardicas");
 			per.setPessoa(alu);
-			//System.out.print("ihadihsidhaihsdf");
 			per.setNivel(NivelAcademus.ALUNO);
-			
-			request.setAttribute("tipo", "Aluno");
+			/*
+			Coordenador cor = new Coordenador();
+			cor.setCargo("Coordenador");
+			//cor.setCurso(new Curso());
+			cor.setNome("Federico Lopes");
+			cor.setId(1);
+			per.setPessoa(cor);
+			per.setNivel(NivelAcademus.COORDENADOR);
+			*/
 			
 			session.setAttribute("usuario", per);
 			
-			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("InicioAluno.jsp");
 			
-			dispatcher.forward(request, response);
-			/*
-			if(per.getPessoa() instanceof Aluno || per.getNivel() == NivelAcademus.ALUNO) {
+			if( per.getNivel() == NivelAcademus.ALUNO) {
 				System.out.print("aluno hahah");
 				
 				request.setAttribute("tipo", "aluno");
@@ -53,7 +58,7 @@ public class InicioController extends HttpServlet {
 				
 				dispatcher.forward(request, response);
 				
-			} else if(per.getPessoa() instanceof Servidor || per.getNivel() == NivelAcademus.SECRETARIO) {
+			} else if( per.getNivel() == NivelAcademus.SECRETARIO) {
 				System.out.print("Secreatria,...,to correndo grande perigo de me parar no tribunal..");
 				request.setAttribute("tipo", "secretario");
 				
@@ -61,7 +66,7 @@ public class InicioController extends HttpServlet {
 				
 				dispatcher.forward(request, response);
 				
-			} else if(per.getPessoa() instanceof Coordenador || per.getNivel() == NivelAcademus.COORDENADOR) {
+			} else if(per.getNivel() == NivelAcademus.COORDENADOR) {
 				request.setAttribute("tipo", "coordenador");
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("InicioCoordenador.jsp");
 				
@@ -79,7 +84,7 @@ public class InicioController extends HttpServlet {
 				
 				dispatcher.forward(request, response);
 			}
-			*/
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

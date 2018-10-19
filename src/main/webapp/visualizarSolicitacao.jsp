@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.Solicitacao" %>
+<%@ page import="br.ufc.russas.n2s.academus.model.Aluno" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.DisciplinaCursada" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.SolicitacaoDAO" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC" %>
@@ -19,6 +20,18 @@
 	} catch(Exception e){
 		deuCerto = false;
 	}
+	Aluno alu = new Aluno();
+	alu.setMatricula("1234");
+	alu.setNome("Carlitos Eduardicas");
+	
+	solicitacao = new Solicitacao();
+	solicitacao.setSolicitante(alu);
+	solicitacao.setInstituicao("UECE");
+	solicitacao.setIdSolicitacao(1);
+	ArrayList<DisciplinaCursada> dis = new ArrayList<>();
+	solicitacao.setDisciplinasCursadas(dis);
+	
+	deuCerto = true;
 	
 	
 %>
@@ -79,7 +92,7 @@
 						<br> 
 						
 						<label for="creditosInput"><b> Nome da Disciplina </b></label> 
-						<input type="text" name="creditos" value="<%= solicitacao.getDisciplinaAlvo().getDisciplina().getNome() %>" class="form-control" id="creditosInput" aria-describedby="tituloHelp" readonly required> 
+						<input type="text" name="creditos" value="< % = //solicitacao.getDisciplinaAlvo().getDisciplina().getNome() % >" class="form-control" id="creditosInput" aria-describedby="tituloHelp" readonly required> 
 						 
 						<div class="invalid-feedback">
                             
@@ -138,10 +151,11 @@
                         </div>
 						<br>
 						<br>
-						
+						<!-- 
 						<div class="modal-footer">
-							<c:import url="botoesVisualizarAluno.jsp" charEncoding="UTF-8"></c:import>
+							<c:import url="jsp/elements/botoesVisualizarAluno.jsp" charEncoding="UTF-8"></c:import>
 						</div>
+						-->
 					</form>	
 				</div>
 				<%

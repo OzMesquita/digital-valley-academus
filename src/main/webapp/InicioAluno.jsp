@@ -36,8 +36,25 @@
 					<li class="breadcrumb-item" aria-current="page"><a href="jsp/elements/aviso.jsp">Início</a></li>
 					<!-- PREENCHER HREF -->
 				</ol>
-				<%=(String) request.getAttribute("tipo") %>
-				</nav>	                
+				</nav>
+				<div class="dropdown right"
+                             position: absolute;">
+                            <button class="btn dropdown-toggle btn-sm btn-icon filtro_tela"
+                                type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">filter_list</i> <span>Filtrar</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right"
+                                aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="/Chronos">Todas as atividade</a>
+                                <a class="dropdown-item" href="/Chronos/estado/aberta">Atividades
+                                    abertas</a> <a class="dropdown-item"
+                                    href="/Chronos/estado/andamento">Atividades em andamento</a> <a
+                                    class="dropdown-item" href="/Chronos/estado/finalizada">Atividades
+                                    finalizadas</a>
+                            </div>
+                </div>
+                               
 				<c:import url="VisualizarSolicitacoes" charEncoding="UTF-8"></c:import>
 			</div>
 		</div>
