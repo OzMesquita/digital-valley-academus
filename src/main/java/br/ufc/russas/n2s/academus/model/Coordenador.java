@@ -16,5 +16,4 @@ public class Coordenador extends Professor{
 		return serialVersionUID;
 	}
 	
-	
 }
