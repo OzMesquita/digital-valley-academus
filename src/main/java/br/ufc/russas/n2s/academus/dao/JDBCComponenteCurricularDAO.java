@@ -22,8 +22,9 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 	
 	@Override
 	public ComponenteCurricular cadastrar(ComponenteCurricular comp, MatrizCurricular matriz) {
-		try {
-			String sql = "INSERT INTO academus.componente_curricular(id_matriz, id_disciplina, natureza, semestre) VALUES (?, ?, ?, ?);";			
+		String sql = "INSERT INTO academus.componente_curricular(id_matriz, id_disciplina, natureza, semestre) VALUES (?, ?, ?, ?);";
+		
+		try {			
 			PreparedStatement insert = connection.prepareStatement(sql);
 			
 			insert.setInt(1, matriz.getIdMatriz());			
@@ -171,6 +172,7 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 				+ "where academus.componente_curricular.id_disciplina_matriz = "+idComponente+" "
 						+ "and academus.disciplina.id_disciplina = academus.disciplina_pre_requisito.id_disciplina_pre_requisito "
 						+ "and academus.componente_curricular.id_disciplina_matriz = academus.disciplina_pre_requisito.id_disciplina_matriz;";
+		
 		List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
 		try{
 			PreparedStatement ps = this.connection.prepareStatement(sql);
@@ -188,8 +190,8 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 			return listaDisciplinas;
 		}catch(SQLException e){
 			e.getMessage();
-			return null;
 		}
+		return null;
 	}
 
 
