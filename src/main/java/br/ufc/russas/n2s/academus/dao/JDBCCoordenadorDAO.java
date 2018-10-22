@@ -116,7 +116,9 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 				//Coordenador
 				cord.setCurso(curso);
 			}
-				
+			
+			buscar.close();
+			rs.close();
 		} catch(SQLException e) {
 			e.getMessage();
 		}
@@ -152,7 +154,7 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 			excluir.setInt(1, cord.getId());
 			
 			excluir.execute();
-			
+			excluir.close();
 		} catch(SQLException e) {
 			e.getMessage();
 		}

@@ -11,7 +11,7 @@ public interface DisciplinaCursadaDAO {
 	
 	public List<DisciplinaCursada> buscar(Solicitacao sol);
 	
-	public void editar(List<DisciplinaCursada> disciplinaCursadas, Solicitacao sol);
+	public void editar(DisciplinaCursada disciplinaCursada, Solicitacao sol);
 	
 	public void excluir(Solicitacao sol);
 		

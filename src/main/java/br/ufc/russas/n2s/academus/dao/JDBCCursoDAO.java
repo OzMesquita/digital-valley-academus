@@ -20,8 +20,19 @@ public class JDBCCursoDAO implements CursoDAO{
 
 	@Override
 	public Curso cardastrar(Curso curso) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "INSERT INTO academus.curso(nome) VALUES (?);";
+		
+		try{
+			PreparedStatement inserir = this.connection.prepareStatement(sql);
+			inserir.setString(1, curso.getNome());
+			
+			inserir.execute();
+			inserir.close();
+		} catch(SQLException e) {
+			e.getMessage();
+		}
+		
+		return curso;
 	}
 
 	@Override
@@ -42,7 +53,9 @@ public class JDBCCursoDAO implements CursoDAO{
 				
 				cursos.add(curso);
 			}
-					
+			
+			listar.close();
+			rs.close();
 		} catch(SQLException e) {
 			e.getMessage();
 		}
@@ -56,12 +69,20 @@ public class JDBCCursoDAO implements CursoDAO{
 		Curso curso = null;
 		try{
 			PreparedStatement listar = this.connection.prepareStatement(sql);
+			listar.setInt(1, idCurso);
+			
 			ResultSet rs = listar.executeQuery();
+			MatrizCurricularDAO matrizDao = new DAOFactoryJDBC().criarMatrizCurricularDAO();
 			
 			if(rs.next()){
 				curso = new Curso();
+				curso.setIdCurso(rs.getInt("id_curso"));
+				curso.setNome(rs.getString("nome"));
+				curso.setMatrizes(matrizDao.buscarPorCurso(curso.getIdCurso()));
 			}
 			
+			listar.close();
+			rs.close();
 		} catch(SQLException e) {
 			e.getMessage();
 		}
@@ -70,14 +91,34 @@ public class JDBCCursoDAO implements CursoDAO{
 
 	@Override
 	public Curso editar(Curso curso) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "UPDATE academus.curso SET nome=? WHERE id_curso=?;";
+		
+		try{
+			PreparedStatement editar = this.connection.prepareStatement(sql);
+			editar.setString(1, curso.getNome());
+			editar.setInt(2, curso.getIdCurso());
+			
+			editar.execute();
+			editar.close();
+			
+		} catch(SQLException e) {
+			e.getMessage();
+		}
+		return curso;
 	}
 
 	@Override
 	public void excluir(Curso curso) {
-		// TODO Auto-generated method stub
-		
+		String sql = "DELETE FROM academus.curso WHERE id_curso=?;";
+		try{
+			PreparedStatement excluir = this.connection.prepareStatement(sql);
+			excluir.setInt(1, curso.getIdCurso());
+			
+			excluir.execute();
+			excluir.close();
+		} catch(SQLException e) {
+			e.getMessage();
+		}
 	}
 
 }
