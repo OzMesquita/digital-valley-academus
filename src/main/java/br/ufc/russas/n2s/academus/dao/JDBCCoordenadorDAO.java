@@ -58,14 +58,16 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 				cord.setId(prof.getId());
 				cord.setNome(prof.getNome());
 				cord.setCpf(prof.getCpf());
-				cord.setDataNascimento(prof.getDataNascimento());
 				cord.setEmail(prof.getEmail());
-				cord.setSiape(prof.getSiape());
+				cord.setImagem(prof.getImagem());
+				cord.setUsuario(prof.getUsuario());
+				cord.setDataNascimento(prof.getDataNascimento());
 				
 				//Servidor
 				cord.setCargo(prof.getCargo());
+				cord.setSiape(prof.getSiape());
 				
-				//Professor - 
+				//Professor
 				cord.setDisciplinas(prof.getDisciplinas());
 				
 				//Coordenador

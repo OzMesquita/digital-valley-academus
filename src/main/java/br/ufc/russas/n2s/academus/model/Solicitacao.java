@@ -9,7 +9,7 @@ public class Solicitacao implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int idSolicitacao;
 	private Status status;
-	private ArrayList<Historico> historicoOperacoes;
+	private List<Historico> historicoOperacoes;
 	private Aluno solicitante;
 	private ComponenteCurricular disciplinaAlvo;
 	private List<DisciplinaCursada> disciplinasCursadas;
@@ -30,10 +30,10 @@ public class Solicitacao implements Serializable{
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	public ArrayList<Historico> getHistoricoOperacoes() {
+	public List<Historico> getHistoricoOperacoes() {
 		return historicoOperacoes;
 	}
-	public void setHistoricoOperacoes(ArrayList<Historico> historicoOperacoes) {
+	public void setHistoricoOperacoes(List<Historico> historicoOperacoes) {
 		this.historicoOperacoes = historicoOperacoes;
 	}
 	public Aluno getSolicitante() {

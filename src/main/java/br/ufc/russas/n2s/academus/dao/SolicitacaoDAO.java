@@ -9,9 +9,7 @@ import br.ufc.russas.n2s.academus.model.Solicitacao;
 public interface SolicitacaoDAO {
 	
 	public Solicitacao cadastrar(Solicitacao sol);
-	
-	public Solicitacao buscarSolicitacaoId(int idSolicitacao);
-	
+		
 	public List<Solicitacao> listar();
 		
 	public Solicitacao buscarPorId(int id);
@@ -24,4 +22,5 @@ public interface SolicitacaoDAO {
 	
 	public List<Solicitacao> listar(Aluno a);
 	
+	public int idUltimaSolicitacao();
 }
