@@ -16,10 +16,11 @@
 	
 	boolean deuCerto = true;
 	try{
-		solicitacao = dao.buscarSolicitacaoId(Integer.parseInt((String)(request.getAttribute("01"))));
+		solicitacao = dao.buscarPorId(Integer.parseInt((String)(request.getAttribute("id"))));
 	} catch(Exception e){
 		deuCerto = false;
 	}
+	/*
 	Aluno alu = new Aluno();
 	alu.setMatricula("1234");
 	alu.setNome("Carlitos Eduardicas");
@@ -32,7 +33,7 @@
 	solicitacao.setDisciplinasCursadas(dis);
 	
 	deuCerto = true;
-	
+	*/
 	
 %>
 

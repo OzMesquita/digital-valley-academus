@@ -12,10 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
-import br.ufc.russas.n2s.academus.model.Status;
 import br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC;
 import br.ufc.russas.n2s.academus.dao.SolicitacaoDAO;
 import br.ufc.russas.n2s.academus.model.Aluno;
+import br.ufc.russas.n2s.academus.model.Coordenador;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 
 public class ListarSolicitacaoController extends HttpServlet {
@@ -37,8 +37,8 @@ public class ListarSolicitacaoController extends HttpServlet {
 			PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
 			
 			SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
-			ArrayList<Solicitacao> listaSol = new ArrayList<>();// (ArrayList<Solicitacao>) sodao.listar();
-			
+			List<Solicitacao> listaSol = sodao.listar();
+			/*
 			Aluno a = new Aluno();
 			a.setNome("Eduardo Costa");
 			Aluno b = new Aluno();
@@ -66,15 +66,19 @@ public class ListarSolicitacaoController extends HttpServlet {
 			listaSol.add(s);
 			listaSol.add(s2);
 			listaSol.add(s3);
+			*/
 			
 			if (per.getNivel() == NivelAcademus.ALUNO) {
+				listaSol = sodao.listar((Aluno)per.getPessoa());
 				
 			} else if(per.getNivel() == NivelAcademus.SECRETARIO) {
+				listaSol = sodao.listar();
 				
 			} else if(per.getNivel() == NivelAcademus.COORDENADOR) {
+				listaSol = sodao.listar((Coordenador)per.getPessoa());
 				
 			} else if(per.getNivel() == NivelAcademus.INDEFINIDO) {
-				
+				listaSol = sodao.listar();
 			}
 			
 			request.setAttribute("listaSol", listaSol);

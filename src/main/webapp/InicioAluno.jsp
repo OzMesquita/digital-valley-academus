@@ -13,8 +13,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
 	integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
 	crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/design.css" />
 <link type="text/css" rel="stylesheet"
@@ -22,6 +21,10 @@
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.standalone.css" />
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
+	
 </head>
 <body>
 	<c:import url="jsp/elements/menu-superior.jsp" charEncoding="UTF-8"></c:import>
@@ -37,24 +40,7 @@
 					<!-- PREENCHER HREF -->
 				</ol>
 				</nav>
-				<div class="dropdown right"
-                             position: absolute;">
-                            <button class="btn dropdown-toggle btn-sm btn-icon filtro_tela"
-                                type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">filter_list</i> <span>Filtrar</span>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right"
-                                aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="/Chronos">Todas as atividade</a>
-                                <a class="dropdown-item" href="/Chronos/estado/aberta">Atividades
-                                    abertas</a> <a class="dropdown-item"
-                                    href="/Chronos/estado/andamento">Atividades em andamento</a> <a
-                                    class="dropdown-item" href="/Chronos/estado/finalizada">Atividades
-                                    finalizadas</a>
-                            </div>
-                </div>
-                               
+
 				<c:import url="VisualizarSolicitacoes" charEncoding="UTF-8"></c:import>
 			</div>
 		</div>

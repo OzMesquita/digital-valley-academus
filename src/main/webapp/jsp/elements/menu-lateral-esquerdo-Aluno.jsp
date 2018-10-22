@@ -2,8 +2,7 @@
     <div class="btn-group-vertical d-flex flex-column border" role="group">
     <strong><p class="btn btn-sm" align="center">Opções</p></strong>
         <a href="elements/aviso.jsp" class="btn btn-light btn-sm text-left">Início</a>
-        <a href="elements/aviso.jsp" class="btn btn-light btn-sm text-left">Cadastrar</a>
+        <a href="ServletCadastroSolicitacao" class="btn btn-light btn-sm text-left">Cadastrar</a>
     </div>
     <br>
 </div>
-</html>

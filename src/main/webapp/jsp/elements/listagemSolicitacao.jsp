@@ -4,33 +4,23 @@
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Solicitacao"%>
 <%@ page import="java.util.*"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Listagem de Disciplinas</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-	integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
-	crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/design.css" />
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.css" />
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.standalone.css" />
-</head>
 
-<body>
+<div class="dropdown right" style="right:+15px; position:absolute;">
+                    <button class="btn dropdown-toggle btn-sm btn-icon filtro_tela" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">filter_list</i>
+                        <span>Filtrar</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="buscaDisciplina.jsp">Todas as seleções</a>
+                        <a class="dropdown-item" href="jsp/elements/listagemSolicitacao.jsp">Solicitações em andamento</a>
+                        <a class="dropdown-item" href="cadastroSolicitacao.jsp">Solicitações finalizadas</a>
+                    </div>
+                </div>
+					         <br><br>
+
 <div class="form-group">
 					<table class="table table-responsive">
 						<thead>
-							<tr> 
-								
-							</tr>
 							
 							<tr>
 								<th scope="col">Codigo de Solicitação</th>
@@ -43,7 +33,7 @@
 						<%
 						 
 							
-						ArrayList<Solicitacao> solicitacoes = (ArrayList<Solicitacao>) request.getAttribute("listaSol");
+						List<Solicitacao> solicitacoes = (List<Solicitacao>) request.getAttribute("listaSol");
 								
 						if(solicitacoes != null){
 							for (Solicitacao soli : solicitacoes) {
@@ -77,8 +67,3 @@
 
 					</table>
 				</div>
-</body>
-<script>
-
-</script>
-</html>
