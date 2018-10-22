@@ -15,20 +15,26 @@
 <%@ page import="br.ufc.russas.n2s.academus.model.ComponenteCurricular"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Aluno"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Curso"%>
+<%@ page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
-	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
-	List<MatrizCurricular> matrizes = daoMC.listar();
-	ComponenteCurricularDAO ccdao = new JDBCComponenteCurricularDAO();
 	DAOFactory df = new DAOFactoryJDBC();
 	
 	Aluno aluno = df.criarAlunoDAO().buscarPorMatricula("375102");
-	Curso c = new Curso();
-	c.setIdCurso(4);
 	
-	request.getSession().setAttribute("Usuario", aluno);
+	request.getSession().setAttribute("usuario", new PerfilAcademus(aluno));
+	PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
+
+	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
+	//List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(aluno.getCurso().getIdCurso());
+	System.out.println("teste-------------------------");
+	//List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(4);
+	List<MatrizCurricular> matrizes = daoMC.listar();
+	System.out.println(matrizes.size());
+	ComponenteCurricularDAO ccdao = new JDBCComponenteCurricularDAO();
+	
 	DisciplinaDAO daoD = new JDBCDisciplinaDAO();
 	List<Disciplina> disciplinas = daoD.listar();
 %>

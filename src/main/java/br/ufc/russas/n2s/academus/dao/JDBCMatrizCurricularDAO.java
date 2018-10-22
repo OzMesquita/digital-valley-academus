@@ -259,8 +259,33 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 	}
 
 	@Override
-	public List<MatrizCurricular> buscarCurso(int idCurso) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MatrizCurricular> buscarPorCurso(int idCurso){
+		JDBCComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
+		String sql = "select * from academus.matriz_curricular where id_curso = "+idCurso+";";
+		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
+		try{
+			PreparedStatement ps = this.connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				MatrizCurricular aux = new MatrizCurricular();
+				aux.setIdMatriz(rs.getInt("id_matriz"));
+				aux.setNome(rs.getString("nome"));
+				aux.setPeriodoLetivo(rs.getString("periodo_letivo"));
+				aux.setCarga(rs.getInt("carga_horario"));
+				aux.setPrazoMinimo(rs.getInt("prazo_minimo"));
+				aux.setPrazoMaximo(rs.getInt("prazo_maximo"));
+				aux.setVigente(rs.getBoolean("vigente"));
+				aux.setAtivo(rs.getBoolean("ativo"));
+				aux.setIdCurso(rs.getInt("id_curso"));
+				aux.setComponentes(cc.listar(rs.getInt("id_matriz")));
+				listaMatrizes.add(aux);
+			}
+			rs.close();
+			ps.close();
+			return listaMatrizes;
+		}catch(SQLException e){
+			e.getMessage();
+			return null;
+		}
 	}
 }

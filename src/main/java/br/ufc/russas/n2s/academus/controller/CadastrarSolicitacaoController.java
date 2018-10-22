@@ -55,8 +55,7 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 		String[] cargaDisciplinas = request.getParameterValues("disc-carga");
 		String[] semestreDisciplinas = request.getParameterValues("disc-semestre");
 		String[] notaDisciplinas = request.getParameterValues("disc-nota");
-		Aluno aluno = (Aluno) request.getSession().getAttribute("Usuario");
-		System.out.println("teste================================================================");
+		PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
 		ArrayList<DisciplinaCursada> disciplinasCursadas = new ArrayList<DisciplinaCursada>();
 		ComponenteCurricularDAO ccd = new JDBCComponenteCurricularDAO();
 		SolicitacaoDAO sd = new JDBCSolicitacaoDAO();
@@ -66,23 +65,16 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 			disciplinasCursadas.add(new DisciplinaCursada(semestreDisciplinas[i], Float.parseFloat(notaDisciplinas[i]), Integer.parseInt(cargaDisciplinas[i]), nomeDisciplinas[i]));
 		}
 		
-		solicitacao.setSolicitante(aluno);
+		solicitacao.setSolicitante((Aluno) usuario.getPessoa());
 		solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
 		solicitacao.setInstituicao(instituicao);
 		solicitacao.setStatus(Status.SUBMETIDO);
 		solicitacao.setDisciplinasCursadas(disciplinasCursadas);
 		
-		sd.cadastrar(solicitacao);
+		
 		
 		if(disciplinasCursadas.size() > 0){
-			Historico historico = new Historico();
-			historico.setData(LocalDate.now());
-			historico.setHorario(LocalTime.now());
-			//historico.setResponsavel(aluno);
-			//historico.gerarDescricao(1);
-			
-			//int id = hd.ultimaSolicitacao();
-			//hd.cadastrar(historico, id);
+			sd.cadastrar(solicitacao);
 		}
 		
 		try {
