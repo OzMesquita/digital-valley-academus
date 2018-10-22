@@ -3,6 +3,7 @@
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.MatrizCurricularDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.ComponenteCurricularDAO"%>
+<%@ page import="br.ufc.russas.n2s.academus.dao.JDBCMatrizCurricularDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.MatrizCurricular"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.ComponenteCurricular"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Disciplina"%>
@@ -44,7 +45,7 @@
 				</nav>
 				<%
 							MatrizCurricular matriz = new MatrizCurricular();
-							MatrizCurricularDao dao = new MatrizCurricularDao();
+							MatrizCurricularDAO dao = new JDBCMatrizCurricularDAO();
 							//int a = Integer.parseInt(request.getParameter("id"));
 							//matriz = dao.buscarPorId(a);
 							boolean deuCerto = true;
@@ -107,12 +108,12 @@
 						</thead>
 						
 						<%
-							ArrayList <ComponenteCurricular> cc = matriz.getComponentes();
+							List <ComponenteCurricular> cc = matriz.getComponentes();
 							for (ComponenteCurricular aux : cc ) {
 						%>
 						
 						<tr>
-							<td><%=aux.getIdDisciplinaMatriz()%></td>
+							<td><%=aux.getIdComponente()%></td>
 							<td><%=aux.getDisciplina().getId()%></td>
 							<td><%=aux.getDisciplina().getNome()%></td>
 							<td><%=aux.getDisciplina().getCarga()%></td>
@@ -120,7 +121,7 @@
 							<td><%=aux.getNatureza()%></td>
 							<td>
 							<%
-								ArrayList <Disciplina> prerequisito = aux.getPreRequisitos();
+								List <Disciplina> prerequisito = aux.getPreRequisitos();
 								for (Disciplina d : prerequisito ) {
 									out.print(d.getId() + "; ");
 								}

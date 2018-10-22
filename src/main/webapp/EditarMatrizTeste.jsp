@@ -9,7 +9,7 @@
 <%
 
 	MatrizCurricular matriz = new MatrizCurricular();
-	MatrizCurricularDao daoMC = new MatrizCurricularDao();
+	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
 	/*	
 	int id_matriz = Integer.parseInt(request.getParameter("id_matriz"));
 	matriz.setIdMatriz(id_matriz);
@@ -18,16 +18,16 @@
 	
 	
 	*/
-	DisciplinaDao daoD = new DisciplinaDao();
-	ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
-	ArrayList<ComponenteCurricular> listaComps = new ArrayList<ComponenteCurricular>();
+	DisciplinaDAO daoD = new JDBCDisciplinaDAO();
+	List<Disciplina> disciplinas = new ArrayList<Disciplina>();
+	List<ComponenteCurricular> listaComps = new ArrayList<ComponenteCurricular>();
 	
 	boolean deuCerto = true;
 	try{
 		int id_matriz = Integer.parseInt((String) request.getAttribute("id"));
 		//matriz.setIdMatriz(id_matriz);
 		matriz = daoMC.buscarPorId(id_matriz);
-		disciplinas = daoD.ListarDisciplinas();
+		disciplinas = daoD.listar();
 		listaComps = matriz.getComponentes();
 	
 	}catch (Exception e){

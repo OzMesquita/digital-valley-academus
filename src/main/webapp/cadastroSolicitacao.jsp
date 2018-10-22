@@ -23,6 +23,8 @@
 	DAOFactory df = new DAOFactoryJDBC();
 	
 	Aluno aluno = df.criarAlunoDAO().buscarPorMatricula("375102");
+	System.out.println(aluno.getCurso().getIdCurso());
+	System.out.println(aluno.getCurso().getNome());
 	
 	request.getSession().setAttribute("usuario", new PerfilAcademus(aluno));
 	PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");

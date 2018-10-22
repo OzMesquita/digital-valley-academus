@@ -49,7 +49,7 @@ public class JDBCCursoDAO implements CursoDAO{
 				Curso curso = new Curso();
 				curso.setIdCurso(rs.getInt("id_curso"));
 				curso.setNome(rs.getString("nome"));
-				curso.setMatrizes(matrizDao.buscarPorCurso(curso.getIdCurso()));
+				//curso.setMatrizes(matrizDao.buscarPorCurso(curso.getIdCurso()));
 				
 				cursos.add(curso);
 			}
@@ -78,7 +78,7 @@ public class JDBCCursoDAO implements CursoDAO{
 				curso = new Curso();
 				curso.setIdCurso(rs.getInt("id_curso"));
 				curso.setNome(rs.getString("nome"));
-				curso.setMatrizes(matrizDao.buscarPorCurso(curso.getIdCurso()));
+				//curso.setMatrizes(matrizDao.buscarPorCurso(curso.getIdCurso()));
 			}
 			
 			listar.close();

@@ -64,7 +64,7 @@
 						</thead>
 						<%
 							MatrizCurricularDAO dao = new JDBCMatrizCurricularDAO();
-							List<MatrizCurricular> contatos = dao.ListarMatrizes();
+							List<MatrizCurricular> contatos = dao.listar();
 							for (MatrizCurricular contato : contatos) {
 						%>
 						<tr>
