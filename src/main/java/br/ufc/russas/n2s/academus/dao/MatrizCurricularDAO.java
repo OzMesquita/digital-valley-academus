@@ -13,6 +13,8 @@ public interface MatrizCurricularDAO {
 	
 	public MatrizCurricular buscarPorId(int idMatriz);
 	
+	public List<MatrizCurricular> buscarPorCurso(int idCurso);
+	
 	public List<MatrizCurricular> buscarPorNome(String nome);
 	
 	public MatrizCurricular editar(MatrizCurricular mat);

@@ -8,9 +8,7 @@ public interface CoordenadorDAO {
 	public Coordenador cadastrarCoordedanador(Coordenador cord);
 	
 	public Coordenador buscarPorId(int idCoordenador);
-	
-	public Coordenador buscarPorSiape(String siape);
-	
+		
 	public Coordenador buscarPorCurso(Curso curso);
 	
 	public Coordenador editar(Coordenador cord);

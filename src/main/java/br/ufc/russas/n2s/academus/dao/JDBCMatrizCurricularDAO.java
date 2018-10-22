@@ -257,4 +257,10 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public List<MatrizCurricular> buscarCurso(int idCurso) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
