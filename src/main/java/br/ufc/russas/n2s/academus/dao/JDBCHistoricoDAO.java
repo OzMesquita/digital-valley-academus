@@ -25,11 +25,14 @@ public class JDBCHistoricoDAO implements HistoricoDAO{
 	public Historico cadastrar(Historico his, int idSolicitacao) throws Exception {
 		
 		PreparedStatement ps = null;
-		String sql = "insert into academus.historico values (?,?,?,?,?,?)";
+		String sql = "insert into academus.historico (data_resultado, horario, descricao, id_pessoa_usuario, id_solicitacao) "
+				+ "values (?,?,?,?,?)";
 		try {
+			System.out.println("Entrou");
 			ps = connection.prepareStatement(sql);
 			ps.setDate(1, Date.valueOf(his.getData()));
 			ps.setTime(2, Time.valueOf(his.getHorario()));
+			System.out.println("Deu certo");
 			ps.setString(3, his.getDescricao());
 			ps.setInt(4, his.getResponsavel().getPessoa().getId());
 			ps.setInt(5, idSolicitacao);
@@ -44,7 +47,7 @@ public class JDBCHistoricoDAO implements HistoricoDAO{
 	}
 
 	@Override
-	public Historico buscarPorSolicitacao(Solicitacao sol) {
+	public java.util.List<Historico> buscarPorSolicitacao(Solicitacao sol) {
 		PreparedStatement ps = null;
 		String sql =  "select * from academus.historico where id_solicitacao = "+sol+";";
 		ArrayList<Historico> lh = new ArrayList<Historico>();
@@ -65,25 +68,7 @@ public class JDBCHistoricoDAO implements HistoricoDAO{
 		}
 		return null;
 	}
-	public int ultimaSolicitacao() {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		String sql =  "select id_solicitacao from academus.solicitacao order by id_solicitacao desc LIMIT 1";
-		try{
-			ps = connection.prepareStatement(sql);
-			rs = ps.executeQuery();
-			rs.next();
-			int i =  rs.getInt("id_solicitacao");
-			rs.close();
-			ps.close();
-			return i;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
-			
-		}
-		return -1;
-	}
+	
 	//select id_solicitacao from academus.solicitacao order by id_solicitacao desc LIMIT 1
 	@Override
 	public Historico editar(Historico his) {

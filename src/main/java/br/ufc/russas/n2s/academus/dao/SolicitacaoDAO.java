@@ -22,5 +22,5 @@ public interface SolicitacaoDAO {
 	
 	public List<Solicitacao> listar(Aluno a);
 	
-	public int idUltimaSolicitacao();
+	public int idUltimaSolicitacao(String matricula);
 }

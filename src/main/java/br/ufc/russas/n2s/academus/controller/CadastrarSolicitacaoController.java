@@ -59,7 +59,6 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 		System.out.println("teste================================================================");
 		ArrayList<DisciplinaCursada> disciplinasCursadas = new ArrayList<DisciplinaCursada>();
 		ComponenteCurricularDAO ccd = new JDBCComponenteCurricularDAO();
-		JDBCHistoricoDAO hd = new JDBCHistoricoDAO();
 		SolicitacaoDAO sd = new JDBCSolicitacaoDAO();
 		Solicitacao solicitacao = new Solicitacao();
 		

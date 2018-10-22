@@ -9,6 +9,7 @@ import java.util.List;
 
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Coordenador;
+import br.ufc.russas.n2s.academus.model.Historico;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
 import br.ufc.russas.n2s.academus.model.Status;
 import br.ufc.russas.n2s.academus.connection.Conexao;
@@ -27,19 +28,19 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			
 			String sql = "insert into academus.solicitacao( id_solicitante, matricula_solicitante, status, id_componente, instituicao) VALUES ( ?, ?, ?, ?, ?)";
 			PreparedStatement insert = connection.prepareStatement(sql);
-			DisciplinaCursadaDAO ddc = new JDBCDisciplinaCursadaDAO();
+			DisciplinaCursadaDAO dcd = new JDBCDisciplinaCursadaDAO();
+			JDBCHistoricoDAO hd = new JDBCHistoricoDAO();
 			
 			insert.setInt(1, sol.getSolicitante().getId());
 			insert.setString(2, sol.getSolicitante().getMatricula());
 			insert.setInt(3, Status.getCodigo(sol.getStatus()));
 			insert.setInt(4, sol.getDisciplinaAlvo().getIdComponente());
 			insert.setString(5, sol.getInstituicao());
-			
 			insert.execute();
-			
-			ddc.cadastrar(sol.getDisciplinasCursadas(), idUltimaSolicitacao());
-			System.out.println("DEU CERTO");
 			insert.close();
+			int idSolicitacao = idUltimaSolicitacao(sol.getSolicitante().getMatricula());
+			dcd.cadastrar(sol.getDisciplinasCursadas(), idSolicitacao);
+			hd.cadastrar(new Historico(sol.getSolicitante(), 1), idSolicitacao);
 		}catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -48,10 +49,10 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 	
 	@Override
-	public int idUltimaSolicitacao() {
+	public int idUltimaSolicitacao(String matricula) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql =  "select id_solicitacao from academus.solicitacao order by id_solicitacao desc LIMIT 1";
+		String sql =  "select id_solicitacao from academus.solicitacao where matricula_solicitante = '"+matricula+"' order by id_solicitacao desc LIMIT 1";
 		try{
 			ps = connection.prepareStatement(sql);
 			rs = ps.executeQuery();

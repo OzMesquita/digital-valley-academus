@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import model.Pessoa;
+
 public class Historico implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -11,6 +13,25 @@ public class Historico implements Serializable{
 	private LocalDate data;
 	private LocalTime horario;
 	private String descricao;
+	
+	public Historico() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Historico(Pessoa responsavel, int tipoMensagem) {
+		setData(LocalDate.now());
+		setHorario(LocalTime.now());
+		setResponsavel(new PerfilAcademus(responsavel));
+		gerarDescricao(tipoMensagem);
+	}
+	
+	public Historico(PerfilAcademus responsavel, int tipoMensagem) {
+		setData(LocalDate.now());
+		setHorario(LocalTime.now());
+		setResponsavel(responsavel);
+		gerarDescricao(tipoMensagem);
+	}
 	
 	public PerfilAcademus getResponsavel() {
 		return responsavel;
