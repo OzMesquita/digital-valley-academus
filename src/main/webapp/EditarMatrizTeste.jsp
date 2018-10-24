@@ -14,9 +14,7 @@
 	int id_matriz = Integer.parseInt(request.getParameter("id_matriz"));
 	matriz.setIdMatriz(id_matriz);
 	matriz = daoMC.buscarPorId(id_matriz);
-	//System.out.println(matriz.getComponentes().size());
-	
-	
+	//System.out.println(matriz.getComponentes().size());	
 	*/
 	DisciplinaDAO daoD = new JDBCDisciplinaDAO();
 	List<Disciplina> disciplinas = new ArrayList<Disciplina>();

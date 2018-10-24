@@ -64,7 +64,7 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 	}
 
 	@Override
-	public Disciplina buscarPorId(int id) {
+	public Disciplina buscarPorId(String id) {
 		String sql = "select * from academus.disciplina where id_disciplina = '"+id+"';";
 		try{
 			PreparedStatement ps = this.connection.prepareStatement(sql);

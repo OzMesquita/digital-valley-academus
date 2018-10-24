@@ -44,7 +44,7 @@ public class AtualizarDisciplinaController extends HttpServlet {
 			dis.setCarga(carga);
 			dis.setCreditos(creditos);
 	
-			daoCadastro.atualizarDisciplina(dis);
+			daoCadastro.editar(dis);
 	
 			try {
 				//javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("listaDisciplinas.jsp");

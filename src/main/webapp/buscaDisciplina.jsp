@@ -59,10 +59,10 @@
 						</thead>
 						<%
 							Disciplina disciplina = new Disciplina();
-							JDBCDisciplinaDAO dao = new JDBCDisciplinaDAO();
+							DisciplinaDAO dao = new JDBCDisciplinaDAO();
 							disciplina.setId(request.getParameter("id_disciplina"));
 							
-							disciplina = dao.buscaDisciplina(disciplina);
+							disciplina = dao.buscarPorId(disciplina.getId());
 							if (disciplina!=null){
 						%>
 						<tr>

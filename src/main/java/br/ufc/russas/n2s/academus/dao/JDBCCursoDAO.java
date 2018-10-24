@@ -19,7 +19,7 @@ public class JDBCCursoDAO implements CursoDAO{
 	}
 
 	@Override
-	public Curso cardastrar(Curso curso) {
+	public Curso cadastrar(Curso curso) {
 		String sql = "INSERT INTO academus.curso(nome) VALUES (?);";
 		
 		try{

@@ -8,13 +8,12 @@
 
 <%
 	MatrizCurricular matriz = new MatrizCurricular();
-	MatrizCurricularDao daoMC = new MatrizCurricularDao();
+	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
 	int id_matriz = Integer.parseInt(request.getParameter("id_matriz"));
 	matriz.setIdMatriz(id_matriz);
-	matriz = daoMC.buscaMatriz(matriz);
-	
-	DisciplinaDao daoD = new DisciplinaDao();
-	ArrayList<Disciplina> disciplinas = daoD.ListarDisciplinas();
+	matriz = daoMC.buscarPorId(matriz.getIdCurso());
+	DisciplinaDAO daoD = new JDBCDisciplinaDAO();
+	List<Disciplina> disciplinas = daoD.listar();
 %>
 
 <html>

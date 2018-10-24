@@ -20,20 +20,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
+	//Simulando um aluno na session------------------------------------------
 	DAOFactory df = new DAOFactoryJDBC();
-	
 	Aluno aluno = df.criarAlunoDAO().buscarPorMatricula("375102");
-	System.out.println(aluno.getCurso().getIdCurso());
-	System.out.println(aluno.getCurso().getNome());
-	
 	request.getSession().setAttribute("usuario", new PerfilAcademus(aluno));
+	//-----------------------------------------------------------------------
+	
 	PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
 
 	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
-	//List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(aluno.getCurso().getIdCurso());
-	System.out.println("teste-------------------------");
-	//List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(4);
-	List<MatrizCurricular> matrizes = daoMC.listar();
+	System.out.println(aluno.getCurso().getIdCurso());
+	Aluno a = (Aluno) usuario.getPessoa();
+	List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(a.getCurso().getIdCurso());
 	System.out.println(matrizes.size());
 	ComponenteCurricularDAO ccdao = new JDBCComponenteCurricularDAO();
 	
@@ -174,7 +172,7 @@
 	
 	function adicionarDisciplinaAproveitada(){
 		var disciplina = new Object();
-		disciplina.nome = document.getElementById("disciplinaAproveitada").value;
+		disciplina.nome = document.getElementById("disciplinaAproveitada").value.toUpperCase();
 		disciplina.carga = document.getElementById("cargaHoraria").value;
 		disciplina.nota = document.getElementById("nota").value;
 		disciplina.ano = document.getElementById("ano").value;

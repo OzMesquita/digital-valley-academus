@@ -10,7 +10,7 @@ public interface DisciplinaDAO {
 	
 	public List<Disciplina> listar();
 	
-	public Disciplina buscarPorId(int id);
+	public Disciplina buscarPorId(String id);
 	
 	public List<Disciplina> buscarPorNome(String nome);
 	

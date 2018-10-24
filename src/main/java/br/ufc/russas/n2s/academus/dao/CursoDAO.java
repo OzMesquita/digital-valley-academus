@@ -6,7 +6,7 @@ import br.ufc.russas.n2s.academus.model.Curso;
 
 public interface CursoDAO {
 	
-	public Curso cardastrar(Curso curso);
+	public Curso cadastrar(Curso curso);
 	
 	public List<Curso> listar();
 	
