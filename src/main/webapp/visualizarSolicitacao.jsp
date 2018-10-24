@@ -16,9 +16,11 @@
 	
 	boolean deuCerto = true;
 	try{
-		solicitacao = dao.buscarPorId(Integer.parseInt((String)(request.getAttribute("id"))));
+		//solicitacao = dao.buscarPorId(Integer.parseInt((String)(request.getAttribute("id"))));
+		solicitacao = dao.buscarPorId(20);
 	} catch(Exception e){
 		deuCerto = false;
+		System.out.print("Deu nao");
 	}
 	/*
 	Aluno alu = new Aluno();
@@ -31,7 +33,6 @@
 	solicitacao.setIdSolicitacao(1);
 	ArrayList<DisciplinaCursada> dis = new ArrayList<>();
 	solicitacao.setDisciplinasCursadas(dis);
-	
 	deuCerto = true;
 	*/
 	
@@ -93,7 +94,7 @@
 						<br> 
 						
 						<label for="creditosInput"><b> Nome da Disciplina </b></label> 
-						<input type="text" name="creditos" value="< % = //solicitacao.getDisciplinaAlvo().getDisciplina().getNome() % >" class="form-control" id="creditosInput" aria-describedby="tituloHelp" readonly required> 
+						<input type="text" name="creditos" value="<%=solicitacao.getDisciplinaAlvo().getDisciplina().getNome() %>" class="form-control" id="creditosInput" aria-describedby="tituloHelp" readonly required> 
 						 
 						<div class="invalid-feedback">
                             
@@ -152,11 +153,12 @@
                         </div>
 						<br>
 						<br>
-						<!-- 
-						<div class="modal-footer">
-							<c:import url="jsp/elements/botoesVisualizarAluno.jsp" charEncoding="UTF-8"></c:import>
-						</div>
-						-->
+						
+					     
+							<c:import url="jsp/elements/botoesVisualizarCoordenador.jsp" charEncoding="UTF-8"></c:import>
+						
+					         
+					
 					</form>	
 				</div>
 				<%

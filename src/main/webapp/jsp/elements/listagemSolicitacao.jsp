@@ -3,7 +3,24 @@
     pageEncoding="ISO-8859-1"%>
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Solicitacao"%>
+<%@ page import="br.ufc.russas.n2s.academus.dao.SolicitacaoDAO"%>
+<%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC" %>
 <%@ page import="java.util.*"%>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+	integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+	crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/design.css" />
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.css" />
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.standalone.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <div class="dropdown right" style="right:+15px; position:absolute;">
                     <button class="btn dropdown-toggle btn-sm btn-icon filtro_tela" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,8 +50,11 @@
 						<%
 						 
 							
-						List<Solicitacao> solicitacoes = (List<Solicitacao>) request.getAttribute("listaSol");
-								
+						//List<Solicitacao> solicitacoes = (List<Solicitacao>) request.getAttribute("listaSol");
+						
+						SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
+						List<Solicitacao> solicitacoes = sodao.listar();
+						
 						if(solicitacoes != null){
 							for (Solicitacao soli : solicitacoes) {
 								
@@ -43,7 +63,7 @@
 							<td><%=soli.getIdSolicitacao()%></td>
 							<td><%=soli.getStatus()%></td>
 							<td><%=soli.getSolicitante().getNome()%></td>
-							<!-- <td>< % =//soli.getDisciplinaAlvo().getDisciplina().getNome()% ></td>-->
+							<td><%=soli.getDisciplinaAlvo().getDisciplina().getNome()%></td>
 							<td><%=soli.getResultado()%></td>
 							<form method="POST" action="VisualizarSolicitacao" id="form<%=soli.getIdSolicitacao()%>">
 							<td><button  class="btn btn-primary btn-sm active" form="form<%=soli.getIdSolicitacao()%>"
