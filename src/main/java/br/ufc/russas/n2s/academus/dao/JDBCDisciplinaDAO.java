@@ -41,6 +41,7 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 	public List<Disciplina> listar() {
 		String sql = "select * from academus.disciplina";
 		ArrayList<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
+		
 		try{
 			PreparedStatement ps = this.connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -66,6 +67,7 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 	@Override
 	public Disciplina buscarPorId(String id) {
 		String sql = "select * from academus.disciplina where id_disciplina = '"+id+"';";
+		
 		try{
 			PreparedStatement ps = this.connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -89,6 +91,7 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 	public List<Disciplina> buscarPorNome(String nome) {
 		String sql = "select * from academus.disciplina where nome like '%?%';";
 		List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
+		
 		try{
 			PreparedStatement ps = this.connection.prepareStatement(sql);
 			ps.setString(1, nome);
@@ -100,6 +103,7 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 				aux.setNome(rs.getString("nome"));
 				aux.setCarga(rs.getInt("carga"));
 				aux.setCreditos(rs.getInt("creditos"));
+				
 				listaDisciplinas.add(aux);
 			}
 			

@@ -3,7 +3,7 @@ package br.ufc.russas.n2s.academus.model;
 public enum NivelAcademus {
 	
 	INDEFINIDO(0, "Indefinido"),
-	SECRETARIO(1, "Secretï¿½rio"),
+	SECRETARIO(1, "Secretário"),
 	COORDENADOR(2, "Coordenador"),
 	ALUNO(3, "Aluno"),
 	PROFESSOR(4, "Professor");

@@ -20,7 +20,5 @@ public interface MatrizCurricularDAO {
 	public MatrizCurricular editar(MatrizCurricular mat);
 	
 	public void excluir(MatrizCurricular mat);
-	
-	public void gerenciarComponentes(List<ComponenteCurricular> comps, int idMatriz);
-	
+		
 }
