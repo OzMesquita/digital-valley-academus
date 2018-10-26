@@ -33,7 +33,7 @@
 				<br>
 				<div class="form-group">
 					<form action="ServletCadastroDisciplina" method="post">
-						<label for="idInput">Código da Disciplina*</label> <input type="text" name="id_disciplina" class="form-control" id="idInput" aria-describedby="tituloHelp" placeholder="Digite o código da Disciplina" required > 
+						<label for="idInput">Código da Disciplina*</label> <input type="text" name="id_disciplina" class="form-control" id="idInput" textTransform="uppercase" aria-describedby="tituloHelp" placeholder="Digite o código da Disciplina" required > 
 						<small id="tituloHelp" class="form-text text-muted"> Exemplo: RUS1001</small> 
 						<div class="invalid-feedback">
                             

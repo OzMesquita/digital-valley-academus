@@ -14,20 +14,20 @@ import br.ufc.russas.n2s.academus.model.Solicitacao;
 import br.ufc.russas.n2s.academus.model.Status;
 import br.ufc.russas.n2s.academus.connection.Conexao;
 
-public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
+public class JDBCSolicitacaoDAO extends JDBCDAO implements SolicitacaoDAO{
 	
-	private Connection connection;
+	//private Connection connection;
 
-	public JDBCSolicitacaoDAO() {
-		connection = Conexao.getConexao();
-	}
+	//public JDBCSolicitacaoDAO() {
+		//connection = Conexao.getConexao();
+	//}
 
 	@Override
 	public Solicitacao cadastrar(Solicitacao sol) {
 		try{
-			
+			open();
 			String sql = "insert into academus.solicitacao( id_solicitante, matricula_solicitante, status, id_componente, instituicao) VALUES ( ?, ?, ?, ?, ?)";
-			PreparedStatement insert = connection.prepareStatement(sql);
+			PreparedStatement insert = getConnection().prepareStatement(sql);
 			DisciplinaCursadaDAO dcd = new JDBCDisciplinaCursadaDAO();
 			JDBCHistoricoDAO hd = new JDBCHistoricoDAO();
 			
@@ -43,6 +43,8 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			hd.cadastrar(new Historico(sol.getSolicitante(), 1), idSolicitacao);
 		}catch (Exception e) {
 			throw new RuntimeException(e);
+		}finally{
+			close();
 		}
 		
 		return sol;
@@ -50,11 +52,12 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	
 	@Override
 	public int idUltimaSolicitacao(String matricula) {
+		open();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String sql =  "select id_solicitacao from academus.solicitacao where matricula_solicitante = '"+matricula+"' order by id_solicitacao desc LIMIT 1";
 		try{
-			ps = connection.prepareStatement(sql);
+			ps = getConnection().prepareStatement(sql);
 			rs = ps.executeQuery();
 			rs.next();
 			int i =  rs.getInt("id_solicitacao");
@@ -64,17 +67,18 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			
+			close();
 		}
 		return -1;
 	}
 
 	@Override
 	public List<Solicitacao> listar() {
+		open();
 		String sql = "select * from academus.solicitacao";
 		List<Solicitacao> listaSolicitacao = new ArrayList<Solicitacao>();
 		try{
-			PreparedStatement ps = this.connection.prepareStatement(sql);
+			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				
@@ -105,16 +109,19 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			}
 			rs.close();
 			ps.close();
-			return listaSolicitacao;
+
 		}catch(SQLException e){
 			e.getMessage();
+		}finally{
+			close();
 		}
 		
-		return null;
+		return listaSolicitacao;
 	}
 
 	@Override
 	public Solicitacao buscarPorId(int id) {
+		open();
 		String sql = "select "
 				+ "id_solicitacao, "
 				+ "id_solicitante, "
@@ -126,13 +133,11 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				+ "resultado "
 				+ "from academus.solicitacao "
 				+ "where academus.solicitacao.id_solicitacao = "+ id;
-		
+		Solicitacao aux = null;
 		try{
-			PreparedStatement ps = this.connection.prepareStatement(sql);
+			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 						
 			ResultSet rs = ps.executeQuery();
-			
-			Solicitacao aux = null;
 			if(rs.next()){
 				aux = new Solicitacao();
 				DAOFactory df = new DAOFactoryJDBC();
@@ -160,19 +165,22 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			ps.close();
 			rs.close();
 			
-			return aux;
+
 		}catch(SQLException e){
 			e.getMessage();
+		}finally{
+			close();
 		}
-		return null;
+		return aux;
 	}
 
 	@Override
 	public Solicitacao editar(Solicitacao sol) {
+		open();
 		String sql = "UPDATE academus.solicitacao SET justificativa=?, id_componente=?, status=?, instituicao=?, resultado=? WHERE id_solicitacao = ?;";
 		try{
 			
-			PreparedStatement update = connection.prepareStatement(sql);
+			PreparedStatement update = getConnection().prepareStatement(sql);
 			
 			update.setString(1, sol.getJustificativa());
 			update.setInt(2, sol.getDisciplinaAlvo().getIdComponente());
@@ -186,18 +194,23 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			return sol;
 		} catch(SQLException e){
 			e.getMessage();
+		}finally{
+			close();
 		}
-		return null;
+		return sol;
 	}
 
 	@Override
 	public void excluir(Solicitacao sol) {
+		open();
 		String sql = "DELETE FROM academus.solicitaca WHERE id_solicitacao = "+sol.getIdSolicitacao()+";";
 		try{
-			PreparedStatement ps = this.connection.prepareStatement(sql);
+			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ps.execute();
 		}catch(SQLException e){
 			e.getMessage();
+		}finally{
+			close();
 		}
 	}
 

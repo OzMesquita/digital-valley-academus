@@ -9,11 +9,11 @@ public abstract class JDBCDAO {
 	
 	private Connection connection;
 	
-	private Connection getConnection() {
+	protected Connection getConnection() {
 		return connection;
 	}
 
-	private void setConnection(Connection connection) {
+	protected void setConnection(Connection connection) {
 		this.connection = connection;
 	}
 

@@ -8,20 +8,15 @@ import java.sql.SQLException;
 import br.ufc.russas.n2s.academus.connection.Conexao;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 
-public class JDBCNivelAcademusDAO implements NivelAcademusDAO{
-	
-	private Connection connection;
-
-	public JDBCNivelAcademusDAO() {
-		connection = Conexao.getConexao();
-	}
+public class JDBCNivelAcademusDAO extends JDBCDAO implements NivelAcademusDAO{
 
 	@Override
 	public NivelAcademus cadastrar(NivelAcademus nivel) {
+		open();
 		String sql = "INSERT INTO academus.nivel( id_nivel, rotulo) VALUES (?, ?);";
 		
 		try{
-			PreparedStatement cadastrar = this.connection.prepareStatement(sql);
+			PreparedStatement cadastrar = this.getConnection().prepareStatement(sql);
 			cadastrar.setInt(1, NivelAcademus.getCodigo(nivel));
 			cadastrar.setString(2, NivelAcademus.getDescricao(nivel));
 			
@@ -29,6 +24,8 @@ public class JDBCNivelAcademusDAO implements NivelAcademusDAO{
 			cadastrar.close();
 		} catch(SQLException e) {
 			e.getMessage();
+		}finally{
+			close();
 		}
 		
 		return nivel;
@@ -36,11 +33,12 @@ public class JDBCNivelAcademusDAO implements NivelAcademusDAO{
 	
 	@Override
 	public NivelAcademus buscar(int id) {
+		open();
 		String sql = "SELECT id_nivel, rotulo FROM academus.nivel WHERE id_nivel = ?;";
 		NivelAcademus nv = null;
 		
 		try{
-			PreparedStatement buscar = this.connection.prepareStatement(sql);
+			PreparedStatement buscar = this.getConnection().prepareStatement(sql);
 			buscar.setInt(1, id);
 			
 			ResultSet rs = buscar.executeQuery();
@@ -54,20 +52,25 @@ public class JDBCNivelAcademusDAO implements NivelAcademusDAO{
 			return nv;
 		} catch(SQLException e) {
 			e.getMessage();
+		}finally{
+			close();
 		}
 		
-		return null;
+		return nv;
 	}
 
 	@Override
 	public NivelAcademus editar(NivelAcademus nivel) {
+		open();
 		String sql = "UPDATE academus.nivel SET id_nivel=?, rotulo=? WHERE id_nivel=?;";
-		NivelAcademus nv = null;
 		try{
 			
-		} catch() {
-			
+		} catch(Exception e) {
+			e.getMessage();
+		}finally{
+			close();
 		}
+		return nivel;
 	}
 
 	@Override

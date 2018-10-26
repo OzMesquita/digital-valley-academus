@@ -14,22 +14,17 @@ import br.ufc.russas.n2s.academus.connection.Conexao;
 import br.ufc.russas.n2s.academus.model.Historico;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
 
-public class JDBCHistoricoDAO implements HistoricoDAO{
-	private Connection connection;
-
-	public JDBCHistoricoDAO(){
-		connection = Conexao.getConexao();
-	}
+public class JDBCHistoricoDAO extends JDBCDAO implements HistoricoDAO{
 	
 	@Override
 	public Historico cadastrar(Historico his, int idSolicitacao) throws Exception {
-		
+		open();
 		PreparedStatement ps = null;
 		String sql = "insert into academus.historico (data_resultado, horario, descricao, id_pessoa_usuario, id_solicitacao) "
 				+ "values (?,?,?,?,?)";
 		try {
 			System.out.println("Entrou");
-			ps = connection.prepareStatement(sql);
+			ps = getConnection().prepareStatement(sql);
 			ps.setDate(1, Date.valueOf(his.getData()));
 			ps.setTime(2, Time.valueOf(his.getHorario()));
 			System.out.println("Deu certo");
@@ -42,18 +37,20 @@ public class JDBCHistoricoDAO implements HistoricoDAO{
 			e.printStackTrace();
 		}finally{
 			ps.close();
+			close();
 		}
-		return null;
+		return his;
 	}
 
 	@Override
 	public java.util.List<Historico> buscarPorSolicitacao(Solicitacao sol) {
+		open();
 		PreparedStatement ps = null;
 		String sql =  "select * from academus.historico where id_solicitacao = "+sol+";";
 		ArrayList<Historico> lh = new ArrayList<Historico>();
 		PerfilAcademusDAO pad = new JDBCPerfilAcademusDAO();
 		try{
-			ps = connection.prepareStatement(sql);
+			ps = getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				Historico h = new Historico();
@@ -65,8 +62,10 @@ public class JDBCHistoricoDAO implements HistoricoDAO{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally{
+			close();
 		}
-		return null;
+		return lh;
 	}
 	
 	//select id_solicitacao from academus.solicitacao order by id_solicitacao desc LIMIT 1

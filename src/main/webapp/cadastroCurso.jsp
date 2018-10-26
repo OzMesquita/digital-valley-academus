@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,11 +25,10 @@
 				</ol>
 				</nav>
 				<h1>Cadastrar Curso</h1>
-				<p>Atenção: Os campos abaixo (*) são de preenchimento
-					obrigatório</p>
+				<p>Atenção: Os campos abaixo (*) são de preenchimento obrigatório</p>
 				<br>
 				<div class="form-group">
-					<form action="ServletCadastroCurso" method="post">
+					<form action="CadastrarCursoController" method="post">
 						
 						<label for="nomeInput"> Nome do Curso*</label> 
 						<input type="text" name="nome" class="form-control" id="nomeInput" aria-describedby="tituloHelp" placeholder="Digite o nome do curso" required> 
@@ -38,7 +37,12 @@
                             
                         </div>
 						<br> 
-						
+						<div class="modal-footer">
+							<div id="botoes" class="controls">
+								<button type="submit" class="btn btn-primary">Confirmar</button>
+								<button type="button" class="btn btn-primary">Cancelar</button>
+							</div>
+						</div>
 					</form>
 				</div>
 			</div>

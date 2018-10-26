@@ -34,8 +34,8 @@ public class DisciplinaController extends HttpServlet {
 		protected void doPost(HttpServletRequest request, HttpServletResponse response)
 				throws ServletException, IOException {
 
-			String id = request.getParameter("id_disciplina");
-			String nome = request.getParameter("nome");
+			String id = request.getParameter("id_disciplina").toUpperCase();
+			String nome = request.getParameter("nome").toUpperCase();
 			int carga = Integer.parseInt(request.getParameter("carga"));
 			int creditos = Integer.parseInt(request.getParameter("creditos"));
 

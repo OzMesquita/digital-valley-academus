@@ -15,43 +15,38 @@ import dao.DAOFactory;
 import dao.JDBCPessoaDAO;
 import model.Pessoa;
 
-public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
-	
-	private Connection connection;
-	
-	public JDBCPerfilAcademusDAO() {
-		this.connection = Conexao.getConexao();
-	}
+public class JDBCPerfilAcademusDAO extends JDBCDAO implements PerfilAcademusDAO{
 
 	@Override
 	public PerfilAcademus cadastrar(PerfilAcademus perfil) {
+		open();
 		String sql = "INSERT INTO academus.perfil_academus(id_pessoa_usuario, id_nivel) VALUES (?, ?);";
 		
 		try{
-			PreparedStatement insert = this.connection.prepareStatement(sql);
+			PreparedStatement insert = this.getConnection().prepareStatement(sql);
 			insert.setInt(1, perfil.getPessoa().getId());
 			insert.setInt(2, NivelAcademus.getCodigo(perfil.getNivel()));
 			insert.execute();
 			
 			insert.close();
-			return perfil;
 		} catch (SQLException e) {
 			e.getMessage();
+		}finally{
+			close();
 		}
 		
-		return null;
+		return perfil;
 	}
 
 	@Override
 	public List<PerfilAcademus> listar() {
+		open();
 		String sql = "SELECT id_pessoa_usuario, id_nivel FROM academus.perfil_academus;";
-		
+		ArrayList<PerfilAcademus> perfis = new ArrayList<PerfilAcademus>();
 		try{
 			JDBCPessoaDAO daoPessoa = (JDBCPessoaDAO) DAOFactory.criarPessoaDAO();
-			ArrayList<PerfilAcademus> perfis = new ArrayList<PerfilAcademus>();
 			
-			
-			PreparedStatement ps = this.connection.prepareStatement(sql);
+			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
@@ -75,74 +70,81 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 			
 			ps.close();
 			rs.close();
-			return perfis;
 			
 		} catch(SQLException e) {
 			e.getMessage();
+		}finally{
+			close();
 		}
 		
-		return null;
+		return perfis;
 	}
 
 	@Override
 	public PerfilAcademus buscarPorId(int id) {
+		open();
 		String sql = "SELECT id_pessoa_usuario, id_nivel FROM academus.perfil_academus WHERE id_pessoa_usuario = "+ id +";";
-		
+		PerfilAcademus perfil = null;
 		try{
 			JDBCPessoaDAO daoPessoa = (JDBCPessoaDAO) DAOFactory.criarPessoaDAO();			
 			
-			PreparedStatement ps = this.connection.prepareStatement(sql);
+			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
-				PerfilAcademus perfil = new PerfilAcademus();
+				perfil = new PerfilAcademus();
 				
 				perfil.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
 				perfil.setPessoa(daoPessoa.buscarPorId(rs.getInt("id_pessoa_usuario")));
 				
 				ps.close();
 				rs.close();
-				return perfil;
+
 			}
 						
 		} catch(SQLException e) {
 			e.getMessage();
+		}finally{
+			close();
 		}
 		
-		return null;
+		return perfil;
 	}
 
 	@Override
 	public PerfilAcademus editar(PerfilAcademus perfil) {
+		open();
 		String sql = "UPDATE academus.perfil_academus SET id_nivel = ? WHERE id_pessoa_usuario = ?;";
-		
 		try{
-			PreparedStatement editar = this.connection.prepareStatement(sql);
+			PreparedStatement editar = this.getConnection().prepareStatement(sql);
 			editar.setInt(1, NivelAcademus.getCodigo(perfil.getNivel()));
 			editar.setInt(2, perfil.getPessoa().getId());
 			editar.executeUpdate();
 			editar.close();
-			
-			return perfil;
+
 		} catch (SQLException e) {
 			e.getMessage();
+		}finally{
+			close();
 		}
 		
-		return null;
+		return perfil;
 	}
 
 	@Override
 	public void excluir(PerfilAcademus perfil) {
+		open();
 		String sql = "DELETE FROM academus.perfil_academus WHERE id_pessoa_usuario = ?;";
-		
 		try{
-			PreparedStatement excluir = this.connection.prepareStatement(sql);
+			PreparedStatement excluir = this.getConnection().prepareStatement(sql);
 			excluir.setInt(1, perfil.getPessoa().getId());
 			excluir.execute();
 			excluir.close();
 			
 		} catch(SQLException e) {
 			e.getMessage();
+		}finally{
+			close();
 		}
 	}
 
