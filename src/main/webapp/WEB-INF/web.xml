@@ -50,4 +50,8 @@
     <servlet-name>ListarSolicitacaoController</servlet-name>
     <url-pattern>/VisualizarSolicitacoes</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CadastrarCursoController</servlet-name>
+    <url-pattern>/CadastrarCurso</url-pattern>
+  </servlet-mapping>
 </web-app>

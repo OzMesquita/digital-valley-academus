@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ufc.russas.n2s.academus.dao.DisciplinaDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO;
 import br.ufc.russas.n2s.academus.model.Disciplina;
 
@@ -46,7 +47,7 @@ public class DisciplinaController extends HttpServlet {
 			dis.setCreditos(creditos);
 
 
-			daoCadastro.insereDisciplina(dis);
+			daoCadastro.cadastrar(dis);
 			
 			if (daoCadastro.buscarPorId2(dis.getId())){
 				File diretorio = new File("C:\\n2s\\Academus\\Disciplinas\\"+dis.getId());
