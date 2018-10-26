@@ -1,31 +1,25 @@
 package br.ufc.russas.n2s.academus.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufc.russas.n2s.academus.connection.Conexao;
 import br.ufc.russas.n2s.academus.model.Disciplina;
 import br.ufc.russas.n2s.academus.model.MatrizCurricular;
 import br.ufc.russas.n2s.academus.model.Natureza;
 import br.ufc.russas.n2s.academus.model.ComponenteCurricular;
 
-public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
-	private Connection connection;
-
-	public JDBCComponenteCurricularDAO() {
-		connection = Conexao.getConexao();
-	}
+public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCurricularDAO{
 	
 	@Override
 	public ComponenteCurricular cadastrar(ComponenteCurricular comp, MatrizCurricular matriz) {
 		String sql = "INSERT INTO academus.componente_curricular(id_matriz, id_disciplina, natureza, semestre) VALUES (?, ?, ?, ?);";
 		
+		super.open();
 		try {			
-			PreparedStatement insert = connection.prepareStatement(sql);
+			PreparedStatement insert = super.getConnection().prepareStatement(sql);
 			
 			insert.setInt(1, matriz.getIdMatriz());			
 			insert.setString(2, comp.getDisciplina().getId());
@@ -35,7 +29,10 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 			insert.close();
 		} catch (SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
+		
 		return comp;
 	}
 
@@ -43,10 +40,11 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 	public List<ComponenteCurricular> listar(int idMatriz) {
 		JDBCDisciplinaDAO d = new JDBCDisciplinaDAO();
 		String sql = "SELECT * FROM academus.componente_curricular WHERE id_matriz = "+ idMatriz +";";
-		
 		ArrayList<ComponenteCurricular> listaComponentes = new ArrayList<ComponenteCurricular>();
+		
+		super.open();
 		try{
-			PreparedStatement ps = this.connection.prepareStatement(sql);
+			PreparedStatement ps = super.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()){
@@ -62,69 +60,84 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 			
 			rs.close();
 			ps.close();
-			return listaComponentes;
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
-		return null;
+		return listaComponentes;
 	}
 
 	@Override
 	public ComponenteCurricular buscarPorId(int idComponente, MatrizCurricular matriz) {
 		JDBCDisciplinaDAO d = new JDBCDisciplinaDAO();
 		String sql = "SELECT * FROM academus.componente_curricular WHERE id_disciplina_matriz = "+idComponente+" AND id_matriz = "+matriz.getIdMatriz()+";";
+		ComponenteCurricular componente = null;
 		
+		super.open();
 		try{
-			PreparedStatement ps = this.connection.prepareStatement(sql);
+			PreparedStatement ps = super.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			rs.next();
 			
-			ComponenteCurricular componente = new ComponenteCurricular();
-			componente.setDisciplina(d.buscarPorId(rs.getString("id_disciplina")));
-			componente.setIdComponente(rs.getInt("id_disciplina_matriz"));
-			componente.setNatureza(Natureza.getNatureza(rs.getString("natureza")));
-			componente.setPreRequisitos(buscarPreRequisitos(rs.getInt("id_disciplina_matriz")));
+			if(rs.next()){
+				componente = new ComponenteCurricular();
+				componente.setDisciplina(d.buscarPorId(rs.getString("id_disciplina")));
+				componente.setIdComponente(rs.getInt("id_disciplina_matriz"));
+				componente.setNatureza(Natureza.getNatureza(rs.getString("natureza")));
+				componente.setPreRequisitos(buscarPreRequisitos(rs.getInt("id_disciplina_matriz")));
+			}
 			
 			rs.close();
 			ps.close();
-			return componente;
+			
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
-		return null;
+		return componente;
 	}
 
 	@Override
 	public ComponenteCurricular buscarPorId(int idComponente) {
 		JDBCDisciplinaDAO d = new JDBCDisciplinaDAO();
 		String sql = "SELECT * FROM academus.componente_curricular WHERE id_disciplina_matriz = "+idComponente+";";
+		ComponenteCurricular componente = null;
 		
+		super.open();
 		try{
-			PreparedStatement ps = this.connection.prepareStatement(sql);
+			PreparedStatement ps = super.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			rs.next();
 			
-			ComponenteCurricular componente = new ComponenteCurricular();
-			componente.setDisciplina(d.buscarPorId(rs.getString("id_disciplina")));
-			componente.setIdComponente(rs.getInt("id_disciplina_matriz"));
-			componente.setNatureza(Natureza.getNatureza(rs.getString("natureza")));
-			componente.setPreRequisitos(buscarPreRequisitos(rs.getInt("id_disciplina_matriz")));
+			if(rs.next()){
+				componente = new ComponenteCurricular();
+				componente.setDisciplina(d.buscarPorId(rs.getString("id_disciplina")));
+				componente.setIdComponente(rs.getInt("id_disciplina_matriz"));
+				componente.setNatureza(Natureza.getNatureza(rs.getString("natureza")));
+				componente.setPreRequisitos(buscarPreRequisitos(rs.getInt("id_disciplina_matriz")));
+			}
 			
 			rs.close();
 			ps.close();
-			return componente;
+			
+			rs.close();
+			ps.close();
+
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
-		return null;
+		return componente;
 	}
 
 	@Override
 	public void inserirPreRequsitos(List<Disciplina> d, int idComponente) {
 		String sql = "INSERT INTO academus.disciplina_pre_requisito VALUES (?, ?)";
 		
+		super.open();
 		try {
-			PreparedStatement insert = connection.prepareStatement(sql);
+			PreparedStatement insert = super.getConnection().prepareStatement(sql);
 			
 			for(int i=0; i < d.size(); i++){
 				insert.setInt(1, idComponente);
@@ -135,6 +148,8 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 			insert.close();
 		} catch (SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 	}
 
@@ -142,12 +157,15 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 	public void excluirPreRequisito(int idComponente, Disciplina disciplina) {
 		String sql = "delete from academus.disciplina_pre_requisito where id_disciplina_matriz = "+idComponente+" and id_disciplina_pre_requisito = "+disciplina.getId()+";";
 		
+		super.open();
 		try{
-			PreparedStatement ps = this.connection.prepareStatement(sql);
+			PreparedStatement ps = super.getConnection().prepareStatement(sql);
 			ps.execute();
 			
 		}catch(SQLException e){
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 		
 	}
@@ -156,12 +174,15 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 	public void excluirComponente(ComponenteCurricular comp) {
 		String sql = "delete from academus.componente_curricular where id_disciplina_matriz = "+comp.getIdComponente()+";";
 		
+		super.open();
 		try{
-			PreparedStatement ps = this.connection.prepareStatement(sql);
+			PreparedStatement ps = super.getConnection().prepareStatement(sql);
 			ps.execute();
 			
 		}catch(SQLException e){
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 	}
 	
@@ -174,8 +195,10 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 						+ "and academus.componente_curricular.id_disciplina_matriz = academus.disciplina_pre_requisito.id_disciplina_matriz;";
 		
 		List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
+		
+		super.open();
 		try{
-			PreparedStatement ps = this.connection.prepareStatement(sql);
+			PreparedStatement ps = super.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				Disciplina aux = new Disciplina();
@@ -185,13 +208,17 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 				aux.setCreditos(rs.getInt("creditos"));
 				listaDisciplinas.add(aux);
 			}
+			
 			rs.close();
 			ps.close();
-			return listaDisciplinas;
+			
 		}catch(SQLException e){
 			e.getMessage();
+		} finally {
+			super.close();
 		}
-		return null;
+
+		return listaDisciplinas;
 	}
 
 

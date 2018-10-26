@@ -1,95 +1,98 @@
 package br.ufc.russas.n2s.academus.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import br.ufc.russas.n2s.academus.connection.Conexao;
 import br.ufc.russas.n2s.academus.model.Arquivo;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
 
-public class JDBCArquivoDAO implements ArquivoDAO{
-	
-	private Connection connection;
-	
-	public JDBCArquivoDAO(){
-		this.connection = Conexao.getConexao();
-	}
+public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
 
 	public Arquivo cadastrarArquivo(Arquivo arq, Solicitacao sol) {
 		String sql = "INSERT INTO academus.arquivo(caminho, id_solicitacao) VALUES (?, ?);";
 		
+		super.open();
 		try{
 			
-			PreparedStatement insert = this.connection.prepareStatement(sql);
+			PreparedStatement insert = super.getConnection().prepareStatement(sql);
 			insert.setString(1, arq.getCaminho());
 			insert.setInt(2, sol.getIdSolicitacao());
-			insert.execute();
 			
+			insert.execute();
 			insert.close();
-			return arq;
+			
 		} catch(SQLException e) {	
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 		
-		return null;
+		return arq;
 	}
 
 	@Override
 	public Arquivo buscarPorSolicitacao(Solicitacao sol){
 		String sql = "SELECT id_arquivo, caminho, id_solicitacao FROM academus.arquivo WHERE id_solicitacao = " + sol.getIdSolicitacao() + ";";
-		
+		Arquivo arq = null;
+		super.open();
 		try{
-			PreparedStatement ps = this.connection.prepareStatement(sql);
+			PreparedStatement ps = super.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			rs.next();
-			
-			Arquivo arq = new Arquivo();
-			arq.setIdArquivo(rs.getInt("id_arquivo"));
-			arq.setCaminho(rs.getString("caminho"));
+			if(rs.next()){
+				arq = new Arquivo();
+				arq.setIdArquivo(rs.getInt("id_arquivo"));
+				arq.setCaminho(rs.getString("caminho"));
+			}
 			
 			rs.close();
 			ps.close();
 			
-			return arq;
 		} catch (SQLException e){
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 		
-		return null;
+		return arq;
 	}
 
 	@Override
 	public Arquivo editar(Arquivo arquivo) {
 		String sql = "UPDATE academus.arquivo SET caminho=? WHERE id_arquivo = ?;";
 		
+		super.open();
 		try{
-			PreparedStatement editar = this.connection.prepareStatement(sql);
+			PreparedStatement editar = super.getConnection().prepareStatement(sql);
 			editar.setString(1, arquivo.getCaminho());
 			editar.setInt(2, arquivo.getIdArquivo());
+		
 			editar.execute();
-			
 			editar.close();
-			return arquivo;
+			
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 		
-		return null;
+		return arquivo;
 	}
 
 	@Override
 	public void excluir(Arquivo arquivo) {
 		String sql = "DELETE FROM academus.arquivo WHERE id_arquivo = ?;";
 		
+		super.open();
 		try{
-			PreparedStatement excluir = this.connection.prepareStatement(sql);
+			PreparedStatement excluir = super.getConnection().prepareStatement(sql);
 			excluir.setInt(1, arquivo.getIdArquivo());
 			excluir.execute();
 			
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 	}
 }

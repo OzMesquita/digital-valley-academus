@@ -1,38 +1,34 @@
 package br.ufc.russas.n2s.academus.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import br.ufc.russas.n2s.academus.connection.Conexao;
 import br.ufc.russas.n2s.academus.model.Coordenador;
 import br.ufc.russas.n2s.academus.model.Curso;
 import br.ufc.russas.n2s.academus.model.Professor;
-import dao.DAOFactory;
 
-public class JDBCCoordenadorDAO implements CoordenadorDAO{
-	private Connection connection;
-	
-	public JDBCCoordenadorDAO() {
-		this.connection = Conexao.getConexao();
-	}
+public class JDBCCoordenadorDAO extends JDBCDAO implements CoordenadorDAO{
 
 	@Override
 	public Coordenador cadastrarCoordedanador(Coordenador cord) {
-		
 		String sql = "INSERT INTO academus.coordenador(id_pessoa, id_curso) VALUES (?, ?);";
 		
+		super.open();
 		try {
-			PreparedStatement insert = this.connection.prepareStatement(sql);
+			PreparedStatement insert = super.getConnection().prepareStatement(sql);
 			insert.setInt(1, cord.getId());
 			insert.setInt(2, cord.getCurso().getIdCurso());
 			
 			insert.execute();
 			insert.close();
+			
 		} catch (SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
+		
 		return cord;
 	}
 
@@ -41,8 +37,9 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 		String sql = "SELECT id_pessoa, id_curso FROM academus.coordenador WHERE id_pessoa = ?;";
 		Coordenador cord = null;
 		
+		super.open();
 		try {
-			PreparedStatement buscar = this.connection.prepareStatement(sql);
+			PreparedStatement buscar = super.getConnection().prepareStatement(sql);
 			buscar.setInt(1, idCoordenador);
 			
 			ResultSet rs = buscar.executeQuery();
@@ -75,9 +72,12 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 			}
 			
 			rs.close();
-			buscar.close();			
+			buscar.close();
+			
 		} catch (SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 		return cord;
 	}
@@ -87,8 +87,9 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 		String sql = "SELECT id_pessoa FROM academus.coordenador WHERE id_curso = ?;";
 		Coordenador cord = null;
 		
+		super.open();
 		try{
-			PreparedStatement buscar = this.connection.prepareStatement(sql);
+			PreparedStatement buscar = super.getConnection().prepareStatement(sql);
 			buscar.setInt(1, curso.getIdCurso());
 			
 			ResultSet rs = buscar.executeQuery();
@@ -119,8 +120,11 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 			
 			buscar.close();
 			rs.close();
+			
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 		return cord;
 	}
@@ -129,8 +133,9 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 	public Coordenador editar(Coordenador cord) {
 		String sql = "UPDATE academus.coordenador SET id_curso=? WHERE id_pessoa=?;";
 		
+		super.open();
 		try{
-			PreparedStatement editar = this.connection.prepareStatement(sql);
+			PreparedStatement editar = super.getConnection().prepareStatement(sql);
 			editar.setInt(1, cord.getCurso().getIdCurso());
 			editar.setInt(2, cord.getId());
 			
@@ -139,6 +144,8 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 			
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 		
 		return cord;
@@ -149,14 +156,18 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 	public void excluir(Coordenador cord) {
 		String sql = "DELETE FROM academus.coordenador WHERE id_pessoa=?;";
 		
+		super.open();
 		try{
-			PreparedStatement excluir = this.connection.prepareStatement(sql);
+			PreparedStatement excluir = super.getConnection().prepareStatement(sql);
 			excluir.setInt(1, cord.getId());
 			
 			excluir.execute();
 			excluir.close();
+			
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 	}
 

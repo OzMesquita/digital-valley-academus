@@ -1,35 +1,31 @@
 package br.ufc.russas.n2s.academus.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufc.russas.n2s.academus.connection.Conexao;
 import br.ufc.russas.n2s.academus.model.Curso;
 
-public class JDBCCursoDAO implements CursoDAO{
-	
-	private Connection connection;
-	
-	public JDBCCursoDAO(){
-		this.connection = Conexao.getConexao();
-	}
+public class JDBCCursoDAO extends JDBCDAO implements CursoDAO{
 
 	@Override
 	public Curso cadastrar(Curso curso) {
 		String sql = "INSERT INTO academus.curso(nome) VALUES (?);";
 		
+		super.open();
 		try{
-			PreparedStatement inserir = this.connection.prepareStatement(sql);
+			PreparedStatement inserir = super.getConnection().prepareStatement(sql);
 			inserir.setString(1, curso.getNome());
 			
 			inserir.execute();
 			inserir.close();
+			
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 		
 		return curso;
@@ -40,8 +36,9 @@ public class JDBCCursoDAO implements CursoDAO{
 		String sql = "SELECT id_curso, nome FROM academus.curso;";
 		List<Curso> cursos = new ArrayList<Curso>();
 		
+		super.open();
 		try{
-			PreparedStatement listar = this.connection.prepareStatement(sql);
+			PreparedStatement listar = super.getConnection().prepareStatement(sql);
 			ResultSet rs = listar.executeQuery();
 			MatrizCurricularDAO matrizDao = new DAOFactoryJDBC().criarMatrizCurricularDAO();
 			
@@ -56,19 +53,24 @@ public class JDBCCursoDAO implements CursoDAO{
 			
 			listar.close();
 			rs.close();
+			
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
+		
 		return cursos;
 	}
 	
 	@Override
 	public Curso buscarPorId(int idCurso) {
 		String sql = "SELECT id_curso, nome FROM academus.curso WHERE id_curso=?;";
-		
 		Curso curso = null;
+		
+		super.open();
 		try{
-			PreparedStatement listar = this.connection.prepareStatement(sql);
+			PreparedStatement listar = super.getConnection().prepareStatement(sql);
 			listar.setInt(1, idCurso);
 			
 			ResultSet rs = listar.executeQuery();
@@ -83,9 +85,13 @@ public class JDBCCursoDAO implements CursoDAO{
 			
 			listar.close();
 			rs.close();
+			
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
+		
 		return curso;
 	}
 
@@ -93,8 +99,9 @@ public class JDBCCursoDAO implements CursoDAO{
 	public Curso editar(Curso curso) {
 		String sql = "UPDATE academus.curso SET nome=? WHERE id_curso=?;";
 		
+		super.open();
 		try{
-			PreparedStatement editar = this.connection.prepareStatement(sql);
+			PreparedStatement editar = super.getConnection().prepareStatement(sql);
 			editar.setString(1, curso.getNome());
 			editar.setInt(2, curso.getIdCurso());
 			
@@ -103,21 +110,28 @@ public class JDBCCursoDAO implements CursoDAO{
 			
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
+		
 		return curso;
 	}
 
 	@Override
 	public void excluir(Curso curso) {
 		String sql = "DELETE FROM academus.curso WHERE id_curso=?;";
+		
+		super.open();
 		try{
-			PreparedStatement excluir = this.connection.prepareStatement(sql);
+			PreparedStatement excluir = super.getConnection().prepareStatement(sql);
 			excluir.setInt(1, curso.getIdCurso());
 			
 			excluir.execute();
 			excluir.close();
 		} catch(SQLException e) {
 			e.getMessage();
+		} finally {
+			super.close();
 		}
 	}
 
