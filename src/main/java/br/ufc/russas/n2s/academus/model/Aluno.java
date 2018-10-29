@@ -9,6 +9,12 @@ public class Aluno extends Pessoa{
 	private String semestreIngresso;
 	private Curso curso;
 	
+	public Aluno(){
+		this.setMatricula("INDEFINIDO");
+		this.setSemestreIngresso("INDEFINIDO");
+		this.setCurso(new Curso());
+	}
+	
 	public String getMatricula() {
 		return matricula;
 	}

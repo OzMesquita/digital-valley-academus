@@ -5,6 +5,10 @@ public class Coordenador extends Professor{
 	
 	private final static long serialVersionUID = 1L;
 	private Curso curso;
+	
+	public Coordenador(){
+		this.setCurso(new Curso());
+	}
 
 	public Curso getCurso() {
 		return curso;

@@ -54,13 +54,12 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 				listaDisciplinas.add(aux);
 			}
 			
-			rs.close();
-			ps.close();
+			
 			
 		} catch(SQLException e) {
 			e.getMessage();
 		}finally{
-			close();
+			super.close();
 		}
 		return listaDisciplinas;
 	}

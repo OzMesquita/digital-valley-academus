@@ -11,14 +11,10 @@ public class DisciplinaCursada implements Serializable{
 	private String nome;
 	
 	public DisciplinaCursada() {
-
-	}
-	
-	public DisciplinaCursada(String semestre, float nota, int carga, String nome) {
-		setSemestre(semestre);
-		setNota(nota);
-		setCarga(carga);
-		setNome(nome);
+		this.setSemestre("INDEFINIDO");
+		this.setNota(-1.0f);
+		this.setCarga(-1);
+		this.setNome("INDEFINIDO");
 	}
 
 	public String getSemestre() {
@@ -48,6 +44,5 @@ public class DisciplinaCursada implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
 	
 }

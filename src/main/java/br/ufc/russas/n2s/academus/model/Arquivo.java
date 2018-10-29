@@ -10,6 +10,12 @@ public class Arquivo implements Serializable{
 	private String caminho;
 	private File arquivo;
 	
+	public Arquivo(){
+		this.setIdArquivo(-1);
+		this.setCaminho("INDEFINIDO");
+		this.setArquivo(new File(this.getCaminho()));
+	}
+	
 	public int getIdArquivo() {
 		return idArquivo;
 	}

@@ -11,16 +11,11 @@ public class Disciplina implements Serializable{
 	private int creditos;
 	
 	public Disciplina() {
-		
+		this.setId("INDEFINIDO");
+		this.setNome("INDEFINIDO");
+		this.setCarga(-1);
+		this.setCreditos(-1);
 	}
-
-	public Disciplina(String id, String nome, int carga, int creditos) {
-		this.id = id;
-		this.nome = nome;
-		this.carga = carga;
-		this.creditos = creditos;
-	}
-
 	
 	public String getId() {
 		return id;

@@ -12,6 +12,8 @@ public class Curso implements Serializable{
 	private List<MatrizCurricular> matrizes;
 	
 	public Curso(){
+		this.setIdCurso(-1);
+		this.setNome("INDEFINIDO");
 		this.setMatrizes(new ArrayList<MatrizCurricular>());
 	}
 	

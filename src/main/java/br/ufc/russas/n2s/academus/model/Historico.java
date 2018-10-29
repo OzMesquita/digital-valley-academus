@@ -15,22 +15,24 @@ public class Historico implements Serializable{
 	private String descricao;
 	
 	public Historico() {
-		super();
-		// TODO Auto-generated constructor stub
+		this.setResponsavel(new PerfilAcademus());
+		this.setData(LocalDate.now());
+		this.setHorario(LocalTime.now());
+		this.setDescricao("INDEFINIDO");
 	}
 
 	public Historico(Pessoa responsavel, int tipoMensagem) {
-		setData(LocalDate.now());
-		setHorario(LocalTime.now());
-		setResponsavel(new PerfilAcademus(responsavel));
-		gerarDescricao(tipoMensagem);
+		this.setData(LocalDate.now());
+		this.setHorario(LocalTime.now());
+		this.setResponsavel(new PerfilAcademus(responsavel));
+		this.gerarDescricao(tipoMensagem);
 	}
 	
 	public Historico(PerfilAcademus responsavel, int tipoMensagem) {
-		setData(LocalDate.now());
-		setHorario(LocalTime.now());
-		setResponsavel(responsavel);
-		gerarDescricao(tipoMensagem);
+		this.setData(LocalDate.now());
+		this.setHorario(LocalTime.now());
+		this.setResponsavel(responsavel);
+		this.gerarDescricao(tipoMensagem);
 	}
 	
 	public PerfilAcademus getResponsavel() {
@@ -65,7 +67,6 @@ public class Historico implements Serializable{
 		String string = "";
 		if(i == 1) string = getResponsavel().getPessoa().getNome()+" cadastrou uma solicitação";
 		setDescricao(string);
-		//return string;
 	}
 	
 }

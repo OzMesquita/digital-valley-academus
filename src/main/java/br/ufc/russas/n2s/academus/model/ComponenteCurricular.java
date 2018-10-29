@@ -13,6 +13,9 @@ public class ComponenteCurricular implements Serializable{
 	private List<Disciplina> preRequisitos;
 	
 	public ComponenteCurricular(){
+		this.setIdComponente(-1);
+		this.setDisciplina(new Disciplina());
+		this.setNatureza(Natureza.OPTATIVA);
 		this.setPreRequisitos(new ArrayList<Disciplina>());
 	}
 
@@ -44,18 +47,4 @@ public class ComponenteCurricular implements Serializable{
 		return serialVersionUID;
 	}
 
-	public String getStringPreRequisitos(){
-		String stringPr = "";
-		if(!preRequisitos.isEmpty()){
-			for(int j=0;j<preRequisitos.size();j++){
-				if(preRequisitos.get(j).getId() != ""){
-					if(j>0){stringPr += "; ";}
-					stringPr += preRequisitos.get(j).getId();
-				}
-			}
-		}else{
-			stringPr = "-";
-		}
-		return stringPr;
-	}
 }

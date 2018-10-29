@@ -34,6 +34,7 @@ public class PerfilAcademus implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	private NivelAcademus verificarNivel(Pessoa p){
 		if(p instanceof Aluno){
 			return NivelAcademus.ALUNO;
@@ -45,6 +46,5 @@ public class PerfilAcademus implements Serializable{
 			return NivelAcademus.INDEFINIDO;
 		}
 	}
-	
 	
 }

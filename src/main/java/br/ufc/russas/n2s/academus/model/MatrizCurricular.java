@@ -19,7 +19,16 @@ public class MatrizCurricular implements Serializable{
 	private int prazoMaximo;
 	
 	public MatrizCurricular(){
+		this.setNome("INDEFINIDO");
+		this.setIdMatriz(-1);
+		this.setIdCurso(-1);
+		this.setCarga(-1);
+		this.setPeriodoLetivo("INDEFINIDO");
+		this.setVigente(false);
+		this.setAtivo(false);
 		this.setComponentes(new ArrayList<ComponenteCurricular>());
+		this.setPrazoMinimo(-1);
+		this.setPrazoMaximo(-1);
 	}
 	
 	public String getNome() {
@@ -85,6 +94,7 @@ public class MatrizCurricular implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	public String getInfoComponentes(){
 		String comps = "";
 		List<ComponenteCurricular> componentes = getComponentes();
@@ -95,4 +105,5 @@ public class MatrizCurricular implements Serializable{
 		}
 		return comps;
 	}
+	
 }

@@ -18,6 +18,19 @@ public class Solicitacao implements Serializable{
 	private String instituicao;
 	private Arquivo arquivo;
 	
+	public Solicitacao(){
+		this.setIdSolicitacao(-1);
+		this.setStatus(Status.CANCELADO);
+		this.setHistoricoOperacoes(new ArrayList<Historico>());
+		this.setSolicitante(new Aluno());
+		this.setDisciplinaAlvo(new ComponenteCurricular());
+		this.setDisciplinasCursadas(new ArrayList<DisciplinaCursada>());
+		this.setResultado("INDEFINIDO");
+		this.setJustificativa("INDEFINIDO");
+		this.setInstituicao("INDEFINIDO");
+		this.setArquivo(new Arquivo());
+	}
+	
 	public int getIdSolicitacao() {
 		return idSolicitacao;
 	}
