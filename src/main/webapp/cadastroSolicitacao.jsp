@@ -65,7 +65,7 @@
 				</nav>
 				<br>
 				<div class="form-group">
-					<form action="ServletCadastroSolicitacao" method="post">
+					<form action="CadastrarSolicitacao" method="post">
 						<div class="form-group">
 							<label for="matrizInput">Matriz escolhida</label>
 							<select id="matrizInput" class="form-control" onchange="listarComponentes()">

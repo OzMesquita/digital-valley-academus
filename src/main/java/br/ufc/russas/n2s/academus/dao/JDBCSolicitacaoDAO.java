@@ -101,8 +101,8 @@ public class JDBCSolicitacaoDAO extends JDBCDAO implements SolicitacaoDAO{
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
 				aux.setInstituicao(rs.getString("instituicao"));
-				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
-				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
+				//aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				
 				
 				listaSolicitacao.add(aux);

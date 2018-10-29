@@ -12,7 +12,7 @@ import br.ufc.russas.n2s.academus.dao.DisciplinaDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO;
 import br.ufc.russas.n2s.academus.model.Disciplina;
 
-public class DisciplinaController extends HttpServlet {
+public class CadastrarDisciplinaController extends HttpServlet {
 	
 	
 		private static final long serialVersionUID = 1L;
@@ -21,7 +21,7 @@ public class DisciplinaController extends HttpServlet {
 		
 		public boolean aux;
 
-		public DisciplinaController() {
+		public CadastrarDisciplinaController() {
 			super();
 		}
 
@@ -49,10 +49,10 @@ public class DisciplinaController extends HttpServlet {
 
 			daoCadastro.cadastrar(dis);
 			
-			if (daoCadastro.buscarPorId2(dis.getId())){
-				File diretorio = new File("C:\\n2s\\Academus\\Disciplinas\\"+dis.getId());
-				diretorio.mkdir();
-			}
+			//if (daoCadastro.buscarPorId2(dis.getId())){
+				//File diretorio = new File("C:\\n2s\\Academus\\Disciplinas\\"+dis.getId());
+				//diretorio.mkdir();
+			//}
 			
 			try {
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroDisciplina.jsp");
