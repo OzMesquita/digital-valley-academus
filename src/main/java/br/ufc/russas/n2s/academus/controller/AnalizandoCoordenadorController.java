@@ -41,9 +41,9 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 		Solicitacao solicitacao = new Solicitacao();
 		//pegar a solicitacao do dao
 		
-		solicitacao.setResultado(resultado);
-		solicitacao.setJustificativa(justificativa);
-		solicitacao.setStatus(Status.FINALIZADO);
+		//solicitacao.setResultado(resultado);
+		//solicitacao.setJustificativa(justificativa);
+		//solicitacao.setStatus(Status.FINALIZADO);
 		
 		
 		try {
