@@ -42,8 +42,7 @@ public class JDBCHistoricoDAO extends JDBCDAO implements HistoricoDAO{
 
 	@Override
 	public java.util.List<Historico> buscarPorSolicitacao(Solicitacao sol) {
-		open();
-		String sql =  "select * from academus.historico where id_solicitacao = "+sol+";";
+		String sql =  "select * from academus.historico where id_solicitacao = "+sol.getIdSolicitacao()+";";
 		ArrayList<Historico> lh = new ArrayList<Historico>();
 		PerfilAcademusDAO pad = new JDBCPerfilAcademusDAO();
 		
@@ -54,7 +53,7 @@ public class JDBCHistoricoDAO extends JDBCDAO implements HistoricoDAO{
 			
 			while(rs.next()){
 				Historico h = new Historico();
-				h.setData(rs.getDate("data").toLocalDate());
+				h.setData(rs.getDate("data_resultado").toLocalDate());
 				h.setHorario(rs.getTime("horario").toLocalTime());
 				h.setResponsavel(pad.buscarPorId(rs.getInt("id_pessoa_usuario")));
 				h.setDescricao(rs.getString("descricao"));

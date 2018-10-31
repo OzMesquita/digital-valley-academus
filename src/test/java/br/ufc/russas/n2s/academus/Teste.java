@@ -4,20 +4,29 @@ import java.util.ArrayList;
 
 
 import br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC;
+import br.ufc.russas.n2s.academus.dao.JDBCHistoricoDAO;
+import br.ufc.russas.n2s.academus.dao.JDBCPerfilAcademusDAO;
 import br.ufc.russas.n2s.academus.model.Aluno;
+import br.ufc.russas.n2s.academus.model.Historico;
+import br.ufc.russas.n2s.academus.model.PerfilAcademus;
+import br.ufc.russas.n2s.academus.model.Solicitacao;
 
 public class Teste {
 
 	public static void main(String[] args) {
-		//System.out.println(new DAOFactoryJDBC().criarSolicitacaoDAO().listar().size());
-		//System.out.println(new DAOFactoryJDBC().criarCoordenadorDAO().buscarPorId(1).getNome());
-		//System.out.println(new DAOFactoryJDBC().criarAlunoDAO().buscarPorId(122).getNome());
-		//System.out.println(new DAOFactoryJDBC().criarCursoDAO().buscarPorId(1).getNome());
-		//System.out.println(new DAOFactoryJDBC().criarDisciplinaDAO().listar().size());
-		//System.out.println(new DAOFactoryJDBC().criarSolicitacaoDAO().listar().size());
 		
-		Aluno n = new Aluno();
-		System.out.println(n.getCurso().getNome());
+		/*
+		JDBCHistoricoDAO dao = new JDBCHistoricoDAO();
+		
+		Solicitacao s = new Solicitacao();
+		s.setIdSolicitacao(28);
+		
+		ArrayList<Historico> h=  (ArrayList<Historico>) dao.buscarPorSolicitacao(s);
+		*/
+		
+		JDBCPerfilAcademusDAO dao = new JDBCPerfilAcademusDAO();
+		PerfilAcademus p = dao.buscarPorId(122);
+		
 	}
 
 }

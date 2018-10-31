@@ -85,6 +85,7 @@ public class JDBCPerfilAcademusDAO extends JDBCDAO implements PerfilAcademusDAO{
 		String sql = "SELECT id_pessoa_usuario, id_nivel FROM academus.perfil_academus WHERE id_pessoa_usuario = "+ id +";";
 		PerfilAcademus perfil = new PerfilAcademus();
 		
+		super.open();
 		try{
 			JDBCPessoaDAO daoPessoa = (JDBCPessoaDAO) DAOFactory.criarPessoaDAO();			
 			
