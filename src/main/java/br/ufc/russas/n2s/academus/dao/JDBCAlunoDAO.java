@@ -17,7 +17,7 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 	@Override
 	public Aluno buscarPorId(int id) {
 		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u WHERE u_a.id_pessoa_usuario=? AND u_a.id_pessoa_usuario = u.id_pessoa_usuario";
-		Aluno aluno = null;
+		Aluno aluno = new Aluno();
 		
 		super.open();
 		try{
@@ -27,7 +27,6 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 			ResultSet rs = ps.executeQuery();
 
 			if(rs.next()){
-				aluno = new Aluno();
 				Usuario usuario = new Usuario();
 				
 				Curso curso = new DAOFactoryJDBC().criarCursoDAO().buscarPorId(rs.getInt("id_curso"));
@@ -72,7 +71,7 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 	@Override
 	public Aluno buscarPorMatricula(String matricula) {
 		String sql = "SELECT * FROM aluno AS a, pessoa_usuario AS p_u, curso AS c WHERE a.matricula= ? AND a.id_pessoa_usuario = p_u.id_pessoa_usuario AND a.id_curso = c.id_curso";
-		Aluno aluno = null;
+		Aluno aluno = new Aluno();
 		
 		super.open();
 		try{
@@ -82,7 +81,6 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 			ResultSet rs = ps.executeQuery();
 
 			if(rs.next()){
-				aluno = new Aluno();
 				Usuario usuario = new Usuario();
 				
 				Curso curso = new DAOFactoryJDBC().criarCursoDAO().buscarPorId(rs.getInt("id_curso"));
@@ -126,8 +124,8 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 
 	@Override
 	public List<Aluno> buscarPorNome(String nome) {
-		List<Aluno> alunos = new ArrayList<Aluno>();
 		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u, curso AS c WHERE u_a.id_pessoa_usuario = u.id_pessoa_usuario AND u_a.id_curso = c.id_curso AND  UPPER(u.nome) like UPPER(?)";
+		List<Aluno> alunos = new ArrayList<Aluno>();
 		
 		super.open();
 		try{
@@ -181,8 +179,8 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 
 	@Override
 	public List<Aluno> listar() {
-		List<Aluno> alunos = new ArrayList<Aluno>();
 		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u, curso AS c WHERE u_a.id_pessoa_usuario = u.id_pessoa_usuario AND u_a.id_curso = c.id_curso";
+		List<Aluno> alunos = new ArrayList<Aluno>();
 		
 		super.open();
 		try{
