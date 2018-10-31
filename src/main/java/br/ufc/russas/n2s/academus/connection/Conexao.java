@@ -11,13 +11,13 @@ public class Conexao {
 	private static String usuario="postgres";
 	private static String senha="postgres"; 	
 	static String status ="";
-
-	public static String getStatus() {
-		return status;
-	}
 	
-	public static Connection getConexao(){
-		Connection conn = null;
+	//Singleton
+	private static Connection conn = null;
+	private static Conexao conexao = null;
+	
+	private Conexao(){
+		//Abre a conexão com o banco
 		try{
 			Class.forName("org.postgresql.Driver").newInstance();
 			conn = DriverManager.getConnection(url+"?user="+usuario+"&password="+senha);
@@ -29,7 +29,18 @@ public class Conexao {
 		}catch(Exception e){
 			status = e.getMessage();
 		}
-		return conn;
+		
+	}
+
+	public static String getStatus() {
+		return status;
+	}
+	
+	public static Connection getConexao(){
+		if(Conexao.conn == null){
+			Conexao.conexao = new Conexao();
+		}
+		return Conexao.conn;
 	}
 	
 }

@@ -72,6 +72,7 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 		Disciplina aux = new Disciplina();
 		
 		super.open();
+		//ControleErro.add("entrou Disciplina\n");
 		try{
 			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -89,6 +90,7 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
+			//ControleErro.add("saio Disciplina\n");
 			super.close();
 		}
 		

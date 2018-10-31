@@ -1,11 +1,9 @@
 package br.ufc.russas.n2s.academus.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import br.ufc.russas.n2s.academus.connection.Conexao;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 
 public class JDBCNivelAcademusDAO extends JDBCDAO implements NivelAcademusDAO{

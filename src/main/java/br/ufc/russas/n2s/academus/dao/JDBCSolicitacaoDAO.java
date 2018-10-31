@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufc.russas.n2s.academus.debug.IOConexao;
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Coordenador;
 import br.ufc.russas.n2s.academus.model.Historico;
@@ -88,7 +89,7 @@ public class JDBCSolicitacaoDAO extends JDBCDAO implements SolicitacaoDAO{
 			
 			//DAO's necessárias
 			AlunoDAO aludao = df.criarAlunoDAO();
-			//ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
 			ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
@@ -100,13 +101,13 @@ public class JDBCSolicitacaoDAO extends JDBCDAO implements SolicitacaoDAO{
 				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
 				aux.setStatus(Status.getStatus(rs.getInt("status")));
 				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
-				//aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
-				//aux.setDisciplinasCursadas(dcd.buscar(aux));
+				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
 				aux.setInstituicao(rs.getString("instituicao"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
-				//aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				
 				
 				listaSolicitacao.add(aux);
@@ -119,6 +120,7 @@ public class JDBCSolicitacaoDAO extends JDBCDAO implements SolicitacaoDAO{
 			e.printStackTrace();
 		}finally{
 			super.close();
+			IOConexao.info();
 		}
 		
 		return listaSolicitacao;
