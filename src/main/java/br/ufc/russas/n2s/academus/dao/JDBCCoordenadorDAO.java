@@ -24,7 +24,7 @@ public class JDBCCoordenadorDAO extends JDBCDAO implements CoordenadorDAO{
 			insert.close();
 			
 		} catch (SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -35,7 +35,7 @@ public class JDBCCoordenadorDAO extends JDBCDAO implements CoordenadorDAO{
 	@Override
 	public Coordenador buscarPorId(int idCoordenador) {
 		String sql = "SELECT id_pessoa, id_curso FROM academus.coordenador WHERE id_pessoa = ?;";
-		Coordenador cord = null;
+		Coordenador cord = new Coordenador();
 		
 		super.open();
 		try {
@@ -44,10 +44,7 @@ public class JDBCCoordenadorDAO extends JDBCDAO implements CoordenadorDAO{
 			
 			ResultSet rs = buscar.executeQuery();
 			
-			if(rs.next())
-			{
-				cord = new Coordenador();
-				
+			if(rs.next()){				
 				Curso curso = new DAOFactoryJDBC().criarCursoDAO().buscarPorId(rs.getInt("id_curso"));
 				Professor prof = new DAOFactoryJDBC().criarProfessorDAO().buscarPorId(rs.getInt("id_pessoa"));
 				
@@ -75,7 +72,7 @@ public class JDBCCoordenadorDAO extends JDBCDAO implements CoordenadorDAO{
 			buscar.close();
 			
 		} catch (SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -85,7 +82,7 @@ public class JDBCCoordenadorDAO extends JDBCDAO implements CoordenadorDAO{
 	@Override
 	public Coordenador buscarPorCurso(Curso curso) {
 		String sql = "SELECT id_pessoa FROM academus.coordenador WHERE id_curso = ?;";
-		Coordenador cord = null;
+		Coordenador cord = new Coordenador();
 		
 		super.open();
 		try{
@@ -95,7 +92,6 @@ public class JDBCCoordenadorDAO extends JDBCDAO implements CoordenadorDAO{
 			ResultSet rs = buscar.executeQuery();
 			
 			if(rs.next()){
-				cord = new Coordenador();
 				Professor prof = new DAOFactoryJDBC().criarProfessorDAO().buscarPorId(rs.getInt("id_pessoa"));
 				
 				//Pessoa
@@ -122,7 +118,7 @@ public class JDBCCoordenadorDAO extends JDBCDAO implements CoordenadorDAO{
 			rs.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -143,7 +139,7 @@ public class JDBCCoordenadorDAO extends JDBCDAO implements CoordenadorDAO{
 			editar.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -165,7 +161,7 @@ public class JDBCCoordenadorDAO extends JDBCDAO implements CoordenadorDAO{
 			excluir.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}

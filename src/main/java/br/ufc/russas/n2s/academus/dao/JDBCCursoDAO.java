@@ -23,7 +23,7 @@ public class JDBCCursoDAO extends JDBCDAO implements CursoDAO{
 			inserir.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -55,7 +55,7 @@ public class JDBCCursoDAO extends JDBCDAO implements CursoDAO{
 			rs.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -66,7 +66,7 @@ public class JDBCCursoDAO extends JDBCDAO implements CursoDAO{
 	@Override
 	public Curso buscarPorId(int idCurso) {
 		String sql = "SELECT id_curso, nome FROM academus.curso WHERE id_curso=?;";
-		Curso curso = null;
+		Curso curso = new Curso();
 		
 		super.open();
 		try{
@@ -77,7 +77,6 @@ public class JDBCCursoDAO extends JDBCDAO implements CursoDAO{
 			MatrizCurricularDAO matrizDao = new DAOFactoryJDBC().criarMatrizCurricularDAO();
 			
 			if(rs.next()){
-				curso = new Curso();
 				curso.setIdCurso(rs.getInt("id_curso"));
 				curso.setNome(rs.getString("nome"));
 				//curso.setMatrizes(matrizDao.buscarPorCurso(curso.getIdCurso()));
@@ -87,7 +86,7 @@ public class JDBCCursoDAO extends JDBCDAO implements CursoDAO{
 			rs.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -109,7 +108,7 @@ public class JDBCCursoDAO extends JDBCDAO implements CursoDAO{
 			editar.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -128,8 +127,9 @@ public class JDBCCursoDAO extends JDBCDAO implements CursoDAO{
 			
 			excluir.execute();
 			excluir.close();
+			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}

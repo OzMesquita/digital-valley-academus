@@ -1,23 +1,20 @@
 package br.ufc.russas.n2s.academus.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufc.russas.n2s.academus.connection.Conexao;
-import br.ufc.russas.n2s.academus.model.ComponenteCurricular;
 import br.ufc.russas.n2s.academus.model.MatrizCurricular;
 
 public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricularDAO{
 	
 	@Override
 	public MatrizCurricular cadastrar(MatrizCurricular mat) {
-		open();
 		String sql = "insert into academus.matriz_curricular(nome, periodo_letivo, carga_horario, prazo_minimo, prazo_maximo, vigente, ativo, id_curso) values (?, ?, ?, ?, ?, ?, ?, ?)";
 		
+		super.open();
 		try {
 			PreparedStatement insert = getConnection().prepareStatement(sql);
 			
@@ -33,23 +30,25 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 			insert.execute();
 			insert.close();
 		} catch (SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 		return mat;
 	}
 
 	@Override
 	public List<MatrizCurricular> listar() {
-		open();
 		String sql = "select * from academus.matriz_curricular";
 		JDBCComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
+		super.open();
 		try {
 			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
+			
 			while (rs.next()) {
 				MatrizCurricular aux = new MatrizCurricular();
 				aux.setIdMatriz(rs.getInt("id_matriz"));
@@ -68,20 +67,23 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 			
 			rs.close();
 			ps.close();
+			
 		} catch (SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 		return listaMatrizes;
 	}
 	
 	@Override
 	public MatrizCurricular buscarPorId(int idMatriz){
-		open();
-		JDBCComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		String sql = "select * from academus.matriz_curricular where id_matriz = "+idMatriz+";";
-		MatrizCurricular aux = null;
+		JDBCComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
+		MatrizCurricular aux = new MatrizCurricular();
+		
+		super.open();
 		try{
 			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -102,21 +104,23 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 			
 			rs.close();
 			ps.close();
+			
 		}catch(SQLException e){
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 		return aux;
 	}
 	
 	@Override
 	public List<MatrizCurricular> buscarPorCurso(int idCurso){
-		open();
 		String sql = "select * from academus.matriz_curricular where id_curso = "+idCurso+";";
 		JDBCComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
+		super.open();
 		try{
 			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -139,20 +143,22 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 			
 			rs.close();
 			ps.close();
+			
 		}catch(SQLException e){
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 		return listaMatrizes;
 	}
 	
 	@Override
 	public List<MatrizCurricular> buscarPorNome(String nome){
-		open();
 		String sql = "select * from academus.matriz_curricular where nome like '%"+nome+"%';";
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
+		super.open();
 		try{
 			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -172,19 +178,21 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 			
 			rs.close();
 			ps.close();
+			
 		}catch(SQLException e){
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 		return listaMatrizes;
 	}
 
 	@Override
 	public MatrizCurricular editar(MatrizCurricular mat) {
-		open();
 		String sql = "UPDATE academus.matriz_curricular SET nome = ?, periodo_letivo = ?, carga_horario = ?, prazo_minimo = ?, prazo_maximo = ?, vigente = ?, ativo = ?, id_curso = ? WHERE id_matriz = ?";
 		
+		super.open();
 		try {                
             PreparedStatement update = getConnection().prepareStatement(sql);
             update.setString(1, mat.getNome());            
@@ -199,27 +207,33 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
             
             update.execute();
             update.close();
+            
         } catch (SQLException e) {
-            e.getMessage();
+            e.printStackTrace();
         }finally{
-        	close();
+        	super.close();
         }
+		
 		return mat;
 	}
 
 	@Override
 	public void excluir(MatrizCurricular mat) {
-		open();
 		String sql = "delete from academus.matriz_curricular where id_matriz = "+mat.getIdMatriz()+";";
+		
+		super.open();
 		try{
 			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			
 			ps.execute();
 			ps.close();
+			
 		}catch(SQLException e){
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 	}
 
 }

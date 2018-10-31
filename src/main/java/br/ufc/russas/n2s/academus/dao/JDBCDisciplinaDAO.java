@@ -1,22 +1,20 @@
 package br.ufc.russas.n2s.academus.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufc.russas.n2s.academus.connection.Conexao;
 import br.ufc.russas.n2s.academus.model.Disciplina;
 
 public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 	
 	@Override
 	public Disciplina cadastrar(Disciplina dis) {
-		open();
 		String sql = "insert into academus.disciplina(id_disciplina, nome, carga, creditos) values (?, ?, ?, ?)";
 		
+		super.open();
 		try {
 			PreparedStatement insert = getConnection().prepareStatement(sql);
 			
@@ -27,20 +25,22 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 			
 			insert.execute();
 			insert.close();
+			
 		} catch (SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 		return dis;
 	}
 
 	@Override
 	public List<Disciplina> listar() {
-		open();
 		String sql = "select * from academus.disciplina";
 		ArrayList<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
 		
+		super.open();
 		try{
 			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -54,54 +54,60 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 				listaDisciplinas.add(aux);
 			}
 			
-			
+			ps.close();
+			rs.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
 			super.close();
 		}
+		
 		return listaDisciplinas;
 	}
 
 	@Override
 	public Disciplina buscarPorId(String id) {
-		open();
 		String sql = "select * from academus.disciplina where id_disciplina = '"+id+"';";
-		Disciplina aux = null;
+		Disciplina aux = new Disciplina();
+		
+		super.open();
 		try{
 			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
+			
 			if(rs.next()){
-				aux = new Disciplina();
 				aux.setId(rs.getString("id_disciplina"));
 				aux.setNome(rs.getString("nome"));
 				aux.setCarga(rs.getInt("carga"));
 				aux.setCreditos(rs.getInt("creditos"));
 			}
+			
 			rs.close();
 			ps.close();
+			
 		}catch(SQLException e){
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 		return aux;
 	}
 
 	@Override
 	public List<Disciplina> buscarPorNome(String nome) {
-		open();
 		String sql = "select * from academus.disciplina where nome like '%?%';";
 		List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
-		Disciplina aux = null;
+		
+		super.open();
 		try{
 			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ps.setString(1, nome);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()){
-				aux = new Disciplina();
+				Disciplina aux = new Disciplina();
 				aux.setId(rs.getString("id_disciplina"));
 				aux.setNome(rs.getString("nome"));
 				aux.setCarga(rs.getInt("carga"));
@@ -112,19 +118,21 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 			
 			rs.close();
 			ps.close();
+			
 		}catch(SQLException e){
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 		return listaDisciplinas;
 	}
 
 	@Override
 	public Disciplina editar(Disciplina dis) {
-		open();
 		String sql = "UPDATE academus.disciplina SET id_disciplina = ?, nome = ?, carga = ?, creditos = ? WHERE id_disciplina = ?";
 		
+		super.open();
 		try {			
 			PreparedStatement update = getConnection().prepareStatement(sql);
 			
@@ -136,25 +144,30 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 			
 			update.executeQuery();
 			update.close();
+			
 		} catch (SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 		return dis;
 	}
 
 	@Override
 	public void excluir(Disciplina dis) {
-		open();
 		String sql = "delete from academus.disciplina where id_disciplina = "+dis.getId()+";";
+		
+		super.open();
 		try{
 			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ps.execute();
 		}catch(SQLException e){
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 	}
+	
 }

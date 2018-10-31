@@ -34,7 +34,7 @@ public class JDBCDisciplinaCursadaDAO extends JDBCDAO implements DisciplinaCursa
 			}
 			
 		}catch (SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -42,8 +42,8 @@ public class JDBCDisciplinaCursadaDAO extends JDBCDAO implements DisciplinaCursa
 
 	@Override
 	public List<DisciplinaCursada> buscar(Solicitacao sol) {
+		String sql = "select * from academus.disciplina_cursada where id_solicitacao = ?;";
 		List<DisciplinaCursada> listaDisciplinaCursada = new ArrayList<DisciplinaCursada>();
-		String sql = "select * from academus.disciplina_cursada where id_solicitacao = ?";
 		
 		super.open();
 		try {
@@ -65,7 +65,7 @@ public class JDBCDisciplinaCursadaDAO extends JDBCDAO implements DisciplinaCursa
 			ps.close();
 			
 		} catch (SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -90,7 +90,7 @@ public class JDBCDisciplinaCursadaDAO extends JDBCDAO implements DisciplinaCursa
 			ps.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -115,4 +115,5 @@ public class JDBCDisciplinaCursadaDAO extends JDBCDAO implements DisciplinaCursa
 		}
 		
 	}
+	
 }

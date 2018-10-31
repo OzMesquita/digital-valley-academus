@@ -7,7 +7,7 @@ import br.ufc.russas.n2s.academus.model.Solicitacao;
 
 public interface HistoricoDAO {
 	
-	public Historico cadastrar(Historico his, int idSolicitacao) throws Exception;
+	public Historico cadastrar(Historico his, int idSolicitacao);
 	
 	public List<Historico> buscarPorSolicitacao(Solicitacao sol);
 		

@@ -16,7 +16,7 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 
 	@Override
 	public Aluno buscarPorId(int id) {
-		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u WHERE u_a.id_pessoa_usuario=? AND u_a.id_pessoa_usuario = u.id_pessoa_usuario";
+		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u WHERE u_a.id_pessoa_usuario=? AND u_a.id_pessoa_usuario = u.id_pessoa_usuario;";
 		Aluno aluno = new Aluno();
 		
 		super.open();
@@ -60,7 +60,7 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 			ps.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -114,7 +114,7 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 			ps.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -169,7 +169,7 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 			ps.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -223,7 +223,7 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 			ps.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}

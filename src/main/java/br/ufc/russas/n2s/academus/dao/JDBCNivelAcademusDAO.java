@@ -12,9 +12,9 @@ public class JDBCNivelAcademusDAO extends JDBCDAO implements NivelAcademusDAO{
 
 	@Override
 	public NivelAcademus cadastrar(NivelAcademus nivel) {
-		open();
 		String sql = "INSERT INTO academus.nivel( id_nivel, rotulo) VALUES (?, ?);";
 		
+		super.open();
 		try{
 			PreparedStatement cadastrar = this.getConnection().prepareStatement(sql);
 			cadastrar.setInt(1, NivelAcademus.getCodigo(nivel));
@@ -22,10 +22,11 @@ public class JDBCNivelAcademusDAO extends JDBCDAO implements NivelAcademusDAO{
 			
 			cadastrar.execute();
 			cadastrar.close();
+			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
 		
 		return nivel;
@@ -33,10 +34,10 @@ public class JDBCNivelAcademusDAO extends JDBCDAO implements NivelAcademusDAO{
 	
 	@Override
 	public NivelAcademus buscar(int id) {
-		open();
 		String sql = "SELECT id_nivel, rotulo FROM academus.nivel WHERE id_nivel = ?;";
-		NivelAcademus nv = null;
+		NivelAcademus nv = NivelAcademus.INDEFINIDO;
 		
+		super.open();
 		try{
 			PreparedStatement buscar = this.getConnection().prepareStatement(sql);
 			buscar.setInt(1, id);
@@ -45,15 +46,13 @@ public class JDBCNivelAcademusDAO extends JDBCDAO implements NivelAcademusDAO{
 			
 			if(rs.next()){
 				nv = NivelAcademus.getNivel(rs.getInt("id_nivel"));
-				
 			}
 			
 			buscar.close();
-			return nv;
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
 		
 		return nv;
@@ -61,22 +60,44 @@ public class JDBCNivelAcademusDAO extends JDBCDAO implements NivelAcademusDAO{
 
 	@Override
 	public NivelAcademus editar(NivelAcademus nivel) {
-		open();
 		String sql = "UPDATE academus.nivel SET id_nivel=?, rotulo=? WHERE id_nivel=?;";
+		
+		super.open();
 		try{
+			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			ps.setInt(1, NivelAcademus.getCodigo(nivel));
+			ps.setString(2, NivelAcademus.getDescricao(nivel));
+			ps.setInt(3, NivelAcademus.getCodigo(nivel));
 			
-		} catch(Exception e) {
-			e.getMessage();
+			ps.execute();
+			ps.close();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 		return nivel;
 	}
 
 	@Override
 	public void excluir(NivelAcademus nivel) {
-		// TODO Auto-generated method stub
+		String sql = "DELETE FROM academus.nivel WHERE id_nivel = ?;";
 		
+		super.open();
+		try{
+			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			ps.setInt(1, NivelAcademus.getCodigo(nivel));
+			
+			ps.execute();
+			ps.close();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			super.close();
+		}
 	}
 	
 }

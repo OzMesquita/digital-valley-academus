@@ -1,6 +1,5 @@
 package br.ufc.russas.n2s.academus.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +7,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufc.russas.n2s.academus.connection.Conexao;
 import br.ufc.russas.n2s.academus.model.Professor;
 import model.EnumCargo;
 import model.Usuario;
@@ -19,16 +17,15 @@ public class JDBCProfessorDAO extends JDBCDAO implements ProfessorDAO{
 
 	@Override
 	public List<Professor> listar() {
-		open();
+		String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE u.id_pessoa_usuario = p.id_pessoa_prof AND u.id_pessoa_usuario = s.id_pessoa_usuario";
 		List<Professor> professores = new ArrayList<Professor>();
+		
+		super.open();
 		try {
-			String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE u.id_pessoa_usuario = p.id_pessoa_prof AND u.id_pessoa_usuario = s.id_pessoa_usuario";
-			PreparedStatement ps = getConnection().prepareStatement(SQL);
-			
+			PreparedStatement ps = this.getConnection().prepareStatement(SQL);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				
 				Professor professor = new Professor();
 				Usuario usuario = new Usuario();
 				
@@ -54,10 +51,11 @@ public class JDBCProfessorDAO extends JDBCDAO implements ProfessorDAO{
 
 			ps.close();
 			rs.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
 		
 		return professores;
@@ -65,18 +63,17 @@ public class JDBCProfessorDAO extends JDBCDAO implements ProfessorDAO{
 
 	@Override
 	public Professor buscarPorId(int id) {
-		open();
 		String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE p.id_pessoa_prof=? AND u.id_pessoa_usuario = p.id_pessoa_prof AND p.id_pessoa_prof = s.id_pessoa_usuario";
-		Professor professor = null;
+		Professor professor = new Professor();
+		
+		super.open();
 		try {
-
-			PreparedStatement ps = getConnection().prepareStatement(SQL);
+			PreparedStatement ps = this.getConnection().prepareStatement(SQL);
 			ps.setInt(1, id);
 			
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
-				professor = new Professor();
 				Usuario usuario = new Usuario();
 				
 				usuario.setLogin(rs.getString("login"));
@@ -94,34 +91,35 @@ public class JDBCProfessorDAO extends JDBCDAO implements ProfessorDAO{
 				
 				usuario.setPessoa(professor);
 				professor.setUsuario(usuario);;
-				
-				rs.close();
-				ps.close();
 
 			}
+			
+			rs.close();
+			ps.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			close();
+			super.close();
 		}
+		
 		return professor;
 	}
 
 	@Override
 	public Professor buscarPorSiape(String siape) {
-		open();
 		String SQL = "SELECT * FROM servidor AS s, professor AS prof, pessoa_usuario AS u WHERE s.siape = ? AND s.id_pessoa_usuario = u.id_pessoa_usuario AND u.id_pessoa_usuario =  prof.id_pessoa_prof";
-		Professor professor = null;
+		Professor professor = new Professor();
+		
+		super.open();
 		try {
 
-			PreparedStatement ps = getConnection().prepareStatement(SQL);
+			PreparedStatement ps = this.getConnection().prepareStatement(SQL);
 			ps.setString(1, siape);
 			
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
-				professor = new Professor();
 				Usuario usuario = new Usuario();
 				
 				usuario.setLogin(rs.getString("login"));
@@ -139,15 +137,15 @@ public class JDBCProfessorDAO extends JDBCDAO implements ProfessorDAO{
 				
 				usuario.setPessoa(professor);
 				professor.setUsuario(usuario);
-				rs.close();
-				ps.close();
 			}
+			
+			rs.close();
+			ps.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Erro ao buscar registro de professor", e);
 		}finally{
-			close();
+			super.close();
 		}
 
 		return professor;

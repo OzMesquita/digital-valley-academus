@@ -28,7 +28,7 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 			insert.execute();
 			insert.close();
 		} catch (SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -40,7 +40,7 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 	public List<ComponenteCurricular> listar(int idMatriz) {
 		JDBCDisciplinaDAO d = new JDBCDisciplinaDAO();
 		String sql = "SELECT * FROM academus.componente_curricular WHERE id_matriz = "+ idMatriz +";";
-		ArrayList<ComponenteCurricular> listaComponentes = new ArrayList<ComponenteCurricular>();
+		List<ComponenteCurricular> listaComponentes = new ArrayList<ComponenteCurricular>();
 		
 		super.open();
 		try{
@@ -72,7 +72,7 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 	public ComponenteCurricular buscarPorId(int idComponente, MatrizCurricular matriz) {
 		JDBCDisciplinaDAO d = new JDBCDisciplinaDAO();
 		String sql = "SELECT * FROM academus.componente_curricular WHERE id_disciplina_matriz = "+idComponente+" AND id_matriz = "+matriz.getIdMatriz()+";";
-		ComponenteCurricular componente = null;
+		ComponenteCurricular componente = new ComponenteCurricular();
 		
 		super.open();
 		try{
@@ -80,7 +80,6 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
-				componente = new ComponenteCurricular();
 				componente.setDisciplina(d.buscarPorId(rs.getString("id_disciplina")));
 				componente.setIdComponente(rs.getInt("id_disciplina_matriz"));
 				componente.setNatureza(Natureza.getNatureza(rs.getString("natureza")));
@@ -91,7 +90,7 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 			ps.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -102,7 +101,7 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 	public ComponenteCurricular buscarPorId(int idComponente) {
 		JDBCDisciplinaDAO d = new JDBCDisciplinaDAO();
 		String sql = "SELECT * FROM academus.componente_curricular WHERE id_disciplina_matriz = "+idComponente+";";
-		ComponenteCurricular componente = null;
+		ComponenteCurricular componente = new ComponenteCurricular();
 		
 		super.open();
 		try{
@@ -110,7 +109,6 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
-				componente = new ComponenteCurricular();
 				componente.setDisciplina(d.buscarPorId(rs.getString("id_disciplina")));
 				componente.setIdComponente(rs.getInt("id_disciplina_matriz"));
 				componente.setNatureza(Natureza.getNatureza(rs.getString("natureza")));
@@ -119,12 +117,9 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 			
 			rs.close();
 			ps.close();
-			
-			rs.close();
-			ps.close();
 
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -146,8 +141,9 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 			}
 			
 			insert.close();
+			
 		} catch (SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -162,8 +158,10 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 			PreparedStatement ps = super.getConnection().prepareStatement(sql);
 			ps.execute();
 			
+			ps.close();
+			
 		}catch(SQLException e){
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -179,8 +177,10 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 			PreparedStatement ps = super.getConnection().prepareStatement(sql);
 			ps.execute();
 			
+			ps.close();
+			
 		}catch(SQLException e){
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -213,13 +213,12 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 			ps.close();
 			
 		}catch(SQLException e){
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
 
 		return listaDisciplinas;
 	}
-
 
 }

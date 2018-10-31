@@ -23,7 +23,7 @@ public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
 			insert.close();
 			
 		} catch(SQLException e) {	
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -33,14 +33,14 @@ public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
 
 	@Override
 	public Arquivo buscarPorSolicitacao(Solicitacao sol){
-		String sql = "SELECT id_arquivo, caminho, id_solicitacao FROM academus.arquivo WHERE id_solicitacao = " + sol.getIdSolicitacao() + ";";
-		Arquivo arq = null;
+		String sql = "SELECT id_arquivo, caminho FROM academus.arquivo WHERE id_solicitacao = " + sol.getIdSolicitacao() + ";";
+		Arquivo arq = new Arquivo();
+		
 		super.open();
 		try{
 			PreparedStatement ps = super.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
-				arq = new Arquivo();
 				arq.setIdArquivo(rs.getInt("id_arquivo"));
 				arq.setCaminho(rs.getString("caminho"));
 			}
@@ -49,7 +49,7 @@ public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
 			ps.close();
 			
 		} catch (SQLException e){
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -71,7 +71,7 @@ public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
 			editar.close();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
@@ -90,7 +90,7 @@ public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
 			excluir.execute();
 			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
 			super.close();
 		}
