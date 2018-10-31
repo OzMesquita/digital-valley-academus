@@ -41,7 +41,7 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 	@Override
 	public List<MatrizCurricular> listar() {
 		String sql = "select * from academus.matriz_curricular";
-		JDBCComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
+		ComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
 		super.open();
@@ -80,7 +80,7 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 	@Override
 	public MatrizCurricular buscarPorId(int idMatriz){
 		String sql = "select * from academus.matriz_curricular where id_matriz = "+idMatriz+";";
-		JDBCComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
+		ComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		MatrizCurricular aux = new MatrizCurricular();
 		
 		super.open();
@@ -117,7 +117,7 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 	@Override
 	public List<MatrizCurricular> buscarPorCurso(int idCurso){
 		String sql = "select * from academus.matriz_curricular where id_curso = "+idCurso+";";
-		JDBCComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
+		ComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
 		super.open();

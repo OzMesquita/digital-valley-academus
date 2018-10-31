@@ -16,6 +16,14 @@ public class DisciplinaCursada implements Serializable{
 		this.setCarga(-1);
 		this.setNome("INDEFINIDO");
 	}
+	
+	public DisciplinaCursada(String semestre, float nota, int carga, String nome) {
+		super();
+		this.semestre = semestre;
+		this.nota = nota;
+		this.carga = carga;
+		this.nome = nome;
+	}
 
 	public String getSemestre() {
 		return semestre;

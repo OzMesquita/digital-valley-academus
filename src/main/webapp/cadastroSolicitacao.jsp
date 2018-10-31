@@ -31,12 +31,9 @@
 	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
 	System.out.println(aluno.getCurso().getIdCurso());
 	Aluno a = (Aluno) usuario.getPessoa();
+	//List<MatrizCurricular> matrizes = new ArrayList<MatrizCurricular>();
 	List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(a.getCurso().getIdCurso());
-	System.out.println(matrizes.size());
-	ComponenteCurricularDAO ccdao = new JDBCComponenteCurricularDAO();
-	
-	DisciplinaDAO daoD = new JDBCDisciplinaDAO();
-	List<Disciplina> disciplinas = daoD.listar();
+	//System.out.println(matrizes.size());
 %>
 
 <html>

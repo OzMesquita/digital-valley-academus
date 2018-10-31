@@ -26,10 +26,6 @@ public abstract class JDBCDAO {
 	
 	protected void close() {
 		IOConexao.add(this.getClass().getName(), Operacao.SAIO);
-		try {
-			getConnection().close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		
 	}
 }
