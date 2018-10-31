@@ -40,7 +40,7 @@
   </servlet>
   <servlet>
     <servlet-name>AnalisandoCoordenadorController</servlet-name>
-    <servlet-class>br.ufc.russas.n2s.academus.controller.AnalisandoCoordenadorController</servlet-class>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.AnalizandoCoordenadorController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CadastrarDisciplinaController</servlet-name>

@@ -27,7 +27,6 @@
 	<c:import url="jsp/elements/menu-superior.jsp" charEncoding="UTF-8"></c:import>
 	<div class="container-fluid">
 		<div class="row row-offcanvas row-offcanvas-right">
-		<%=(String)request.getAttribute("tipo")%>
 			<c:import url="jsp/elements/menu-lateral-esquerdo-Aluno.jsp"
 				charEncoding="UTF-8"></c:import>
 			<div class="col-sm-8">

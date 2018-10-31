@@ -16,8 +16,9 @@
 	
 	boolean deuCerto = true;
 	try{
-		//solicitacao = dao.buscarPorId(Integer.parseInt((String)(request.getAttribute("id"))));
-		solicitacao = dao.buscarPorId(2);
+		System.out.print((String)(request.getAttribute("id")));
+		solicitacao = dao.buscarPorId(Integer.parseInt((String)(request.getAttribute("id"))));
+		//solicitacao = dao.buscarPorId(2);
 	} catch(Exception e){
 		deuCerto = false;
 		System.out.print("Deu nao");
@@ -68,7 +69,7 @@
 				if (solicitacao != null && deuCerto){
 				%>
 				<div class="form-group">						
-					<form action="VisualizarSolicitacoes" method="post">
+					<!-- <form action="VisualizarSolicitacao" method="post"> -->
 						<label for="idInput"><b> Código da Solicitação </b></label>
 						<input type="text" name="id_solicitacao" value="<%= solicitacao.getIdSolicitacao() %>" class="form-control" id="idInput" aria-describedby="tituloHelp" readonly  required> 
 						
@@ -159,7 +160,7 @@
 						
 					         
 					
-					</form>	
+					<!--  </form>-->	
 				</div>
 				<%
 				} else {

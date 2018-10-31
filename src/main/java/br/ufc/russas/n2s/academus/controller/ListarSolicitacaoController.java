@@ -66,7 +66,7 @@ public class ListarSolicitacaoController extends HttpServlet {
 			listaSol.add(s);
 			listaSol.add(s2);
 			listaSol.add(s3);
-			*/
+			
 			
 			if (per.getNivel() == NivelAcademus.ALUNO) {
 				listaSol = sodao.listar((Aluno)per.getPessoa());
@@ -79,8 +79,10 @@ public class ListarSolicitacaoController extends HttpServlet {
 				
 			} else if(per.getNivel() == NivelAcademus.INDEFINIDO) {
 				listaSol = sodao.listar();
-			}
+			} else 
+				listaSol = sodao.listar();
 			
+			*/
 			request.setAttribute("listaSol", listaSol);
 			javax.servlet.RequestDispatcher dispacher = request.getRequestDispatcher("jsp/elements/listagemSolicitacao.jsp");
 

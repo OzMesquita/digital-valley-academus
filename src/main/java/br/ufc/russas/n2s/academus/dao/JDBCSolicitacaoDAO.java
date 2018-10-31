@@ -80,24 +80,26 @@ public class JDBCSolicitacaoDAO extends JDBCDAO implements SolicitacaoDAO{
 		try{
 			PreparedStatement ps = this.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
+			
+			
+			//DAOFactory df = new DAOFactoryJDBC();
+			
+			//DAO's necessárias
+			//AlunoDAO aludao = df.criarAlunoDAO();
+			//ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO();
+			//DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+			//ArquivoDAO arqdao = df.criarArquivoDAO();
+			//HistoricoDAO hisdao = df.criarHistoricoDAO();
+			
 			while(rs.next()){
-				
-				DAOFactory df = new DAOFactoryJDBC();
-				
-				//DAO's necessárias
-				AlunoDAO aludao = df.criarAlunoDAO();
-				ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO();
-				DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-				ArquivoDAO arqdao = df.criarArquivoDAO();
-				HistoricoDAO hisdao = df.criarHistoricoDAO();
 				
 				Solicitacao aux = new Solicitacao();
 				
 				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
 				aux.setStatus(Status.getStatus(rs.getInt("status")));
-				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
-				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
-				aux.setDisciplinasCursadas(dcd.buscar(aux));
+				//aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+				//aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				//aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
 				aux.setInstituicao(rs.getString("instituicao"));
