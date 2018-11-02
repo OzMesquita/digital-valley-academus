@@ -6,8 +6,7 @@
     </button>
     
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">      
-            <a class="nav-item nav-link" href="elements/aviso.jsp"> Perfil</a>
+        <div class="navbar-nav">
             <a class="nav-item nav-link" href="elements/aviso.jsp"> Disciplina</a>
             <a class="nav-item nav-link" href="elements/aviso.jsp"> Matriz</a>            
            

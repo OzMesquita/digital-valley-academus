@@ -17,7 +17,7 @@
 	boolean deuCerto = true;
 	try{
 		//solicitacao = dao.buscarPorId(Integer.parseInt((String)(request.getAttribute("id"))));
-		solicitacao = dao.buscarPorId(20);
+		solicitacao = dao.buscarPorId(2);
 	} catch(Exception e){
 		deuCerto = false;
 		System.out.print("Deu nao");
@@ -86,7 +86,7 @@
 						<br> 
 						
 						<label for="cargaInput"><b> Nome do Solicitante </b></label> 
-						<input type="text" name="componenteCurricular" value="alguem haha<% /*solicitacao.getSolicitante().getNome()*/ %>" class="form-control" id="cargaInput" aria-describedby="tituloHelp" readonly required> 
+						<input type="text" name="componenteCurricular" value="<%=solicitacao.getSolicitante().getNome() %>" class="form-control" id="cargaInput" aria-describedby="tituloHelp" readonly required> 
 						
 						 <div class="invalid-feedback">
                             

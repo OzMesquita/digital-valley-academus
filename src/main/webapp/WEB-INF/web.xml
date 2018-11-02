@@ -62,4 +62,8 @@
     <servlet-name>CadastrarCursoController</servlet-name>
     <url-pattern>/CadastrarCurso</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AnalisandoCoordenadorController</servlet-name>
+    <url-pattern>/AnaliseCoordenador</url-pattern>
+  </servlet-mapping>
 </web-app>

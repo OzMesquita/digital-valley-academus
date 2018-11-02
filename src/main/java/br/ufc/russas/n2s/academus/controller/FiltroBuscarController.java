@@ -1,21 +1,23 @@
 package br.ufc.russas.n2s.academus.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-public class AnalizandoCoordenadorController extends HttpServlet {
+/**
+ * Servlet implementation class FiltroBuscarController
+ */
+@WebServlet("/FiltroBuscarController")
+public class FiltroBuscarController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AnalizandoCoordenadorController() {
+    public FiltroBuscarController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -24,34 +26,20 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		doPost(request,response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String resultado = request.getParameter("resultado");
-		String justificativa = request.getParameter("justificativaInput");
-		//int id_sol = Integer.parseInt((String)request.getParameter("id"));
-		System.out.println(resultado+"   "+justificativa+"  ");
+		// TODO Auto-generated method stub
+		String teste = request.getParameter("filtro");
+		System.out.print(teste);
 		
-		//Solicitacao solicitacao = new Solicitacao();
-		//pegar a solicitacao do dao
+		javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		
-		//solicitacao.setResultado(resultado);
-		//solicitacao.setJustificativa(justificativa);
-		//solicitacao.setStatus(Status.FINALIZADO);
-		
-		
-		try {
-			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("aviso.jsp");
-			
-			dispatcher.forward(request, response);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		dispatcher.forward(request, response);
 	}
-	
+
 }

@@ -48,6 +48,9 @@ public class InicioController extends HttpServlet {
 			per.setNivel(NivelAcademus.COORDENADOR);
 			*/
 			Aluno alu2 = new DAOFactoryJDBC().criarAlunoDAO().buscarPorId(122);
+			if(alu2 == null) {
+				System.out.print("Nao dem tama");
+			}
 			System.out.println(alu2.getNome());
 			per.setPessoa(alu2);
 			per.setNivel(NivelAcademus.ALUNO);

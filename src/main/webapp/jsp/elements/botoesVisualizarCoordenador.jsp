@@ -13,6 +13,7 @@
             <div class="invalid-feedback">
                             
         	</div>
+        	<br>
 
         <label for="justificativaInput"><b> Justificativa </b></label> 
 			<textarea rows="8" id="justificativaInput" name="justificativaInput" class="form-control" aria-describedby="tituloHelp" required> </textarea>
@@ -23,7 +24,7 @@
       </div>
    </div>
          <div class="modal-footer">
-			<form method="POST" action="AnalizarSolicitacao" id="form<%=(String)request.getAttribute("id")%>">
+			<form method="POST" action="AnaliseCoordenador" id="form<%=(String)request.getAttribute("id")%>">
 				<td>
 				<button  class="btn btn-primary btn-sm active" form="form<%=(String)request.getAttribute("id")%>"
 					class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("id") %>" > Confirmar

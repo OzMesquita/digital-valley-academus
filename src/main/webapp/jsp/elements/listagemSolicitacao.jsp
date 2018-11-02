@@ -22,20 +22,21 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<div class="dropdown right" style="right:+15px; position:absolute;">
-                    <button class="btn dropdown-toggle btn-sm btn-icon filtro_tela" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<form action="FiltroBuscarController" method="post">
+		<div class="dropdown right" style="right:+15px; position:absolute;">
+                    <button class="btn dropdown-toggle btn-sm btn-icon filtro_tela" name="filtro" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">filter_list</i>
                         <span>Filtrar</span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="buscaDisciplina.jsp">Todas as seleções</a>
-                        <a class="dropdown-item" href="jsp/elements/listagemSolicitacao.jsp">Solicitações em andamento</a>
-                        <a class="dropdown-item" href="cadastroSolicitacao.jsp">Solicitações finalizadas</a>
+                        <a class="dropdown-item" value="todos">Todas as seleções</a>
+                        <a class="dropdown-item" value="andamento">Solicitações em andamento</a>
+                        <a class="dropdown-item" value="finalizado">Solicitações finalizadas</a>
                     </div>
                 </div>
 					         <br><br>
 
-<div class="form-group">
+		<div class="form-group">
 					<table class="table table-responsive">
 						<thead>
 							
@@ -87,3 +88,4 @@
 
 					</table>
 				</div>
+</form>
