@@ -21,18 +21,30 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String resultado = request.getParameter("resultado");
 		String justificativa = request.getParameter("justificativaInput");
+		String ans = request.getParameter("button");
 		//int id_sol = Integer.parseInt((String)request.getParameter("id"));
-		if (resultado != null && justificativa != null) {
+		if (resultado != null && justificativa != null && ans != null) {
 
-			System.out.println(resultado+"   "+justificativa+"  ");
+			System.out.println(resultado+"   "+justificativa+"  "+ans);
 			
 		} else {
-			if (resultado == null) 
+			if (resultado == null) {
 				System.out.print("resultado == null ");
-			
-			if (justificativa == null)
+			} else {
+				System.out.println(resultado);
+			}
+			if (justificativa == null) {
 				System.out.print(" justificativa == null ");
-		} 
+			} else {
+				System.out.println(justificativa);
+			}
+			if (ans == null) {
+				System.out.println(" id == null");
+			} else {
+				System.out.println(ans);
+			}
+			
+		}
 		
 		
 		//Solicitacao solicitacao = new Solicitacao();

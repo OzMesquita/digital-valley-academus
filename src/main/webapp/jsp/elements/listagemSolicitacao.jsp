@@ -29,9 +29,9 @@
                         <span>Filtrar</span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" value="todos">Todas as seleções</a>
-                        <a class="dropdown-item" value="andamento">Solicitações em andamento</a>
-                        <a class="dropdown-item" value="finalizado">Solicitações finalizadas</a>
+                        <a class="dropdown-item" value="Inicio">Todas as seleções</a>
+                        <a class="dropdown-item" value="Inicio?solicitacao=andamento">Solicitações em andamento</a>
+                        <a class="dropdown-item" value="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
                     </div>
                 </div>
 					         <br><br>
@@ -51,10 +51,17 @@
 						<%
 						 
 							
-						//List<Solicitacao> solicitacoes = (List<Solicitacao>) request.getAttribute("listaSol");
+						List<Solicitacao> solicitacoes = (List<Solicitacao>) request.getAttribute("listaSol");
 						
-						SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
-						List<Solicitacao> solicitacoes = sodao.listar();
+						//SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
+						//List<Solicitacao> solicitacoes = sodao.listar();
+						if(solicitacoes == null){
+							System.out.println("entrou aqui");
+							solicitacoes = (List<Solicitacao>) session.getAttribute("listaSol");
+							if (solicitacoes == null){
+								System.out.println("joga no mato");
+							}
+						}
 						
 						if(solicitacoes != null){
 							for (Solicitacao soli : solicitacoes) {
@@ -71,13 +78,7 @@
 								class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=soli.getIdSolicitacao() %>" > Visualizar
 							</button></td>
 							</form>
-							<!--  <td>
-								<input type="button" class="btn btn-primary btn-sm active" class="btn btn-primary btn-sm" style="height: 30px;" onclick="visualizarSolicitacao(<%=soli.getIdSolicitacao() %>)" value="Adicionar">
 							
-							</td>-->
-							<!-- <td><a href="elements/aviso.jsp" class="btn btn-primary btn-sm active"
-								class="btn btn-primary btn-sm" style="height: 30px;"> Remover
-							</a></td> -->
 						</tr>
 
 						<%
