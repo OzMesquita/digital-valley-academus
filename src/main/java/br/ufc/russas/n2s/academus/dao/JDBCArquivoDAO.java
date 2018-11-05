@@ -87,7 +87,7 @@ public class JDBCArquivoDAO implements ArquivoDAO{
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement excluir = super.getConnection().prepareStatement(sql);
+			PreparedStatement excluir = conn.prepareStatement(sql);
 			excluir.setInt(1, arquivo.getIdArquivo());
 			
 			excluir.execute();

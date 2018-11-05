@@ -76,7 +76,6 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 		Disciplina aux = new Disciplina();
 		
 		Connection conn = ConnectionPool.getConnection();
-		//ControleErro.add("entrou Disciplina\n");
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -94,7 +93,6 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
-			//ControleErro.add("saio Disciplina\n");
 			ConnectionPool.releaseConnection(conn);
 		}
 		
