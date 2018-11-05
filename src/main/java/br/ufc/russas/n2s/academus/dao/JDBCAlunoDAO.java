@@ -7,8 +7,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufc.russas.n2s.academus.debug.IOConexao;
-import br.ufc.russas.n2s.academus.debug.Operacao;
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Curso;
 import dao.DAOFactory;

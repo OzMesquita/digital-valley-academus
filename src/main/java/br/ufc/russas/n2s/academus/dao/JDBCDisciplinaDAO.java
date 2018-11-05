@@ -1,11 +1,14 @@
 package br.ufc.russas.n2s.academus.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufc.russas.n2s.academus.connection.Conexao2;
+import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Disciplina;
 
 public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
@@ -40,9 +43,10 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 		String sql = "select * from academus.disciplina";
 		ArrayList<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
 		
-		super.open();
+		//super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()){
@@ -60,7 +64,8 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			//super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return listaDisciplinas;
