@@ -1,22 +1,24 @@
 package br.ufc.russas.n2s.academus.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.MatrizCurricular;
 
-public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricularDAO{
+public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 	
 	@Override
 	public MatrizCurricular cadastrar(MatrizCurricular mat) {
 		String sql = "insert into academus.matriz_curricular(nome, periodo_letivo, carga_horario, prazo_minimo, prazo_maximo, vigente, ativo, id_curso) values (?, ?, ?, ?, ?, ?, ?, ?)";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try {
-			PreparedStatement insert = getConnection().prepareStatement(sql);
+			PreparedStatement insert = conn.prepareStatement(sql);
 			
 			insert.setString(1, mat.getNome());
 			insert.setString(2, mat.getPeriodoLetivo());
@@ -32,7 +34,7 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return mat;
@@ -44,9 +46,9 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 		ComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try {
-			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
@@ -71,7 +73,7 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return listaMatrizes;
@@ -83,9 +85,9 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 		ComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		MatrizCurricular aux = new MatrizCurricular();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
@@ -108,7 +110,7 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return aux;
@@ -120,9 +122,9 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 		ComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()){
@@ -147,7 +149,7 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return listaMatrizes;
@@ -158,9 +160,9 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 		String sql = "select * from academus.matriz_curricular where nome like '%"+nome+"%';";
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()){
@@ -182,7 +184,7 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return listaMatrizes;
@@ -192,9 +194,9 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 	public MatrizCurricular editar(MatrizCurricular mat) {
 		String sql = "UPDATE academus.matriz_curricular SET nome = ?, periodo_letivo = ?, carga_horario = ?, prazo_minimo = ?, prazo_maximo = ?, vigente = ?, ativo = ?, id_curso = ? WHERE id_matriz = ?";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try {                
-            PreparedStatement update = getConnection().prepareStatement(sql);
+            PreparedStatement update = conn.prepareStatement(sql);
             update.setString(1, mat.getNome());            
             update.setString(2, mat.getPeriodoLetivo());
             update.setInt(3, mat.getCarga());
@@ -211,7 +213,7 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
         } catch (SQLException e) {
             e.printStackTrace();
         }finally{
-        	super.close();
+        	ConnectionPool.releaseConnection(conn);
         }
 		
 		return mat;
@@ -221,9 +223,9 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 	public void excluir(MatrizCurricular mat) {
 		String sql = "delete from academus.matriz_curricular where id_matriz = "+mat.getIdMatriz()+";";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			
 			ps.execute();
 			ps.close();
@@ -231,7 +233,7 @@ public class JDBCMatrizCurricularDAO extends JDBCDAO implements MatrizCurricular
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 	}

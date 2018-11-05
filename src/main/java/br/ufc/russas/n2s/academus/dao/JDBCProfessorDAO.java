@@ -1,5 +1,6 @@
 package br.ufc.russas.n2s.academus.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,11 +8,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Professor;
 import model.EnumCargo;
 import model.Usuario;
 
-public class JDBCProfessorDAO extends JDBCDAO implements ProfessorDAO{
+public class JDBCProfessorDAO implements ProfessorDAO{
 	//.:Observações:. 
 	// - As disciplinas ministradas pelos professores não estão sendo setadas na busca
 
@@ -20,9 +22,9 @@ public class JDBCProfessorDAO extends JDBCDAO implements ProfessorDAO{
 		String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE u.id_pessoa_usuario = p.id_pessoa_prof AND u.id_pessoa_usuario = s.id_pessoa_usuario";
 		List<Professor> professores = new ArrayList<Professor>();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try {
-			PreparedStatement ps = this.getConnection().prepareStatement(SQL);
+			PreparedStatement ps = conn.prepareStatement(SQL);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
@@ -55,7 +57,7 @@ public class JDBCProfessorDAO extends JDBCDAO implements ProfessorDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return professores;
@@ -66,9 +68,9 @@ public class JDBCProfessorDAO extends JDBCDAO implements ProfessorDAO{
 		String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE p.id_pessoa_prof=? AND u.id_pessoa_usuario = p.id_pessoa_prof AND p.id_pessoa_prof = s.id_pessoa_usuario";
 		Professor professor = new Professor();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try {
-			PreparedStatement ps = this.getConnection().prepareStatement(SQL);
+			PreparedStatement ps = conn.prepareStatement(SQL);
 			ps.setInt(1, id);
 			
 			ResultSet rs = ps.executeQuery();
@@ -100,7 +102,7 @@ public class JDBCProfessorDAO extends JDBCDAO implements ProfessorDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return professor;
@@ -111,10 +113,10 @@ public class JDBCProfessorDAO extends JDBCDAO implements ProfessorDAO{
 		String SQL = "SELECT * FROM servidor AS s, professor AS prof, pessoa_usuario AS u WHERE s.siape = ? AND s.id_pessoa_usuario = u.id_pessoa_usuario AND u.id_pessoa_usuario =  prof.id_pessoa_prof";
 		Professor professor = new Professor();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try {
 
-			PreparedStatement ps = this.getConnection().prepareStatement(SQL);
+			PreparedStatement ps = conn.prepareStatement(SQL);
 			ps.setString(1, siape);
 			
 			ResultSet rs = ps.executeQuery();
@@ -145,7 +147,7 @@ public class JDBCProfessorDAO extends JDBCDAO implements ProfessorDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 
 		return professor;

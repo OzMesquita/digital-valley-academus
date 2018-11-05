@@ -1,5 +1,6 @@
 package br.ufc.russas.n2s.academus.dao;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,20 +8,21 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 
+import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Historico;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
 
-public class JDBCHistoricoDAO extends JDBCDAO implements HistoricoDAO{
+public class JDBCHistoricoDAO implements HistoricoDAO{
 	
 	@Override
 	public Historico cadastrar(Historico his, int idSolicitacao){
 		String sql = "insert into academus.historico (data_resultado, horario, descricao, id_pessoa_usuario, id_solicitacao) "
 				+ "values (?,?,?,?,?)";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try {
 			System.out.println("Entrou");
-			PreparedStatement ps = getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setDate(1, Date.valueOf(his.getData()));
 			ps.setTime(2, Time.valueOf(his.getHorario()));
 			System.out.println("Deu certo");
@@ -34,7 +36,7 @@ public class JDBCHistoricoDAO extends JDBCDAO implements HistoricoDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return his;
@@ -46,9 +48,9 @@ public class JDBCHistoricoDAO extends JDBCDAO implements HistoricoDAO{
 		ArrayList<Historico> lh = new ArrayList<Historico>();
 		PerfilAcademusDAO pad = new JDBCPerfilAcademusDAO();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()){
@@ -66,7 +68,7 @@ public class JDBCHistoricoDAO extends JDBCDAO implements HistoricoDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return lh;

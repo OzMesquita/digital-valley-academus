@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<Context path="/PoolConexao">
+		<Resource
+			auth="Container"
+			name="jdbc/academus"
+			type="javax.sql.DataSource"
+			url="jdbc:postgresql://192.169.1.2:5432/n2s-ufc"
+			driverClassName="org.postgresql.Driver"
+			username="postgres"
+			password="postgres"
+			maxActive="1" maxldle="5" maxWait="-1"/>
+	</Context>

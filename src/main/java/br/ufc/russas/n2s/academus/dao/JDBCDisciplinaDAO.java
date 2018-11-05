@@ -7,19 +7,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufc.russas.n2s.academus.connection.Conexao2;
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Disciplina;
 
-public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
+public class JDBCDisciplinaDAO implements DisciplinaDAO{
 	
 	@Override
 	public Disciplina cadastrar(Disciplina dis) {
 		String sql = "insert into academus.disciplina(id_disciplina, nome, carga, creditos) values (?, ?, ?, ?)";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try {
-			PreparedStatement insert = getConnection().prepareStatement(sql);
+			PreparedStatement insert = conn.prepareStatement(sql);
 			
 			insert.setString(1, dis.getId());
 			insert.setString(2, dis.getNome());
@@ -32,7 +31,7 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return dis;
@@ -76,10 +75,10 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 		String sql = "select * from academus.disciplina where id_disciplina = '"+id+"';";
 		Disciplina aux = new Disciplina();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		//ControleErro.add("entrou Disciplina\n");
 		try{
-			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
@@ -96,7 +95,7 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 			e.printStackTrace();
 		}finally{
 			//ControleErro.add("saio Disciplina\n");
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return aux;
@@ -107,9 +106,9 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 		String sql = "select * from academus.disciplina where nome like '%?%';";
 		List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, nome);
 			ResultSet rs = ps.executeQuery();
 			
@@ -129,7 +128,7 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return listaDisciplinas;
@@ -139,9 +138,9 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 	public Disciplina editar(Disciplina dis) {
 		String sql = "UPDATE academus.disciplina SET id_disciplina = ?, nome = ?, carga = ?, creditos = ? WHERE id_disciplina = ?";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try {			
-			PreparedStatement update = getConnection().prepareStatement(sql);
+			PreparedStatement update = conn.prepareStatement(sql);
 			
 			update.setString(1, dis.getId());
 			update.setString(2, dis.getNome());			
@@ -155,7 +154,7 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return dis;
@@ -165,14 +164,14 @@ public class JDBCDisciplinaDAO extends JDBCDAO implements DisciplinaDAO{
 	public void excluir(Disciplina dis) {
 		String sql = "delete from academus.disciplina where id_disciplina = "+dis.getId()+";";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.execute();
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 	}

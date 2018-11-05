@@ -1,11 +1,13 @@
 package br.ufc.russas.n2s.academus.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 
@@ -13,15 +15,15 @@ import dao.DAOFactory;
 import dao.JDBCPessoaDAO;
 import model.Pessoa;
 
-public class JDBCPerfilAcademusDAO extends JDBCDAO implements PerfilAcademusDAO{
+public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 
 	@Override
 	public PerfilAcademus cadastrar(PerfilAcademus perfil) {
 		String sql = "INSERT INTO academus.perfil_academus(id_pessoa_usuario, id_nivel) VALUES (?, ?);";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement insert = this.getConnection().prepareStatement(sql);
+			PreparedStatement insert = conn.prepareStatement(sql);
 			insert.setInt(1, perfil.getPessoa().getId());
 			insert.setInt(2, NivelAcademus.getCodigo(perfil.getNivel()));
 			
@@ -31,7 +33,7 @@ public class JDBCPerfilAcademusDAO extends JDBCDAO implements PerfilAcademusDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return perfil;
@@ -42,11 +44,11 @@ public class JDBCPerfilAcademusDAO extends JDBCDAO implements PerfilAcademusDAO{
 		String sql = "SELECT id_pessoa_usuario, id_nivel FROM academus.perfil_academus;";
 		ArrayList<PerfilAcademus> perfis = new ArrayList<PerfilAcademus>();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
 			JDBCPessoaDAO daoPessoa = (JDBCPessoaDAO) DAOFactory.criarPessoaDAO();
 			
-			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
@@ -74,7 +76,7 @@ public class JDBCPerfilAcademusDAO extends JDBCDAO implements PerfilAcademusDAO{
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return perfis;
@@ -85,11 +87,11 @@ public class JDBCPerfilAcademusDAO extends JDBCDAO implements PerfilAcademusDAO{
 		String sql = "SELECT id_pessoa_usuario, id_nivel FROM academus.perfil_academus WHERE id_pessoa_usuario = "+ id +";";
 		PerfilAcademus perfil = new PerfilAcademus();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
 			JDBCPessoaDAO daoPessoa = (JDBCPessoaDAO) DAOFactory.criarPessoaDAO();			
 			
-			PreparedStatement ps = this.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
@@ -106,7 +108,7 @@ public class JDBCPerfilAcademusDAO extends JDBCDAO implements PerfilAcademusDAO{
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return perfil;
@@ -116,9 +118,9 @@ public class JDBCPerfilAcademusDAO extends JDBCDAO implements PerfilAcademusDAO{
 	public PerfilAcademus editar(PerfilAcademus perfil) {
 		String sql = "UPDATE academus.perfil_academus SET id_nivel = ? WHERE id_pessoa_usuario = ?;";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement editar = this.getConnection().prepareStatement(sql);
+			PreparedStatement editar = conn.prepareStatement(sql);
 			editar.setInt(1, NivelAcademus.getCodigo(perfil.getNivel()));
 			editar.setInt(2, perfil.getPessoa().getId());
 			
@@ -128,7 +130,7 @@ public class JDBCPerfilAcademusDAO extends JDBCDAO implements PerfilAcademusDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return perfil;
@@ -138,9 +140,9 @@ public class JDBCPerfilAcademusDAO extends JDBCDAO implements PerfilAcademusDAO{
 	public void excluir(PerfilAcademus perfil) {
 		String sql = "DELETE FROM academus.perfil_academus WHERE id_pessoa_usuario = ?;";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement excluir = this.getConnection().prepareStatement(sql);
+			PreparedStatement excluir = conn.prepareStatement(sql);
 			excluir.setInt(1, perfil.getPessoa().getId());
 			
 			excluir.execute();
@@ -149,7 +151,7 @@ public class JDBCPerfilAcademusDAO extends JDBCDAO implements PerfilAcademusDAO{
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}finally{
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 	}
 
