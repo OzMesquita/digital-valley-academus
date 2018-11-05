@@ -1,5 +1,6 @@
 package br.ufc.russas.n2s.academus.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,17 +10,18 @@ import java.util.List;
 import br.ufc.russas.n2s.academus.model.Disciplina;
 import br.ufc.russas.n2s.academus.model.MatrizCurricular;
 import br.ufc.russas.n2s.academus.model.Natureza;
+import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.ComponenteCurricular;
 
-public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCurricularDAO{
+public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 	
 	@Override
 	public ComponenteCurricular cadastrar(ComponenteCurricular comp, MatrizCurricular matriz) {
 		String sql = "INSERT INTO academus.componente_curricular(id_matriz, id_disciplina, natureza, semestre) VALUES (?, ?, ?, ?);";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try {			
-			PreparedStatement insert = super.getConnection().prepareStatement(sql);
+			PreparedStatement insert = conn.prepareStatement(sql);
 			
 			insert.setInt(1, matriz.getIdMatriz());			
 			insert.setString(2, comp.getDisciplina().getId());
@@ -27,10 +29,11 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 			
 			insert.execute();
 			insert.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return comp;
@@ -42,9 +45,9 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 		String sql = "SELECT * FROM academus.componente_curricular WHERE id_matriz = "+ idMatriz +";";
 		List<ComponenteCurricular> listaComponentes = new ArrayList<ComponenteCurricular>();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = super.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()){
@@ -60,11 +63,13 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 			
 			rs.close();
 			ps.close();
+			
 		} catch(SQLException e) {
 			e.getMessage();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
+		
 		return listaComponentes;
 	}
 
@@ -74,9 +79,9 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 		String sql = "SELECT * FROM academus.componente_curricular WHERE id_disciplina_matriz = "+idComponente+" AND id_matriz = "+matriz.getIdMatriz()+";";
 		ComponenteCurricular componente = new ComponenteCurricular();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = super.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
@@ -92,8 +97,9 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
+		
 		return componente;
 	}
 
@@ -103,9 +109,9 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 		String sql = "SELECT * FROM academus.componente_curricular WHERE id_disciplina_matriz = "+idComponente+";";
 		ComponenteCurricular componente = new ComponenteCurricular();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = super.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
@@ -121,8 +127,9 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
+		
 		return componente;
 	}
 
@@ -130,9 +137,9 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 	public void inserirPreRequsitos(List<Disciplina> d, int idComponente) {
 		String sql = "INSERT INTO academus.disciplina_pre_requisito VALUES (?, ?)";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try {
-			PreparedStatement insert = super.getConnection().prepareStatement(sql);
+			PreparedStatement insert = conn.prepareStatement(sql);
 			
 			for(int i=0; i < d.size(); i++){
 				insert.setInt(1, idComponente);
@@ -145,7 +152,7 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 	}
 
@@ -153,9 +160,9 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 	public void excluirPreRequisito(int idComponente, Disciplina disciplina) {
 		String sql = "delete from academus.disciplina_pre_requisito where id_disciplina_matriz = "+idComponente+" and id_disciplina_pre_requisito = "+disciplina.getId()+";";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = super.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.execute();
 			
 			ps.close();
@@ -163,7 +170,7 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 		}catch(SQLException e){
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 	}
@@ -172,17 +179,17 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 	public void excluirComponente(ComponenteCurricular comp) {
 		String sql = "delete from academus.componente_curricular where id_disciplina_matriz = "+comp.getIdComponente()+";";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = super.getConnection().prepareStatement(sql);
-			ps.execute();
+			PreparedStatement ps = conn.prepareStatement(sql);
 			
+			ps.execute();
 			ps.close();
 			
 		}catch(SQLException e){
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 	}
 	
@@ -196,9 +203,9 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 		
 		List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = super.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				Disciplina aux = new Disciplina();
@@ -215,7 +222,7 @@ public class JDBCComponenteCurricularDAO extends JDBCDAO implements ComponenteCu
 		}catch(SQLException e){
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 
 		return listaDisciplinas;

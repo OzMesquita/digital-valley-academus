@@ -1,5 +1,6 @@
 package br.ufc.russas.n2s.academus.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,21 +8,22 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Curso;
 import dao.DAOFactory;
 import model.Usuario;
 
-public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
+public class JDBCAlunoDAO implements AlunoDAO{
 
 	@Override
 	public Aluno buscarPorId(int id) {
 		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u WHERE u_a.id_pessoa_usuario=? AND u_a.id_pessoa_usuario = u.id_pessoa_usuario;";
 		Aluno aluno = new Aluno();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = super.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
 
 			ResultSet rs = ps.executeQuery();
@@ -62,7 +64,7 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return aluno;
@@ -73,9 +75,9 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 		String sql = "SELECT * FROM aluno AS a, pessoa_usuario AS p_u, curso AS c WHERE a.matricula= ? AND a.id_pessoa_usuario = p_u.id_pessoa_usuario AND a.id_curso = c.id_curso";
 		Aluno aluno = new Aluno();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = super.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, matricula);
 
 			ResultSet rs = ps.executeQuery();
@@ -116,7 +118,7 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return aluno;
@@ -127,9 +129,9 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u, curso AS c WHERE u_a.id_pessoa_usuario = u.id_pessoa_usuario AND u_a.id_curso = c.id_curso AND  UPPER(u.nome) like UPPER(?)";
 		List<Aluno> alunos = new ArrayList<Aluno>();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = super.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, '%'+nome+'%');
 			ResultSet rs = ps.executeQuery();
 			
@@ -171,7 +173,7 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return alunos;
@@ -182,9 +184,9 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u, curso AS c WHERE u_a.id_pessoa_usuario = u.id_pessoa_usuario AND u_a.id_curso = c.id_curso";
 		List<Aluno> alunos = new ArrayList<Aluno>();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = super.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
@@ -225,7 +227,7 @@ public class JDBCAlunoDAO extends JDBCDAO implements AlunoDAO{
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return alunos;

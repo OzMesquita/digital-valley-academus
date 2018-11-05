@@ -2,7 +2,9 @@ package br.ufc.russas.n2s.academus.debug;
 
 public enum Operacao {
 	ENTROU(1, "Entrou"),
-	SAIO(2, "Saio");
+	SAIO(2, "Saio"),
+	PEGOU(3, "Pegou"),
+	DEVOLVEU(4, "Devolveu");
 	
 	private final int id;
 	private final String desc;

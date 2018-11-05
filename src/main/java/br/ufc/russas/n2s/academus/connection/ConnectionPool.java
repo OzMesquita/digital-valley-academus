@@ -12,8 +12,9 @@ public class ConnectionPool {
 	private static List<Connection> pool;
     private static List<Connection> usedConnections;
     private static final int INITIAL_POOL_SIZE = 2;
+    private static final int MAX_POOL_SIZE = 40;
     
-    private static ConnectionPool INSTANCE = null; 
+    private static ConnectionPool INSTANCE = null;
 		
 	private ConnectionPool(){
 		ConnectionPool.pool = Collections.synchronizedList(new ArrayList<>());
@@ -65,7 +66,7 @@ public class ConnectionPool {
 		return conn;
 	}
 	
-	public void closeConections(){
+	public static void closeConections(){
 		for(int i = 0; i < ConnectionPool.pool.size(); i++){
 			Connection conn = ConnectionPool.pool.remove(ConnectionPool.pool.size()-1);
 			try {

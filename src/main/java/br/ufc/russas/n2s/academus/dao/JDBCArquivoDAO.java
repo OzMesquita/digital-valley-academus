@@ -1,21 +1,23 @@
 package br.ufc.russas.n2s.academus.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Arquivo;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
 
-public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
+public class JDBCArquivoDAO implements ArquivoDAO{
 
 	public Arquivo cadastrarArquivo(Arquivo arq, Solicitacao sol) {
 		String sql = "INSERT INTO academus.arquivo(caminho, id_solicitacao) VALUES (?, ?);";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
 			
-			PreparedStatement insert = super.getConnection().prepareStatement(sql);
+			PreparedStatement insert = conn.prepareStatement(sql);
 			insert.setString(1, arq.getCaminho());
 			insert.setInt(2, sol.getIdSolicitacao());
 			
@@ -25,7 +27,7 @@ public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
 		} catch(SQLException e) {	
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return arq;
@@ -36,9 +38,9 @@ public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
 		String sql = "SELECT id_arquivo, caminho FROM academus.arquivo WHERE id_solicitacao = " + sol.getIdSolicitacao() + ";";
 		Arquivo arq = new Arquivo();
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement ps = super.getConnection().prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
 				arq.setIdArquivo(rs.getInt("id_arquivo"));
@@ -51,7 +53,7 @@ public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
 		} catch (SQLException e){
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return arq;
@@ -61,9 +63,9 @@ public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
 	public Arquivo editar(Arquivo arquivo) {
 		String sql = "UPDATE academus.arquivo SET caminho=? WHERE id_arquivo = ?;";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
-			PreparedStatement editar = super.getConnection().prepareStatement(sql);
+			PreparedStatement editar = conn.prepareStatement(sql);
 			editar.setString(1, arquivo.getCaminho());
 			editar.setInt(2, arquivo.getIdArquivo());
 		
@@ -73,7 +75,7 @@ public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 		
 		return arquivo;
@@ -83,16 +85,18 @@ public class JDBCArquivoDAO extends JDBCDAO implements ArquivoDAO{
 	public void excluir(Arquivo arquivo) {
 		String sql = "DELETE FROM academus.arquivo WHERE id_arquivo = ?;";
 		
-		super.open();
+		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement excluir = super.getConnection().prepareStatement(sql);
 			excluir.setInt(1, arquivo.getIdArquivo());
+			
 			excluir.execute();
+			excluir.close();
 			
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
-			super.close();
+			ConnectionPool.releaseConnection(conn);
 		}
 	}
 }
