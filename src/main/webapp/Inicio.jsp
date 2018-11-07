@@ -1,8 +1,10 @@
+<%@page import="br.ufc.russas.n2s.academus.model.NivelAcademus"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Solicitacao"%>
+<%@ page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,23 +31,30 @@
 	<div class="container-fluid">
 		<div class="row row-offcanvas row-offcanvas-right">
 			<% 
-			String nome = (String)request.getAttribute("tipo");
-			if (nome.equals("Aluno")){
-				%>
-				<c:import url="jsp/elements/menu-lateral-esquerdo-Aluno.jsp"
-				charEncoding="UTF-8"></c:import>
-				<%
-			} else if (nome.equals("Coordenador")){
-				%>
-				<c:import url="jsp/elements/menu-lateral-esquerdo-Coordenador.jsp"
-				charEncoding="UTF-8"></c:import>
-				<%
-			} else if (nome.equals("Secretario")){
-				%>
-				<c:import url="jsp/elements/menu-lateral-esquerdo-Secretario.jsp"
-				charEncoding="UTF-8"></c:import>
-				<%
-			} else{
+			PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
+			if (per == null){
+				if (per.getNivel() == NivelAcademus.ALUNO){
+					%>
+					<c:import url="jsp/elements/menu-lateral-esquerdo-Aluno.jsp"
+					charEncoding="UTF-8"></c:import>
+					<%
+				} else if (per.getNivel() == NivelAcademus.COORDENADOR){
+					%>
+					<c:import url="jsp/elements/menu-lateral-esquerdo-Coordenador.jsp"
+					charEncoding="UTF-8"></c:import>
+					<%
+				} else if (per.getNivel() == NivelAcademus.SECRETARIO){
+					%>
+					<c:import url="jsp/elements/menu-lateral-esquerdo-Secretario.jsp"
+					charEncoding="UTF-8"></c:import>
+					<%
+				} else{
+					%>
+					<c:import url="jsp/elements/menu-lateral-esquerdo.jsp"
+					charEncoding="UTF-8"></c:import>
+					<%
+				}
+			} else {
 				%>
 				<c:import url="jsp/elements/menu-lateral-esquerdo.jsp"
 				charEncoding="UTF-8"></c:import>
@@ -61,7 +70,7 @@
 				</ol>
 				</nav>
 				
-				<c:import url="jsp/elements/listagemSolicitacoes" charEncoding="UTF-8"></c:import>
+				<c:import url="jsp/elements/listagemSolicitacao.jsp" charEncoding="UTF-8"></c:import>
 			</div>
 		</div>
 	</div>

@@ -32,7 +32,7 @@ public class InicioController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//pegar o pessoa do guardiao e colocar em uma pagina de inicio
 		try {
-			HttpSession session = ((HttpServletRequest) request).getSession();
+			HttpSession session = request.getSession();
 			//PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
 			PerfilAcademus per = new PerfilAcademus();
 			/*
@@ -51,7 +51,7 @@ public class InicioController extends HttpServlet {
 			per.setNivel(NivelAcademus.COORDENADOR);
 			*/
 			
-			if (per.getNivel() == null) {
+			if (per.getNivel() == NivelAcademus.INDEFINIDO) {
 				
 				Aluno alu2 = new DAOFactoryJDBC().criarAlunoDAO().buscarPorId(122);
 				if(alu2 == null) {
@@ -73,8 +73,7 @@ public class InicioController extends HttpServlet {
 			}
 			
 			if( per.getNivel() == NivelAcademus.ALUNO) {
-				request.setAttribute("tipo", "Aluno");
-				if (tipoSolicitacao.equals("andamento") == false || tipoSolicitacao.equals("finalizado") == false ) {
+				if (tipoSolicitacao == null || ( !tipoSolicitacao.equals("andamento") || !tipoSolicitacao.equals("finalizado") )) {
 					listaSol = sodao.listar((Aluno)per.getPessoa());
 				} else {
 					if (tipoSolicitacao.equals("andamento")) {
@@ -85,8 +84,7 @@ public class InicioController extends HttpServlet {
 				}
 				
 			} else if( per.getNivel() == NivelAcademus.SECRETARIO) {
-				request.setAttribute("tipo", "Secretario");
-				if (!tipoSolicitacao.equals("andamento") || !tipoSolicitacao.equals("finalizado")) {
+				if (tipoSolicitacao == null || (!tipoSolicitacao.equals("andamento") || !tipoSolicitacao.equals("finalizado"))) {
 					listaSol = sodao.listar();
 				} else {
 					if (tipoSolicitacao.equals("andamento")) {
@@ -96,8 +94,7 @@ public class InicioController extends HttpServlet {
 					}
 				}
 			} else if(per.getNivel() == NivelAcademus.COORDENADOR) {
-				request.setAttribute("tipo", "Coordenador");
-				if (!tipoSolicitacao.equals("andamento") || !tipoSolicitacao.equals("finalizado")) {
+				if (tipoSolicitacao == null || (!tipoSolicitacao.equals("andamento") || !tipoSolicitacao.equals("finalizado"))) {
 					listaSol = sodao.listar((Coordenador)per.getPessoa());
 				} else {
 					if (tipoSolicitacao.equals("andamento")) {
@@ -107,15 +104,24 @@ public class InicioController extends HttpServlet {
 					}
 				}
 			} else if(per.getNivel() == NivelAcademus.PROFESSOR) {
-				request.setAttribute("tipo", "Professor");
-				
+				listaSol = sodao.listar();
 				
 			} else if (per.getNivel() == NivelAcademus.INDEFINIDO) {
-				request.setAttribute("tipo", "indefinido");
-			
+				listaSol = sodao.listar();
 			}
 			
+			if(listaSol == null || listaSol.isEmpty()) {
+				System.out.println("Mais problemas");
+				listaSol = sodao.listar();
+				if(listaSol == null || listaSol.isEmpty()) {
+					System.out.println("Não é possivel");
+				}
+			}
 			session.setAttribute("listaSol", listaSol);
+			
+			if (session.getAttribute("listaSol") == null) {
+				System.out.println("Deu erro no inicio");
+			}
 			
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio.jsp");
 			

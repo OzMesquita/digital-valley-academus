@@ -22,16 +22,15 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<form action="FiltroBuscarController" method="post">
 		<div class="dropdown right" style="right:+15px; position:absolute;">
                     <button class="btn dropdown-toggle btn-sm btn-icon filtro_tela" name="filtro" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">filter_list</i>
                         <span>Filtrar</span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" value="Inicio">Todas as seleções</a>
-                        <a class="dropdown-item" value="Inicio?solicitacao=andamento">Solicitações em andamento</a>
-                        <a class="dropdown-item" value="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
+                        <a class="dropdown-item" href="Inicio">Todas as seleções</a>
+                        <a class="dropdown-item" href="Inicio?solicitacao=andamento">Solicitações em andamento</a>
+                        <a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
                     </div>
                 </div>
 					         <br><br>
@@ -64,6 +63,7 @@
 						}
 						
 						if(solicitacoes != null){
+							System.out.println("Deu Certo ^^");
 							for (Solicitacao soli : solicitacoes) {
 								
 						%>
@@ -89,4 +89,3 @@
 
 					</table>
 				</div>
-</form>

@@ -23,19 +23,6 @@
 		deuCerto = false;
 		System.out.print("Deu nao");
 	}
-	/*
-	Aluno alu = new Aluno();
-	alu.setMatricula("1234");
-	alu.setNome("Carlitos Eduardicas");
-	
-	solicitacao = new Solicitacao();
-	solicitacao.setSolicitante(alu);
-	solicitacao.setInstituicao("UECE");
-	solicitacao.setIdSolicitacao(1);
-	ArrayList<DisciplinaCursada> dis = new ArrayList<>();
-	solicitacao.setDisciplinasCursadas(dis);
-	deuCerto = true;
-	*/
 	
 %>
 
@@ -110,7 +97,7 @@
 						<br>
 						
 						<label for="instituicaoInput"><b> Instituição </b></label> 
-						<textarea id="instituicao" name="instituicao" class="form-control" aria-describedby="tituloHelp" readonly required> <%= solicitacao.getInstituicao() %></textarea>
+						<textarea id="instituicao" name="instituicao" class="form-control" aria-describedby="tituloHelp" readonly required> < % = solicitacao.getInstituicao() % ></textarea>
 						<div class="invalid-feedback">
                             
                         </div>
