@@ -46,6 +46,10 @@
     <servlet-name>AnalisandoCoordenadorController</servlet-name>
     <servlet-class>br.ufc.russas.n2s.academus.controller.AnalizandoCoordenadorController</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>EditarMatrizesController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.EditarMatrizesController</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>ServletExemplo</servlet-name>
     <url-pattern>/ServletExemplo</url-pattern>
@@ -81,5 +85,9 @@
   <servlet-mapping>
     <servlet-name>AnalisandoCoordenadorController</servlet-name>
     <url-pattern>/AnaliseCoordenador</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EditarMatrizesController</servlet-name>
+    <url-pattern>/EditarMatriz</url-pattern>
   </servlet-mapping>
 </web-app>

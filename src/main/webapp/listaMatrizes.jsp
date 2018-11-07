@@ -82,7 +82,7 @@
 								class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz() %>" > Visualizar
 							</button>
 							</form></td>
-							<td><form method="post" action="AtualizarMatrizController" id="form<%=contato.getIdMatriz()%>">
+							<td><form method="post" action="EditarMatriz" id="form<%=contato.getIdMatriz()%>">
 							<button  class="btn btn-primary btn-sm active" form="form<%=contato.getIdMatriz()%>"
 								class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz() %>" > Editar
 							</button>

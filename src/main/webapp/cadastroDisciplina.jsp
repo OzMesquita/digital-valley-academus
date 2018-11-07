@@ -23,8 +23,7 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">Você está em:</li>
 					<li class="breadcrumb-item" aria-current="page"><a href="jsp/elements/aviso.jsp">Início</a></li> <!-- PREENCHER HREF -->					
-					<li class="breadcrumb-item active" aria-current="page">Cadastrar
-						Disciplina</li>
+					<li class="breadcrumb-item active" aria-current="page">CadastrarDisciplina</li>
 				</ol>
 				</nav>
 				<h1>Cadastrar Disciplina</h1>

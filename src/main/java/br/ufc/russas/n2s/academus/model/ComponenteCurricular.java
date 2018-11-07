@@ -43,6 +43,21 @@ public class ComponenteCurricular implements Serializable{
 	public void setPreRequisitos(List<Disciplina> list) {
 		this.preRequisitos = list;
 	}
+	
+	public String getStringPreRequisitos(){
+		String s = "";
+		if(!getPreRequisitos().isEmpty()){
+			for(Disciplina d : getPreRequisitos()){
+				s += d.getId()+";";
+			}
+			s = s.substring(0, s.length()-1);
+		}else{
+			return "-";
+		}
+		
+		return s;
+		
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

@@ -13,6 +13,7 @@ import br.ufc.russas.n2s.academus.dao.JDBCMatrizCurricularDAO;
 import br.ufc.russas.n2s.academus.model.ComponenteCurricular;
 import br.ufc.russas.n2s.academus.model.Disciplina;
 import br.ufc.russas.n2s.academus.model.MatrizCurricular;
+import br.ufc.russas.n2s.academus.model.Natureza;
 
 public class AtualizarMatrizController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -51,14 +52,19 @@ public class AtualizarMatrizController extends HttpServlet {
 				ArrayList<ComponenteCurricular> compObjs = new ArrayList<ComponenteCurricular>();
 				while(request.getParameter("comp-id-"+i) != null) {
 					String compId = request.getParameter("comp-id-"+i);//recuperando id da disciplina add como componente
-					String compNatureza = request.getParameter("comp-natureza-"+i);// recuperando natureza da disciplina add como componente
+					Natureza compNatureza = Natureza.getNatureza(request.getParameter("comp-natureza-"+i));// recuperando natureza da disciplina add como componente
 					String[] compPreRequisitos = (request.getParameter("comp-preRequisitos-"+i) != "-") ? request.getParameter("comp-preRequisitos-"+i).split(";"): new String[0];
 					ArrayList<Disciplina> prObjs = new ArrayList<Disciplina>();
 					Disciplina disciplina = ddao.buscarPorId(compId);
 					for(String pr : compPreRequisitos){
 						prObjs.add(ddao.buscarPorId(pr));
 					}
-					compObjs.add(new ComponenteCurricular(id, disciplina, compNatureza, prObjs));
+					ComponenteCurricular cc = new ComponenteCurricular();
+					cc.setIdComponente(id);
+					cc.setDisciplina(disciplina);
+					cc.setNatureza(compNatureza);
+					cc.setPreRequisitos(prObjs);
+					compObjs.add(cc);
 				}
 				
 				MatrizCurricular ma = new MatrizCurricular();
@@ -74,8 +80,8 @@ public class AtualizarMatrizController extends HttpServlet {
 				ma.setIdCurso(curso);
 				
 				
-				daoMatriz.atualizarMatriz(ma);
-				daoMatriz.gerenciarComponentes(compObjs, id);
+				daoMatriz.editar(ma);
+				//daoMatriz.gerenciarComponentes(compObjs, id);
 				
 			
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("listaMatrizes.jsp");			
