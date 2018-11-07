@@ -19,7 +19,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 
 	@Override
 	public Solicitacao cadastrar(Solicitacao sol) {
-		String sql = "insert into academus.solicitacao( id_solicitante, matricula_solicitante, status, id_componente, instituicao) VALUES ( ?, ?, ?, ?, ?)";
+		String sql = "insert into academus.solicitacao( id_solicitante, matricula_solicitante, status, id_componente, id_curso) VALUES ( ?, ?, ?, ?, ?)";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -32,6 +32,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			insert.setString(2, sol.getSolicitante().getMatricula());
 			insert.setInt(3, Status.getCodigo(sol.getStatus()));
 			insert.setInt(4, sol.getDisciplinaAlvo().getIdComponente());
+			insert.setInt(5, sol.getCurso().getIdCurso());
 			insert.execute();
 			
 			int idSolicitacao = idUltimaSolicitacao(sol.getSolicitante().getMatricula());

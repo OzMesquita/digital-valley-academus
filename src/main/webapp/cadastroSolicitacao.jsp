@@ -29,7 +29,7 @@
 	PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
 
 	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
-	System.out.println(aluno.getCurso().getIdCurso());
+	//System.out.println(aluno.getCurso().getIdCurso());
 	Aluno a = (Aluno) usuario.getPessoa();
 	//List<MatrizCurricular> matrizes = new ArrayList<MatrizCurricular>();
 	List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(a.getCurso().getIdCurso());

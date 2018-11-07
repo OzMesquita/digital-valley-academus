@@ -68,6 +68,9 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 		solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
 		solicitacao.setStatus(Status.SUBMETIDO);
 		solicitacao.setDisciplinasCursadas(disciplinasCursadas);
+		solicitacao.setCurso(((Aluno) usuario.getPessoa()).getCurso());
+		System.out.println("teste------------------------------------");
+		System.out.println(solicitacao.getCurso().getIdCurso());
 		
 		if(disciplinasCursadas.size() > 0){
 			sd.cadastrar(solicitacao);

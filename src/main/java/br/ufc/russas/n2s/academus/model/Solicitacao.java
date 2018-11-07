@@ -15,6 +15,7 @@ public class Solicitacao implements Serializable{
 	private List<DisciplinaCursada> disciplinasCursadas;
 	private String resultado;
 	private String justificativa;
+	private Curso curso;
 	private Arquivo arquivo;
 	
 	public Solicitacao(){
@@ -76,6 +77,12 @@ public class Solicitacao implements Serializable{
 	}
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
+	}
+	public Curso getCurso() {
+		return curso;
+	}
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
 	public Arquivo getArquivo() {
 		return arquivo;
