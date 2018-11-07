@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
-import br.ufc.russas.n2s.academus.debug.IOConexao;
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Coordenador;
 import br.ufc.russas.n2s.academus.model.Historico;
@@ -175,7 +174,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 
 	@Override
 	public Solicitacao editar(Solicitacao sol) {
-		String sql = "UPDATE academus.solicitacao SET justificativa=?, id_componente=?, status=?, resultado=? WHERE id_solicitacao = ?;";
+		String sql = "UPDATE academus.solicitacao SET justificativa=?, id_componente=?, status=?, resultado=? WHERE id_solicitacao = ? AND status=?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -187,6 +186,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			update.setInt(3, Status.getCodigo(sol.getStatus()));
 			update.setString(5, sol.getResultado());
 			update.setInt(6, sol.getIdSolicitacao());
+			update.setInt(7, Status.getCodigo(Status.SUBMETIDO));
 			
 			update.execute();
 			update.close();
@@ -536,6 +536,113 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		}
 		
 		return solicitacoes;
+	}
+
+	@Override
+	public List<Solicitacao> listarAndamento() {
+		String sql = "select * from academus.solicitacao where status!=? and status!=?";
+		List<Solicitacao> listaSolicitacao = new ArrayList<Solicitacao>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
+			ps.setInt(1, Status.getCodigo(Status.CANCELADO));
+			ResultSet rs = ps.executeQuery();
+			
+			
+			//DAOFactory df = new DAOFactoryJDBC();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			//DAO's necessárias
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+			ArquivoDAO arqdao = df.criarArquivoDAO();
+			HistoricoDAO hisdao = df.criarHistoricoDAO();
+			CursoDAO curdao = df.criarCursoDAO();
+			
+			while(rs.next()){
+				
+				Solicitacao aux = new Solicitacao();
+				
+				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+				aux.setStatus(Status.getStatus(rs.getInt("status")));
+				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				aux.setDisciplinasCursadas(dcd.buscar(aux));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setResultado(rs.getString("resultado"));
+				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				
+				listaSolicitacao.add(aux);
+			}
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return listaSolicitacao;
+	}
+
+	@Override
+	public List<Solicitacao> listarFinalizado() {
+		String sql = "select * from academus.solicitacao where status=?";
+		List<Solicitacao> listaSolicitacao = new ArrayList<Solicitacao>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
+			ResultSet rs = ps.executeQuery();
+			
+			
+			//DAOFactory df = new DAOFactoryJDBC();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			//DAO's necessárias
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+			ArquivoDAO arqdao = df.criarArquivoDAO();
+			HistoricoDAO hisdao = df.criarHistoricoDAO();
+			CursoDAO curdao = df.criarCursoDAO();
+			
+			while(rs.next()){
+				
+				Solicitacao aux = new Solicitacao();
+				
+				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+				aux.setStatus(Status.getStatus(rs.getInt("status")));
+				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				aux.setDisciplinasCursadas(dcd.buscar(aux));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setResultado(rs.getString("resultado"));
+				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				
+				listaSolicitacao.add(aux);
+			}
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return listaSolicitacao;
 	}
 
 }

@@ -11,6 +11,10 @@ public interface SolicitacaoDAO {
 	public Solicitacao cadastrar(Solicitacao sol);
 		
 	public List<Solicitacao> listar();
+	
+	public List<Solicitacao> listarAndamento();
+	
+	public List<Solicitacao> listarFinalizado();
 		
 	public Solicitacao buscarPorId(int id);
 	

@@ -8,34 +8,22 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import br.ufc.russas.n2s.academus.model.PerfilAcademus;
+import dao.UsuarioDAO;
 import model.Pessoa;
+import model.Usuario;
+import dao.DAOFactory;
 import util.Facade;
 
-/**
- * Servlet Filter implementation class AutenticadoFiltro
- */
 public class AutenticadoFiltro implements Filter {
 
-    /**
-     * Default constructor. 
-     */
-    public AutenticadoFiltro() {
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see Filter#destroy()
-	 */
+	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
+		
 	}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -48,16 +36,10 @@ public class AutenticadoFiltro implements Filter {
 				String token = request.getParameter("token");
 				int id = Integer.parseInt(request.getParameter("id"));
 				Pessoa user = Facade.buscarPessoaPorId(id);
-
 				if (token.equals(user.getUsuario().getTokenUsuario()) && id == user.getId() && !token.equals("null")) {
-
-					PerfilAcademus per = new PerfilAcademus(user);
-
-
-					session.setAttribute("usuario", per);
-					
+					UsuarioDAO userDAO = DAOFactory.criarUsuarioDAO();
+					session.setAttribute("usuario", user.getUsuario());
 					chain.doFilter(request, response);
-
 				}else {
 					((HttpServletResponse) response).sendRedirect("/Controle_de_Acesso/");
 				}
@@ -69,11 +51,11 @@ public class AutenticadoFiltro implements Filter {
 		}				
 	}
 
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
-	public void init(FilterConfig fConfig) throws ServletException {
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
+		
 	}
+
 
 }
