@@ -84,11 +84,6 @@
 				           <label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">Disciplinas Aproveitadas</label>
 				           </div>
 				           <div class="card-body">
-					           <div class="form-group">
-									<label for="instituicaoInput">Instituição</label>
-									<input type="text" id="instituicaoInput" name="instituicaoInput" style='text-transform:uppercase' class="form-control">
-								</div>
-					           
 					           <table class="table" id="listaDisciplinasAproveitadas">
 							        <thead> 
 							           	<tr>
@@ -96,6 +91,7 @@
 							           		<th scope="col">Carga Horária</th>
 							           		<th scope="col">Nota</th>
 							           		<th scope="col">Ano/Semestre</th>
+							           		<th scope="col">Instituição</th>
 							           		<th scope="col"></th>
 							           	</tr>
 							        <thead>
@@ -104,7 +100,7 @@
 				        </div>   
 						<br>
 						<div class="form-row">
-							<div class="form-group col-md-5">
+							<div class="form-group col-md-3">
 								<label for="disciplinaAproveitada">Nome da Disciplina Aproveitada</label>
 								<input type="text" id="disciplinaAproveitada" style='text-transform:uppercase' class="form-control">
 							</div>
@@ -127,6 +123,10 @@
 							<div class="form-group col-md-1">
 								<label for="semestre">Semestre</label>
 								<input type="number" min="1" max="2" id="semestre" class="form-control">
+							</div>
+							<div class="form-group col-md-3">
+								<label for="instituicao">Instituição</label>
+								<input type="text" id="instituicao" style='text-transform:uppercase' class="form-control">
 							</div>
 							<div class="form-group col-md-2">
 								<input type="button" class="btn btn-secondary col-md-8" onclick="adicionarDisciplinaAproveitada()" value="Adicionar">
@@ -174,6 +174,7 @@
 		disciplina.nota = document.getElementById("nota").value;
 		disciplina.ano = document.getElementById("ano").value;
 		disciplina.semestre = document.getElementById("semestre").value;
+		disciplina.instituicao = document.getElementById("instituicao").value.toUpperCase();
 		disciplinas[tam] = disciplina;
 		if(verificarDisciplinaAproveitada(disciplina)){
 			tam++;
@@ -182,6 +183,7 @@
 			document.getElementById("nota").value = "";
 			document.getElementById("ano").value = "";
 			document.getElementById("semestre").value = "";
+			document.getElementById("instituicao").value = "";
 			atualizarDisciplinaAproveitada();
 		}
 	}
@@ -196,6 +198,7 @@
 								  '<td>'+disciplinas[i].carga+'<input type="hidden" id="disc-carga-'+i+'" name="disc-carga" value="'+disciplinas[i].carga+'"></td>'+
 								  '<td>'+disciplinas[i].nota+'<input type="hidden" id="disc-nota-'+i+'" name="disc-nota" value="'+disciplinas[i].nota+'"></td>'+
 								  '<td>'+disciplinas[i].ano+'.'+disciplinas[i].semestre+'<input type="hidden" id="disc-semestre-'+i+'" name="disc-semestre" value="'+disciplinas[i].ano+'.'+disciplinas[i].semestre+'"></td>'+
+								  '<td>'+disciplinas[i].instituicao+'<input type="hidden" id="disc-instituicao-'+i+'" name="disc-instituicao" value="'+disciplinas[i].instituicao+'"></td>'+
 								  '<td><button type="button" class="btn btn-light btn-sm material-icons float-right" style="font-size: 15px;" onclick="removerDisciplinaAproveitada('+i+')">clear</button></td>'+
 								  '</tr>';
 			}

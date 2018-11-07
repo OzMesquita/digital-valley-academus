@@ -49,11 +49,11 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String componente = request.getParameter("componenteInput");
-		String instituicao = request.getParameter("instituicaoInput");
 		String[] nomeDisciplinas = request.getParameterValues("disc-nome");
 		String[] cargaDisciplinas = request.getParameterValues("disc-carga");
 		String[] semestreDisciplinas = request.getParameterValues("disc-semestre");
 		String[] notaDisciplinas = request.getParameterValues("disc-nota");
+		String[] instituicaoDisciplinas = request.getParameterValues("disc-instituicao");
 		PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
 		ArrayList<DisciplinaCursada> disciplinasCursadas = new ArrayList<DisciplinaCursada>();
 		ComponenteCurricularDAO ccd = new JDBCComponenteCurricularDAO();
@@ -61,17 +61,16 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 		Solicitacao solicitacao = new Solicitacao();
 		
 		for(int i=0; i<nomeDisciplinas.length; i++){
-			disciplinasCursadas.add(new DisciplinaCursada(semestreDisciplinas[i], Float.parseFloat(notaDisciplinas[i]), Integer.parseInt(cargaDisciplinas[i]), nomeDisciplinas[i]));
+			disciplinasCursadas.add(new DisciplinaCursada(semestreDisciplinas[i], Float.parseFloat(notaDisciplinas[i]), Integer.parseInt(cargaDisciplinas[i]), nomeDisciplinas[i], instituicaoDisciplinas[i]));
 		}
 		
 		solicitacao.setSolicitante((Aluno) usuario.getPessoa());
-		//solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
-		solicitacao.setInstituicao(instituicao);
+		solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
 		solicitacao.setStatus(Status.SUBMETIDO);
 		solicitacao.setDisciplinasCursadas(disciplinasCursadas);
 		
 		if(disciplinasCursadas.size() > 0){
-			//sd.cadastrar(solicitacao);
+			sd.cadastrar(solicitacao);
 		}
 		
 		try {

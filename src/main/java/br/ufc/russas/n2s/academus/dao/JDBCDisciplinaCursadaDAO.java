@@ -15,7 +15,7 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 
 	@Override
 	public void cadastrar(List<DisciplinaCursada> ldc, int idSol) {
-		String sql = "INSERT INTO academus.disciplina_cursada(nome, carga, semestre, nota, id_solicitacao) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO academus.disciplina_cursada(nome, carga, semestre, nota, id_solicitacao, instituicao) VALUES (?, ?, ?, ?, ?, ?)";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -30,6 +30,7 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 				insert.setString(3, dc.getSemestre());
 				insert.setFloat(4, dc.getNota());
 				insert.setInt(5, idSol);
+				insert.setString(6, dc.getInstituicao());
 				
 				insert.execute();
 				insert.close();
@@ -60,6 +61,7 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 				aux.setNota(rs.getFloat("nota"));//Talvez de erro, já que no banco a coluna 'nota' é do tipo double precision
 				aux.setCarga(rs.getInt("carga"));
 				aux.setNome(rs.getString("nome"));
+				aux.setInstituicao(rs.getString("instituicao"));
 				
 				listaDisciplinaCursada.add(aux);
 			}
@@ -78,7 +80,7 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 
 	@Override
 	public void editar(DisciplinaCursada disciplinaCursada, Solicitacao sol) {
-		String sql = "UPDATE academus.disciplina_cursada SET nome=?, carga=?, semestre=?, nota=? WHERE id_solicitacao=?;";
+		String sql = "UPDATE academus.disciplina_cursada SET nome=?, carga=?, semestre=?, nota=?, instituicao=? WHERE id_solicitacao=?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -88,7 +90,9 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 			ps.setInt(2, disciplinaCursada.getCarga());
 			ps.setString(3, disciplinaCursada.getSemestre());
 			ps.setFloat(4, disciplinaCursada.getNota());
-			ps.setInt(5, sol.getIdSolicitacao());
+			ps.setString(5, disciplinaCursada.getInstituicao());
+			ps.setInt(6, sol.getIdSolicitacao());
+			
 			
 			ps.execute();
 			ps.close();
