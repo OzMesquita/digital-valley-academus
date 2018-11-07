@@ -15,17 +15,6 @@ public class Teste {
 
 	public static void main(String[] args) {
 		
-		/*
-		JDBCHistoricoDAO dao = new JDBCHistoricoDAO();
-		
-		Solicitacao s = new Solicitacao();
-		s.setIdSolicitacao(28);
-		
-		ArrayList<Historico> h=  (ArrayList<Historico>) dao.buscarPorSolicitacao(s);
-		*/
-		
-		JDBCPerfilAcademusDAO dao = new JDBCPerfilAcademusDAO();
-		PerfilAcademus p = dao.buscarPorId(122);
 		
 	}
 

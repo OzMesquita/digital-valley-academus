@@ -11,7 +11,7 @@ public class ConnectionPool {
 	
 	private static List<Connection> pool;
     private static List<Connection> usedConnections;
-    private static final int INITIAL_POOL_SIZE = 2;
+    private static final int INITIAL_POOL_SIZE = 10;
     private static final int MAX_POOL_SIZE = 40;
     
     private static ConnectionPool INSTANCE = null;

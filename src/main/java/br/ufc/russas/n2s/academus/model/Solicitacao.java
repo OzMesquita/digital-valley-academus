@@ -15,7 +15,6 @@ public class Solicitacao implements Serializable{
 	private List<DisciplinaCursada> disciplinasCursadas;
 	private String resultado;
 	private String justificativa;
-	private String instituicao;
 	private Arquivo arquivo;
 	
 	public Solicitacao(){
@@ -27,7 +26,6 @@ public class Solicitacao implements Serializable{
 		this.setDisciplinasCursadas(new ArrayList<DisciplinaCursada>());
 		this.setResultado("INDEFINIDO");
 		this.setJustificativa("INDEFINIDO");
-		this.setInstituicao("INDEFINIDO");
 		this.setArquivo(new Arquivo());
 	}
 	
@@ -78,12 +76,6 @@ public class Solicitacao implements Serializable{
 	}
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
-	}
-	public String getInstituicao() {
-		return instituicao;
-	}
-	public void setInstituicao(String instituicao) {
-		this.instituicao = instituicao;
 	}
 	public Arquivo getArquivo() {
 		return arquivo;

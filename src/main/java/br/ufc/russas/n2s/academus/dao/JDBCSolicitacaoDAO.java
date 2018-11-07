@@ -32,7 +32,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			insert.setString(2, sol.getSolicitante().getMatricula());
 			insert.setInt(3, Status.getCodigo(sol.getStatus()));
 			insert.setInt(4, sol.getDisciplinaAlvo().getIdComponente());
-			insert.setString(5, sol.getInstituicao());
 			insert.execute();
 			
 			int idSolicitacao = idUltimaSolicitacao(sol.getSolicitante().getMatricula());
@@ -107,9 +106,8 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				aux.setInstituicao(rs.getString("instituicao"));
 				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
-				//aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				
 				
 				listaSolicitacao.add(aux);
@@ -138,7 +136,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				+ "matricula_solicitante, "
 				+ "id_componente, "
 				+ "status, "
-				+ "instituicao, "
 				+ "resultado "
 				+ "from academus.solicitacao "
 				+ "where academus.solicitacao.id_solicitacao = "+ id;
@@ -165,7 +162,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				aux.setInstituicao(rs.getString("instituicao"));
 				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				
@@ -185,7 +181,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 
 	@Override
 	public Solicitacao editar(Solicitacao sol) {
-		String sql = "UPDATE academus.solicitacao SET justificativa=?, id_componente=?, status=?, instituicao=?, resultado=? WHERE id_solicitacao = ?;";
+		String sql = "UPDATE academus.solicitacao SET justificativa=?, id_componente=?, status=?, resultado=? WHERE id_solicitacao = ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -195,7 +191,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			update.setString(1, sol.getJustificativa());
 			update.setInt(2, sol.getDisciplinaAlvo().getIdComponente());
 			update.setInt(3, Status.getCodigo(sol.getStatus()));
-			update.setString(4, sol.getInstituicao());
 			update.setString(5, sol.getResultado());
 			update.setInt(6, sol.getIdSolicitacao());
 			
@@ -230,14 +225,302 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 
 	@Override
 	public List<Solicitacao> listar(Coordenador c) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Solicitacao> solicitacoes = new ArrayList<>();
+		String sql = "";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			//DAOFactory df = new DAOFactoryJDBC();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			//DAO's necessárias
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+			ArquivoDAO arqdao = df.criarArquivoDAO();
+			HistoricoDAO hisdao = df.criarHistoricoDAO();
+			
+			while(rs.next()){
+				
+				Solicitacao aux = new Solicitacao();
+				
+				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+				aux.setStatus(Status.getStatus(rs.getInt("status")));
+				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				aux.setDisciplinasCursadas(dcd.buscar(aux));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setResultado(rs.getString("resultado"));
+				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				
+				
+				solicitacoes.add(aux);
+			}
+			
+			ps.close();
+			rs.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return solicitacoes;
 	}
 
 	@Override
 	public List<Solicitacao> listar(Aluno a) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Solicitacao> solicitacoes = new ArrayList<>();
+		String sql = "";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			//DAOFactory df = new DAOFactoryJDBC();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			//DAO's necessárias
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+			ArquivoDAO arqdao = df.criarArquivoDAO();
+			HistoricoDAO hisdao = df.criarHistoricoDAO();
+			
+			while(rs.next()){
+				
+				Solicitacao aux = new Solicitacao();
+				
+				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+				aux.setStatus(Status.getStatus(rs.getInt("status")));
+				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				aux.setDisciplinasCursadas(dcd.buscar(aux));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setResultado(rs.getString("resultado"));
+				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				
+				
+				solicitacoes.add(aux);
+			}
+			
+			ps.close();
+			rs.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return solicitacoes;
+	}
+
+	@Override
+	public List<Solicitacao> listarAndamento(Aluno a) {
+		List<Solicitacao> solicitacoes = new ArrayList<>();
+		String sql = "";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			//DAOFactory df = new DAOFactoryJDBC();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			//DAO's necessárias
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+			ArquivoDAO arqdao = df.criarArquivoDAO();
+			HistoricoDAO hisdao = df.criarHistoricoDAO();
+			
+			while(rs.next()){
+				
+				Solicitacao aux = new Solicitacao();
+				
+				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+				aux.setStatus(Status.getStatus(rs.getInt("status")));
+				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				aux.setDisciplinasCursadas(dcd.buscar(aux));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setResultado(rs.getString("resultado"));
+				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				
+				
+				solicitacoes.add(aux);
+			}
+			
+			ps.close();
+			rs.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return solicitacoes;
+	}
+
+	@Override
+	public List<Solicitacao> listarAndemanto(Coordenador c) {
+		List<Solicitacao> solicitacoes = new ArrayList<>();
+		String sql = "";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			//DAOFactory df = new DAOFactoryJDBC();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			//DAO's necessárias
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+			ArquivoDAO arqdao = df.criarArquivoDAO();
+			HistoricoDAO hisdao = df.criarHistoricoDAO();
+			
+			while(rs.next()){
+				
+				Solicitacao aux = new Solicitacao();
+				
+				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+				aux.setStatus(Status.getStatus(rs.getInt("status")));
+				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				aux.setDisciplinasCursadas(dcd.buscar(aux));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setResultado(rs.getString("resultado"));
+				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				
+				
+				solicitacoes.add(aux);
+			}
+			
+			ps.close();
+			rs.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return solicitacoes;
+	}
+
+	@Override
+	public List<Solicitacao> listarFinalizado(Aluno a) {
+		List<Solicitacao> solicitacoes = new ArrayList<>();
+		String sql = "";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			//DAOFactory df = new DAOFactoryJDBC();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			//DAO's necessárias
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+			ArquivoDAO arqdao = df.criarArquivoDAO();
+			HistoricoDAO hisdao = df.criarHistoricoDAO();
+			
+			while(rs.next()){
+				
+				Solicitacao aux = new Solicitacao();
+				
+				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+				aux.setStatus(Status.getStatus(rs.getInt("status")));
+				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				aux.setDisciplinasCursadas(dcd.buscar(aux));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setResultado(rs.getString("resultado"));
+				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				
+				
+				solicitacoes.add(aux);
+			}
+			
+			ps.close();
+			rs.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return solicitacoes;
+	}
+
+	@Override
+	public List<Solicitacao> listarFinalizado(Coordenador c) {
+		List<Solicitacao> solicitacoes = new ArrayList<>();
+		String sql = "";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			//DAOFactory df = new DAOFactoryJDBC();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			//DAO's necessárias
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+			ArquivoDAO arqdao = df.criarArquivoDAO();
+			HistoricoDAO hisdao = df.criarHistoricoDAO();
+			
+			while(rs.next()){
+				
+				Solicitacao aux = new Solicitacao();
+				
+				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+				aux.setStatus(Status.getStatus(rs.getInt("status")));
+				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				aux.setDisciplinasCursadas(dcd.buscar(aux));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setResultado(rs.getString("resultado"));
+				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				
+				
+				solicitacoes.add(aux);
+			}
+			
+			ps.close();
+			rs.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return solicitacoes;
 	}
 
 }

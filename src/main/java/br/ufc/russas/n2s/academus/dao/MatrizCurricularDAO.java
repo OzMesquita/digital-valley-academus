@@ -2,7 +2,6 @@ package br.ufc.russas.n2s.academus.dao;
 
 import java.util.List;
 
-import br.ufc.russas.n2s.academus.model.ComponenteCurricular;
 import br.ufc.russas.n2s.academus.model.MatrizCurricular;
 
 public interface MatrizCurricularDAO {

@@ -22,5 +22,13 @@ public interface SolicitacaoDAO {
 	
 	public List<Solicitacao> listar(Aluno a);
 	
+	public List<Solicitacao> listarAndamento(Aluno a);
+	
+	public List<Solicitacao> listarAndemanto(Coordenador c);
+	
+	public List<Solicitacao> listarFinalizado(Aluno a);
+	
+	public List<Solicitacao> listarFinalizado(Coordenador c);
+ 	
 	public int idUltimaSolicitacao(String matricula);
 }
