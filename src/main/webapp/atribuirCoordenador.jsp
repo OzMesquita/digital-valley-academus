@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="br.ufc.russas.n2s.academus.dao.CursoDAO"%>
+<%@ page import="br.ufc.russas.n2s.academus.dao.JDBCCursoDAO"%>
+<%@ page import="br.ufc.russas.n2s.academus.dao.ProfessorDAO"%>
+<%@ page import="br.ufc.russas.n2s.academus.dao.JDBCProfessorDAO"%>
+<%@ page import="br.ufc.russas.n2s.academus.model.Curso"%>
+<%@ page import="br.ufc.russas.n2s.academus.model.Professor"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,6 +17,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<%CursoDAO cd = new JDBCCursoDAO();
+	ProfessorDAO pd = new JDBCProfessorDAO();
+	List<Curso> lc = cd.listar();
+	List<Professor> lp = pd.listar();%>
+	
 	<c:import url="jsp/elements/menu-superior.jsp" charEncoding="UTF-8"></c:import>
 	<div class="container-fluid">
 		<div class="row row-offcanvas row-offcanvas-right">
@@ -33,7 +45,27 @@
 								<th scope="col">Coordenador</th>
 							</tr>
 						</thead>
-						<td></td>
+						<%for(Curso c : lc){ %>
+							<tr>
+								<td><%=c.getNome()%></td>
+								<td>
+								<div class="form-row">
+									<div class="form-group-col-md-9">
+										<select id="cursoInput" class="form-control">
+											<option id="professorOption-default" selected="selected"><%String s = (c.getCoordenador() != null) ? c.getCoordenador().getNome() : "Sem Coordenador";%></option>
+											<%for(Professor p : lp){ %>
+												<option id="professorOption-<%=p.getId()%>" value="<%=p.getId()%>" ><%=p.getNome()%></option>
+											<%}%>
+										</select>
+									</div>
+									<div class="form-group-col-md-3">
+										<input type="submit" class="btn btn-secondary col-md-8" value="atribuir">
+									</div>
+									
+								</div>
+								</td>
+							</tr>
+						<%}%>
 					</table>
 				</form>
 			</div>
