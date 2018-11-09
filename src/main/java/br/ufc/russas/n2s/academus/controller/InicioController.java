@@ -73,35 +73,37 @@ public class InicioController extends HttpServlet {
 			}
 			
 			if( per.getNivel() == NivelAcademus.ALUNO) {
-				if (tipoSolicitacao == null || ( !tipoSolicitacao.equals("andamento") || !tipoSolicitacao.equals("finalizado") )) {
+				
+				if (tipoSolicitacao == null) {
 					listaSol = sodao.listar((Aluno)per.getPessoa());
+				} else if (tipoSolicitacao.equals("andamento")) {
+					listaSol = sodao.listarAndamento((Aluno)per.getPessoa());
+				} else if(tipoSolicitacao.equals("finalizado")) {
+					listaSol = sodao.listarFinalizado((Aluno)per.getPessoa());
 				} else {
-					if (tipoSolicitacao.equals("andamento")) {
-						//listaSol = sodao.listar((Aluno)per.getPessoa()); precisa do andamento
-					} else { //if (tipoSolicitacao.equals("finalizado")) {
-						//listaSol = sodao.listar((Aluno)per.getPessoa()); precisa do finalizado
-					}
+					listaSol = sodao.listar((Aluno)per.getPessoa());
 				}
 				
+				
 			} else if( per.getNivel() == NivelAcademus.SECRETARIO) {
-				if (tipoSolicitacao == null || (!tipoSolicitacao.equals("andamento") || !tipoSolicitacao.equals("finalizado"))) {
+				if (tipoSolicitacao == null) {
 					listaSol = sodao.listar();
+				} else if (tipoSolicitacao.equals("andamento")) {
+					listaSol = sodao.listarAndamento();
+				} else if(tipoSolicitacao.equals("finalizado")) {
+					listaSol = sodao.listarFinalizado();
 				} else {
-					if (tipoSolicitacao.equals("andamento")) {
-						//listaSol = sodao.listar(); precisa do andamento
-					} else {
-						//listaSol = sodao.listar(); precisa do finalizado
-					}
+					listaSol = sodao.listar();
 				}
 			} else if(per.getNivel() == NivelAcademus.COORDENADOR) {
-				if (tipoSolicitacao == null || (!tipoSolicitacao.equals("andamento") || !tipoSolicitacao.equals("finalizado"))) {
+				if (tipoSolicitacao == null) {
 					listaSol = sodao.listar((Coordenador)per.getPessoa());
+				} else if (tipoSolicitacao.equals("andamento")) {
+					listaSol = sodao.listarAndemanto((Coordenador)per.getPessoa());
+				} else if(tipoSolicitacao.equals("finalizado")) {
+					listaSol = sodao.listarFinalizado((Coordenador)per.getPessoa());
 				} else {
-					if (tipoSolicitacao.equals("andamento")) {
-						//listaSol = sodao.listar((Coordenador)per.getPessoa()); precisa do andamento
-					} else {
-						//listaSol = sodao.listar((Coordenador)per.getPessoa()); precisa do finalizado
-					}
+					listaSol = sodao.listar((Coordenador)per.getPessoa());
 				}
 			} else if(per.getNivel() == NivelAcademus.PROFESSOR) {
 				listaSol = sodao.listar();
@@ -110,18 +112,11 @@ public class InicioController extends HttpServlet {
 				listaSol = sodao.listar();
 			}
 			
-			if(listaSol == null || listaSol.isEmpty()) {
-				System.out.println("Mais problemas");
-				listaSol = sodao.listar();
-				if(listaSol == null || listaSol.isEmpty()) {
-					System.out.println("Não é possivel");
-				}
+			if(listaSol == null) {
+				listaSol = new ArrayList<Solicitacao>();
 			}
 			session.setAttribute("listaSol", listaSol);
 			
-			if (session.getAttribute("listaSol") == null) {
-				System.out.println("Deu erro no inicio");
-			}
 			
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio.jsp");
 			

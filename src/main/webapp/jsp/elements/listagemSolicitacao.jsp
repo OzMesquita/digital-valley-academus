@@ -45,6 +45,7 @@
 								<th scope="col">Solicitante</th>
 								<th scope="col">Disciplina</th>
 								<th scope="col">Resultado</th>
+								<th> </th>
 							</tr>
 						</thead>
 						<%

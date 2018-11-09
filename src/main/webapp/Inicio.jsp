@@ -32,7 +32,7 @@
 		<div class="row row-offcanvas row-offcanvas-right">
 			<% 
 			PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
-			if (per == null){
+			if (per != null){
 				if (per.getNivel() == NivelAcademus.ALUNO){
 					%>
 					<c:import url="jsp/elements/menu-lateral-esquerdo-Aluno.jsp"

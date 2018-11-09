@@ -333,7 +333,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, a.getId());
 			ps.setInt(2, Status.getCodigo(Status.FINALIZADO));
-			ps.setInt(2, Status.getCodigo(Status.CANCELADO));
+			ps.setInt(3, Status.getCodigo(Status.CANCELADO));
 			ResultSet rs = ps.executeQuery();
 			
 			//DAOFactory df = new DAOFactoryJDBC();
@@ -546,7 +546,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
-			ps.setInt(1, Status.getCodigo(Status.CANCELADO));
+			ps.setInt(2, Status.getCodigo(Status.CANCELADO));
 			ResultSet rs = ps.executeQuery();
 			
 			

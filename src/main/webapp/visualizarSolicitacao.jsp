@@ -7,6 +7,8 @@
 <%@ page import="br.ufc.russas.n2s.academus.dao.SolicitacaoDAO" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC" %>
 <%@ page import="java.util.*"%>
+ 
+ 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
@@ -144,10 +146,9 @@
 						
 					     
 							<c:import url="jsp/elements/botoesVisualizarCoordenador.jsp" charEncoding="UTF-8"></c:import>
-						
-					         
+			     
 					
-					<!--  </form>-->	
+					
 				</div>
 				<%
 				} else {

@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC;
+import br.ufc.russas.n2s.academus.dao.SolicitacaoDAO;
+import br.ufc.russas.n2s.academus.model.Solicitacao;
+import br.ufc.russas.n2s.academus.model.Status;
+
 public class AnalizandoCoordenadorController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -19,43 +24,31 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String resultado = request.getParameter("resultado");
-		String justificativa = request.getParameter("justificativaInput");
-		String ans = request.getParameter("button");
-		//int id_sol = Integer.parseInt((String)request.getParameter("id"));
-		if (resultado != null && justificativa != null && ans != null) {
-
-			System.out.println(resultado+"   "+justificativa+"  "+ans);
+		try {		
+			String resultado = request.getParameter("resultado");
+			String justificativa = request.getParameter("justificativaInput");
+			int id = Integer.parseInt(request.getParameter("button"));
 			
-		} else {
-			if (resultado == null) {
-				System.out.print("resultado == null ");
+			if (resultado != null && justificativa != null && id != 0) {
+	
+				System.out.println(resultado+"   "+justificativa+"  "+id);
+				
+				SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
+				Solicitacao solicitacao = sodao.buscarPorId(id);
+				if(solicitacao == null) {
+					System.out.println("solicitacao is null");
+				} else {
+					System.out.println("Entrou aqui no banco");
+					solicitacao.setResultado(resultado);
+					solicitacao.setJustificativa(justificativa);
+					solicitacao.setStatus(Status.FINALIZADO);
+					
+					sodao.editar(solicitacao);
+				}
 			} else {
-				System.out.println(resultado);
-			}
-			if (justificativa == null) {
-				System.out.print(" justificativa == null ");
-			} else {
-				System.out.println(justificativa);
-			}
-			if (ans == null) {
-				System.out.println(" id == null");
-			} else {
-				System.out.println(ans);
+				System.out.println("alguem nulo");
 			}
 			
-		}
-		
-		
-		//Solicitacao solicitacao = new Solicitacao();
-		//pegar a solicitacao do dao
-		
-		//solicitacao.setResultado(resultado);
-		//solicitacao.setJustificativa(justificativa);
-		//solicitacao.setStatus(Status.FINALIZADO);
-		
-		
-		try {
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");
 			
 			dispatcher.forward(request, response);
