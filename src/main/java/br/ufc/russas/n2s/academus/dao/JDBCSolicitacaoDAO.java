@@ -174,7 +174,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 
 	@Override
 	public Solicitacao editar(Solicitacao sol) {
-		String sql = "UPDATE academus.solicitacao SET justificativa=?, id_componente=?, status=?, resultado=? WHERE id_solicitacao = ? AND status=?;";
+		String sql = "UPDATE academus.solicitacao SET justificativa=?, id_componente=?, status=?, resultado=? WHERE id_solicitacao = ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -184,9 +184,8 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			update.setString(1, sol.getJustificativa());
 			update.setInt(2, sol.getDisciplinaAlvo().getIdComponente());
 			update.setInt(3, Status.getCodigo(sol.getStatus()));
-			update.setString(5, sol.getResultado());
-			update.setInt(6, sol.getIdSolicitacao());
-			update.setInt(7, Status.getCodigo(Status.SUBMETIDO));
+			update.setString(4, sol.getResultado());
+			update.setInt(5, sol.getIdSolicitacao());
 			
 			update.execute();
 			update.close();
