@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
-import br.ufc.russas.n2s.academus.model.Coordenador;
 import br.ufc.russas.n2s.academus.model.Curso;
 
 public class JDBCCursoDAO implements CursoDAO{
@@ -36,7 +35,7 @@ public class JDBCCursoDAO implements CursoDAO{
 
 	@Override
 	public List<Curso> listar() {
-		String sql = "SELECT academus.curso.id_curso, nome, id_pessoa "
+		String sql = "SELECT academus.curso.id_curso, academus.curso.nome "
 				+ "FROM academus.curso LEFT JOIN academus.coordenador "
 				+ "ON academus.curso.id_curso = academus.coordenador.id_curso";
 		List<Curso> cursos = new ArrayList<Curso>();
@@ -48,13 +47,11 @@ public class JDBCCursoDAO implements CursoDAO{
 			
 			while(rs.next()){
 				//MatrizCurricularDAO matrizDao = new DAOFactoryJDBC().criarMatrizCurricularDAO();
-				CoordenadorDAO cod = new JDBCCoordenadorDAO();
 				
 				Curso curso = new Curso();
 				curso.setIdCurso(rs.getInt("id_curso"));
 				curso.setNome(rs.getString("nome"));
 				//curso.setMatrizes(matrizDao.buscarPorCurso(curso.getIdCurso()));
-				//curso.setCoordenador((rs.getString("id_pessoa") != null) ? cod.buscarPorId(rs.getInt("id_pessoa")) : null);
 				
 				cursos.add(curso);
 			}
@@ -73,7 +70,7 @@ public class JDBCCursoDAO implements CursoDAO{
 	
 	@Override
 	public Curso buscarPorId(int idCurso) {
-		String sql = "SELECT id_curso, nome"
+		String sql = "SELECT academus.curso.id_curso, academus.curso.nome "
 				+ "FROM academus.curso INNER JOIN academus.coordenador "
 				+ "ON academus.curso.id_curso = academus.coordenador.id_curso "
 				+ "WHERE academus.curso.id_curso=?;";

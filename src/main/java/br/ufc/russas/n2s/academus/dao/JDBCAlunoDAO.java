@@ -67,7 +67,6 @@ public class JDBCAlunoDAO implements AlunoDAO{
 			ConnectionPool.releaseConnection(conn);
 		}
 		
-		System.out.println("aluno token:" + aluno.getUsuario().getTokenUsuario());
 		return aluno;
 	}
 

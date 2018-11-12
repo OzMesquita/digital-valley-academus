@@ -13,9 +13,7 @@ public interface CursoDAO {
 	public Curso buscarPorId(int idCurso);
 	
 	public Curso editar(Curso curso);
-	
-	public Coordenador buscarCordenador(Curso curso);
-	
+		
 	public void excluir(Curso curso);
 	
 }
