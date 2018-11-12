@@ -54,7 +54,7 @@ public class JDBCCursoDAO implements CursoDAO{
 				curso.setIdCurso(rs.getInt("id_curso"));
 				curso.setNome(rs.getString("nome"));
 				//curso.setMatrizes(matrizDao.buscarPorCurso(curso.getIdCurso()));
-				curso.setCoordenador((rs.getString("id_pessoa") != null) ? cod.buscarPorId(rs.getInt("id_pessoa")) : null);
+				//curso.setCoordenador((rs.getString("id_pessoa") != null) ? cod.buscarPorId(rs.getInt("id_pessoa")) : null);
 				
 				cursos.add(curso);
 			}

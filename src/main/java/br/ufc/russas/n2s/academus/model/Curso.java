@@ -10,13 +10,11 @@ public class Curso implements Serializable{
 	private int idCurso;
 	private String nome;
 	private List<MatrizCurricular> matrizes;
-	private Coordenador coordenador;
 	
 	public Curso(){
 		this.setIdCurso(-1);
 		this.setNome("INDEFINIDO");
 		this.setMatrizes(new ArrayList<MatrizCurricular>());
-		this.setCoordenador(null);
 	}
 	
 	public int getIdCurso() {
@@ -36,12 +34,6 @@ public class Curso implements Serializable{
 	}
 	public void setMatrizes(List<MatrizCurricular> matrizes){
 		this.matrizes = matrizes;
-	}
-	public Coordenador getCoordenador() {
-		return coordenador;
-	}
-	public void setCoordenador(Coordenador coordenador) {
-		this.coordenador = coordenador;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;

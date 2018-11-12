@@ -22,7 +22,7 @@
 <%
 	//Simulando um aluno na session------------------------------------------
 	DAOFactory df = new DAOFactoryJDBC();
-	Aluno aluno = df.criarAlunoDAO().buscarPorMatricula("375102");
+	Aluno aluno = df.criarAlunoDAO().buscarPorMatricula("371251");
 	request.getSession().setAttribute("usuario", new PerfilAcademus(aluno));
 	//-----------------------------------------------------------------------
 	

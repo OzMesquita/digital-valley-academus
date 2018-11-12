@@ -117,8 +117,8 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 				cord.setCurso(curso);
 			}
 			
-			buscar.close();
 			rs.close();
+			buscar.close();
 			
 		} catch(SQLException e) {
 			e.printStackTrace();
