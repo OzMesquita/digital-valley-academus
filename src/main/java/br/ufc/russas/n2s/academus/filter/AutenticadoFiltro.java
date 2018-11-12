@@ -11,13 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import br.ufc.russas.n2s.academus.dao.AlunoDAO;
-import br.ufc.russas.n2s.academus.dao.JDBCAlunoDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCCoordenadorDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCPerfilAcademusDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCProfessorDAO;
 import br.ufc.russas.n2s.academus.dao.PerfilAcademusDAO;
-import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Coordenador;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
@@ -75,12 +72,12 @@ public class AutenticadoFiltro implements Filter {
 						
 						Coordenador coor = new JDBCCoordenadorDAO().buscarPorId(id);
 						if(coor.getNome() != null){
-							
+							perfil.setNivel(NivelAcademus.COORDENADOR);
 						} else {
 							Professor prof = new JDBCProfessorDAO().buscarPorId(id);
 							
 							if(prof.getNome() != null){
-								
+								perfil.setNivel(NivelAcademus.PROFESSOR);
 							}
 						}
 					}
