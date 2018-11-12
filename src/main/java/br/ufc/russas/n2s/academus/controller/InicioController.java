@@ -34,7 +34,7 @@ public class InicioController extends HttpServlet {
 		try {
 			HttpSession session = request.getSession();
 			//PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
-			PerfilAcademus per = new PerfilAcademus();
+			PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
 			/*
 			Aluno alu = new Aluno();
 			alu.setMatricula("1234");
@@ -51,6 +51,7 @@ public class InicioController extends HttpServlet {
 			per.setNivel(NivelAcademus.COORDENADOR);
 			*/
 			
+			/*
 			if (per.getNivel() == NivelAcademus.INDEFINIDO) {
 				
 				Aluno alu2 = new DAOFactoryJDBC().criarAlunoDAO().buscarPorId(122);
@@ -63,6 +64,7 @@ public class InicioController extends HttpServlet {
 				
 				session.setAttribute("usuario", per);
 			}
+			*/
 			
 			SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
 			List<Solicitacao> listaSol = new ArrayList<Solicitacao>();
@@ -83,7 +85,6 @@ public class InicioController extends HttpServlet {
 				} else {
 					listaSol = sodao.listar((Aluno)per.getPessoa());
 				}
-				
 				
 			} else if( per.getNivel() == NivelAcademus.SECRETARIO) {
 				if (tipoSolicitacao == null) {

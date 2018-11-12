@@ -11,12 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import br.ufc.russas.n2s.academus.dao.AlunoDAO;
+import br.ufc.russas.n2s.academus.dao.JDBCAlunoDAO;
+import br.ufc.russas.n2s.academus.dao.JDBCCoordenadorDAO;
+import br.ufc.russas.n2s.academus.dao.JDBCPerfilAcademusDAO;
+import br.ufc.russas.n2s.academus.dao.JDBCProfessorDAO;
+import br.ufc.russas.n2s.academus.dao.PerfilAcademusDAO;
+import br.ufc.russas.n2s.academus.model.Aluno;
+import br.ufc.russas.n2s.academus.model.Coordenador;
+import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
-import dao.UsuarioDAO;
-import model.Pessoa;
-import model.Usuario;
+import br.ufc.russas.n2s.academus.model.Professor;
 import dao.DAOFactory;
-import util.Facade;
+import dao.PessoaDAO;
+import model.EnumPerfil;
+import model.Pessoa;
 
 public class AutenticadoFiltro implements Filter {
 
@@ -39,18 +48,56 @@ public class AutenticadoFiltro implements Filter {
 			
 			HttpSession session = ((HttpServletRequest) request).getSession();
 			
+			//FOI PASSADO UM TOKEN E UM ID PELA URL
 			if(request.getParameter("token") != null && request.getParameter("id") != null){
 				
 				String token = request.getParameter("token");
 				int id = Integer.parseInt(request.getParameter("id"));
-				//Pessoa user = Facade.buscarPessoaPorId(id);
 				
-				PerfilAcademus user;
 				
-				if (token.equals(user.getUsuario().getTokenUsuario()) && id == user.getId() && !token.equals("null")) {
+				PerfilAcademus user = new JDBCPerfilAcademusDAO().buscarPorId(id);
+				
+				//CASO SEJA O PRIMEIRO ACESSO DO USUÁRIO AO ACADEMUS, CADASTRE ELE NA NOSSA BASE DE DADOS
+				if(user.getNivel() == NivelAcademus.INDEFINIDO){
+					//USUÁRIO QUE SERA CADASTRADO
+					PerfilAcademus perfil = new PerfilAcademus();
 					
-					UsuarioDAO userDAO = DAOFactory.criarUsuarioDAO();
-					session.setAttribute("usuario", user.getUsuario());
+					//DAO'S NECESSÁRIAS
+					PerfilAcademusDAO daoAcademus = new JDBCPerfilAcademusDAO();
+					PessoaDAO daoPessoa = DAOFactory.criarPessoaDAO();
+					
+					
+					Pessoa pessoaCore = daoPessoa.buscarPorId(id);
+					if(pessoaCore.getUsuario().getPerfil() == EnumPerfil.ALUNO)
+					{
+						perfil.setNivel(NivelAcademus.ALUNO);
+					} else if(pessoaCore.getUsuario().getPerfil() == EnumPerfil.SERVIDOR){
+						
+						Coordenador coor = new JDBCCoordenadorDAO().buscarPorId(id);
+						if(coor.getNome() != null){
+							
+						} else {
+							Professor prof = new JDBCProfessorDAO().buscarPorId(id);
+							
+							if(prof.getNome() != null){
+								
+							}
+						}
+					}
+					
+					
+					perfil.setPessoa(pessoaCore);
+					daoAcademus.cadastrar(perfil);
+					
+					user = perfil;
+				}
+				
+				//VERIFICANDO SE O TOKEN PASSADO É IGUAL AO TOKEN DO USUÁRIO DO ACADEMUS
+				if (!token.equals("null") &&
+					token.equals(user.getPessoa().getUsuario().getTokenUsuario()) && 
+					id == user.getPessoa().getId()) {
+					
+					session.setAttribute("usuario", user);
 					chain.doFilter(request, response);
 					
 				}else {
@@ -58,16 +105,19 @@ public class AutenticadoFiltro implements Filter {
 					((HttpServletResponse) response).sendRedirect("/Controle_de_Acesso/");
 					
 				}
-			}else if(session.getAttribute("usuario")!= null && DAOFactory.criarUsuarioDAO().buscarTokenTemp(((Usuario)session.getAttribute("usuario")).getPessoa().getId())!=null && ((Usuario)session.getAttribute("usuario")).getTokenUsuario().equals(DAOFactory.criarUsuarioDAO().buscarTokenTemp(((Usuario)session.getAttribute("usuario")).getPessoa().getId()))){
+			}else if(session.getAttribute("usuario") != null && 
+					 DAOFactory.criarUsuarioDAO().buscarTokenTemp(((PerfilAcademus)session.getAttribute("usuario")).getPessoa().getId()) != null &&
+					 ((PerfilAcademus)session.getAttribute("usuario")).getPessoa().getUsuario().getTokenUsuario().equals(DAOFactory.criarUsuarioDAO().buscarTokenTemp(((PerfilAcademus)session.getAttribute("usuario")).getPessoa().getId()))){
 				
 				chain.doFilter(request, response);
 				
 			}else {
-				
+
 				((HttpServletResponse) response).sendRedirect("/Controle_de_Acesso/");
 				
 			}
-		}				
+		}
+		
 	}
 
 	@Override

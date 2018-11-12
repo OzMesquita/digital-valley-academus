@@ -13,6 +13,7 @@ import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 
 import dao.DAOFactory;
 import dao.JDBCPessoaDAO;
+import dao.JDBCServidorDAO;
 import model.Pessoa;
 
 public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
@@ -89,7 +90,7 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
-			JDBCPessoaDAO daoPessoa = (JDBCPessoaDAO) DAOFactory.criarPessoaDAO();			
+			JDBCServidorDAO daoServidor = (JDBCServidorDAO) DAOFactory.criarServidorDAO();
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -98,7 +99,16 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 				perfil = new PerfilAcademus();
 				
 				perfil.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
-				perfil.setPessoa(daoPessoa.buscarPorId(rs.getInt("id_pessoa_usuario")));
+				
+				if(perfil.getNivel() == NivelAcademus.ALUNO){
+					perfil.setPessoa(new JDBCAlunoDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
+				} else if(perfil.getNivel() == NivelAcademus.COORDENADOR){
+					perfil.setPessoa(new JDBCCoordenadorDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
+				} else if(perfil.getNivel() == NivelAcademus.SECRETARIO){
+					perfil.setPessoa(daoServidor.buscar(rs.getInt("id_pessoa_usuario")));
+				} else if(perfil.getNivel() == NivelAcademus.PROFESSOR){
+					perfil.setPessoa(new JDBCProfessorDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
+				}
 				
 			}
 			

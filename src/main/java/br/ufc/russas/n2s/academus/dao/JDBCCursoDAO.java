@@ -73,7 +73,7 @@ public class JDBCCursoDAO implements CursoDAO{
 	
 	@Override
 	public Curso buscarPorId(int idCurso) {
-		String sql = "SELECT id_curso, nome "
+		String sql = "SELECT id_curso, nome"
 				+ "FROM academus.curso INNER JOIN academus.coordenador "
 				+ "ON academus.curso.id_curso = academus.coordenador.id_curso "
 				+ "WHERE academus.curso.id_curso=?;";
@@ -94,7 +94,7 @@ public class JDBCCursoDAO implements CursoDAO{
 				curso.setIdCurso(rs.getInt("id_curso"));
 				curso.setNome(rs.getString("nome"));
 				//curso.setMatrizes(matrizDao.buscarPorCurso(curso.getIdCurso()));
-				curso.setCoordenador((rs.getInt("id_pessoa") > 0) ? cod.buscarPorId(rs.getInt("id_pessoa")) : null);
+				//curso.setCoordenador((rs.getInt("id_pessoa") > 0) ? cod.buscarPorId(rs.getInt("id_pessoa")) : null);
 			}
 			
 			listar.close();
