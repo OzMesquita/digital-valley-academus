@@ -9,6 +9,7 @@ import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Coordenador;
 import br.ufc.russas.n2s.academus.model.Curso;
 import br.ufc.russas.n2s.academus.model.Professor;
+import model.Pessoa;
 
 public class JDBCCoordenadorDAO implements CoordenadorDAO{
 
@@ -168,6 +169,30 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 		} finally {
 			ConnectionPool.releaseConnection(conn);
 		}
+	}
+
+	@Override
+	public boolean isCoordenador(Pessoa pessoa) {
+		String sql = "SELECT academus.coordenador.id_pessoa, public.pessoa_usuario.nome "
+				+ "FROM academus.coordenador INNER JOIN public.pessoa_usuario "
+				+ "ON academus.coordenador.id_pessoa = public.pessoa_usuario.id_pessoa_usuario AND academus.coordenador.id_pessoa = 5;";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, pessoa.getId());
+			
+			boolean resultado = ps.execute();
+			ps.close();
+			
+			if(resultado){
+				return true;
+			}
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

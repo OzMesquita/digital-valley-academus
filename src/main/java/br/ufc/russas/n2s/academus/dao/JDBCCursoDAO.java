@@ -45,13 +45,10 @@ public class JDBCCursoDAO implements CursoDAO{
 			PreparedStatement listar = conn.prepareStatement(sql);
 			ResultSet rs = listar.executeQuery();
 			
-			while(rs.next()){
-				//MatrizCurricularDAO matrizDao = new DAOFactoryJDBC().criarMatrizCurricularDAO();
-				
+			while(rs.next()){				
 				Curso curso = new Curso();
 				curso.setIdCurso(rs.getInt("id_curso"));
 				curso.setNome(rs.getString("nome"));
-				//curso.setMatrizes(matrizDao.buscarPorCurso(curso.getIdCurso()));
 				
 				cursos.add(curso);
 			}
@@ -85,13 +82,9 @@ public class JDBCCursoDAO implements CursoDAO{
 			ResultSet rs = listar.executeQuery();
 			
 			if(rs.next()){
-				//MatrizCurricularDAO matrizDao = new DAOFactoryJDBC().criarMatrizCurricularDAO();
-				CoordenadorDAO cod = new JDBCCoordenadorDAO();
 				
 				curso.setIdCurso(rs.getInt("id_curso"));
 				curso.setNome(rs.getString("nome"));
-				//curso.setMatrizes(matrizDao.buscarPorCurso(curso.getIdCurso()));
-				//curso.setCoordenador((rs.getInt("id_pessoa") > 0) ? cod.buscarPorId(rs.getInt("id_pessoa")) : null);
 			}
 			
 			listar.close();

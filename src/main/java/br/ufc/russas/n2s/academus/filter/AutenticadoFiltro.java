@@ -15,10 +15,8 @@ import br.ufc.russas.n2s.academus.dao.JDBCCoordenadorDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCPerfilAcademusDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCProfessorDAO;
 import br.ufc.russas.n2s.academus.dao.PerfilAcademusDAO;
-import br.ufc.russas.n2s.academus.model.Coordenador;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
-import br.ufc.russas.n2s.academus.model.Professor;
 import dao.DAOFactory;
 import dao.PessoaDAO;
 import model.EnumPerfil;
@@ -70,18 +68,12 @@ public class AutenticadoFiltro implements Filter {
 						perfil.setNivel(NivelAcademus.ALUNO);
 					} else if(pessoaCore.getUsuario().getPerfil() == EnumPerfil.SERVIDOR){
 						
-						Coordenador coor = new JDBCCoordenadorDAO().buscarPorId(id);
-						if(coor.getNome() != null){
+						if(new JDBCCoordenadorDAO().isCoordenador(pessoaCore)){
 							perfil.setNivel(NivelAcademus.COORDENADOR);
-						} else {
-							Professor prof = new JDBCProfessorDAO().buscarPorId(id);
-							
-							if(prof.getNome() != null){
-								perfil.setNivel(NivelAcademus.PROFESSOR);
-							}
+						} else if(new JDBCProfessorDAO().isProfessor(pessoaCore)){
+							perfil.setNivel(NivelAcademus.PROFESSOR);
 						}
 					}
-					
 					
 					perfil.setPessoa(pessoaCore);
 					daoAcademus.cadastrar(perfil);

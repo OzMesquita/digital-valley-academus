@@ -11,6 +11,7 @@ import java.util.List;
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Professor;
 import model.EnumCargo;
+import model.Pessoa;
 import model.Usuario;
 
 public class JDBCProfessorDAO implements ProfessorDAO{
@@ -151,6 +152,30 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 		}
 
 		return professor;
+	}
+
+	@Override
+	public boolean isProfessor(Pessoa pessoa) {
+		String sql = "SELECT public.pessoa_usuario.nome, public.professor.id_pessoa_prof "
+				+ "FROM public.professor INNER JOIN public.pessoa_usuario "
+				+ "ON professor.id_pessoa_prof = pessoa_usuario.id_pessoa_usuario AND public.professor.id_pessoa_prof = ?;";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, pessoa.getId());
+			
+			boolean resultado = ps.execute();
+			ps.close();
+			
+			if(resultado){
+				return true;
+			}
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 }

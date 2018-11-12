@@ -12,5 +12,5 @@
            
         </div>        
     </div>
-	<a class="btn-sm btn-light text-right" href="">Sair</a> <!-- Colocar no href Constantes.getAppUrl() %>/sair -->
+	<a class="btn-sm btn-light text-right" href="Sair">Sair</a> <!-- Colocar no href Constantes.getAppUrl() %>/sair -->
 	</nav>
