@@ -103,6 +103,7 @@ public class AutenticadoFiltro implements Filter {
 			}else {
 
 				((HttpServletResponse) response).sendRedirect("/Controle_de_Acesso/");
+				//((HttpServletResponse) response).sendRedirect("atribuirCoordenador.jsp");
 				
 			}
 		}

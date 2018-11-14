@@ -68,7 +68,7 @@ public class JDBCCursoDAO implements CursoDAO{
 	@Override
 	public Curso buscarPorId(int idCurso) {
 		String sql = "SELECT academus.curso.id_curso, academus.curso.nome "
-				+ "FROM academus.curso INNER JOIN academus.coordenador "
+				+ "FROM academus.curso LEFT JOIN academus.coordenador "
 				+ "ON academus.curso.id_curso = academus.coordenador.id_curso "
 				+ "WHERE academus.curso.id_curso=?;";
 		

@@ -21,9 +21,9 @@
 
 <%
 	//Simulando um aluno na session------------------------------------------
-	DAOFactory df = new DAOFactoryJDBC();
-	Aluno aluno = df.criarAlunoDAO().buscarPorMatricula("371251");
-	request.getSession().setAttribute("usuario", new PerfilAcademus(aluno));
+	//DAOFactory df = new DAOFactoryJDBC();
+	//Aluno aluno = df.criarAlunoDAO().buscarPorMatricula("371251");
+	//request.getSession().setAttribute("usuario", new PerfilAcademus(aluno));
 	//-----------------------------------------------------------------------
 	
 	PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
@@ -31,6 +31,7 @@
 	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
 	//System.out.println(aluno.getCurso().getIdCurso());
 	Aluno a = (Aluno) usuario.getPessoa();
+	System.out.println(a.getCurso().getNome());
 	//List<MatrizCurricular> matrizes = new ArrayList<MatrizCurricular>();
 	List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(a.getCurso().getIdCurso());
 	//System.out.println(matrizes.size());
