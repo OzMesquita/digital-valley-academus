@@ -4,6 +4,8 @@
 <%@ page import="br.ufc.russas.n2s.academus.model.Solicitacao" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.Aluno" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.DisciplinaCursada" %>
+<%@ page import="br.ufc.russas.n2s.academus.model.PerfilAcademus" %>
+<%@ page import="br.ufc.russas.n2s.academus.model.NivelAcademus" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.SolicitacaoDAO" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC" %>
 <%@ page import="java.util.*"%>
@@ -41,7 +43,26 @@
 	<c:import url="jsp/elements/menu-superior.jsp" charEncoding="UTF-8"></c:import>
 	<div class="container-fluid">
 		<div class="row row-offcanvas row-offcanvas-right">
-			<c:import url="jsp/elements/menu-lateral-esquerdo.jsp" charEncoding="UTF-8"></c:import>
+		<% 
+			PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
+			if (per != null){
+				if (per.getNivel() == NivelAcademus.ALUNO){ 	%>
+					<c:import url="jsp/elements/menu-lateral-esquerdo-Aluno.jsp"
+					charEncoding="UTF-8"></c:import>
+			<%	} else if (per.getNivel() == NivelAcademus.COORDENADOR){ %>
+					<c:import url="jsp/elements/menu-lateral-esquerdo-Coordenador.jsp"
+					charEncoding="UTF-8"></c:import>
+			<%	} else if (per.getNivel() == NivelAcademus.SECRETARIO){	%>
+					<c:import url="jsp/elements/menu-lateral-esquerdo-Secretario.jsp"
+					charEncoding="UTF-8"></c:import>
+			<%	} else{ %>
+					<c:import url="jsp/elements/menu-lateral-esquerdo.jsp"
+					charEncoding="UTF-8"></c:import>
+			<% }
+			} else { %>
+				<c:import url="jsp/elements/menu-lateral-esquerdo.jsp"
+				charEncoding="UTF-8"></c:import>
+			<% } %>
 			<div class="col-sm-8">
 				<nav aria-label="breadcrumb" role="navigation">
 				<ol class="breadcrumb">
@@ -97,20 +118,14 @@
                             
                         </div>
 						<br>
-						
-						<label for="instituicaoInput"><b> Instituição </b></label> 
-						<textarea id="instituicao" name="instituicao" class="form-control" aria-describedby="tituloHelp" readonly required> < % = solicitacao.getInstituicao() % ></textarea>
-						<div class="invalid-feedback">
-                            
-                        </div>
-						<br>							
-						
+													
 						<label for="disciplinasCursadasInput"><b> Lista de Disciplinas Cursadas</b></label>
 							<div class="form-group">
 								<table class="table table-responsive">
 									<thead>
 										<tr>
 											<th scope="col">Nome</th>
+											<th scope="col">Instituição</th>
 											<th scope="col">Carga</th>
 											<th scope="col">Semestre</th>
 											<th scope="col">Nota</th>
@@ -122,6 +137,7 @@
 									%>
 									<tr>
 										<td><%=disCursada.getNome()%></td>
+										<td><%=disCursada.getInstituicao()%></td>
 										<td><%=disCursada.getCarga()%></td>
 										<td><%=disCursada.getSemestre()%></td>
 										<td><%=disCursada.getNota()%></td>
@@ -145,7 +161,7 @@
 						<br>
 						
 					     
-							<c:import url="jsp/elements/botoesVisualizarCoordenador.jsp" charEncoding="UTF-8"></c:import>
+							<c:import url="jsp/elements/botoesVisualizarAluno.jsp" charEncoding="UTF-8"></c:import>
 			     
 					
 					
