@@ -12,6 +12,8 @@ public interface MatrizCurricularDAO {
 	
 	public MatrizCurricular buscarPorId(int idMatriz);
 	
+	public MatrizCurricular buscarPorSolicitacao(int idSolicitacao);
+	
 	public List<MatrizCurricular> buscarPorCurso(int idCurso);
 	
 	public List<MatrizCurricular> buscarPorNome(String nome);

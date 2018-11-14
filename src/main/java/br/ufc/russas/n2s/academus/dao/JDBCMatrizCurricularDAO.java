@@ -238,4 +238,42 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 		
 	}
 
+	@Override
+	public MatrizCurricular buscarPorSolicitacao(int idSolicitacao) {
+		String sql = "SELECT DISTINCT academus.matriz_curricular.* FROM academus.solicitacao "
+				+ "INNER JOIN academus.componente_curricular ON academus.solicitacao.id_componente = academus.componente_curricular.id_disciplina_matriz AND academus.solicitacao.id_solicitacao = ? "
+				+ "LEFT JOIN academus.matriz_curricular ON academus.componente_curricular.id_matriz = academus.matriz_curricular.id_matriz;";
+		
+		MatrizCurricular matriz = new MatrizCurricular();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idSolicitacao);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()){
+				matriz.setIdMatriz(rs.getInt("id_matriz_curricular"));
+				matriz.setNome(rs.getString("nome"));
+				matriz.setCarga(rs.getInt("carga_horario"));
+				matriz.setPrazoMinimo(rs.getInt("prazo_minimo"));
+				matriz.setPrazoMaximo(rs.getInt("prazo_maximo"));
+				matriz.setVigente(rs.getBoolean("vigente"));
+				matriz.setAtivo(rs.getBoolean("ativo"));
+				matriz.setIdCurso(rs.getInt("id_curso"));
+
+			}
+			
+			rs.close();
+			ps.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return matriz;
+	}
+
 }
