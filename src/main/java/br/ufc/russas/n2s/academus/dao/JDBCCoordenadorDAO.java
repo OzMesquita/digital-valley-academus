@@ -34,6 +34,25 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 		
 		return cord;
 	}
+	
+	public void cadastrarCoordedanador(int idCurso, int idProfessor) {
+		String sql = "INSERT INTO academus.coordenador(id_pessoa, id_curso) VALUES (?, ?);";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try {
+			PreparedStatement insert = conn.prepareStatement(sql);
+			insert.setInt(1, idProfessor);
+			insert.setInt(2, idCurso);
+			
+			insert.execute();
+			insert.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.releaseConnection(conn);
+		}
+	}
 
 	@Override
 	public Coordenador buscarPorId(int idCoordenador) {
@@ -84,18 +103,19 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 	}
 	
 	@Override
-	public Coordenador buscarPorCurso(Curso curso) {
-		String sql = "SELECT id_pessoa FROM academus.coordenador WHERE id_curso = ?;";
+	public Coordenador buscarPorCurso(int idCurso) {
+		String sql = "SELECT * FROM academus.coordenador WHERE id_curso = ?;";
 		Coordenador cord = new Coordenador();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement buscar = conn.prepareStatement(sql);
-			buscar.setInt(1, curso.getIdCurso());
+			buscar.setInt(1, idCurso);
 			
 			ResultSet rs = buscar.executeQuery();
 			
 			if(rs.next()){
+				Curso curso = new DAOFactoryJDBC().criarCursoDAO().buscarPorId(rs.getInt("id_Curso"));
 				Professor prof = new DAOFactoryJDBC().criarProfessorDAO().buscarPorId(rs.getInt("id_pessoa"));
 				
 				//Pessoa
@@ -191,8 +211,26 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 			
 		} catch(SQLException e) {
 			e.printStackTrace();
+		}finally{
+			ConnectionPool.closeConections();
 		}
 		return false;
+	}
+	
+	public void alterarCoordenador(int idCurso, int idProfessor){
+		String sql = "UPDATE academus.coordenador SET id_pessoa = ? WHERE id_curso = ?";
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idProfessor);
+			ps.setInt(2, idCurso);
+			ps.execute();
+			ps.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.closeConections();
+		}
 	}
 
 }

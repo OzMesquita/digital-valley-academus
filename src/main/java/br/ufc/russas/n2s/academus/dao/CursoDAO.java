@@ -16,4 +16,6 @@ public interface CursoDAO {
 		
 	public void excluir(Curso curso);
 	
+	public boolean possuiCoordenador(int idCurso);
+	
 }

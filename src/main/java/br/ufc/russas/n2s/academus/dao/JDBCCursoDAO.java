@@ -139,5 +139,26 @@ public class JDBCCursoDAO implements CursoDAO{
 			ConnectionPool.releaseConnection(conn);
 		}
 	}
+	
+	public boolean possuiCoordenador(int idCurso){
+		String sql = "SELECT id_pessoa FROM academus.coordenador where id_curso = ?";
+		Connection conn = ConnectionPool.getConnection();
+		boolean resultado = false;
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idCurso);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				if(rs.getInt("id_pessoa") > 0) resultado = true;
+			}
+			rs.close();
+			ps.close();
+		} catch(SQLException e){
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.releaseConnection(conn);
+		}
+		return resultado;
+	}
 
 }

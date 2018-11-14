@@ -86,7 +86,7 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 	@Override
 	public PerfilAcademus buscarPorId(int id) {
 		String sql = "SELECT id_pessoa_usuario, id_nivel FROM academus.perfil_academus WHERE id_pessoa_usuario = "+ id +";";
-		PerfilAcademus perfil = new PerfilAcademus();
+		PerfilAcademus perfil = null;
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{

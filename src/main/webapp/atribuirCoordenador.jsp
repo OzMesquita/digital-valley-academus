@@ -48,7 +48,7 @@
 							<th scope="col">Coordenador</th>
 						</tr>
 					</thead>
-					<%for(Curso c : lc){ Coordenador co = null; co = cod.buscarPorCurso(c);%>
+					<%for(Curso c : lc){ Coordenador co = null; co = cod.buscarPorCurso(c.getIdCurso());%>
 						<tr>
 							<td><%=c.getNome()%></td>
 							<td>
@@ -63,9 +63,7 @@
 									</select>
 								</div>
 								<div class="form-group-col-md-3">
-
-										<button type="submit" name="buttonCurso" class="btn btn-secondary" value="<%=c.getIdCurso()%>">Atribuir</button>
-									
+									<button type="submit" name="buttonCurso" class="btn btn-secondary" value="<%=c.getIdCurso()%>">Atribuir</button>
 								</div>
 							</div>
 							</form>
