@@ -4,6 +4,7 @@ import java.util.Map;
 import com.github.shyiko.dotenv.DotEnv;
 
 public class Constantes {
+	private static String ANEXO_DIR;
 	private static String APP_URL;
 	private static String PRE_URL;
 	private static String APP_ASSETS_URL;
@@ -21,6 +22,7 @@ public class Constantes {
 	
 	static{
 		Map<String, String> dotEnv = DotEnv.load();
+		ANEXO_DIR = dotEnv.get("ANEXO_DIR");
 		DATABASE_CONF_DIR = dotEnv.get("DATABASE_CONF_DIR");
 		EMAIL_CONF_DIR = dotEnv.get("EMAIL_CONF_DIR");
 		APP_URL = dotEnv.get("APP_URL");
