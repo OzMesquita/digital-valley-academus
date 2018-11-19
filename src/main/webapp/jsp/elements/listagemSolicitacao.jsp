@@ -35,15 +35,12 @@
 		//SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
 		//List<Solicitacao> solicitacoes = sodao.listar();
 		if(solicitacoes == null){
-			System.out.println("entrou aqui");
 			solicitacoes = (List<Solicitacao>) session.getAttribute("listaSol");
 			if (solicitacoes == null){
-				System.out.println("joga no mato");
 			}
 		}
 		
 		if(solicitacoes != null){
-			System.out.println("Deu Certo ^^");
 			for (Solicitacao soli : solicitacoes) {
 				
 		%>

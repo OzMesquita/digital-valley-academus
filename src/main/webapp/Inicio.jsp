@@ -8,9 +8,9 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
+		<title>Início</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
-		<title>Início</title>
 		
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -23,7 +23,6 @@
 		<link type="text/css" rel="stylesheet" href="<%=Constantes.getAppCssUrl()%>/bootstrap-datepicker.css" />
 		<link type="text/css" rel="stylesheet" href="<%=Constantes.getAppCssUrl()%>/bootstrap-datepicker.standalone.css" />
 	
-		
 	</head>
 	<body>
 		<c:import url="jsp/elements/menu-superior.jsp" charEncoding="UTF-8"></c:import>
