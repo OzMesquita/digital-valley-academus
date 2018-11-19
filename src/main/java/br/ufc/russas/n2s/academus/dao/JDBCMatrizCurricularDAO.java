@@ -167,7 +167,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 			
 			while(rs.next()){
 				MatrizCurricular aux = new MatrizCurricular();
-				aux.setIdMatriz(rs.getInt("id_matriz_curricular"));
+				aux.setIdMatriz(rs.getInt("id_matriz"));
 				aux.setNome(rs.getString("nome"));
 				aux.setCarga(rs.getInt("carga_horario"));
 				aux.setPrazoMinimo(rs.getInt("prazo_minimo"));

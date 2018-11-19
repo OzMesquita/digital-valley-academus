@@ -109,7 +109,7 @@
   	<servlet-name>Sair</servlet-name>
   	<url-pattern>/Sair</url-pattern>
   </servlet-mapping>
-  <!--
+
   <filter>
     <filter-name>FiltroAutenticado</filter-name>
     <filter-class>br.ufc.russas.n2s.academus.filter.AutenticadoFiltro</filter-class>
@@ -118,5 +118,5 @@
     <filter-name>FiltroAutenticado</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  -->
+
 </web-app>

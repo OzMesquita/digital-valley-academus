@@ -27,7 +27,6 @@ public class VisualizarSolicitacaoController extends HttpServlet {
 		try {
 			String ans = request.getParameter("button");
 			request.setAttribute("id", ans);
-			//System.out.println(ans);
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSolicitacao.jsp");
 			
 			dispatcher.forward(request, response);
