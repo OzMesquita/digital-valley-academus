@@ -13,7 +13,11 @@
 		<title>Início</title>
 		
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link type="text/css" rel="stylesheet" href="<%=Constantes.getAppCssUrl()%>/design.css" />
 		<link type="text/css" rel="stylesheet" href="<%=Constantes.getAppCssUrl()%>/bootstrap-datepicker.css" />
@@ -24,7 +28,7 @@
 	<body>
 		<c:import url="jsp/elements/menu-superior.jsp" charEncoding="UTF-8"></c:import>
 		<div class="container-fluid">
-			<div class="row row-offcanvas row-offcanvas-right">
+			<div class="row">
 				<% 
 				PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
 				if (per != null){
@@ -56,7 +60,7 @@
 					<%
 				}
 				%>
-				<div class="col-sm-8">
+				<div class="col-md-10">
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
