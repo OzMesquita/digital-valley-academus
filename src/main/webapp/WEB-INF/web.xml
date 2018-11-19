@@ -57,6 +57,14 @@
     <servlet-name>AtribuirCoordenadoresController</servlet-name>
     <servlet-class>br.ufc.russas.n2s.academus.controller.AtribuirCoordenadoresController</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>AtualizarSolicitacaoController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.AtualizarSolicitacaoController</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>EditarSolicitacaoController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.EditarSolicitacaoController</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Autenticar</servlet-name>
     <url-pattern>/autentica</url-pattern>
@@ -104,6 +112,14 @@
   <servlet-mapping>
     <servlet-name>AtribuirCoordenadoresController</servlet-name>
     <url-pattern>/AtribuirCoordenadores</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AtualizarSolicitacaoController</servlet-name>
+    <url-pattern>/AtualizarSolicitacao</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EditarSolicitacaoController</servlet-name>
+    <url-pattern>/EditarSolicitacao</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>Sair</servlet-name>

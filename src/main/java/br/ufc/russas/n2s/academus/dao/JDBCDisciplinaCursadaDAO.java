@@ -114,7 +114,7 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, sol.getIdSolicitacao());
 			
-			ps.execute();
+			ps.executeUpdate();
 			ps.close();
 			
 		} catch(SQLException e) {

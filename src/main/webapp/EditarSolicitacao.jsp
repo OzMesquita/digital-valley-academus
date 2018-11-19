@@ -23,12 +23,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
-	//Simulando um aluno na session------------------------------------------
+	/*/Simulando um aluno na session------------------------------------------
 	DAOFactory df = new DAOFactoryJDBC();
 	Aluno aluno = df.criarAlunoDAO().buscarPorMatricula("375102");
 	request.getSession().setAttribute("usuario", new PerfilAcademus(aluno));
 	//-----------------------------------------------------------------------
-	
+	*/
 	PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
 
 	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
@@ -84,7 +84,7 @@
 				</nav>
 				<br>
 				<div class="form-group">
-					<form action="CadastrarSolicitacao" method="post">
+					<form action="AtualizarSolicitacao" method="post">
 						<div class="form-group">
 							<label for="matrizInput">Matriz escolhida</label>
 							<select id="matrizInput" class="form-control" onchange="listarComponentes()">
@@ -97,7 +97,7 @@
 						<div class="form-group">
 							<label for="componenteInput">Disciplina Alvo</label>
 							<select id="componenteInput" name="componenteInput" class="form-control">
-								<option value="<%=solicitacao.getDisciplinaAlvo().getDisciplina().getNome() %>" selected="selected" disabled="disabled"><%=solicitacao.getDisciplinaAlvo().getDisciplina().getNome() %></option>
+								<option value="<%=solicitacao.getDisciplinaAlvo().getDisciplina().getId() %>" selected="selected" disabled="disabled"><%=solicitacao.getDisciplinaAlvo().getDisciplina().getNome() %></option>
 							</select>
 						</div>
 						
@@ -170,7 +170,7 @@
 						</div>
 						<div class="modal-footer">
 							<div id="botoes" class="controls">
-								<button type="submit" class="btn btn-primary">Confirmar</button>
+								<button type="submit" name="button" value="<%=solicitacao.getIdSolicitacao()%>" class="btn btn-primary">Confirmar</button>
 								<button type="button" class="btn btn-primary">Cancelar</button>
 							</div>
 						</div>
