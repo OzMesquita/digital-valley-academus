@@ -7,8 +7,6 @@ public class Constantes {
 	private static String ANEXO_DIR;
 	private static String APP_URL;
 	private static String PRE_URL;
-	private static String APP_ASSETS_URL;
-	private static String APP_JS_URL;
 	private static String APP_IMG_URL;
 	private static String APP_CSS_URL;
 	private static Integer NUMBER_OF_ROWS_PER_PAGE;
@@ -26,13 +24,15 @@ public class Constantes {
 		DATABASE_CONF_DIR = dotEnv.get("DATABASE_CONF_DIR");
 		EMAIL_CONF_DIR = dotEnv.get("EMAIL_CONF_DIR");
 		APP_URL = dotEnv.get("APP_URL");
-		APP_ASSETS_URL = dotEnv.get("APP_ASSETS_URL");
-		APP_JS_URL = dotEnv.get("APP_JS_URL");
 		APP_IMG_URL = dotEnv.get("APP_IMG_URL");
 		APP_CSS_URL = dotEnv.get("APP_CSS_URL");
 		NUMBER_OF_ROWS_PER_PAGE = Integer.valueOf(dotEnv.get("NUMBER_OF_ROWS_PER_PAGE"));
 		SESSION_MSG = dotEnv.get("SESSION_MSG");
 		PRE_URL = dotEnv.get("PRE_URL");
+	}
+	
+	public static String getAnexoDir() {
+		return ANEXO_DIR;
 	}
 
 	public static String getAppUrl() {
@@ -41,14 +41,6 @@ public class Constantes {
 
 	public static String getPreUrl() {
 		return PRE_URL;
-	}
-
-	public static String getAppAssetsUrl() {
-		return APP_ASSETS_URL;
-	}
-
-	public static String getAppJsUrl() {
-		return APP_JS_URL;
 	}
 
 	public static String getAppImgUrl() {
