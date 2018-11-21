@@ -24,14 +24,29 @@ public class BuscarMatrizController extends HttpServlet {
 		try{
 			if(request.getParameter("editarPtn") != null){
 				
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("buscaMatriz.jsp"); //Encaminhando para errada
+				dispatcher.forward(request, response);
+				
+				System.out.println("Editar btn");
 			} else if(request.getParameter("vizualizarPtn") != null){
 				
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("buscaMatriz.jsp"); //Encaminhando para errada
+				dispatcher.forward(request, response);
+				
+				System.out.println("Vizualizar btn");
 			} else if(request.getParameter("removerPtn") != null){
 				
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("buscaMatriz.jsp"); //Encaminhando para errada
+				dispatcher.forward(request, response);
+				
+				System.out.println("Remover btn");
+			} else {
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("buscaMatriz.jsp"); 
+				dispatcher.forward(request, response);
+				System.out.println("nenhum btn");
 			}
 			
-			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("buscaMatriz.jsp");			
-			dispatcher.forward(request, response);
+			
 			
 		}catch(Exception e){
 			e.getMessage();

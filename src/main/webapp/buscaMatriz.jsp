@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Listando Matrizes</title>
+		<title>Buscar Matrizes</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 		
@@ -68,9 +68,8 @@
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
-						<li class="breadcrumb-item" aria-current="page"><a href="listaMatrizes.jsp">Lista de Matriz</a></li>
-						<!-- PREENCHER HREF -->
-						<li class="breadcrumb-item active" aria-current="page">Busca Matriz</li>
+						<li class="breadcrumb-item"><a href="listaMatrizes.jsp">Listar de Matriz</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Buscar Matriz</li>
 					</ol>
 					</nav>
 					
@@ -80,7 +79,7 @@
                            <button class="btn btn-primary btn-sm" type="submit">Procurar</button>
 	                    </form>
 	                    
-	                    <form id="buscarMatrizForm" action="BuscarMatriz"></form>
+	                    <form id="buscarMatrizForm" method="post" action="BuscarMatriz"></form>
 	                    
 	                    <br/>
 	                    <div class="table-responsive">

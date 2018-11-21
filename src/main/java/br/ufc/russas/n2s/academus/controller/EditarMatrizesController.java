@@ -26,7 +26,6 @@ public class EditarMatrizesController extends HttpServlet{
 		try {
 			String ans = request.getParameter("button");
 			request.setAttribute("id", ans);
-			//System.out.println(ans);
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("EditarMatrizTeste.jsp");
 			
 			dispatcher.forward(request, response);
