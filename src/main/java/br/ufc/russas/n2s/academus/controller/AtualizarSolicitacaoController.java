@@ -49,13 +49,13 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 			PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
 			ArrayList<DisciplinaCursada> disciplinasCursadas = new ArrayList<DisciplinaCursada>();
 			
-			
-			for(int i=0; i<nomeDisciplinas.length; i++){
-				
-				disciplinasCursadas.add(new DisciplinaCursada(semestreDisciplinas[i], Float.parseFloat(notaDisciplinas[i]), Integer.parseInt(cargaDisciplinas[i]), nomeDisciplinas[i], instituicaoDisciplinas[i]));
-				
+			if(nomeDisciplinas != null) {
+				for(int i=0; i<nomeDisciplinas.length; i++){
+					
+					disciplinasCursadas.add(new DisciplinaCursada(semestreDisciplinas[i], Float.parseFloat(notaDisciplinas[i]), Integer.parseInt(cargaDisciplinas[i]), nomeDisciplinas[i], instituicaoDisciplinas[i]));
+					
+				}
 			}
-			
 			ComponenteCurricularDAO ccd = new JDBCComponenteCurricularDAO();
 			SolicitacaoDAO sd = new JDBCSolicitacaoDAO();
 			DisciplinaCursadaDAO dcd = new JDBCDisciplinaCursadaDAO();
@@ -63,9 +63,12 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 			Solicitacao solicitacao = sd.buscarPorId(id);
 			
 			if (solicitacao.getSolicitante().getId() == usuario.getPessoa().getId()) {
-				
-				solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
+				if(componente != null) {
+					solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
+				}
 				solicitacao.setStatus(Status.SUBMETIDO);
+				solicitacao.setResultado("");
+				solicitacao.setJustificativa("");
 				solicitacao.setDisciplinasCursadas(disciplinasCursadas);
 				
 				sd.editar(solicitacao);

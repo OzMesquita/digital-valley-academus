@@ -121,11 +121,12 @@
 										for (DisciplinaCursada disCursada : solicitacao.getDisciplinasCursadas()) {
 									%>
 									<tr>
-										<td><%=disCursada.getNome()%><input name="nomeEX" type="hidden" value="<%=disCursada.getNome()%>"></td>
-										<td><%=disCursada.getCarga()%><input name="cargaEX" type="hidden" value="<%=disCursada.getCarga()%>"></td>
-										<td><%=disCursada.getNota()%><input name="notaEX" type="hidden" value="<%=disCursada.getNota()%>"></td>
-										<td><%=disCursada.getSemestre()%><input name="semestreEX" type="hidden" value="<%=disCursada.getSemestre()%>"></td>
-										<td><%=disCursada.getInstituicao()%><input name="instituicaoEX" type="hidden" value="<%=disCursada.getInstituicao()%>"></td>
+										<td><%=disCursada.getNome()%><input name="disc-nome" type="hidden" value="<%=disCursada.getNome()%>"></td>
+										<td><%=disCursada.getCarga()%><input name="disc-carga" type="hidden" value="<%=disCursada.getCarga()%>"></td>
+										<td><%=disCursada.getNota()%><input name="disc-nota" type="hidden" value="<%=disCursada.getNota()%>"></td>
+										<td><%=disCursada.getSemestre()%><input name="disc-semestre" type="hidden" value="<%=disCursada.getSemestre()%>"></td>
+										<td><%=disCursada.getInstituicao()%><input name="disc-instituicao" type="hidden" value="<%=disCursada.getInstituicao()%>"></td>
+										<td><button type="button" class="btn btn-light btn-sm material-icons float-right" style="font-size: 15px;" onclick="removerDA('<%=disCursada.getNome()%>')">clear</button></td>
 									</tr>
 									
 									<%
@@ -211,6 +212,7 @@
 		disciplina.ano = document.getElementById("ano").value;
 		disciplina.semestre = document.getElementById("semestre").value;
 		disciplina.instituicao = document.getElementById("instituicao").value.toUpperCase();
+		atualizarListaDisciplinasAproveitadas();
 		disciplinas[tam] = disciplina;
 		if(verificarDisciplinaAproveitada(disciplina)){
 			tam++;
@@ -224,18 +226,19 @@
 		}
 	}
 	
-	function atualizarDisciplinaAproveitada(){
-		var list = document.getElementById("listaDisciplinasAproveitadas");
+	function atualizarListaDisciplinasAproveitadas(){
+		disciplinas = [];
+		tam = 0;
 		var listaNome = [];
-		listaNome = document.getElementsByName("nomeEX");
+		listaNome = document.getElementsByName("disc-nome");
 		var listaCarga = [];
-		listaCarga = document.getElementsByName("cargaEX");
+		listaCarga = document.getElementsByName("disc-carga");
 		var listaNota = [];
-		listaNota = document.getElementsByName("notaEX");
+		listaNota = document.getElementsByName("disc-nota");
 		var listaSemestre = [];
-		listaSemestre = document.getElementsByName("semestreEX");
+		listaSemestre = document.getElementsByName("disc-semestre");
 		var listaInstituicao = [];
-		listaInstituicao = document.getElementsByName("instituicaoEX");
+		listaInstituicao = document.getElementsByName("disc-instituicao");
 		var i;
 		for(i = 0; i < listaNome.length;i++){
 			var disciplina = new Object();
@@ -249,6 +252,14 @@
 			
 			disciplinas[tam] = disciplina;
 			tam++;
+			
+		}
+	}
+	
+	function atualizarDisciplinaAproveitada(){
+		var list = document.getElementById("listaDisciplinasAproveitadas");
+		if (disciplinas.lenght == 0){
+			atualizarListaDisciplinasAproveitadas();
 		}
 		list.innerHTML = '<tr><th scope="col">Disciplina Aproveitada</th><th scope="col">Carga Horária</th><th scope="col">Nota</th><th scope="col">Ano/Semestre</th><th scope="col">Instituição</th></tr>';
 		for(i=0;i<disciplinas.length;i++){
@@ -270,8 +281,54 @@
 	    atualizarDisciplinaAproveitada();
 	}
 	
+	function removerDA(nome){
+		var list = document.getElementById("listaDisciplinasAproveitadas");
+		if (disciplinas.lenght == 0){
+			var listaNome = [];
+			listaNome = document.getElementsByName("disc-nome");
+			var listaCarga = [];
+			listaCarga = document.getElementsByName("disc-carga");
+			var listaNota = [];
+			listaNota = document.getElementsByName("disc-nota");
+			var listaSemestre = [];
+			listaSemestre = document.getElementsByName("disc-semestre");
+			var listaInstituicao = [];
+			listaInstituicao = document.getElementsByName("disc-instituicao");
+			var i;
+			for(i = 0; i < listaNome.length;i++){
+				var disciplina = new Object();
+				disciplina.nome = listaNome[i].value;
+				disciplina.carga = listaCarga[i].value;
+				disciplina.nota = listaNota[i].value;
+				var aux = listaSemestre[i].value.split('.');
+				disciplina.ano = aux[0];
+				disciplina.semestre = aux[1];
+				disciplina.instituicao = listaInstituicao[i].value;
+				
+				if( nome !== disciplina.nome){
+					disciplinas[tam] = disciplina;
+					tam++;
+				}
+			}
+		}
+		list.innerHTML = '<tr><th scope="col">Disciplina Aproveitada</th><th scope="col">Carga Horária</th><th scope="col">Nota</th><th scope="col">Ano/Semestre</th><th scope="col">Instituição</th></tr>';
+		for(i=0;i<disciplinas.length;i++){
+			if(disciplinas[i] !== null){
+				list.innerHTML += '<tr>'+
+								  '<td>'+disciplinas[i].nome+'<input type="hidden" id="disc-nome-'+i+'" name="disc-nome" value="'+disciplinas[i].nome+'"></td>'+
+								  '<td>'+disciplinas[i].carga+'<input type="hidden" id="disc-carga-'+i+'" name="disc-carga" value="'+disciplinas[i].carga+'"></td>'+
+								  '<td>'+disciplinas[i].nota+'<input type="hidden" id="disc-nota-'+i+'" name="disc-nota" value="'+disciplinas[i].nota+'"></td>'+
+								  '<td>'+disciplinas[i].ano+'.'+disciplinas[i].semestre+'<input type="hidden" id="disc-semestre-'+i+'" name="disc-semestre" value="'+disciplinas[i].ano+'.'+disciplinas[i].semestre+'"></td>'+
+								  '<td>'+disciplinas[i].instituicao+'<input type="hidden" id="disc-instituicao-'+i+'" name="disc-instituicao" value="'+disciplinas[i].instituicao+'"></td>'+
+								  '<td><button type="button" class="btn btn-light btn-sm material-icons float-right" style="font-size: 15px;" onclick="removerDisciplinaAproveitada('+i+')">clear</button></td>'+
+								  '</tr>';
+			}
+		}
+		
+	}
+	
 	function mensagemConfirmacao(){
-		alert("Solicitação Cadastrada com sucesso");
+		alert("Solicitação atualizada com sucesso");
 	}
 	
 	function verificarDisciplinaAproveitada(obj){
