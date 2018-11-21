@@ -176,7 +176,7 @@
 							<br>
 							
 						     
-								<c:import url="jsp/elements/botoesVisualizarAluno.jsp" charEncoding="UTF-8"></c:import>
+								<c:import url="BotoesVisualizar" charEncoding="UTF-8"></c:import>
 				     
 						
 						

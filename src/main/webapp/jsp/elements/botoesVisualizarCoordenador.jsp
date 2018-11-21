@@ -3,11 +3,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
  		
-		<a href="Inicio" type="button" id="enviar"
-						class="btn btn-secondary"> Cancelar </a>
+		<a href="Inicio">
+			<input type="button" class="btn btn-primary" value="Cancelar"></a>
 		<input type="button"
-						class="btn btn-primary" value="Avaliar"
-						data-toggle="modal" data-target="#testeCoor">
+				class="btn btn-primary" value="Avaliar"
+				data-toggle="modal" data-target="#testeCoor">
 					
 					<!-- Modal -->
 					<div class="modal fade" id="testeCoor" tabindex="1"
@@ -52,14 +52,14 @@
 							</div>
 							<div class="modal-footer">
 									<td>
-									<button  class="btn btn-primary btn-sm active" form="form<%=(String)request.getAttribute("id")%>"
-										class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("id") %>" > Confirmar
+									<button  class="btn btn-primary btn-sm" form="form<%=(String)request.getAttribute("id")%>"
+										 style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("id") %>" > Confirmar
 									</button>
 									</td>
 									<form method="POST" action="Inicio">
 										<td>
-										<button  class="btn btn-primary btn-sm active"
-											class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" > Cancelar
+										<button  class="btn btn-primary btn-sm"
+											style="height: 30px;" type="submit" name="button" > Cancelar
 										</button>
 										</td>
 									</form>
