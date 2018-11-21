@@ -5,6 +5,9 @@
  		
 		<a href="Inicio">
 			<input type="button" class="btn btn-primary" value="Cancelar"></a>
+			<%
+				if((boolean)request.getAttribute("Avaliar")){
+			%>
 		<input type="button"
 				class="btn btn-primary" value="Avaliar"
 				data-toggle="modal" data-target="#testeCoor">
@@ -68,4 +71,6 @@
 						</div>
 						</div>
 					</div>
-		
+		<%
+				}
+		%>
