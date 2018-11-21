@@ -63,7 +63,7 @@
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
-						<li class="breadcrumb-item" aria-current="page">Início</li>
+						<li class="breadcrumb-item active" aria-current="page">Início</li>
 					</ol>
 					</nav>
 					

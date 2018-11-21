@@ -1,4 +1,4 @@
-<%@page import="br.ufc.russas.n2s.academus.util.Constantes"%>
+<%@ page import="br.ufc.russas.n2s.academus.util.Constantes"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Solicitacao" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.Aluno" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.DisciplinaCursada" %>
@@ -18,7 +18,6 @@
 	
 	boolean deuCerto = true;
 	try{
-		System.out.print((String)(request.getAttribute("id")));
 		solicitacao = dao.buscarPorId(Integer.parseInt((String)(request.getAttribute("id"))));
 	} catch(Exception e){
 		deuCerto = false;
@@ -84,7 +83,7 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
 						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>
-						<li class="breadcrumb-item" aria-current="page">Visualizar Solicitacao</li>
+						<li class="breadcrumb-item active" aria-current="page">Visualizar Solicitacao</li>
 					</ol>
 					</nav>
 					

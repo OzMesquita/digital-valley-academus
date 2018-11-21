@@ -22,6 +22,14 @@ public class BuscarMatrizController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try{
+			if(request.getParameter("editarPtn") != null){
+				
+			} else if(request.getParameter("vizualizarPtn") != null){
+				
+			} else if(request.getParameter("removerPtn") != null){
+				
+			}
+			
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("buscaMatriz.jsp");			
 			dispatcher.forward(request, response);
 			
