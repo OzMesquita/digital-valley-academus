@@ -8,6 +8,7 @@ public class PerfilAcademus implements Serializable{
 	private final static long serialVersionUID = 1L;
 	private Pessoa pessoa;
 	private NivelAcademus nivel;
+	private boolean isAdm = false;
 	
 	public PerfilAcademus() {
 		this.setPessoa(new Pessoa());

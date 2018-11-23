@@ -28,6 +28,9 @@ public class Solicitacao implements Serializable{
 		this.setResultado("INDEFINIDO");
 		this.setJustificativa("INDEFINIDO");
 		this.setArquivo(new Arquivo());
+		this.setCurso(new Curso());
+		this.justificativa = "";
+		this.resultado = "";
 	}
 	
 	public int getIdSolicitacao() {
