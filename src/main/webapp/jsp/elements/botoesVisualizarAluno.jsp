@@ -1,9 +1,9 @@
 <div class="form-group">
 	<div class="modal-footer">
 	<form method="POST" action="Inicio">
-		<td><button  class="btn btn-primary btn-sm" form="form"
-			class="btn btn-primary btn-sm" style="height: 30px;" type="submit" > Cancelar
-		</button></td>
+		<a href="Inicio">
+			<input type="button" class="btn btn-primary btn-sm"
+				style="height: 30px;" value="Cancelar"></a>
 	</form>
 	<%
 		if((boolean)request.getAttribute("Editar")){

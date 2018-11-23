@@ -19,6 +19,7 @@
 <%@ page import="br.ufc.russas.n2s.academus.model.Aluno"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Curso"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
+<%@ page import="br.ufc.russas.n2s.academus.model.NivelAcademus"%>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -71,8 +72,37 @@
 	<c:import url="jsp/elements/menu-superior.jsp" charEncoding="UTF-8"></c:import>
 	<div class="container-fluid">
 		<div class="row row-offcanvas row-offcanvas-right">
-			<c:import url="jsp/elements/menu-lateral-esquerdo.jsp"
-				charEncoding="UTF-8"></c:import>
+			<% 
+				PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
+				if (per != null){
+					if (per.getNivel() == NivelAcademus.ALUNO){
+						%>
+						<c:import url="jsp/elements/menu-lateral-esquerdo-Aluno.jsp"
+						charEncoding="UTF-8"></c:import>
+						<%
+					} else if (per.getNivel() == NivelAcademus.COORDENADOR){
+						%>
+						<c:import url="jsp/elements/menu-lateral-esquerdo-Coordenador.jsp"
+						charEncoding="UTF-8"></c:import>
+						<%
+					} else if (per.getNivel() == NivelAcademus.SECRETARIO){
+						%>
+						<c:import url="jsp/elements/menu-lateral-esquerdo-Secretario.jsp"
+						charEncoding="UTF-8"></c:import>
+						<%
+					} else{
+						%>
+						<c:import url="jsp/elements/menu-lateral-esquerdo.jsp"
+						charEncoding="UTF-8"></c:import>
+						<%
+					}
+				} else {
+					%>
+					<c:import url="jsp/elements/menu-lateral-esquerdo.jsp"
+					charEncoding="UTF-8"></c:import>
+					<%
+				}
+				%>
 			<div class="col-sm-8">
 				<nav aria-label="breadcrumb" role="navigation">
 				<ol class="breadcrumb">
@@ -126,7 +156,7 @@
 										<td><%=disCursada.getNota()%><input name="disc-nota" type="hidden" value="<%=disCursada.getNota()%>"></td>
 										<td><%=disCursada.getSemestre()%><input name="disc-semestre" type="hidden" value="<%=disCursada.getSemestre()%>"></td>
 										<td><%=disCursada.getInstituicao()%><input name="disc-instituicao" type="hidden" value="<%=disCursada.getInstituicao()%>"></td>
-										<td><button type="button" class="btn btn-light btn-sm material-icons float-right" style="font-size: 15px;" onclick="removerDA('<%=disCursada.getNome()%>')">clear</button></td>
+										<td><button type="button" class="btn btn-light btn-sm material-icons float-right" style="font-size: 15px;" onclick="removerDA('<%=disCursada.getNome()%>','<%=disCursada.getCarga()%>','<%=disCursada.getNota()%>','<%=disCursada.getSemestre()%>','<%=disCursada.getInstituicao()%>')">clear</button></td>
 									</tr>
 									
 									<%
@@ -172,7 +202,8 @@
 						<div class="modal-footer">
 							<div id="botoes" class="controls">
 								<button type="submit" name="button" value="<%=solicitacao.getIdSolicitacao()%>" class="btn btn-primary">Confirmar</button>
-								<button type="button" class="btn btn-primary">Cancelar</button>
+								<a href="Inicio">
+									<input type="button" class="btn btn-primary" value="Cancelar"></a>
 							</div>
 						</div>
 					</form>
@@ -281,9 +312,9 @@
 	    atualizarDisciplinaAproveitada();
 	}
 	
-	function removerDA(nome){
+	function removerDA(nome, carga, nota, semestre, instituicao){
 		var list = document.getElementById("listaDisciplinasAproveitadas");
-		if (disciplinas.lenght == 0){
+		
 			var listaNome = [];
 			listaNome = document.getElementsByName("disc-nome");
 			var listaCarga = [];
@@ -305,11 +336,11 @@
 				disciplina.semestre = aux[1];
 				disciplina.instituicao = listaInstituicao[i].value;
 				
-				if( nome !== disciplina.nome){
+				if( (nome !== disciplina.nome) & (carga != disciplina.carga) & (nota != disciplina.nota) & (semestre !== disciplina.semestre) & (instituicao !== disciplina.instituicao)){
 					disciplinas[tam] = disciplina;
 					tam++;
 				}
-			}
+			
 		}
 		list.innerHTML = '<tr><th scope="col">Disciplina Aproveitada</th><th scope="col">Carga Horária</th><th scope="col">Nota</th><th scope="col">Ano/Semestre</th><th scope="col">Instituição</th></tr>';
 		for(i=0;i<disciplinas.length;i++){
