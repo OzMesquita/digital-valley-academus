@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Professor;
+import dao.DAOFactory;
 import model.EnumCargo;
 import model.Pessoa;
 import model.Usuario;
@@ -36,6 +37,8 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 				usuario.setNivel(rs.getInt("nivel"));
 				usuario.setPerfil(rs.getInt("perfil"));
 				usuario.setSenha(rs.getString("senha"));
+				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id")));
+				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id")));
 				
 				professor.setId(rs.getInt("id_pessoa_prof"));
 				professor.setNome(rs.getString("nome"));
@@ -83,6 +86,8 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 				usuario.setNivel(rs.getInt("nivel"));
 				usuario.setPerfil(rs.getInt("perfil"));
 				usuario.setSenha(rs.getString("senha"));
+				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(id));
+				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(id));
 				
 				professor.setId(rs.getInt("id_pessoa_prof"));
 				professor.setNome(rs.getString("nome"));
@@ -129,6 +134,8 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 				usuario.setNivel(rs.getInt("nivel"));
 				usuario.setPerfil(rs.getInt("perfil"));
 				usuario.setSenha(rs.getString("senha"));
+				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id")));
+				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id")));
 				
 				professor.setId(rs.getInt("id_pessoa_prof"));
 				professor.setNome(rs.getString("nome"));

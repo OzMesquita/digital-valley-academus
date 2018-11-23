@@ -86,7 +86,7 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 	@Override
 	public PerfilAcademus buscarPorId(int id) {
 		String sql = "SELECT id_pessoa_usuario, id_nivel FROM academus.perfil_academus WHERE id_pessoa_usuario = "+ id +";";
-		PerfilAcademus perfil = null;
+		PerfilAcademus perfil = new PerfilAcademus();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -96,7 +96,6 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
-				perfil = new PerfilAcademus();
 				
 				perfil.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
 				

@@ -7,8 +7,8 @@
    
    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
        <div class="navbar-nav">
-           <a class="nav-item nav-link" href="elements/aviso.jsp"> Disciplina</a>
-           <a class="nav-item nav-link" href="elements/aviso.jsp"> Matriz</a>            
+           <a class="nav-item nav-link" href="ListarDisciplina"> Disciplina</a>
+           <a class="nav-item nav-link" href="ListarMatriz"> Matriz</a>            
           
        </div>        
    </div>
