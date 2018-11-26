@@ -13,6 +13,7 @@ public class PerfilAcademus implements Serializable{
 	public PerfilAcademus() {
 		this.setPessoa(new Pessoa());
 		this.setNivel(NivelAcademus.INDEFINIDO);
+		this.isAdmin = false;
 	}
 	
 	public PerfilAcademus(Pessoa pessoa){
@@ -31,6 +32,12 @@ public class PerfilAcademus implements Serializable{
 	}
 	public void setNivel(NivelAcademus nivel) {
 		this.nivel = nivel;
+	}
+	public boolean getIsAdmin(){
+		return isAdmin;
+	}
+	public void setIsAdmin(boolean isAdmin){
+		this.isAdmin = isAdmin;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
