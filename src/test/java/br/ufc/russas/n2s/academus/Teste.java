@@ -1,16 +1,19 @@
 package br.ufc.russas.n2s.academus;
 
 import br.ufc.russas.n2s.academus.dao.JDBCCoordenadorDAO;
-import br.ufc.russas.n2s.academus.dao.JDBCMatrizCurricularDAO;
-import br.ufc.russas.n2s.academus.model.Coordenador;
-import br.ufc.russas.n2s.academus.util.Constantes;
+import dao.DAOFactory;
+import dao.PessoaDAO;
+import model.Pessoa;
 
 public class Teste {
 
 	public static void main(String[] args) {
-		Coordenador coo = new JDBCCoordenadorDAO().buscarPorId(153);
 		
-		System.out.println(coo.getUsuario().getToken());
+		PessoaDAO daoPessoa = DAOFactory.criarPessoaDAO();
+		Pessoa pessoaCore = daoPessoa.buscarPorId(154);
+		
+		System.out.println(pessoaCore.getNome());
+		System.out.println(new JDBCCoordenadorDAO().isCoordenador(pessoaCore));
 	}
 
 }

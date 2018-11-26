@@ -72,6 +72,8 @@ public class AutenticadoFiltro implements Filter {
 							perfil.setNivel(NivelAcademus.COORDENADOR);
 						} else if(new JDBCProfessorDAO().isProfessor(pessoaCore)){
 							perfil.setNivel(NivelAcademus.PROFESSOR);
+						} else{
+							perfil.setNivel(NivelAcademus.SECRETARIO);
 						}
 					}
 					
@@ -80,6 +82,7 @@ public class AutenticadoFiltro implements Filter {
 					
 					user = perfil;
 				}
+				
 				
 				//VERIFICANDO SE O TOKEN PASSADO É IGUAL AO TOKEN DO USUÁRIO DO ACADEMUS
 				if (!token.equals("null") &&

@@ -172,12 +172,15 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, pessoa.getId());
 			
-			boolean resultado = ps.execute();
+			ResultSet rs = ps.executeQuery();
+			
+			boolean resultado = false;
+			if(rs.next()){
+				resultado = true;
+			}
 			ps.close();
 			
-			if(resultado){
-				return true;
-			}
+			return resultado;
 			
 		} catch(SQLException e) {
 			e.printStackTrace();

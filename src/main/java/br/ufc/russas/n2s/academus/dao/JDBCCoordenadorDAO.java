@@ -195,19 +195,22 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 	public boolean isCoordenador(Pessoa pessoa) {
 		String sql = "SELECT academus.coordenador.id_pessoa, public.pessoa_usuario.nome "
 				+ "FROM academus.coordenador INNER JOIN public.pessoa_usuario "
-				+ "ON academus.coordenador.id_pessoa = public.pessoa_usuario.id_pessoa_usuario AND academus.coordenador.id_pessoa = 5;";
+				+ "ON academus.coordenador.id_pessoa = public.pessoa_usuario.id_pessoa_usuario AND academus.coordenador.id_pessoa = ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, pessoa.getId());
 			
-			boolean resultado = ps.execute();
+			ResultSet rs = ps.executeQuery();
+			
+			boolean resultado = false;
+			if(rs.next()){
+				resultado = true;
+			}
 			ps.close();
 			
-			if(resultado){
-				return true;
-			}
+			return resultado;
 			
 		} catch(SQLException e) {
 			e.printStackTrace();

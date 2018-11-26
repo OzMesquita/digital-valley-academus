@@ -15,6 +15,7 @@ import dao.DAOFactory;
 import dao.JDBCPessoaDAO;
 import dao.JDBCServidorDAO;
 import model.Pessoa;
+import model.Servidor;
 
 public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 
@@ -104,7 +105,12 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 				} else if(perfil.getNivel() == NivelAcademus.COORDENADOR){
 					perfil.setPessoa(new JDBCCoordenadorDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
 				} else if(perfil.getNivel() == NivelAcademus.SECRETARIO){
-					perfil.setPessoa(daoServidor.buscar(rs.getInt("id_pessoa_usuario")));
+					Servidor serv = daoServidor.buscar(rs.getInt("id_pessoa_usuario"));
+					serv.getUsuario().setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id_pessoa_usuario")));
+					serv.getUsuario().setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id_pessoa_usuario")));
+					
+					perfil.setPessoa(serv);
+					
 				} else if(perfil.getNivel() == NivelAcademus.PROFESSOR){
 					perfil.setPessoa(new JDBCProfessorDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
 				}
