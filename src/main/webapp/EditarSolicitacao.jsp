@@ -231,9 +231,30 @@
 			disciplina.semestre = document.getElementById("semestre").value;
 			disciplina.instituicao = document.getElementById("instituicao").value.toUpperCase();
 			atualizarListaDisciplinasAproveitadas();
-			disciplinas[tam] = disciplina;
+			
 			if(verificarDisciplinaAproveitada(disciplina)){
-				tam++;
+				var i=0;
+				var podeAdicionar = true;
+				for(i = 0; i< disciplinas.length; i++){
+					if(disciplinas[i].nome === disciplina.nome){
+						if (disciplinas[i].carga == disciplina.carga){
+							if(disciplinas[i].nota == disciplina.nota){
+								if(disciplinas[i].semestre === disciplina.semestre){
+									if(disciplinas[i].ano === disciplina.ano){
+										if (disciplinas[i].instituicao === disciplina.instituicao){
+											//nao adiciona
+											podeAdicionar = false;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				if(podeAdicionar){
+					disciplinas[tam] = disciplina;
+					tam++;
+				}
 				document.getElementById("disciplinaAproveitada").value = "";
 				document.getElementById("cargaHoraria").value = "";
 				document.getElementById("nota").value = "";
@@ -300,6 +321,10 @@
 		}
 		
 		function removerDA(nome, carga, nota, semestre, instituicao){
+			var tes = semestre.split('.');
+			var ano = tes[0];
+			semestre = tes[1];
+			
 			var list = document.getElementById("listaDisciplinasAproveitadas");
 			
 				var listaNome = [];
@@ -323,11 +348,26 @@
 					disciplina.semestre = aux[1];
 					disciplina.instituicao = listaInstituicao[i].value;
 					
-					if( (nome !== disciplina.nome) & (carga != disciplina.carga) & (nota != disciplina.nota) & (semestre !== disciplina.semestre) & (instituicao !== disciplina.instituicao)){
+					var podeAdicionar = true;
+					
+					if(nome === disciplina.nome){
+						if (carga == disciplina.carga){
+							if(nota == disciplina.nota){
+								if(semestre === disciplina.semestre){
+									if(ano === disciplina.ano){
+										if (instituicao === disciplina.instituicao){
+											//nao adiciona
+											podeAdicionar = false;
+										}
+									}
+								}
+							}
+						}
+					}
+					if(podeAdicionar){
 						disciplinas[tam] = disciplina;
 						tam++;
 					}
-				
 			}
 			list.innerHTML = '<tr><th scope="col">Disciplina Aproveitada</th><th scope="col">Carga Horária</th><th scope="col">Nota</th><th scope="col">Ano/Semestre</th><th scope="col">Instituição</th></tr>';
 			for(i=0;i<disciplinas.length;i++){

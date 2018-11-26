@@ -55,36 +55,42 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 					disciplinasCursadas.add(new DisciplinaCursada(semestreDisciplinas[i], Float.parseFloat(notaDisciplinas[i]), Integer.parseInt(cargaDisciplinas[i]), nomeDisciplinas[i], instituicaoDisciplinas[i]));
 					
 				}
-			}
-			ComponenteCurricularDAO ccd = new JDBCComponenteCurricularDAO();
-			SolicitacaoDAO sd = new JDBCSolicitacaoDAO();
-			DisciplinaCursadaDAO dcd = new JDBCDisciplinaCursadaDAO();
 			
-			Solicitacao solicitacao = sd.buscarPorId(id);
-			
-			if (solicitacao.getSolicitante().getId() == usuario.getPessoa().getId()) {
-				if(componente != null) {
-					solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
+				ComponenteCurricularDAO ccd = new JDBCComponenteCurricularDAO();
+				SolicitacaoDAO sd = new JDBCSolicitacaoDAO();
+				DisciplinaCursadaDAO dcd = new JDBCDisciplinaCursadaDAO();
+				
+				Solicitacao solicitacao = sd.buscarPorId(id);
+				
+				if (solicitacao.getSolicitante().getId() == usuario.getPessoa().getId()) {
+					if(componente != null) {
+						solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
+					}
+					solicitacao.setStatus(Status.SUBMETIDO);
+					solicitacao.setResultado("");
+					solicitacao.setJustificativa("");
+					solicitacao.setDisciplinasCursadas(disciplinasCursadas);
+					
+					sd.editar(solicitacao);
+					dcd.excluir(solicitacao);
+					dcd.cadastrar(disciplinasCursadas, solicitacao.getIdSolicitacao());
+					
+					
+					System.out.println("possivel realizar a solicitacao");
+				} else {
+					System.out.println("Não foi possivel realizar a solicitacao");
 				}
-				solicitacao.setStatus(Status.SUBMETIDO);
-				solicitacao.setResultado("");
-				solicitacao.setJustificativa("");
-				solicitacao.setDisciplinasCursadas(disciplinasCursadas);
 				
-				sd.editar(solicitacao);
-				dcd.excluir(solicitacao);
-				dcd.cadastrar(disciplinasCursadas, solicitacao.getIdSolicitacao());
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");
 				
+				dispatcher.forward(request, response);
 				
-				System.out.println("possivel realizar a solicitacao");
 			} else {
-				System.out.println("Não foi possivel realizar a solicitacao");
+				request.setAttribute("id", id);
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("EditarSolicitacao");
+				
+				dispatcher.forward(request, response);
 			}
-			
-			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");
-			
-			dispatcher.forward(request, response);
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
