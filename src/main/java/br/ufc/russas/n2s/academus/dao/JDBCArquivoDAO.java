@@ -1,25 +1,29 @@
 package br.ufc.russas.n2s.academus.dao;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Arquivo;
+import br.ufc.russas.n2s.academus.model.DisciplinaCursada;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
 
 public class JDBCArquivoDAO implements ArquivoDAO{
 
-	public Arquivo cadastrarArquivo(Arquivo arq, Solicitacao sol) {
-		String sql = "INSERT INTO academus.arquivo(caminho, id_solicitacao) VALUES (?, ?);";
+	public Arquivo cadastrarArquivo(Arquivo arq, int dis) {
+		String sql = "INSERT INTO academus.arquivo(caminho, id_disciplina_cursada) VALUES (?, ?);";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			
 			PreparedStatement insert = conn.prepareStatement(sql);
 			insert.setString(1, arq.getCaminho());
-			insert.setInt(2, sol.getIdSolicitacao());
+			insert.setInt(2, dis);
 			
 			insert.execute();
 			insert.close();
@@ -34,8 +38,36 @@ public class JDBCArquivoDAO implements ArquivoDAO{
 	}
 
 	@Override
-	public Arquivo buscarPorSolicitacao(Solicitacao sol){
+	public List<Arquivo> buscarPorSolicitacao(Solicitacao sol){
 		String sql = "SELECT id_arquivo, caminho FROM academus.arquivo WHERE id_solicitacao = " + sol.getIdSolicitacao() + ";";
+		List<Arquivo> listaArq = new ArrayList<Arquivo>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				Arquivo arq = new Arquivo();
+				arq.setIdArquivo(rs.getInt("id_arquivo"));
+				arq.setCaminho(rs.getString("caminho"));
+				arq.setArquivo(new File(rs.getString("caminho")));
+				listaArq.add(arq);
+			}
+			
+			rs.close();
+			ps.close();
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return listaArq;
+	}
+	
+	public Arquivo buscarPorDisciplinaCursada(DisciplinaCursada dis){
+		String sql = "SELECT id_arquivo, caminho FROM academus.arquivo WHERE id_disciplina_cursada = " + dis.getId() + ";";
 		Arquivo arq = new Arquivo();
 		
 		Connection conn = ConnectionPool.getConnection();

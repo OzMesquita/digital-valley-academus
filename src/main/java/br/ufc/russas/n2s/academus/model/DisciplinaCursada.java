@@ -5,13 +5,16 @@ import java.io.Serializable;
 public class DisciplinaCursada implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private String semestre;
 	private float nota;
 	private int carga;
 	private String nome;
 	private String instituicao;
+	private Arquivo arquivo;
 	
 	public DisciplinaCursada() {
+		this.setId(0);
 		this.setSemestre("INDEFINIDO");
 		this.setNota(-1.0f);
 		this.setCarga(-1);
@@ -27,7 +30,12 @@ public class DisciplinaCursada implements Serializable{
 		this.nome = nome;
 		this.instituicao = instituicao;
 	}
-
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getSemestre() {
 		return semestre;
 	}
@@ -57,6 +65,12 @@ public class DisciplinaCursada implements Serializable{
 	}
 	public void setInstituicao(String instituicao) {
 		this.instituicao = instituicao;
+	}
+	public Arquivo getArquivo() {
+		return arquivo;
+	}
+	public void setArquivo(Arquivo arquivo) {
+		this.arquivo = arquivo;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;

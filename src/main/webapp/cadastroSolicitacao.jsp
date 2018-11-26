@@ -197,7 +197,7 @@
 			disciplina.ano = document.getElementById("ano").value;
 			disciplina.semestre = document.getElementById("semestre").value;
 			disciplina.instituicao = document.getElementById("instituicao").value.toUpperCase();
-			disciplinas[tam] = disciplina;
+			//disciplinas[tam] = disciplina;
 			if(verificarDisciplinaAproveitada(disciplina)){
 				tam++;
 				document.getElementById("disciplinaAproveitada").value = "";
@@ -266,6 +266,7 @@
 				alert("O Semestre deve ser 1 ou 2");
 				return false;
 			}
+			disciplinas[tam] = obj;
 			return true;
 		}
 	</script>

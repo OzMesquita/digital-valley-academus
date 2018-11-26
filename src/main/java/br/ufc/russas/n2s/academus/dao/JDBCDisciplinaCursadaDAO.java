@@ -47,7 +47,8 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 	public List<DisciplinaCursada> buscar(Solicitacao sol) {
 		String sql = "select * from academus.disciplina_cursada where id_solicitacao = ?;";
 		List<DisciplinaCursada> listaDisciplinaCursada = new ArrayList<DisciplinaCursada>();
-		
+		DAOFactoryJDBC df = new DAOFactoryJDBC();
+		ArquivoDAO arqdao = df.criarArquivoDAO();
 		Connection conn = ConnectionPool.getConnection();
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -57,11 +58,13 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 			while(rs.next()){
 				DisciplinaCursada aux = new DisciplinaCursada();
 				
+				aux.setId(rs.getInt("id_disciplina_cursada"));
 				aux.setSemestre(rs.getString("semestre"));
 				aux.setNota(rs.getFloat("nota"));//Talvez de erro, já que no banco a coluna 'nota' é do tipo double precision
 				aux.setCarga(rs.getInt("carga"));
 				aux.setNome(rs.getString("nome"));
 				aux.setInstituicao(rs.getString("instituicao"));
+				aux.setArquivo(arqdao.buscarPorDisciplinaCursada(aux));
 				
 				listaDisciplinaCursada.add(aux);
 			}

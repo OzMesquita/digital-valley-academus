@@ -65,7 +65,9 @@ public class Historico implements Serializable{
 	
 	public void gerarDescricao(int i){
 		String string = "";
-		if(i == 1) string = getResponsavel().getPessoa().getNome()+" cadastrou uma solicitação";
+		if(i == 1) string = "O(A) aluno(a) "+getResponsavel().getPessoa().getNome()+" cadastrou esta solicitação";
+		if(i == 2) string = "O(A) secretário(a) "+getResponsavel().getPessoa().getNome()+" validou esta solicitação";
+		if(i == 3) string = "O(A) coordenador(a) "+getResponsavel().getPessoa().getNome()+" avaliou esta solicitação";
 		setDescricao(string);
 	}
 	
