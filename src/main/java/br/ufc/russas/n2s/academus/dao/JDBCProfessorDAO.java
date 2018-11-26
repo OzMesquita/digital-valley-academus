@@ -37,8 +37,8 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 				usuario.setNivel(rs.getInt("nivel"));
 				usuario.setPerfil(rs.getInt("perfil"));
 				usuario.setSenha(rs.getString("senha"));
-				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id")));
-				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id")));
+				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id_pessoa_usuario")));
+				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id_pessoa_usuario")));
 				
 				professor.setId(rs.getInt("id_pessoa_prof"));
 				professor.setNome(rs.getString("nome"));
@@ -134,8 +134,8 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 				usuario.setNivel(rs.getInt("nivel"));
 				usuario.setPerfil(rs.getInt("perfil"));
 				usuario.setSenha(rs.getString("senha"));
-				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id")));
-				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id")));
+				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id_pessoa_usuario")));
+				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id_pessoa_usuario")));
 				
 				professor.setId(rs.getInt("id_pessoa_prof"));
 				professor.setNome(rs.getString("nome"));

@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Listando Disciplinas</title>
+		<title>Lista de Disciplinas</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 		
