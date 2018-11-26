@@ -12,10 +12,16 @@ public interface SolicitacaoDAO {
 		
 	public List<Solicitacao> listar();
 	
+	public List<Solicitacao> listarAnalizado();
+	
 	public List<Solicitacao> listarAndamento();
 	
 	public List<Solicitacao> listarFinalizado();
-		
+	
+	public List<Solicitacao> listarSubmetida();
+	
+	public List<Solicitacao> listarValidada();
+	
 	public Solicitacao buscarPorId(int id);
 	
 	public Solicitacao editar(Solicitacao sol);
@@ -26,6 +32,8 @@ public interface SolicitacaoDAO {
 	
 	public List<Solicitacao> listar(Aluno a);
 	
+	public List<Solicitacao> listarAnalizado(Coordenador c);
+	
 	public List<Solicitacao> listarAndamento(Aluno a);
 	
 	public List<Solicitacao> listarAndemanto(Coordenador c);
@@ -33,6 +41,8 @@ public interface SolicitacaoDAO {
 	public List<Solicitacao> listarFinalizado(Aluno a);
 	
 	public List<Solicitacao> listarFinalizado(Coordenador c);
- 	
+	
+	public List<Solicitacao> listarSubmetida(Aluno a);
+	
 	public int idUltimaSolicitacao(String matricula);
 }

@@ -1,3 +1,5 @@
+<%@page import="br.ufc.russas.n2s.academus.model.NivelAcademus"%>
+<%@page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Solicitacao"%>
 <%@ page import="java.util.*"%>
 
@@ -7,9 +9,38 @@
 		Filtrar
 	</button>
 	<div class="dropdown-menu dropdown-menu-left">
-		<a class="dropdown-item" href="Inicio">Todas as seleções</a>
+		<%
+		PerfilAcademus usuario = (PerfilAcademus)session.getAttribute("usuario"); 
+		
+		if (usuario.getNivel() == NivelAcademus.ALUNO){
+		%>
+		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações possíveis de editar</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=andamento">Solicitações em andamento</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
+		
+		<% } else if (usuario.getNivel() == NivelAcademus.SECRETARIO){
+		%>
+		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações submetidas</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=validado">Solicitações validadas</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
+		
+		<% } else if (usuario.getNivel() == NivelAcademus.COORDENADOR){ 
+		%>
+		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=analizado">Solicitações para analizar</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
+		
+		<% } else if (usuario.getNivel() == NivelAcademus.PROFESSOR) {
+		%>
+		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
+		
+		<% } else {
+		%>
+		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
+		
+		<% } %>
 	</div>
 </div>
 			         <br>

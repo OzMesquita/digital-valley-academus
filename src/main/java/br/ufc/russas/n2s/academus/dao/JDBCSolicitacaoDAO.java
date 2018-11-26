@@ -324,6 +324,11 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
+	public List<Solicitacao> listarAnalizado(Coordenador c){
+		return new ArrayList<Solicitacao>();
+	}
+	
+	@Override
 	public List<Solicitacao> listarAndamento(Aluno a) {
 		List<Solicitacao> solicitacoes = new ArrayList<>();
 		String sql = "SELECT * FROM academus.solicitacao WHERE id_solicitante = ? AND status != ? AND status != ?;";
@@ -538,6 +543,64 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
+	public List<Solicitacao> listarSubmetida(Aluno a){
+		List<Solicitacao> solicitacoes = new ArrayList<>();
+		String sql = "SELECT * FROM academus.solicitacao WHERE id_solicitante = ? AND status = ?;";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, a.getId());
+			ps.setInt(2, Status.getCodigo(Status.SUBMETIDO));
+			ResultSet rs = ps.executeQuery();
+			
+			//DAOFactory df = new DAOFactoryJDBC();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			//DAO's necessárias
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+			ArquivoDAO arqdao = df.criarArquivoDAO();
+			HistoricoDAO hisdao = df.criarHistoricoDAO();
+			CursoDAO curdao = df.criarCursoDAO();
+			
+			while(rs.next()){
+				
+				Solicitacao aux = new Solicitacao();
+				
+				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+				aux.setStatus(Status.getStatus(rs.getInt("status")));
+				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				aux.setDisciplinasCursadas(dcd.buscar(aux));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setResultado(rs.getString("resultado"));
+				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				
+				solicitacoes.add(aux);
+			}
+			
+			ps.close();
+			rs.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return solicitacoes;
+	}
+	
+	@Override
+	public List<Solicitacao> listarAnalizado(){
+		return new ArrayList<Solicitacao>();
+	}
+	
+	@Override
 	public List<Solicitacao> listarAndamento() {
 		String sql = "select * from academus.solicitacao where status!=? and status!=?";
 		List<Solicitacao> listaSolicitacao = new ArrayList<Solicitacao>();
@@ -644,4 +707,14 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		return listaSolicitacao;
 	}
 
+	@Override
+	public List<Solicitacao> listarSubmetida(){
+		return new ArrayList<Solicitacao>();
+	}
+	
+	@Override
+	public List<Solicitacao> listarValidada(){
+		return new ArrayList<Solicitacao>();
+	}
+	
 }
