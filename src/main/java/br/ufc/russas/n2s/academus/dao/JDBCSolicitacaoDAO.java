@@ -219,12 +219,12 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	@Override
 	public List<Solicitacao> listar(Coordenador c) {
 		List<Solicitacao> solicitacoes = new ArrayList<>();
-		String sql = "SELECT * FROM academus.solicitacao WHERE status = ? AND id_curso = ?;";
+		String sql = "SELECT * FROM academus.solicitacao WHERE status != ? AND id_curso = ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
+			ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
 			ps.setInt(2, c.getCurso().getIdCurso());
 			
 			ResultSet rs = ps.executeQuery();
@@ -325,7 +325,56 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 
 	@Override
 	public List<Solicitacao> listarAnalizado(Coordenador c){
-		return new ArrayList<Solicitacao>();
+		List<Solicitacao> solicitacoes = new ArrayList<>();
+		String sql = "SELECT * FROM academus.solicitacao WHERE status = ? AND id_curso = ?;";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
+			ps.setInt(2, c.getCurso().getIdCurso());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			//DAOFactory df = new DAOFactoryJDBC();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			//DAO's necessárias
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+			ArquivoDAO arqdao = df.criarArquivoDAO();
+			HistoricoDAO hisdao = df.criarHistoricoDAO();
+			CursoDAO curdao = df.criarCursoDAO();
+			
+			while(rs.next()){
+				
+				Solicitacao aux = new Solicitacao();
+				
+				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+				aux.setStatus(Status.getStatus(rs.getInt("status")));
+				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				aux.setDisciplinasCursadas(dcd.buscar(aux));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setResultado(rs.getString("resultado"));
+				aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				
+				solicitacoes.add(aux);
+			}
+			
+			ps.close();
+			rs.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return solicitacoes;
 	}
 	
 	@Override

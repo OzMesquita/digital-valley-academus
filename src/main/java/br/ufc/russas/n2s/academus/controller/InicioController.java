@@ -71,6 +71,8 @@ public class InicioController extends HttpServlet {
 				if (tipoSolicitacao == null) {
 					listaSol = sodao.listar((Coordenador)per.getPessoa());
 				} else if (tipoSolicitacao.equals("analizado")) {
+					listaSol = sodao.listarAnalizado((Coordenador)per.getPessoa());
+				} else if (tipoSolicitacao.equals("andamento")) {
 					listaSol = sodao.listarAndemanto((Coordenador)per.getPessoa());
 				} else if(tipoSolicitacao.equals("finalizado")) {
 					listaSol = sodao.listarFinalizado((Coordenador)per.getPessoa());
