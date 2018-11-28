@@ -23,7 +23,7 @@
 		%>
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações submetidas</a>
-		<a class="dropdown-item" href="Inicio?solicitacao=validado">Solicitações validadas</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=validado">Solicitações para validar</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
 		
 		<% } else if (usuario.getNivel() == NivelAcademus.COORDENADOR){ 
@@ -36,10 +36,15 @@
 		%>
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
 		
-		<% } else {
+		<% } else if(usuario.getIsAdmin()){
 		%>
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
-		
+		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações submetidas</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=validado">Solicitações para validar</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=analizado">Solicitações para analizar</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
+		<% } else { %>
+		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
 		<% } %>
 	</div>
 </div>
