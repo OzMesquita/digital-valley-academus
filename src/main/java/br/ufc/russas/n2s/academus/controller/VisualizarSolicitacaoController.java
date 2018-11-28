@@ -6,6 +6,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import br.ufc.russas.n2s.academus.model.NivelAcademus;
+import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 
 public class VisualizarSolicitacaoController extends HttpServlet {
 	
@@ -25,10 +29,16 @@ public class VisualizarSolicitacaoController extends HttpServlet {
 		
 		
 		try {
+			HttpSession session = request.getSession();
+			PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
+			
 			String ans = request.getParameter("button");
 			request.setAttribute("id", ans);
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSolicitacao.jsp");
-			//javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
+			
+			if(per.getNivel() == NivelAcademus.SECRETARIO) {
+				dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
+			}
 			
 			dispatcher.forward(request, response);
 			

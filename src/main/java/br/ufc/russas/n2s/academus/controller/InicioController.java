@@ -41,7 +41,21 @@ public class InicioController extends HttpServlet {
 			
 			String tipoSolicitacao = request.getParameter("solicitacao");
 			
-			if( per.getNivel() == NivelAcademus.ALUNO) {
+			if (per.getIsAdmin()) {
+				if (tipoSolicitacao == null) {
+					listaSol = sodao.listar();
+				} else if (tipoSolicitacao.equals("submetido")) {
+					listaSol = sodao.listarSubmetida();
+				} else if (tipoSolicitacao.equals("validado")) {
+					listaSol = sodao.listarValidada();
+				} else if(tipoSolicitacao.equals("analizado")) {
+					listaSol = sodao.listarAnalizado();
+				} else if(tipoSolicitacao.equals("finalizado")) {
+					listaSol = sodao.listarFinalizado();
+				} else {
+					listaSol = sodao.listar();
+				}
+			} else if( per.getNivel() == NivelAcademus.ALUNO) {
 				
 				if (tipoSolicitacao == null) {
 					listaSol = sodao.listar((Aluno)per.getPessoa());
