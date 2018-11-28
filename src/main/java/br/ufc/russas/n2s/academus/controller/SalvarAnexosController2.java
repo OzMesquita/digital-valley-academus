@@ -53,63 +53,69 @@ public class SalvarAnexosController2 extends HttpServlet {
 		String idSolicitacao = request.getParameter("id_solicitacao");
 		String idDisciplinaCursada = request.getParameter("id_disciplina_cursada");
 		String caminho = Constantes.getAnexoDir()+File.separator+matricula+File.separator+idSolicitacao;
+		boolean chave = Boolean.parseBoolean(request.getParameter("chave"));
 		
-		File dir = new File(caminho+File.separator);
-		if(!dir.isDirectory()) dir.mkdirs();
-		System.out.println(dir.getAbsolutePath());
-		if(!Files.isWritable(dir.toPath())) System.out.println("Não é possivel escrever um arquivo");
-		if(request.getPart("id_disciplina_cursada") == null) System.out.println("Part vazio");
-		else{
-			//System.out.println(request.getParts().size());
-				Part part = request.getPart("id_disciplina_cursada");
-				String nome = "";
-				nome = "anexo-"+matricula+"-"+idSolicitacao+"-"+idDisciplinaCursada+".pdf";
-				System.out.println(nome);
+		if(chave){
+			File dir = new File(caminho+File.separator);
+			if(!dir.isDirectory()) dir.mkdirs();
+			System.out.println(dir.getAbsolutePath());
+			if(!Files.isWritable(dir.toPath())) System.out.println("Não é possivel escrever um arquivo");
+			if(request.getPart("id_disciplina_cursada") == null) System.out.println("Part vazio");
+			else{
+				//System.out.println(request.getParts().size());
+					Part part = request.getPart("id_disciplina_cursada");
+					String nome = "";
+					nome = "anexo-"+matricula+"-"+idSolicitacao+"-"+idDisciplinaCursada+".pdf";
+					System.out.println(nome);
+					
+					OutputStream out = null;
+				    InputStream filecontent = null;
+				    final PrintWriter writer = response.getWriter();
 				
-				OutputStream out = null;
-			    InputStream filecontent = null;
-			    final PrintWriter writer = response.getWriter();
+				    try {
+				        File file = new File(dir.getAbsolutePath() + File.separator + nome);
+				    	out = new FileOutputStream(file);
+				        filecontent = part.getInputStream();
+				
+				        int read = 0;
+				        final byte[] bytes = new byte[1024];
+				
+				        while ((read = filecontent.read(bytes)) != -1) {
+				            out.write(bytes, 0, read);
+				        }
+				        //writer.println("New file " + nome + " created at " + caminho);
+				        LOGGER.log(Level.INFO, "File{0}being uploaded to {1}", new Object[]{nome, caminho});
+						
+				        Arquivo arq = new Arquivo();
+				        arq.setCaminho(file.getAbsolutePath());
+				        ArquivoDAO arqdao = new JDBCArquivoDAO();
+				        arqdao.cadastrarArquivo(arq, Integer.parseInt(idDisciplinaCursada));
+				        
+				        request.setAttribute("id", idSolicitacao);
+				        javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
+						dispatcher.forward(request, response);
+						
+				    } catch (FileNotFoundException fne) {
+				        //writer.println("You either did not specify a file to upload or are trying to upload a file to a protected or nonexistent location.");
+				        //writer.println("<br/> ERROR: " + fne.getMessage());
+				
+				        LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}", new Object[]{fne.getMessage()});
+				    } finally {
+				        if (out != null) {
+				            out.close();
+				        }
+				        if (filecontent != null) {
+				            filecontent.close();
+				        }
+				        if (writer != null) {
+				            writer.close();
+				        }
+				    }
+			}
+		}else{
 			
-			    try {
-			        File file = new File(dir.getAbsolutePath() + File.separator + nome);
-			    	out = new FileOutputStream(file);
-			        filecontent = part.getInputStream();
-			
-			        int read = 0;
-			        final byte[] bytes = new byte[1024];
-			
-			        while ((read = filecontent.read(bytes)) != -1) {
-			            out.write(bytes, 0, read);
-			        }
-			        //writer.println("New file " + nome + " created at " + caminho);
-			        LOGGER.log(Level.INFO, "File{0}being uploaded to {1}", new Object[]{nome, caminho});
-					
-			        Arquivo arq = new Arquivo();
-			        arq.setCaminho(file.getAbsolutePath());
-			        ArquivoDAO arqdao = new JDBCArquivoDAO();
-			        arqdao.cadastrarArquivo(arq, Integer.parseInt(idDisciplinaCursada));
-			        
-			        request.setAttribute("id", idSolicitacao);
-			        javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
-					dispatcher.forward(request, response);
-					
-			    } catch (FileNotFoundException fne) {
-			        //writer.println("You either did not specify a file to upload or are trying to upload a file to a protected or nonexistent location.");
-			        //writer.println("<br/> ERROR: " + fne.getMessage());
-			
-			        LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}", new Object[]{fne.getMessage()});
-			    } finally {
-			        if (out != null) {
-			            out.close();
-			        }
-			        if (filecontent != null) {
-			            filecontent.close();
-			        }
-			        if (writer != null) {
-			            writer.close();
-			        }
-			    }
 		}
+		
 	}
 	
 	private String getFileName(final Part part) {

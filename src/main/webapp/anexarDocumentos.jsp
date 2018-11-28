@@ -117,8 +117,7 @@
 						<div class="invalid-feedback">
                             
                         </div>
-						<br>
-												
+						<br>			
 						<label for="disciplinasCursadasInput"><b> Lista de Disciplinas Cursadas</b></label>
 							<div class="form-group">
 								<table class="table table-responsive">
@@ -145,8 +144,8 @@
 											<%if(disCursada.getArquivo().getIdArquivo() == -1){%>
 											<input type="file" name="anexo" accept=".pdf">
 											<input type="submit" value="Anexar" onclick="atribuirValor(<%=disCursada.getId()%>)">
-											<%}else{%>
-												<iframe src="C:\n2s\Academus\anexo\371251\71\anexo-371251-71-78.pdf" width="600" height="780" style="border: none;">teste</iframe>
+											<%else{%>
+												<button >
 											<%}%>
 										</td>
 									</tr>

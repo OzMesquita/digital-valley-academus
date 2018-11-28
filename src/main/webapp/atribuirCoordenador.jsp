@@ -86,7 +86,7 @@
 					</ol>
 					</nav>
 					<h1>Coordenadores</h1>
-					<p>Atenção: Os campos abaixo (*) são de preenchimento obrigatório</p>
+					<!-- <p>Atenção: Os campos abaixo (*) são de preenchimento obrigatório</p>  -->
 					<br>
 					<table class="table" id="listaCursos">
 						<thead>

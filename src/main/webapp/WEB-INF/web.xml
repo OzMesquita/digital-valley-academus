@@ -8,10 +8,9 @@
     <session-timeout>60</session-timeout>
   </session-config>
   <display-name>Archetype Created Web Application</display-name>
-  
   <servlet>
-  	<servlet-name>EditarDisciplinaController</servlet-name>
-  	<servlet-class>br.ufc.russas.n2s.academus.controller.EditarDisciplinaController</servlet-class>
+    <servlet-name>EditarDisciplinaController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.EditarDisciplinaController</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>CadastrarMatrizController</servlet-name>
@@ -22,12 +21,12 @@
     <servlet-class>br.ufc.russas.n2s.academus.controller.BuscarDisciplinaController</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>ListarDisciplinasController</servlet-name>
-  	<servlet-class>br.ufc.russas.n2s.academus.controller.ListarDisciplinasController</servlet-class>
+    <servlet-name>ListarDisciplinasController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.ListarDisciplinasController</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>ListarMatrizController</servlet-name>
-  	<servlet-class>br.ufc.russas.n2s.academus.controller.ListarMatrizController</servlet-class>
+    <servlet-name>ListarMatrizController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.ListarMatrizController</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>Sair</servlet-name>
@@ -93,10 +92,9 @@
     <servlet-name>BotoesVisualizarController</servlet-name>
     <servlet-class>br.ufc.russas.n2s.academus.controller.BotoesVisualizarController</servlet-class>
   </servlet>
-  
   <servlet-mapping>
-  	<servlet-name>EditarDisciplinaController</servlet-name>
-  	<url-pattern>/EditarDisciplina</url-pattern>
+    <servlet-name>EditarDisciplinaController</servlet-name>
+    <url-pattern>/EditarDisciplina</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>CadastrarMatrizController</servlet-name>
@@ -107,12 +105,12 @@
     <url-pattern>/BuscarDisciplina</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>ListarDisciplinasController</servlet-name>
-  	<url-pattern>/ListarDisciplina</url-pattern>
+    <servlet-name>ListarDisciplinasController</servlet-name>
+    <url-pattern>/ListarDisciplina</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>ListarMatrizController</servlet-name>
-  	<url-pattern>/ListarMatriz</url-pattern>
+    <servlet-name>ListarMatrizController</servlet-name>
+    <url-pattern>/ListarMatriz</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Autenticar</servlet-name>
@@ -178,16 +176,14 @@
     <servlet-name>Sair</servlet-name>
     <url-pattern>/Sair</url-pattern>
   </servlet-mapping>
-  
   <servlet>
-  	<servlet-name>SalvarAnexosController2</servlet-name>
-  	<servlet-class>br.ufc.russas.n2s.academus.controller.SalvarAnexosController2</servlet-class>
+    <servlet-name>SalvarAnexosController2</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.SalvarAnexosController2</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>SalvarAnexosController2</servlet-name>
     <url-pattern>/SalvarAnexos</url-pattern>
   </servlet-mapping>
-  
   <filter>
     <filter-name>FiltroAutenticado</filter-name>
     <filter-class>br.ufc.russas.n2s.academus.filter.AutenticadoFiltro</filter-class>
@@ -196,5 +192,4 @@
     <filter-name>FiltroAutenticado</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
 </web-app>

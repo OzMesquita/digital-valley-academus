@@ -7,13 +7,16 @@ public class Arquivo implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int idArquivo;
+	private String nome;
 	private String caminho;
-	private File arquivo;
+	private TipoArquivo tipo;
+	
 	
 	public Arquivo(){
 		this.setIdArquivo(-1);
+		this.setNome("INDEFINIDO");
 		this.setCaminho("INDEFINIDO");
-		this.setArquivo(new File(this.getCaminho()));
+		this.setTipo(TipoArquivo.INDEFINIDO);
 	}
 	
 	public int getIdArquivo() {
@@ -22,18 +25,28 @@ public class Arquivo implements Serializable{
 	public void setIdArquivo(int idArquivo) {
 		this.idArquivo = idArquivo;
 	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
 	public String getCaminho() {
 		return caminho;
 	}
 	public void setCaminho(String caminho) {
 		this.caminho = caminho;
 	}
-	public File getArquivo() {
-		return arquivo;
+	public TipoArquivo getTipo() {
+		return tipo;
 	}
-	public void setArquivo(File arquivo) {
-		this.arquivo = arquivo;
+	public void setTipo(TipoArquivo tipo) {
+		this.tipo = tipo;
 	}
-	
-	
+	public File getArquivo(){
+		if(getCaminho() == "INDEFINIDO") return null;
+		else return new File(getCaminho());
+	}
+		
 }

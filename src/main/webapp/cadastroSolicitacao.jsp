@@ -84,6 +84,8 @@
 					</nav>
 					<br>
 					<div class="form-group">
+						<h1>Cadastrar Solicitação</h1>
+						<br>
 						<form action="CadastrarSolicitacao" method="post">
 							<div class="form-group">
 								<label for="matrizInput">Matriz escolhida</label>
@@ -212,7 +214,7 @@
 		
 		function atualizarDisciplinaAproveitada(){
 			var list = document.getElementById("listaDisciplinasAproveitadas");
-			list.innerHTML = '<tr><th scope="col">Disciplina Aproveitada</th><th scope="col">Carga Horária</th><th scope="col">Nota</th><th scope="col">Ano/Semestre</th><th scope="col"></th></tr>';
+			list.innerHTML = '<tr><th scope="col">Disciplina Aproveitada</th><th scope="col">Carga Horária</th><th scope="col">Nota</th><th scope="col">Ano/Semestre</th><th scope="col">Instituição</th></tr>';
 			for(i=0;i<disciplinas.length;i++){
 				if(disciplinas[i] !== null){
 					list.innerHTML += '<tr>'+
