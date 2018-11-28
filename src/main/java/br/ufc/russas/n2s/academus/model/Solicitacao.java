@@ -16,7 +16,6 @@ public class Solicitacao implements Serializable{
 	private String resultado;
 	private String justificativa;
 	private Curso curso;
-	private Arquivo arquivo;
 	
 	public Solicitacao(){
 		this.setIdSolicitacao(-1);
@@ -27,10 +26,7 @@ public class Solicitacao implements Serializable{
 		this.setDisciplinasCursadas(new ArrayList<DisciplinaCursada>());
 		this.setResultado("INDEFINIDO");
 		this.setJustificativa("INDEFINIDO");
-		this.setArquivo(new Arquivo());
 		this.setCurso(new Curso());
-		this.justificativa = "";
-		this.resultado = "";
 	}
 	
 	public int getIdSolicitacao() {
@@ -86,12 +82,6 @@ public class Solicitacao implements Serializable{
 	}
 	public void setCurso(Curso curso) {
 		this.curso = curso;
-	}
-	public Arquivo getArquivo() {
-		return arquivo;
-	}
-	public void setArquivo(Arquivo arquivo) {
-		this.arquivo = arquivo;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;

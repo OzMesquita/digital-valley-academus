@@ -2,11 +2,11 @@ package br.ufc.russas.n2s.academus.model;
 
 public enum Status {
 	
-	CANCELADO(1, "Cancelado"),
-	SUBMETIDO(2, "Submetido"),
-	VALIDANDO(3, "Validando"),
-	ANALIZANDO(4, "Analizando"),
-	FINALIZADO(5, "Finalizado");
+	CANCELADO(1, "CANCELADO"),
+	SUBMETIDO(2, "SUBMETIDO"),
+	VALIDANDO(3, "VALIDANDO"),
+	ANALIZANDO(4, "ANALIZANDO"),
+	FINALIZADO(5, "FINALIZADO");
 	
 	private final int codigo;
 	private final String descricao;

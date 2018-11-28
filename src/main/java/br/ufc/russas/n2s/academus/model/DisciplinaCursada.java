@@ -14,7 +14,7 @@ public class DisciplinaCursada implements Serializable{
 	private Arquivo arquivo;
 	
 	public DisciplinaCursada() {
-		this.setId(0);
+		this.setId(-1);
 		this.setSemestre("INDEFINIDO");
 		this.setNota(-1.0f);
 		this.setCarga(-1);
