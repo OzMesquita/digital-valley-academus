@@ -18,7 +18,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 
 	@Override
 	public Solicitacao cadastrar(Solicitacao sol) {
-		String sql = "insert into academus.solicitacao( id_solicitante, matricula_solicitante, status, id_componente, id_curso) VALUES ( ?, ?, ?, ?, ?)";
+		String sql = "insert into academus.solicitacao( id_solicitante, matricula_solicitante, status, id_componente, id_curso, justificativa, resultado) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -32,6 +32,8 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			insert.setInt(3, Status.getCodigo(sol.getStatus()));
 			insert.setInt(4, sol.getDisciplinaAlvo().getIdComponente());
 			insert.setInt(5, sol.getCurso().getIdCurso());
+			insert.setString(6, sol.getJustificativa());
+			insert.setString(7, sol.getResultado());
 			insert.execute();
 			
 			int idSolicitacao = idUltimaSolicitacao(sol.getSolicitante().getMatricula());
@@ -92,7 +94,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -107,7 +108,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -143,7 +143,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				AlunoDAO aludao = df.criarAlunoDAO();
 				ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO();
 				DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-				//ArquivoDAO arqdao = df.criarArquivoDAO();
 				HistoricoDAO hisdao = df.criarHistoricoDAO();
 				CursoDAO curdao = df.criarCursoDAO();
 				
@@ -154,7 +153,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -236,7 +234,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -251,7 +248,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -289,7 +285,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -304,7 +299,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -343,7 +337,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -358,7 +351,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -397,7 +389,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -412,7 +403,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -451,7 +441,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -466,7 +455,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -504,7 +492,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -519,7 +506,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -557,7 +543,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -572,7 +557,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -610,7 +594,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -625,7 +608,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -663,7 +645,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -678,7 +659,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -717,7 +697,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -732,7 +711,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -770,7 +748,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -785,7 +762,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -823,7 +799,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -838,7 +813,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
@@ -876,7 +850,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			AlunoDAO aludao = df.criarAlunoDAO();
 			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
 			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			//ArquivoDAO arqdao = df.criarArquivoDAO();
 			HistoricoDAO hisdao = df.criarHistoricoDAO();
 			CursoDAO curdao = df.criarCursoDAO();
 			
@@ -891,7 +864,6 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 				aux.setDisciplinasCursadas(dcd.buscar(aux));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setResultado(rs.getString("resultado"));
-				//aux.setArquivo(arqdao.buscarPorSolicitacao(aux));
 				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
 				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
