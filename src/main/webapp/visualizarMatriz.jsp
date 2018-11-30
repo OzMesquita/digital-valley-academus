@@ -50,14 +50,13 @@
 						<li class="breadcrumb-item">Você está em:</li>
 						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>
 						<!-- PREENCHER HREF -->
-						<li class="breadcrumb-item active" aria-current="page">Visualizar Matriz e Componentes</li>
+						<li class="breadcrumb-item active" aria-current="page">Matriz e Componentes</li>
 					</ol>
 					</nav>
 					<%
 								MatrizCurricular matriz = new MatrizCurricular();
 								MatrizCurricularDAO dao = new JDBCMatrizCurricularDAO();
-								//int a = Integer.parseInt(request.getParameter("id"));
-								//matriz = dao.buscarPorId(a);
+
 								boolean deuCerto = true;
 								try{
 									int id = Integer.parseInt((String) request.getAttribute("id_matriz"));
@@ -74,75 +73,81 @@
 								
 							%>
 					<div class="form-group">
-						<table class="table table-responsive">
-							<thead>
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th scope="col">Código Matriz</th>
+										<th scope="col">Nome</th>
+										<th scope="col">Periodo Letivo</th>
+										<th scope="col">Carga Horaria</th>
+										<th scope="col">Prazo Minimo</th>
+										<th scope="col">Prazo Maximo</th>
+										<th scope="col">Vigente</th>		
+										<th scope="col">Ativo</th>
+										<th scope="col">Código Curso</th>	
+									</tr>
+								</thead>
+								
 								<tr>
-									<th scope="col">Código Matriz</th>
-									<th scope="col">Nome</th>
-									<th scope="col">Periodo Letivo</th>
-									<th scope="col">Carga Horaria</th>
-									<th scope="col">Prazo Minimo</th>
-									<th scope="col">Prazo Maximo</th>
-									<th scope="col">Vigente</th>		
-									<th scope="col">Ativo</th>
-									<th scope="col">Código Curso</th>	
-								</tr>
-							</thead>
-							
-							<tr>
-								<td><%=matriz.getIdMatriz()%></td>
-								<td><%=matriz.getNome()%></td>
-								<td><%=matriz.getPeriodoLetivo()%></td>
-								<td><%=matriz.getCarga()%></td>
-								<td><%=matriz.getPrazoMinimo()%></td>
-								<td><%=matriz.getPrazoMaximo()%></td>
-								<td><%=(matriz.isVigente())? "Sim" : "Não"%></td>
-								<td><%=(matriz.isAtivo())? "Sim" : "Não"%></td>
-								<td><%=matriz.getIdCurso()%></td>
-							</tr>		
-						</table>
+									<td><%=matriz.getIdMatriz()%></td>
+									<td><%=matriz.getNome()%></td>
+									<td><%=matriz.getPeriodoLetivo()%></td>
+									<td><%=matriz.getCarga()%></td>
+									<td><%=matriz.getPrazoMinimo()%></td>
+									<td><%=matriz.getPrazoMaximo()%></td>
+									<td><%=(matriz.isVigente())? "Sim" : "Não"%></td>
+									<td><%=(matriz.isAtivo())? "Sim" : "Não"%></td>
+									<td><%=matriz.getIdCurso()%></td>
+								</tr>		
+							</table>
+						</div>
+						
 						
 						<h3><b>Componentes Curriculares</b></h3>
 						
-						<table class="table table-responsive">
-							<thead>	
-								<tr>
-									<th scope="col">Código do Componente</th>
-									<th scope="col">Código da Disciplina</th>
-									<th scope="col">Nome da Disciplina</th>
-									<th scope="col">Carga da Disciplina</th>
-									<th scope="col">Créditos da Disciplina</th>
-									<th scope="col">Natureza do Componente</th>
-									<th scope="col">Código do Pré Requisito</th>
-								</tr>
-							</thead>
-							
-							<%
-								List <ComponenteCurricular> cc = matriz.getComponentes();
-								for (ComponenteCurricular aux : cc ) {
-							%>
-							
-							<tr>
-								<td><%=aux.getIdComponente()%></td>
-								<td><%=aux.getDisciplina().getId()%></td>
-								<td><%=aux.getDisciplina().getNome()%></td>
-								<td><%=aux.getDisciplina().getCarga()%></td>
-								<td><%=aux.getDisciplina().getCreditos()%></td>
-								<td><%=aux.getNatureza()%></td>
-								<td>
+						<div class="table-responsive">
+							<table class="table">
+								<thead>	
+									<tr>
+										<th scope="col">Código do Componente</th>
+										<th scope="col">Código da Disciplina</th>
+										<th scope="col">Nome da Disciplina</th>
+										<th scope="col">Carga da Disciplina</th>
+										<th scope="col">Créditos da Disciplina</th>
+										<th scope="col">Natureza do Componente</th>
+										<th scope="col">Código do Pré Requisito</th>
+									</tr>
+								</thead>
+								
 								<%
-									List <Disciplina> prerequisito = aux.getPreRequisitos();
-									for (Disciplina d : prerequisito ) {
-										out.print(d.getId() + "; ");
+									List <ComponenteCurricular> cc = matriz.getComponentes();
+									for (ComponenteCurricular aux : cc ) {
+								%>
+								
+								<tr>
+									<td><%=aux.getIdComponente()%></td>
+									<td><%=aux.getDisciplina().getId()%></td>
+									<td><%=aux.getDisciplina().getNome()%></td>
+									<td><%=aux.getDisciplina().getCarga()%></td>
+									<td><%=aux.getDisciplina().getCreditos()%></td>
+									<td><%=aux.getNatureza()%></td>
+									<td>
+									<%
+										List <Disciplina> prerequisito = aux.getPreRequisitos();
+										for (Disciplina d : prerequisito ) {
+											out.print(d.getId() + "; ");
+										}
+									%>
+									</td>
+								</tr>
+								
+								<%
 									}
 								%>
-								</td>
-							</tr>
+							</table>
+						</div>
 							
-							<%
-								}
-							%>
-						</table>	
 					</div>
 					<%
 								} else {

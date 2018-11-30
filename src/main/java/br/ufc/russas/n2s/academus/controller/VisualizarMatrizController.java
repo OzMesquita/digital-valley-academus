@@ -24,7 +24,6 @@ public class VisualizarMatrizController extends HttpServlet{
 		try {
 			String ans = request.getParameter("button");
 			request.setAttribute("id_matriz", ans);
-			//System.out.println(" 1 p "+ans+"     ");
 			
 			
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarMatriz.jsp");

@@ -77,13 +77,13 @@
 								<td><%=(contato.isVigente())? "Sim":"Não"%></td>
 								<td><%=(contato.isAtivo())? "Sim" : "Não"%></td>
 								<td><%=contato.getIdCurso()%></td>
-								<td><form method="post" action="VisualizarMatriz" id="form<%=contato.getIdMatriz()%>">
-								<button  class="btn btn-primary btn-sm" form="form<%=contato.getIdMatriz()%>"
+								<td><form method="post" action="VisualizarMatriz" id="formV<%=contato.getIdMatriz()%>">
+								<button  class="btn btn-primary btn-sm" form="formV<%=contato.getIdMatriz()%>"
 									class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz() %>" > Visualizar
 								</button>
 								</form></td>
-								<td><form method="post" action="EditarMatriz" id="form<%=contato.getIdMatriz()%>">
-								<button  class="btn btn-primary btn-sm" form="form<%=contato.getIdMatriz()%>"
+								<td><form method="post" action="EditarMatriz" id="formE<%=contato.getIdMatriz()%>">
+								<button  class="btn btn-primary btn-sm" form="formE<%=contato.getIdMatriz()%>"
 									class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz() %>" > Editar
 								</button>
 								</form></td>

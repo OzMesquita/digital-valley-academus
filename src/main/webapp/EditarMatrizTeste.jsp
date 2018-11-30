@@ -25,7 +25,6 @@
 	boolean deuCerto = true;
 	try{
 		int id_matriz = Integer.parseInt((String) request.getAttribute("id"));
-		//matriz.setIdMatriz(id_matriz);
 		matriz = daoMC.buscarPorId(id_matriz);
 		disciplinas = daoD.listar();
 		listaComps = matriz.getComponentes();
