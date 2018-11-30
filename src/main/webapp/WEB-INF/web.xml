@@ -9,12 +9,16 @@
   </session-config>
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
-  	<servlet-name>VisualizarMatrizController</servlet-name>
-  	<servlet-class>br.ufc.russas.n2s.academus.controller.VisualizarMatrizController</servlet-class>
+  	<servlet-name>ExcluirMatrizController</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.ExcluirMatrizController</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>ExcluirDisciplinaController</servlet-name>
-  	<servlet-class>br.ufc.russas.n2s.academus.controller.ExcluirDisciplinaController</servlet-class>
+    <servlet-name>VisualizarMatrizController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.VisualizarMatrizController</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ExcluirDisciplinaController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.ExcluirDisciplinaController</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>EditarDisciplinaController</servlet-name>
@@ -101,12 +105,16 @@
     <servlet-class>br.ufc.russas.n2s.academus.controller.BotoesVisualizarController</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>VisualizarMatrizController</servlet-name>
- 	<url-pattern>/VisualizarMatriz</url-pattern>
+  	<servlet-name>ExcluirMatrizController</servlet-name>
+  	<url-pattern>/ExcluirMatriz</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>ExcluirDisciplinaController</servlet-name>
-  	<url-pattern>/ExcluirDisciplina</url-pattern>
+    <servlet-name>VisualizarMatrizController</servlet-name>
+    <url-pattern>/VisualizarMatriz</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExcluirDisciplinaController</servlet-name>
+    <url-pattern>/ExcluirDisciplina</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>EditarDisciplinaController</servlet-name>

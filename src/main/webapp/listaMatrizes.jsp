@@ -77,19 +77,21 @@
 								<td><%=(contato.isVigente())? "Sim":"Não"%></td>
 								<td><%=(contato.isAtivo())? "Sim" : "Não"%></td>
 								<td><%=contato.getIdCurso()%></td>
-								<td><form method="post" action="VisualizarMatriz" id="formV<%=contato.getIdMatriz()%>">
-								<button  class="btn btn-primary btn-sm" form="formV<%=contato.getIdMatriz()%>"
+								<td><form method="post" action="VisualizarMatriz" id="formVis<%=contato.getIdMatriz()%>">
+								<button  class="btn btn-primary btn-sm" form="formVis<%=contato.getIdMatriz()%>"
 									class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz() %>" > Visualizar
 								</button>
 								</form></td>
-								<td><form method="post" action="EditarMatriz" id="formE<%=contato.getIdMatriz()%>">
-								<button  class="btn btn-primary btn-sm" form="formE<%=contato.getIdMatriz()%>"
+								<td><form method="post" action="EditarMatriz" id="formEdi<%=contato.getIdMatriz()%>">
+								<button  class="btn btn-primary btn-sm" form="formEdi<%=contato.getIdMatriz()%>"
 									class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz() %>" > Editar
 								</button>
 								</form></td>
-								<td><a href="elements/aviso.jsp" class="btn btn-primary btn-sm"
-									class="btn btn-primary btn-sm" style="height: 30px;">Remover
-								</a></td>
+								<td><form method="post" action="ExcluirMatriz" id="formEx<%=contato.getIdMatriz()%>">
+								<button  class="btn btn-primary btn-sm" form="formEx<%=contato.getIdMatriz()%>"
+									class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz() %>" > Excluir
+								</button>
+								</form></td>
 							</tr>
 	
 							<%
