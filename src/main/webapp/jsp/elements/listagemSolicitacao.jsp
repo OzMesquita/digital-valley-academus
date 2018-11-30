@@ -88,7 +88,7 @@
 			<td><%=soli.getResultado()%></td>
 			<form method="POST" action="VisualizarSolicitacao" id="form<%=soli.getIdSolicitacao()%>">
 				<td>
-				<button  class="btn btn-primary btn-sm active" form="form<%=soli.getIdSolicitacao()%>" class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=soli.getIdSolicitacao() %>" >
+				<button  class="btn btn-primary btn-sm" form="form<%=soli.getIdSolicitacao()%>" class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=soli.getIdSolicitacao() %>" >
 				Visualizar
 				</button>
 				</td>

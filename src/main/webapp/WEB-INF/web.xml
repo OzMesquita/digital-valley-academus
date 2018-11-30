@@ -106,11 +106,11 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ListarDisciplinasController</servlet-name>
-    <url-pattern>/ListarDisciplina</url-pattern>
+    <url-pattern>/ListarDisciplinas</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ListarMatrizController</servlet-name>
-    <url-pattern>/ListarMatriz</url-pattern>
+    <url-pattern>/ListarMatrizes</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Autenticar</servlet-name>
