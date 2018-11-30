@@ -22,6 +22,10 @@ public enum TipoArquivo {
 	}
 	
 	public static TipoArquivo getTipoArquivo(int id) throws IllegalArgumentException{
+		if(id == 0) {
+			return TipoArquivo.INDEFINIDO;
+		}
+		
 		if(id == 1){
 			return TipoArquivo.EMENTA;
 		}
