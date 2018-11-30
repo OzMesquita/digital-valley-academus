@@ -9,6 +9,10 @@
   </session-config>
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
+  	<servlet-name>ExcluirDisciplinaController</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.ExcluirDisciplinaController</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>EditarDisciplinaController</servlet-name>
     <servlet-class>br.ufc.russas.n2s.academus.controller.EditarDisciplinaController</servlet-class>
   </servlet>
@@ -92,6 +96,10 @@
     <servlet-name>BotoesVisualizarController</servlet-name>
     <servlet-class>br.ufc.russas.n2s.academus.controller.BotoesVisualizarController</servlet-class>
   </servlet>
+  <servlet-mapping>
+  	<servlet-name>ExcluirDisciplinaController</servlet-name>
+  	<url-pattern>/ExcluirDisciplina</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>EditarDisciplinaController</servlet-name>
     <url-pattern>/EditarDisciplina</url-pattern>

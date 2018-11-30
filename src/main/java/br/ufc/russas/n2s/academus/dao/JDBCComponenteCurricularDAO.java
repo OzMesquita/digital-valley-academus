@@ -163,7 +163,7 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.execute();
+			ps.executeUpdate();
 			
 			ps.close();
 			
@@ -183,7 +183,7 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
-			ps.execute();
+			ps.executeUpdate();
 			ps.close();
 			
 		}catch(SQLException e){

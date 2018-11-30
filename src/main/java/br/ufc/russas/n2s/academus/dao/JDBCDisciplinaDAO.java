@@ -146,7 +146,7 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 			update.setInt(4, dis.getCreditos());
 			update.setString(5, dis.getId());
 			
-			update.executeQuery();
+			update.executeUpdate();
 			update.close();
 			
 		} catch (SQLException e) {
@@ -160,12 +160,15 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 
 	@Override
 	public void excluir(Disciplina dis) {
-		String sql = "delete from academus.disciplina where id_disciplina = "+dis.getId()+";";
+		String sql = "DELETE FROM academus.disciplina where id_disciplina = ?";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.execute();
+			ps.setString(1, dis.getId());
+			ps.executeUpdate();
+			
+			ps.close();
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{

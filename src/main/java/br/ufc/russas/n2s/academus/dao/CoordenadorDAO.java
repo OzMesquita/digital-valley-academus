@@ -12,9 +12,7 @@ public interface CoordenadorDAO {
 	public Coordenador buscarPorId(int idCoordenador);
 		
 	public Coordenador buscarPorCurso(int idCurso);
-	
-	public Coordenador editar(Coordenador cord);
-	
+		
 	public void excluir(Coordenador cord);
 	
 	public boolean isCoordenador(Pessoa pessoa);

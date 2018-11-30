@@ -151,28 +151,6 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 	}
 
 	@Override
-	public Coordenador editar(Coordenador cord) {
-		String sql = "UPDATE academus.coordenador SET id_curso=? WHERE id_pessoa=?;";
-		
-		Connection conn = ConnectionPool.getConnection();
-		try{
-			PreparedStatement editar = conn.prepareStatement(sql);
-			editar.setInt(1, cord.getCurso().getIdCurso());
-			editar.setInt(2, cord.getId());
-			
-			editar.execute();
-			editar.close();
-			
-		} catch(SQLException e) {
-			e.printStackTrace();
-		} finally {
-			ConnectionPool.releaseConnection(conn);
-		}
-		
-		return cord;
-	}
-
-	@Override
 	public void excluir(Coordenador cord) {
 		String sql = "DELETE FROM academus.coordenador WHERE id_pessoa=?;";
 		
@@ -181,7 +159,7 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 			PreparedStatement excluir = conn.prepareStatement(sql);
 			excluir.setInt(1, cord.getId());
 			
-			excluir.execute();
+			excluir.executeUpdate();
 			excluir.close();
 			
 		} catch(SQLException e) {
@@ -227,7 +205,7 @@ public class JDBCCoordenadorDAO implements CoordenadorDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idProfessor);
 			ps.setInt(2, idCurso);
-			ps.execute();
+			ps.executeUpdate();
 			ps.close();
 		}catch(SQLException e){
 			e.printStackTrace();

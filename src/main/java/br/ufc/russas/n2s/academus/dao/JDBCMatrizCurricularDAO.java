@@ -207,7 +207,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
             update.setInt(8, mat.getIdCurso());
             update.setInt(9, mat.getIdMatriz());
             
-            update.execute();
+            update.executeUpdate();
             update.close();
             
         } catch (SQLException e) {
@@ -221,13 +221,14 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 
 	@Override
 	public void excluir(MatrizCurricular mat) {
-		String sql = "delete from academus.matriz_curricular where id_matriz = "+mat.getIdMatriz()+";";
+		String sql = "delete from academus.matriz_curricular where id_matriz = ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, mat.getIdMatriz());
 			
-			ps.execute();
+			ps.executeUpdate();
 			ps.close();
 			
 		}catch(SQLException e){

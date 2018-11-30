@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Historico;
@@ -43,7 +44,7 @@ public class JDBCHistoricoDAO implements HistoricoDAO{
 	}
 
 	@Override
-	public java.util.List<Historico> buscarPorSolicitacao(Solicitacao sol) {
+	public List<Historico> buscarPorSolicitacao(Solicitacao sol) {
 		String sql =  "select * from academus.historico where id_solicitacao = "+sol.getIdSolicitacao()+";";
 		ArrayList<Historico> lh = new ArrayList<Historico>();
 		PerfilAcademusDAO pad = new JDBCPerfilAcademusDAO();

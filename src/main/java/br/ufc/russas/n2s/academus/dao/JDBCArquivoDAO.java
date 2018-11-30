@@ -1,17 +1,13 @@
 package br.ufc.russas.n2s.academus.dao;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Arquivo;
 import br.ufc.russas.n2s.academus.model.DisciplinaCursada;
-import br.ufc.russas.n2s.academus.model.Solicitacao;
 import br.ufc.russas.n2s.academus.model.TipoArquivo;
 
 public class JDBCArquivoDAO implements ArquivoDAO{
@@ -80,7 +76,7 @@ public class JDBCArquivoDAO implements ArquivoDAO{
 			editar.setInt(3, TipoArquivo.getId(arquivo.getTipo()));
 			editar.setInt(4, arquivo.getIdArquivo());
 		
-			editar.execute();
+			editar.executeUpdate();
 			editar.close();
 			
 		} catch(SQLException e) {
@@ -101,7 +97,7 @@ public class JDBCArquivoDAO implements ArquivoDAO{
 			PreparedStatement excluir = conn.prepareStatement(sql);
 			excluir.setInt(1, arquivo.getIdArquivo());
 			
-			excluir.execute();
+			excluir.executeUpdate();
 			excluir.close();
 			
 		} catch(SQLException e) {

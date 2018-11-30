@@ -16,7 +16,6 @@
 	boolean deuCerto = true;
 	
 	try{
-		//System.out.print(" outro "+ ( request.getAttribute("id")));
 		disciplina.setId((String) request.getAttribute("id"));
 		
 		disciplina = dao.buscarPorId(disciplina.getId());
@@ -102,7 +101,7 @@
 							<div class="modal-footer">
 								<div id="botoes" class="controls">
 									<button type="submit" class="btn btn-primary">Confirmar</button>
-									<button type="button" class="btn btn-primary">Cancelar</button>
+									<a class="btn btn-primary" href="ListarDisciplinas">Cancelar</a>
 								</div>
 							</div>
 						</form>	

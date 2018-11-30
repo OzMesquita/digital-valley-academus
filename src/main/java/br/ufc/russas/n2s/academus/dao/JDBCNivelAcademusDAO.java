@@ -69,7 +69,7 @@ public class JDBCNivelAcademusDAO implements NivelAcademusDAO{
 			ps.setString(2, NivelAcademus.getDescricao(nivel));
 			ps.setInt(3, NivelAcademus.getCodigo(nivel));
 			
-			ps.execute();
+			ps.executeUpdate();
 			ps.close();
 			
 		} catch(SQLException e) {
@@ -90,7 +90,7 @@ public class JDBCNivelAcademusDAO implements NivelAcademusDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, NivelAcademus.getCodigo(nivel));
 			
-			ps.execute();
+			ps.executeUpdate();
 			ps.close();
 			
 		} catch(SQLException e) {

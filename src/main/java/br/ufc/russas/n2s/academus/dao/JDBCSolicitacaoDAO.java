@@ -185,7 +185,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			update.setString(4, sol.getResultado());
 			update.setInt(5, sol.getIdSolicitacao());
 			
-			update.execute();
+			update.executeUpdate();
 			update.close();
 			
 		} catch(SQLException e){
@@ -199,14 +199,16 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 
 	@Override
 	public void excluir(Solicitacao sol) {
-		String sql = "DELETE FROM academus.solicitaca WHERE id_solicitacao = "+sol.getIdSolicitacao()+";";
+		String sql = "DELETE FROM academus.solicitaca WHERE id_solicitacao = ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.execute();
+			ps.setInt(1, sol.getIdSolicitacao());
 			
+			ps.execute();
 			ps.close();
+			
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{

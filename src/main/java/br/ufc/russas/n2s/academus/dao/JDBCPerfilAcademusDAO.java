@@ -164,7 +164,7 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 			PreparedStatement excluir = conn.prepareStatement(sql);
 			excluir.setInt(1, perfil.getPessoa().getId());
 			
-			excluir.execute();
+			excluir.executeUpdate();
 			excluir.close();
 			
 		} catch(SQLException e) {
