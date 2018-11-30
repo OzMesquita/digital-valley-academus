@@ -27,38 +27,7 @@
 		<c:import url="jsp/elements/menu-superior.jsp" charEncoding="UTF-8"></c:import>
 		<div class="container-fluid">
 			<div class="row">
-				<% 
-				PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
-				if (per != null){
-					if (per.getNivel() == NivelAcademus.ALUNO){
-						%>
-						<c:import url="jsp/elements/menu-lateral-esquerdo-Aluno.jsp"
-						charEncoding="UTF-8"></c:import>
-						<%
-					} else if (per.getNivel() == NivelAcademus.COORDENADOR){
-						%>
-						<c:import url="jsp/elements/menu-lateral-esquerdo-Coordenador.jsp"
-						charEncoding="UTF-8"></c:import>
-						<%
-					} else if (per.getNivel() == NivelAcademus.SECRETARIO){
-						%>
-						<c:import url="jsp/elements/menu-lateral-esquerdo-Secretario.jsp"
-						charEncoding="UTF-8"></c:import>
-						<%
-					} else{
-						%>
-						<c:import url="jsp/elements/menu-lateral-esquerdo.jsp"
-						charEncoding="UTF-8"></c:import>
-						<%
-					}
-				} else {
-					%>
-					<c:import url="jsp/elements/menu-lateral-esquerdo.jsp"
-					charEncoding="UTF-8"></c:import>
-					<%
-				}
-				%>
-				
+				<c:import url="jsp/elements/menu-lateral-esquerdo.jsp" charEncoding="UTF-8"></c:import>
 				<div class="col-md-10">
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
