@@ -1,13 +1,15 @@
 
- 		
-<a href="Inicio"><input type="button" class="btn btn-primary" value="Cancelar"></a>
+<div class="modal-footer">
 			<%
 		if((boolean)request.getAttribute("Avaliar")){
 	%>
-<input type="button"
-		class="btn btn-primary" value="Avaliar"
+<input type="button" class="btn btn-primary btn-sm"
+		style="height: 30px;" value="Avaliar"
 		data-toggle="modal" data-target="#testeCoor">
-			
+
+<a href="Inicio"><input type="button" class="btn btn-primary btn-sm"
+	style="height: 30px;" value="Cancelar"></a>
+</div>
 			<!-- Modal -->
 			<div class="modal fade" id="testeCoor" tabindex="1"
 				role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -55,13 +57,6 @@
 								 style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("id") %>" > Confirmar
 							</button>
 							</td>
-							<form method="POST" action="Inicio">
-								<td>
-								<button  class="btn btn-primary btn-sm"
-									style="height: 30px;" type="submit" name="button" > Cancelar
-								</button>
-								</td>
-							</form>
 					</div>
 					</form>
 				</div>

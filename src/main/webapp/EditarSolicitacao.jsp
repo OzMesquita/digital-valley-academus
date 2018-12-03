@@ -153,14 +153,14 @@
 									<input type="text" id="instituicao" style='text-transform:uppercase' class="form-control">
 								</div>
 								<div class="form-group col-md-2">
-									<input type="button" class="btn btn-secondary col-md-8" onclick="adicionarDisciplinaAproveitada()" value="Adicionar">
+									<input type="button" class="btn btn-secondary col-md-6 btn-sm" onclick="adicionarDisciplinaAproveitada()" value="Adicionar">
 								</div>
 							</div>
 							<div class="modal-footer">
 								<div id="botoes" class="controls">
-									<button type="submit" name="button" value="<%=solicitacao.getIdSolicitacao()%>" class="btn btn-primary">Confirmar</button>
+									<button type="submit" name="button" value="<%=solicitacao.getIdSolicitacao()%>" class="btn btn-primary btn-sm">Confirmar</button>
 									<a href="Inicio">
-										<input type="button" class="btn btn-primary" value="Cancelar"></a>
+										<button type="button" class="btn btn-primary btn-sm" value="<%=solicitacao.getIdSolicitacao()%>">Cancelar</button></a>
 								</div>
 							</div>
 						</form>
@@ -231,7 +231,7 @@
 				document.getElementById("ano").value = "";
 				document.getElementById("semestre").value = "";
 				document.getElementById("instituicao").value = "";
-				atualizarDisciplinaAproveitada();
+				atualizarDisciplinasTela();
 			}
 		}
 		
@@ -270,6 +270,23 @@
 			if (disciplinas.lenght == 0){
 				atualizarListaDisciplinasAproveitadas();
 			}
+			list.innerHTML = '<tr><th scope="col">Disciplina Aproveitada</th><th scope="col">Carga Horária</th><th scope="col">Nota</th><th scope="col">Ano/Semestre</th><th scope="col">Instituição</th></tr>';
+			for(i=0;i<disciplinas.length;i++){
+				if(disciplinas[i] !== null){
+					list.innerHTML += '<tr>'+
+									  '<td>'+disciplinas[i].nome+'<input type="hidden" id="disc-nome-'+i+'" name="disc-nome" value="'+disciplinas[i].nome+'"></td>'+
+									  '<td>'+disciplinas[i].carga+'<input type="hidden" id="disc-carga-'+i+'" name="disc-carga" value="'+disciplinas[i].carga+'"></td>'+
+									  '<td>'+disciplinas[i].nota+'<input type="hidden" id="disc-nota-'+i+'" name="disc-nota" value="'+disciplinas[i].nota+'"></td>'+
+									  '<td>'+disciplinas[i].ano+'.'+disciplinas[i].semestre+'<input type="hidden" id="disc-semestre-'+i+'" name="disc-semestre" value="'+disciplinas[i].ano+'.'+disciplinas[i].semestre+'"></td>'+
+									  '<td>'+disciplinas[i].instituicao+'<input type="hidden" id="disc-instituicao-'+i+'" name="disc-instituicao" value="'+disciplinas[i].instituicao+'"></td>'+
+									  '<td><button type="button" class="btn btn-light btn-sm material-icons float-right" style="font-size: 15px;" onclick="removerDisciplinaAproveitada('+i+')">clear</button></td>'+
+									  '</tr>';
+				}
+			}
+		}
+		
+		function atualizarDisciplinasTela(){
+			var list = document.getElementById("listaDisciplinasAproveitadas");
 			list.innerHTML = '<tr><th scope="col">Disciplina Aproveitada</th><th scope="col">Carga Horária</th><th scope="col">Nota</th><th scope="col">Ano/Semestre</th><th scope="col">Instituição</th></tr>';
 			for(i=0;i<disciplinas.length;i++){
 				if(disciplinas[i] !== null){

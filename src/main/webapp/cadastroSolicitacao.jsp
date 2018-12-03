@@ -121,13 +121,13 @@
 									<input type="text" id="instituicao" style='text-transform:uppercase' class="form-control">
 								</div>
 								<div class="form-group col-md-2">
-									<input type="button" class="btn btn-secondary col-md-8" onclick="adicionarDisciplinaAproveitada()" value="Adicionar">
+									<input type="button" class="btn btn-secondary col-md-6 btn-sm" onclick="adicionarDisciplinaAproveitada()" value="Adicionar">
 								</div>
 							</div>
 							<div class="modal-footer">
 								<div id="botoes" class="controls">
-									<button type="submit" class="btn btn-primary">Confirmar</button>
-									<button type="button" class="btn btn-primary">Cancelar</button>
+									<button type="submit" class="btn btn-primary btn-sm">Confirmar</button>
+									<a href="Inicio"><button type="button" class="btn btn-primary btn-sm">Cancelar</button></a>
 								</div>
 							</div>
 						</form>
