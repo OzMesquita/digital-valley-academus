@@ -34,7 +34,8 @@ public class VisualizarSolicitacaoController extends HttpServlet {
 			
 			String ans = request.getParameter("button");
 			request.setAttribute("id", ans);
-			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSolicitacao.jsp");
+			//javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSolicitacao.jsp");
+			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
 			
 			if(per.getNivel() == NivelAcademus.SECRETARIO) {
 				dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");

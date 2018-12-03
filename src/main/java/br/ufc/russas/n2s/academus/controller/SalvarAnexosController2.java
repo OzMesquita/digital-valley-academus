@@ -53,6 +53,7 @@ public class SalvarAnexosController2 extends HttpServlet {
 		String idSolicitacao = request.getParameter("id_solicitacao");
 		String idDisciplinaCursada = request.getParameter("id_disciplina_cursada");
 		String caminho = Constantes.getAnexoDir()+File.separator+matricula+File.separator+idSolicitacao;
+		System.out.println(caminho);
 		boolean chave = Boolean.parseBoolean(request.getParameter("chave"));
 		
 		if(chave){

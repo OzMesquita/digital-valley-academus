@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class EncaminharAnexoController
  */
-public class EncaminharAnexoController extends HttpServlet {
+public class AnexarDocumentosController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EncaminharAnexoController() {
+    public AnexarDocumentosController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +32,8 @@ public class EncaminharAnexoController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/elements/botoesVisualizarAluno.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }
