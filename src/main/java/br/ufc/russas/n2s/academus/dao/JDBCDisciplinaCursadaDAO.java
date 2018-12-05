@@ -3,6 +3,7 @@ package br.ufc.russas.n2s.academus.dao;
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.DisciplinaCursada;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
+import br.ufc.russas.n2s.academus.model.TipoArquivo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -64,7 +65,8 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 				aux.setCarga(rs.getInt("carga"));
 				aux.setNome(rs.getString("nome"));
 				aux.setInstituicao(rs.getString("instituicao"));
-				aux.setArquivo(arqdao.buscarPorDisciplinaCursada(aux));
+				aux.setEmenta(arqdao.buscarPorDisciplinaCursada(aux, TipoArquivo.EMENTA));
+				aux.setHistorico(arqdao.buscarPorDisciplinaCursada(aux, TipoArquivo.HISTORICO));
 				
 				listaDisciplinaCursada.add(aux);
 			}
@@ -126,6 +128,41 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 			ConnectionPool.releaseConnection(conn);
 		}
 		
+	}
+
+	@Override
+	public DisciplinaCursada buscarPorId(int id) {
+		String sql = "select * from academus.disciplina_cursada where id_disciplina_cursada = ?;";
+		DAOFactoryJDBC df = new DAOFactoryJDBC();
+		DisciplinaCursada aux = new DisciplinaCursada();
+		ArquivoDAO arqdao = df.criarArquivoDAO();
+		Connection conn = ConnectionPool.getConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+						
+			if(rs.next()){
+				aux.setId(rs.getInt("id_disciplina_cursada"));
+				aux.setSemestre(rs.getString("semestre"));
+				aux.setNota(rs.getFloat("nota"));//Talvez de erro, já que no banco a coluna 'nota' é do tipo double precision
+				aux.setCarga(rs.getInt("carga"));
+				aux.setNome(rs.getString("nome"));
+				aux.setInstituicao(rs.getString("instituicao"));
+				aux.setEmenta(arqdao.buscarPorDisciplinaCursada(aux, TipoArquivo.EMENTA));
+				aux.setHistorico(arqdao.buscarPorDisciplinaCursada(aux, TipoArquivo.HISTORICO));
+			}
+			
+			rs.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return aux;
 	}
 	
 }
