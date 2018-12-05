@@ -8,7 +8,7 @@
 <%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC" %>
 <%@ page import="java.util.*"%>
  
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  
  <%
@@ -28,7 +28,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Visualizando Solicitação</title>
+		<title>Visualizando SolicitaÃ§Ã£o</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 			
@@ -51,13 +51,13 @@
 				<div class="col-md-10">
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item">Você está em:</li>
-						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>
+						<li class="breadcrumb-item">VocÃª estÃ¡ em:</li>
+						<li class="breadcrumb-item"><a href="Inicio">InÃ­cio</a></li>
 						<li class="breadcrumb-item active" aria-current="page">Visualizar Solicitacao</li>
 					</ol>
 					</nav>
 					
-					<h1>Visualizar Solicitação</h1>
+					<h1>Visualizar SolicitaÃ§Ã£o</h1>
 					
 					<br>
 					<%
@@ -65,7 +65,7 @@
 					%>
 					<div class="form-group">						
 						<!-- <form action="VisualizarSolicitacao" method="post"> -->
-							<label for="idInput"><b> Código da Solicitação </b></label>
+							<label for="idInput"><b> CÃ³digo da SolicitaÃ§Ã£o </b></label>
 							<input type="text" name="id_solicitacao" value="<%= solicitacao.getIdSolicitacao() %>" class="form-control" id="idInput" aria-describedby="tituloHelp" readonly  required> 
 							
 							<div class="invalid-feedback">
@@ -73,7 +73,7 @@
 	                        </div>
 							<br> 
 							
-							<label for="nomeInput"><b> Status da Solicitação </b></label> 
+							<label for="nomeInput"><b> Status da SolicitaÃ§Ã£o </b></label> 
 							<input type="text" name="nome" value="<%= solicitacao.getStatus() %>" class="form-control" id="nomeInput" aria-describedby="tituloHelp" readonly required> 
 							
 							<div class="invalid-feedback">
@@ -110,7 +110,7 @@
 										<thead>
 											<tr>
 												<th scope="col">Nome</th>
-												<th scope="col">Instituição</th>
+												<th scope="col">InstituiÃ§Ã£o</th>
 												<th scope="col">Carga</th>
 												<th scope="col">Semestre</th>
 												<th scope="col">Nota</th>
@@ -154,7 +154,7 @@
 					<%
 					} else {
 						%>
-						Solicitação não encontrada.
+						SolicitaÃ§Ã£o nÃ£o encontrada.
 						<%
 					}
 					%>

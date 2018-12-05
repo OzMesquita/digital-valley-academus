@@ -1,10 +1,6 @@
-<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
- 		
-		<input type="button" class="btn btn-secondary" value="Ementa" data-toggle="modal" data-target="#anexarEmenta">
-		<input type="button" class="btn btn-secondary" value="Historico" data-toggle="modal" data-target="#anexarHistorico">
+
+		<input type="button" class="btn btn-secondary btn-sm" value="Ementa" data-toggle="modal" data-target="#anexarEmenta">
+		<input type="button" class="btn btn-secondary btn-sm" value="Historico" data-toggle="modal" data-target="#anexarHistorico">
 					
 					<!-- Modal -->
 					<div class="modal fade" id="anexarEmenta" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

@@ -15,8 +15,6 @@ public class VisualizarSolicitacaoController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
-	//MatrizCurricularDao daoCadastroMatriz = new MatrizCurricularDao();
-
 	public VisualizarSolicitacaoController() {
 		super();
 	}
@@ -34,8 +32,7 @@ public class VisualizarSolicitacaoController extends HttpServlet {
 			
 			String ans = request.getParameter("button");
 			request.setAttribute("id", ans);
-			//javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSolicitacao.jsp");
-			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
+			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSolicitacao.jsp");
 			
 			if(per.getNivel() == NivelAcademus.SECRETARIO) {
 				dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
