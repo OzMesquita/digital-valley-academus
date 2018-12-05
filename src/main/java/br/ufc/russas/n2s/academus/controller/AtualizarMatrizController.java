@@ -22,12 +22,8 @@ public class AtualizarMatrizController extends HttpServlet {
 	
     public AtualizarMatrizController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
@@ -80,9 +76,7 @@ public class AtualizarMatrizController extends HttpServlet {
 				ma.setIdCurso(curso);
 				
 				
-				daoMatriz.editar(ma);
-				//daoMatriz.gerenciarComponentes(compObjs, id);
-				
+				daoMatriz.editar(ma);				
 			
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("listaMatrizes.jsp");			
 				dispatcher.forward(request, response);
@@ -97,7 +91,6 @@ public class AtualizarMatrizController extends HttpServlet {
 			try {
 				String ans = request.getParameter("button");
 				request.setAttribute("id", ans);
-				//System.out.println(ans);
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("EditarMatrizTeste.jsp");
 				
 				dispatcher.forward(request, response);

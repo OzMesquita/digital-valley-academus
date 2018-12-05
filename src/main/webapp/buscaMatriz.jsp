@@ -90,15 +90,21 @@
 										<td>${matriz.isAtivo() ? "Não" : "Sim"}</td>
 										<td><%=matriz.getIdCurso()%></td>
 										
-										<td>
-											<button class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="editarPtn" value="<%=matriz.getIdMatriz() %>" form="buscarMatrizForm">Editar</button>
-										</td>
-										<td>
-											<button class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="vizualizarPtn" value="<%=matriz.getIdMatriz() %>" form="buscarMatrizForm">Vizualizar</button>
-										</td>
-										<td>
-											<button class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="removerPtn" value="<%=matriz.getIdMatriz() %>" form="buscarMatrizForm">Remover</button>
-										</td>
+										<td><form method="post" action="VisualizarMatriz" id="formVis<%=matriz.getIdMatriz()%>">
+										<button  class="btn btn-primary btn-sm" form="formVis<%=matriz.getIdMatriz()%>"
+											style="height: 30px;" type="submit" name="button" value="<%=matriz.getIdMatriz()%>" > Visualizar
+										</button>
+										</form></td>
+										<td><form method="post" action="EditarMatriz" id="formEdi<%=matriz.getIdMatriz()%>">
+										<button  class="btn btn-primary btn-sm" form="formEdi<%=matriz.getIdMatriz()%>"
+											style="height: 30px;" type="submit" name="button" value="<%=matriz.getIdMatriz()%>" > Editar
+										</button>
+										</form></td>
+										<td><form method="post" action="ExcluirMatriz" id="formEx<%=matriz.getIdMatriz()%>">
+										<button  class="btn btn-primary btn-sm" form="formEx<%=matriz.getIdMatriz()%>"
+											style="height: 30px;" type="submit" name="button" value="<%=matriz.getIdMatriz()%>" > Excluir
+										</button>
+										</form></td>
 									</tr>
 									<%
 									} else {%>						

@@ -12,12 +12,8 @@ public class EditarSolicitacaoController extends HttpServlet {
        
     public EditarSolicitacaoController() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request,response);
 	}
@@ -26,7 +22,6 @@ public class EditarSolicitacaoController extends HttpServlet {
 		try {
 			String ans = request.getParameter("button");
 			request.setAttribute("id", ans);
-			System.out.println(ans+": prestoui a solicitacao "+ans);
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("EditarSolicitacao.jsp");
 			
 			dispatcher.forward(request, response);

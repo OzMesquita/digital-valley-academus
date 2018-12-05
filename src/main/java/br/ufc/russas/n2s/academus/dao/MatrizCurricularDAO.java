@@ -20,6 +20,8 @@ public interface MatrizCurricularDAO {
 	
 	public MatrizCurricular editar(MatrizCurricular mat);
 	
+	public boolean verificarSeEstaSendoUtilizada(int idMat);
+	
 	public void excluir(MatrizCurricular mat);
 		
 }

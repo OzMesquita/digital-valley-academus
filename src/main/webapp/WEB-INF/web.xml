@@ -53,10 +53,6 @@
     <servlet-class>br.ufc.russas.n2s.academus.controller.Autenticacao</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>ServletExemplo</servlet-name>
-    <servlet-class>br.ufc.russas.n2s.academus.controller.ServletExemplo</servlet-class>
-  </servlet>
-  <servlet>
     <servlet-name>CadastrarDisciplinaController</servlet-name>
     <servlet-class>br.ufc.russas.n2s.academus.controller.CadastrarDisciplinaController</servlet-class>
   </servlet>
@@ -139,10 +135,6 @@
   <servlet-mapping>
     <servlet-name>Autenticar</servlet-name>
     <url-pattern>/autentica</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>ServletExemplo</servlet-name>
-    <url-pattern>/ServletExemplo</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>CadastrarDisciplinaController</servlet-name>

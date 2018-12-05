@@ -27,6 +27,8 @@ public class ExcluirMatrizController extends HttpServlet {
 			
 			MatrizCurricularDAO daoMat = new JDBCMatrizCurricularDAO();
 			MatrizCurricular mat = daoMat.buscarPorId(idMatriz);
+			
+			
 			daoMat.excluir(mat);
 		}
 		

@@ -9,11 +9,16 @@
    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">	
    		<%if(((PerfilAcademus) session.getAttribute("usuario")).getIsAdmin()){%>
        <div class="navbar-nav">
-           <a class="nav-item nav-link" href="ListarDisciplinas"> Disciplina</a>
-           <a class="nav-item nav-link" href="ListarMatrizes"> Matriz</a>            
-       </div>  
+           <a class="nav-item nav-link" href="ListarDisciplinas"> Listar Disciplinas</a>
+           <a class="nav-item nav-link" href="BuscarDisciplina"> Buscar Disciplinas</a>
+           <a class="nav-item nav-link" href="CadastrarDisciplina"> Cadastrar Disciplinas</a>
+           <a class="nav-item nav-link" href="ListarMatrizes"> Listar Matrizes</a>
+           <a class="nav-item nav-link" href="BuscarMatriz"> Buscar Matrizes</a>
+           <a class="nav-item nav-link" href="CadastrarMatriz"> Cadastrar Matrizes</a>
+           
+       </div>
        <%}%>      
    </div>
    
-	<a class="btn-sm btn-light text-right" href="Sair">Sair</a>
+	<a class="btn-sm btn-light text-right" href="Sair">Voltar ao Guardião</a>
 </nav>

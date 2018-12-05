@@ -277,4 +277,40 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 		return matriz;
 	}
 
+	@Override
+	public boolean verificarSeEstaSendoUtilizada(int idMat) {
+		String sql = "SELECT COUNT(academus.matriz_curricular.*) FROM academus.solicitacao "
+				+ "INNER JOIN academus.componente_curricular ON academus.solicitacao.id_componente = academus.componente_curricular.id_disciplina_matriz "
+				+ "INNER JOIN academus.matriz_curricular ON academus.componente_curricular.id_matriz = academus.matriz_curricular.id_matriz "
+				+ "WHERE academus.matriz_curricular.id_matriz = ?;";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idMat);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()){
+				int qtdUtilizacao = rs.getInt("count");
+				
+				if(qtdUtilizacao > 0){
+					return true;
+				}
+				
+				return false;
+			}
+			
+			ps.close();
+			rs.close();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return false;
+	}
+
 }

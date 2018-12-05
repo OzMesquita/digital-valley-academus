@@ -10,7 +10,7 @@
 			if (per.getIsAdmin()){
 				%>
 				<a href="Inicio" class="btn btn-light btn-sm text-left">Início</a>
-				<a href="elements/aviso.jsp" class="btn btn-light btn-sm text-left">Outra Coisa</a>
+				<!-- <a href="elements/aviso.jsp" class="btn btn-light btn-sm text-left">Outra Coisa</a> --> 
 				<%
 			} else if (per.getNivel() == NivelAcademus.ALUNO){
 				%>

@@ -67,9 +67,7 @@
  
 	
 		List<Solicitacao> solicitacoes = (List<Solicitacao>) request.getAttribute("listaSol");
-		
-		//SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
-		//List<Solicitacao> solicitacoes = sodao.listar();
+
 		if(solicitacoes == null){
 			solicitacoes = (List<Solicitacao>) session.getAttribute("listaSol");
 			if (solicitacoes == null){

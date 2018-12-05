@@ -79,17 +79,17 @@
 								<td><%=contato.getIdCurso()%></td>
 								<td><form method="post" action="VisualizarMatriz" id="formVis<%=contato.getIdMatriz()%>">
 								<button  class="btn btn-primary btn-sm" form="formVis<%=contato.getIdMatriz()%>"
-									class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz() %>" > Visualizar
+									style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz()%>" > Visualizar
 								</button>
 								</form></td>
 								<td><form method="post" action="EditarMatriz" id="formEdi<%=contato.getIdMatriz()%>">
 								<button  class="btn btn-primary btn-sm" form="formEdi<%=contato.getIdMatriz()%>"
-									class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz() %>" > Editar
+									style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz()%>" > Editar
 								</button>
 								</form></td>
 								<td><form method="post" action="ExcluirMatriz" id="formEx<%=contato.getIdMatriz()%>">
 								<button  class="btn btn-primary btn-sm" form="formEx<%=contato.getIdMatriz()%>"
-									class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz() %>" > Excluir
+									style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz()%>" > Excluir
 								</button>
 								</form></td>
 							</tr>
