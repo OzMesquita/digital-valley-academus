@@ -11,7 +11,8 @@ public class DisciplinaCursada implements Serializable{
 	private int carga;
 	private String nome;
 	private String instituicao;
-	private Arquivo arquivo;
+	private Arquivo ementa;
+	private Arquivo historico;
 	
 	public DisciplinaCursada() {
 		this.setId(-1);
@@ -66,11 +67,17 @@ public class DisciplinaCursada implements Serializable{
 	public void setInstituicao(String instituicao) {
 		this.instituicao = instituicao;
 	}
-	public Arquivo getArquivo() {
-		return arquivo;
+	public Arquivo getEmenta() {
+		return ementa;
 	}
-	public void setArquivo(Arquivo arquivo) {
-		this.arquivo = arquivo;
+	public void setEmenta(Arquivo ementa) {
+		this.ementa = ementa;
+	}
+	public Arquivo getHistorico() {
+		return historico;
+	}
+	public void setHistorico(Arquivo historico) {
+		this.historico = historico;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;

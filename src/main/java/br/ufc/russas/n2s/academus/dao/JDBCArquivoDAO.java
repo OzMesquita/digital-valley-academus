@@ -36,8 +36,8 @@ public class JDBCArquivoDAO implements ArquivoDAO{
 		return arq;
 	}
 	
-	public Arquivo buscarPorDisciplinaCursada(DisciplinaCursada dis){
-		String sql = "SELECT id_arquivo, caminho, nome, tipo FROM academus.arquivo WHERE id_disciplina_cursada = " + dis.getId() + ";";
+	public Arquivo buscarPorDisciplinaCursada(DisciplinaCursada dis, TipoArquivo ta){
+		String sql = "SELECT id_arquivo, caminho, nome, tipo FROM academus.arquivo WHERE id_disciplina_cursada = " + dis.getId() + " and tipo = " + TipoArquivo.getId(ta) + ";";
 		Arquivo arq = new Arquivo();
 		
 		Connection conn = ConnectionPool.getConnection();
