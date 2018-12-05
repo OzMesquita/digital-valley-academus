@@ -164,7 +164,18 @@
 								</div>
 							</div>
 						</form>
-					</div>	                
+					</div>
+					<% 
+					String mensagem = (String) request.getAttribute("mensagem");
+					if(mensagem != null){
+						if (mensagem.equals("NS")){
+					%>
+						<script type="text/javascript">
+        					alert("Não foi possível realizar a atualização! Falta de Disciplinas Cursadas");
+    					</script>
+					<%
+						}
+					}%>	                
 				</div>
 			</div>
 		</div>
@@ -372,6 +383,26 @@
 			
 		}
 		
+		function disciplinaRepetida(nome, carga, nota, semestre, ano, instituicao){
+			var repetida = false;
+			for(i = 0; i< disciplinas.length; i++){
+				if(disciplinas[i].nome === nome){
+					if (disciplinas[i].carga == carga){
+						if(disciplinas[i].nota == nota){
+							if(disciplinas[i].semestre == semestre){
+								if(disciplinas[i].ano == ano){
+									if (disciplinas[i].instituicao === instituicao){
+										repetida = true;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			return repetida;
+		}
+		
 		function mensagemConfirmacao(){
 			alert("Solicitação atualizada com sucesso");
 		}
@@ -404,6 +435,12 @@
 				return false;
 			}else if(!(obj.semestre > 0 && obj.semestre <= 2)){
 				alert("O Semestre deve ser 1 ou 2");
+				return false;
+			} else if(obj.instituicao == ""){
+				alert("Campo Instituição deve ser preenchido");
+				return false;
+			} else if (disciplinaRepetida(obj.nome, obj.carga, obj.nota, obj.semestre, obj.ano, obj.instituicao)) {
+				alert("A Disciplina Aprovada já foi adicionada");
 				return false;
 			}
 			return true;

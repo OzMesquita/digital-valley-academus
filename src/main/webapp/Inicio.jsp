@@ -37,9 +37,25 @@
 					</ol>
 					</nav>
 					
+					
 					<c:import url="jsp/elements/listagemSolicitacao.jsp" charEncoding="UTF-8"></c:import>
 				</div>
 			</div>
+			<% 
+					String mensagem = (String) request.getAttribute("mensagem");
+					if(mensagem != null){
+						if (mensagem.equals("ES")){
+					%>
+						<script type="text/javascript">
+        					alert("Solicitação atualizada com sucesso!");
+    					</script>
+					<%	} else if(mensagem.equals("EN")){
+						%>
+						<script type="text/javascript">
+        					alert("ERRO. Você não é dono desta solicitação");
+    					</script>
+					<%	}
+					}%>
 		</div>
 	</body>
 </html>

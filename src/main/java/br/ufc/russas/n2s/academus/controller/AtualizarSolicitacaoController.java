@@ -74,9 +74,9 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 					dcd.cadastrar(disciplinasCursadas, solicitacao.getIdSolicitacao());
 					
 					
-					System.out.println("possivel realizar a solicitacao");
+					request.setAttribute("mensagem", "ES");
 				} else {
-					System.out.println("Não foi possivel realizar a solicitacao");
+					request.setAttribute("mensagem", "EN");
 				}
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");
@@ -85,6 +85,7 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 				
 			} else {
 				request.setAttribute("id", id);
+				request.setAttribute("mensagem", "NS");
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("EditarSolicitacao");
 				
 				dispatcher.forward(request, response);
