@@ -84,7 +84,7 @@
 								           		<th scope="col">Nota</th>
 								           		<th scope="col">Ano/Semestre</th>
 								           		<th scope="col">Instituição</th>
-								           		<th scope="col"></th>
+								           		<th scope="col" colspan="1"></th>
 								           	</tr>
 								        <thead>
 						           </table>

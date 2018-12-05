@@ -216,7 +216,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
 	</body>
 	<script>
 	var vigente = document.getElementById("vigenteInput");

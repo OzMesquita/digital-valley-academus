@@ -71,7 +71,7 @@
 			         <br>
 					
 					 <label for="vigenteInput">Vigente*</label>
-			                        <select type="text" name="vigente" class="form-control custom-select" id="vigenteInput" required>
+			                        <select name="vigente" class="form-control custom-select" id="vigenteInput" required>
 			                            <option value="" selected="selected" disabled="disabled">Selecione uma opção</option>
 			                            <option value="true">Sim</option>
 			                            <option value="false">Não</option>              
@@ -79,7 +79,7 @@
 			         <br>
 					
 					<label for="ativoInput">Ativo*</label>
-			                        <select type="text" name="ativo" class="form-control custom-select" id="ativoInput" required>
+			                        <select name="ativo" class="form-control custom-select" id="ativoInput" required>
 			                            <option value="" selected="selected" disabled="disabled">Selecione uma opção</option>
 			                            <option value="true">Sim</option>
 			                            <option value="false">Não</option>              
@@ -87,7 +87,7 @@
 			         <br>
 					
 					<label for="cursoInput">Curso*</label>
-			                        <select type="text" name="id_curso" class="form-control custom-select" id="cursoInput" required>
+			                        <select name="id_curso" class="form-control custom-select" id="cursoInput" required>
 			                            <option value="" selected="selected" disabled="disabled">Selecione o curso</option>
 			                            <option value="1">CIÊNCIA DA COMPUTAÇÃO</option>
 			                            <option value="2">ENGENHARIA CIVIL</option>
@@ -107,7 +107,7 @@
 				</form>
 				</div>
 				</div>
-	</div>
-	</div>
+			</div>
+		</div>
 	</body>
 </html>

@@ -209,9 +209,21 @@
     <url-pattern>/SalvarAnexos</url-pattern>
   </servlet-mapping>
   <filter>
+  	<filter-name>setCharacterEncodingFilter</filter-name>
+  	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>UTF-8</param-value>
+  	</init-param>
+  </filter>
+  <filter>
     <filter-name>FiltroAutenticado</filter-name>
     <filter-class>br.ufc.russas.n2s.academus.filter.AutenticadoFiltro</filter-class>
   </filter>
+  <filter-mapping>
+  	<filter-name>setCharacterEncodingFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
   <filter-mapping>
     <filter-name>FiltroAutenticado</filter-name>
     <url-pattern>/*</url-pattern>
