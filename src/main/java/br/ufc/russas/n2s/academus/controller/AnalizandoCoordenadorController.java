@@ -31,22 +31,27 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 			
 			if (resultado != null && justificativa != null && id != 0) {
 	
-				System.out.println(resultado+"   "+justificativa+"  "+id);
+				if(resultado.equals("Sim")) {
+					resultado = "DEFERIDO";
+				} else if(resultado.equals("Nao")) {
+					resultado = "INDEFERIDO";
+				} else {
+					resultado = "INDEFINIDO";
+				}
 				
 				SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
 				Solicitacao solicitacao = sodao.buscarPorId(id);
-				if(solicitacao == null) {
-					System.out.println("solicitacao is null");
+				if(solicitacao == null || resultado.equals("INDEFINIDO")) {
+					
 				} else {
-					System.out.println("Entrou aqui no banco");
+					
+					
 					solicitacao.setResultado(resultado);
 					solicitacao.setJustificativa(justificativa);
 					solicitacao.setStatus(Status.FINALIZADO);
 					
 					sodao.editar(solicitacao);
 				}
-			} else {
-				System.out.println("alguem nulo");
 			}
 			
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");

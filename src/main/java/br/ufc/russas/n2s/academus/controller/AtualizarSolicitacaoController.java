@@ -67,8 +67,6 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 						solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
 					}
 					solicitacao.setStatus(Status.SUBMETIDO);
-					solicitacao.setResultado("");
-					solicitacao.setJustificativa("");
 					solicitacao.setDisciplinasCursadas(disciplinasCursadas);
 					
 					sd.editar(solicitacao);
