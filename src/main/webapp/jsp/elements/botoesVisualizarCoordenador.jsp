@@ -43,7 +43,7 @@
 						        	<br>
 						
 						        <label for="justificativaInput"><b> Justificativa </b></label> 
-									<textarea rows="8" id="justificativaInput" name="justificativaInput" class="form-control" aria-describedby="tituloHelp" required> </textarea>
+									<textarea rows="8" id="justificativaInput" name="justificativaInput" class="form-control" aria-describedby="tituloHelp" required></textarea>
 									<div class="invalid-feedback">
 							                            
 						            </div>

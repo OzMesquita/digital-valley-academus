@@ -57,7 +57,7 @@
 						<form action="CadastrarSolicitacao" method="post">
 							<div class="form-group">
 								<label for="matrizInput">Matriz escolhida</label>
-								<select id="matrizInput" class="form-control" onchange="listarComponentes()">
+								<select id="matrizInput" class="form-control" onchange="listarComponentes()" required>
 									<option value="" selected="selected" disabled="disabled">Selecione a disciplina para a solicitação</option>
 									<%for(MatrizCurricular matriz : matrizes){%>
 										<option id="matrizOption-<%=matriz.getIdMatriz()%>" value="<%=matriz.getInfoComponentes()%>"><%=matriz.getNome()%></option>
@@ -66,7 +66,7 @@
 							</div>
 							<div class="form-group">
 								<label for="componenteInput">Disciplina Alvo</label>
-								<select id="componenteInput" name="componenteInput" class="form-control">
+								<select id="componenteInput" name="componenteInput" class="form-control" required>
 									<option value="" selected="selected" disabled="disabled">Selecione a disciplina para a solicitação</option>
 								</select>
 							</div>
@@ -135,6 +135,17 @@
 				</div>
 			</div>
 		</div>
+		<% 
+		String mensagem = (String) request.getAttribute("mensagem");
+		if(mensagem != null){
+			if (mensagem.equals("CN")){
+		%>
+			<script type="text/javascript">
+      				alert("Cadastro não realizado!\nRequer pelo menos uma disciplina cursada");
+    		</script>
+		<%
+			}
+		}%>
 	</body>
 	<script>
 		var componentes = [];

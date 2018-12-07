@@ -76,7 +76,7 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 					
 					request.setAttribute("mensagem", "ES");
 				} else {
-					request.setAttribute("mensagem", "EN");
+					request.setAttribute("mensagem", "Erro");
 				}
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");

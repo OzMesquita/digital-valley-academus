@@ -67,8 +67,9 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 				sd.cadastrar(solicitacao);
 			}
 			
+			request.setAttribute("mensagem", "CS");
 			try {
-				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroSolicitacao.jsp");
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");
 				
 				dispatcher.forward(request, response);
 				
@@ -80,6 +81,7 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 		else{
 			
 			try {
+				request.setAttribute("mensagem", "CN");
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroSolicitacao.jsp");
 				
 				dispatcher.forward(request, response);

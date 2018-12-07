@@ -164,21 +164,22 @@
 								</div>
 							</div>
 						</form>
-					</div>
-					<% 
-					String mensagem = (String) request.getAttribute("mensagem");
-					if(mensagem != null){
-						if (mensagem.equals("NS")){
-					%>
-						<script type="text/javascript">
-        					alert("Não foi possível realizar a atualização! Falta de Disciplinas Cursadas");
-    					</script>
-					<%
-						}
-					}%>	                
+					</div>	                
 				</div>
 			</div>
 		</div>
+	<% 
+	String mensagem = (String) request.getAttribute("mensagem");
+	if(mensagem != null){
+		if (mensagem.equals("NS")){
+		%>
+			<script type="text/javascript">
+        		alert("Não foi possível realizar a atualização!\nRequer pelo menos uma disciplina cursada");
+    		</script>
+		<%
+		}
+	}
+	%>
 	</body>
 	<script>
 		var componentes = [];

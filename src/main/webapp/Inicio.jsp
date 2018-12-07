@@ -54,7 +54,31 @@
 						<script type="text/javascript">
         					alert("ERRO. Você não é dono desta solicitação");
     					</script>
-					<%	}
+					<%	}else if(mensagem.equals("CS")){
+						%>
+						<script type="text/javascript">
+        					alert("Cadastro da solicitação realizado com sucesso! \nEntregue as documentações necessárias para a secretaria do curso. \nQualquer dúvida, leia o edital do aproveitamento de disciplinas.");
+    					</script>
+						<%
+						} else if(mensagem.equals("AS")){
+							%>
+							<script type="text/javascript">
+	        					alert("Avaliação da solicitação realizada com sucesso!");
+	    					</script>
+						<%
+						} else if(mensagem.equals("AN")){
+							%>
+							<script type="text/javascript">
+	        					alert("Avaliação inválida! Tente novamente mais tarde.");
+	    					</script>
+						<%
+						} else if(mensagem.equals("Erro")){
+							%>
+							<script type="text/javascript">
+	        					alert("Operação Inválida!");
+	    					</script>
+						<%
+						}
 					}%>
 		</div>
 	</body>

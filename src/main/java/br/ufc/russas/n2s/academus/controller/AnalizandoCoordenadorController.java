@@ -29,7 +29,9 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 			String justificativa = request.getParameter("justificativaInput");
 			int id = Integer.parseInt(request.getParameter("button"));
 			
-			if (resultado != null && justificativa != null && id != 0) {
+			String mensagem = "";
+			
+			if (resultado != null && (justificativa != null || justificativa == "") && id != 0) {
 	
 				if(resultado.equals("Sim")) {
 					resultado = "DEFERIDO";
@@ -42,18 +44,25 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 				SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
 				Solicitacao solicitacao = sodao.buscarPorId(id);
 				if(solicitacao == null || resultado.equals("INDEFINIDO")) {
-					
+					mensagem = "Erro";
 				} else {
-					
 					
 					solicitacao.setResultado(resultado);
 					solicitacao.setJustificativa(justificativa);
 					solicitacao.setStatus(Status.FINALIZADO);
 					
 					sodao.editar(solicitacao);
+					mensagem = "AS";
 				}
+			} else {
+				mensagem = "AN";
+				request.setAttribute("id", id);
+				request.setAttribute("mensagem", mensagem);
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSocilitacao.jsp");
+				
+				dispatcher.forward(request, response);
 			}
-			
+			request.setAttribute("mensagem", mensagem);
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");
 			
 			dispatcher.forward(request, response);

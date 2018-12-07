@@ -160,6 +160,16 @@
 					%>
 				</div>
 			</div>
+			<% 
+					String mensagem = (String) request.getAttribute("mensagem");
+					if(mensagem != null){
+						if (mensagem.equals("AN")){
+					%>
+						<script type="text/javascript">
+        					alert("Avaliação Inválida! \nCampos de resultado e justificativa devem ser preenchidos.");
+    					</script>
+					<%	}
+					}%>
 		</div>
 	</body>
 </html>
