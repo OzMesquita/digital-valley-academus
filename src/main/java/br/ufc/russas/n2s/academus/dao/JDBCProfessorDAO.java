@@ -21,7 +21,7 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 
 	@Override
 	public List<Professor> listar() {
-		String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE u.id_pessoa_usuario = p.id_pessoa_prof AND u.id_pessoa_usuario = s.id_pessoa_usuario";
+		String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE u.id_pessoa_usuario = p.id_pessoa_prof AND u.id_pessoa_usuario = s.id_pessoa_usuario ORDER BY id_pessoa_prof;";
 		List<Professor> professores = new ArrayList<Professor>();
 		
 		Connection conn = ConnectionPool.getConnection();

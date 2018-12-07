@@ -77,13 +77,15 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listar() {
-		String sql = "select * from academus.solicitacao";
+	public List<Solicitacao> listar(int limiteInf, int limiteSup) {
+		String sql = "select * from academus.solicitacao order by id_solicitacao offset ? limit ?;";
 		List<Solicitacao> listaSolicitacao = new ArrayList<Solicitacao>();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, limiteInf);
+			ps.setInt(2, limiteSup);
 			ResultSet rs = ps.executeQuery();
 			
 			
@@ -217,15 +219,17 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listar(Coordenador c) {
+	public List<Solicitacao> listar(Coordenador c, int limiteInf, int limiteSup) {
 		List<Solicitacao> solicitacoes = new ArrayList<>();
-		String sql = "SELECT * FROM academus.solicitacao WHERE status != ? AND id_curso = ?;";
+		String sql = "SELECT * FROM academus.solicitacao WHERE status != ? AND id_curso = ? order by id_solicitacao offset ? limit ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
 			ps.setInt(2, c.getCurso().getIdCurso());
+			ps.setInt(3, limiteInf);
+			ps.setInt(4, limiteSup);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -269,14 +273,16 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listar(Aluno a) {
+	public List<Solicitacao> listar(Aluno a, int limiteInf, int limiteSup) {
 		List<Solicitacao> solicitacoes = new ArrayList<>();
-		String sql = "SELECT * FROM academus.solicitacao WHERE id_solicitante = ?;";
+		String sql = "SELECT * FROM academus.solicitacao WHERE id_solicitante = ? order by id_solicitacao offset ? limit ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, a.getId());
+			ps.setInt(2, limiteInf);
+			ps.setInt(3, limiteSup);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -320,15 +326,17 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listarAnalizado(Coordenador c){
+	public List<Solicitacao> listarAnalizado(Coordenador c, int limiteInf, int limiteSup){
 		List<Solicitacao> solicitacoes = new ArrayList<>();
-		String sql = "SELECT * FROM academus.solicitacao WHERE status = ? AND id_curso = ?;";
+		String sql = "SELECT * FROM academus.solicitacao WHERE status = ? AND id_curso = ? order by id_solicitacao offset ? limit ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
 			ps.setInt(2, c.getCurso().getIdCurso());
+			ps.setInt(3, limiteInf);
+			ps.setInt(4, limiteSup);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -372,9 +380,9 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 	
 	@Override
-	public List<Solicitacao> listarAndamento(Aluno a) {
+	public List<Solicitacao> listarAndamento(Aluno a, int limiteInf, int limiteSup) {
 		List<Solicitacao> solicitacoes = new ArrayList<>();
-		String sql = "SELECT * FROM academus.solicitacao WHERE id_solicitante = ? AND status != ? AND status != ?;";
+		String sql = "SELECT * FROM academus.solicitacao WHERE id_solicitante = ? AND status != ? AND status != ? order by id_solicitacao offset ? limit ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -382,6 +390,9 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			ps.setInt(1, a.getId());
 			ps.setInt(2, Status.getCodigo(Status.FINALIZADO));
 			ps.setInt(3, Status.getCodigo(Status.CANCELADO));
+			ps.setInt(4, limiteInf);
+			ps.setInt(5, limiteSup);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			//DAOFactory df = new DAOFactoryJDBC();
@@ -424,9 +435,9 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listarAndemanto(Coordenador c) {
+	public List<Solicitacao> listarAndemanto(Coordenador c, int limiteInf, int limiteSup) {
 		List<Solicitacao> solicitacoes = new ArrayList<>();
-		String sql = "SELECT * FROM academus.solicitacao WHERE id_curso = ? AND status != ? AND status != ?;";
+		String sql = "SELECT * FROM academus.solicitacao WHERE id_curso = ? AND status != ? AND status != ? order by id_solicitacao offset ? limit ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -434,6 +445,9 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			ps.setInt(1, c.getCurso().getIdCurso());
 			ps.setInt(2, Status.getCodigo(Status.FINALIZADO));
 			ps.setInt(3, Status.getCodigo(Status.CANCELADO));
+			ps.setInt(4, limiteInf);
+			ps.setInt(5, limiteSup);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			//DAOFactory df = new DAOFactoryJDBC();
@@ -476,15 +490,18 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listarFinalizado(Aluno a) {
+	public List<Solicitacao> listarFinalizado(Aluno a, int limiteInf, int limiteSup) {
 		List<Solicitacao> solicitacoes = new ArrayList<>();
-		String sql = "SELECT * FROM academus.solicitacao WHERE id_solicitante = ? AND status = ?;";
+		String sql = "SELECT * FROM academus.solicitacao WHERE id_solicitante = ? AND status = ? order by id_solicitacao offset ? limit ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, a.getId());
 			ps.setInt(2, Status.getCodigo(Status.FINALIZADO));
+			ps.setInt(3, limiteInf);
+			ps.setInt(4, limiteSup);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			//DAOFactory df = new DAOFactoryJDBC();
@@ -527,15 +544,18 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listarFinalizado(Coordenador c) {
+	public List<Solicitacao> listarFinalizado(Coordenador c, int limiteInf, int limiteSup) {
 		List<Solicitacao> solicitacoes = new ArrayList<>();
-		String sql = "SELECT * FROM academus.solicitacao WHERE id_curso = ? AND status = ?;";
+		String sql = "SELECT * FROM academus.solicitacao WHERE id_curso = ? AND status = ? order by id_solicitacao offset ? limit ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, c.getCurso().getIdCurso());
 			ps.setInt(2, Status.getCodigo(Status.FINALIZADO));
+			ps.setInt(3, limiteInf);
+			ps.setInt(4, limiteSup);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			//DAOFactory df = new DAOFactoryJDBC();
@@ -578,15 +598,18 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listarSubmetida(Aluno a){
+	public List<Solicitacao> listarSubmetida(Aluno a, int limiteInf, int limiteSup){
 		List<Solicitacao> solicitacoes = new ArrayList<>();
-		String sql = "SELECT * FROM academus.solicitacao WHERE id_solicitante = ? AND status = ?;";
+		String sql = "SELECT * FROM academus.solicitacao WHERE id_solicitante = ? AND status = ? order by id_solicitacao offset ? limit ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, a.getId());
 			ps.setInt(2, Status.getCodigo(Status.SUBMETIDO));
+			ps.setInt(3, limiteInf);
+			ps.setInt(4, limiteSup);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			//DAOFactory df = new DAOFactoryJDBC();
@@ -629,14 +652,17 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 	
 	@Override
-	public List<Solicitacao> listarAnalizado(){
-		String sql = "select * from academus.solicitacao where status=?";
+	public List<Solicitacao> listarAnalizado(int limiteInf, int limiteSup){
+		String sql = "select * from academus.solicitacao where status=? order by id_solicitacao offset ? limit ?;";
 		List<Solicitacao> listaSolicitacao = new ArrayList<Solicitacao>();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
+			ps.setInt(2, limiteInf);
+			ps.setInt(3, limiteSup);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			
@@ -680,8 +706,8 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 	
 	@Override
-	public List<Solicitacao> listarAndamento() {
-		String sql = "select * from academus.solicitacao where status!=? and status!=?";
+	public List<Solicitacao> listarAndamento(int limiteInf, int limiteSup) {
+		String sql = "select * from academus.solicitacao where status!=? and status!=? order by id_solicitacao offset ? limit ?;";
 		List<Solicitacao> listaSolicitacao = new ArrayList<Solicitacao>();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -689,6 +715,9 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
 			ps.setInt(2, Status.getCodigo(Status.CANCELADO));
+			ps.setInt(3, limiteInf);
+			ps.setInt(4, limiteSup);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			
@@ -732,14 +761,17 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listarFinalizado() {
-		String sql = "select * from academus.solicitacao where status=?";
+	public List<Solicitacao> listarFinalizado(int limiteInf, int limiteSup) {
+		String sql = "select * from academus.solicitacao where status=? order by id_solicitacao offset ? limit ?;";
 		List<Solicitacao> listaSolicitacao = new ArrayList<Solicitacao>();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
+			ps.setInt(2, limiteInf);
+			ps.setInt(3, limiteSup);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			
@@ -783,14 +815,17 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listarSubmetida(){
-		String sql = "select * from academus.solicitacao where status=?";
+	public List<Solicitacao> listarSubmetida(int limiteInf, int limiteSup){
+		String sql = "select * from academus.solicitacao where status=? order by id_solicitacao offset ? limit ?;";
 		List<Solicitacao> listaSolicitacao = new ArrayList<Solicitacao>();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
+			ps.setInt(2, limiteInf);
+			ps.setInt(3, limiteSup);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			
@@ -834,14 +869,17 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 	
 	@Override
-	public List<Solicitacao> listarValidada(){
-		String sql = "select * from academus.solicitacao where status=?";
+	public List<Solicitacao> listarValidada(int limiteInf, int limiteSup){
+		String sql = "select * from academus.solicitacao where status=? order by id_solicitacao offset ? limit ?;";
 		List<Solicitacao> listaSolicitacao = new ArrayList<Solicitacao>();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, Status.getCodigo(Status.VALIDANDO));
+			ps.setInt(2, limiteInf);
+			ps.setInt(3, limiteSup);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			

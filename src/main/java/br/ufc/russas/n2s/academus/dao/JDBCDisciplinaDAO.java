@@ -39,10 +39,9 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 
 	@Override
 	public List<Disciplina> listar() {
-		String sql = "select * from academus.disciplina";
+		String sql = "select * from academus.disciplina order by id_disciplina";
 		ArrayList<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
 		
-		//super.open();
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -63,7 +62,6 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}finally{
-			//super.close();
 			ConnectionPool.releaseConnection(conn);
 		}
 		
@@ -101,7 +99,7 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 
 	@Override
 	public List<Disciplina> buscarPorNome(String nome) {
-		String sql = "select * from academus.disciplina where nome like '%?%';";
+		String sql = "select * from academus.disciplina where nome like '%?%' order by id_disciplina;";
 		List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -160,7 +158,7 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 
 	@Override
 	public void excluir(Disciplina dis) {
-		String sql = "DELETE FROM academus.disciplina where id_disciplina = ?";
+		String sql = "DELETE FROM academus.disciplina where id_disciplina = ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{

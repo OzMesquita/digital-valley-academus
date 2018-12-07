@@ -46,7 +46,7 @@ public class JDBCDisciplinaCursadaDAO implements DisciplinaCursadaDAO{
 
 	@Override
 	public List<DisciplinaCursada> buscar(Solicitacao sol) {
-		String sql = "select * from academus.disciplina_cursada where id_solicitacao = ?;";
+		String sql = "select * from academus.disciplina_cursada where id_solicitacao = ? order by id_disciplina_cursada;";
 		List<DisciplinaCursada> listaDisciplinaCursada = new ArrayList<DisciplinaCursada>();
 		DAOFactoryJDBC df = new DAOFactoryJDBC();
 		ArquivoDAO arqdao = df.criarArquivoDAO();

@@ -126,7 +126,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 
 	@Override
 	public List<Aluno> buscarPorNome(String nome) {
-		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u, curso AS c WHERE u_a.id_pessoa_usuario = u.id_pessoa_usuario AND u_a.id_curso = c.id_curso AND  UPPER(u.nome) like UPPER(?)";
+		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u, curso AS c WHERE u_a.id_pessoa_usuario = u.id_pessoa_usuario AND u_a.id_curso = c.id_curso AND  UPPER(u.nome) like UPPER(?) ;";
 		List<Aluno> alunos = new ArrayList<Aluno>();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -181,7 +181,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 
 	@Override
 	public List<Aluno> listar() {
-		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u, curso AS c WHERE u_a.id_pessoa_usuario = u.id_pessoa_usuario AND u_a.id_curso = c.id_curso";
+		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u, curso AS c WHERE u_a.id_pessoa_usuario = u.id_pessoa_usuario AND u_a.id_curso = c.id_curso order by matricula order by matricula;";
 		List<Aluno> alunos = new ArrayList<Aluno>();
 		
 		Connection conn = ConnectionPool.getConnection();
