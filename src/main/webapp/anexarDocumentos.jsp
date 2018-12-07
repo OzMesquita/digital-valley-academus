@@ -175,9 +175,4 @@
 			</div>
 		</div>
 	</body>
-	<script type="text/javascript">
-		function atribuirValor(i){
-			document.getElementById("id_disciplina_cursada").value = i;
-		}
-	</script>
 </html>

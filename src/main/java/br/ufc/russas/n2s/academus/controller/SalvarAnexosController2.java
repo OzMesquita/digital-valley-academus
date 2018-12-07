@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,8 +22,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import br.ufc.russas.n2s.academus.dao.ArquivoDAO;
+import br.ufc.russas.n2s.academus.dao.DisciplinaCursadaDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCArquivoDAO;
+import br.ufc.russas.n2s.academus.dao.JDBCDisciplinaCursadaDAO;
 import br.ufc.russas.n2s.academus.model.Arquivo;
+import br.ufc.russas.n2s.academus.model.TipoArquivo;
 import br.ufc.russas.n2s.academus.util.Constantes;
 
 @MultipartConfig
@@ -49,14 +53,21 @@ public class SalvarAnexosController2 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArquivoDAO arqdao = new JDBCArquivoDAO();
+		DisciplinaCursadaDAO dcdao = new JDBCDisciplinaCursadaDAO();
+		int chave = Integer.parseInt(request.getParameter("chave"));
+		
 		String matricula = request.getParameter("matricula");
 		String idSolicitacao = request.getParameter("id_solicitacao");
 		String idDisciplinaCursada = request.getParameter("id_disciplina_cursada");
-		String caminho = Constantes.getAnexoDir()+File.separator+matricula+File.separator+idSolicitacao;
-		System.out.println(caminho);
-		boolean chave = Boolean.parseBoolean(request.getParameter("chave"));
+		int tipoArquivo = Integer.parseInt(request.getParameter("tipo_arquivo"));
 		
-		if(chave){
+		if(chave == 1){
+			
+			String caminhoRelativo = File.separator+matricula+File.separator+idSolicitacao+File.separator+idDisciplinaCursada;
+			String caminho = Constantes.getAnexoDir()+caminhoRelativo;
+			System.out.println(caminho);
+			
 			File dir = new File(caminho+File.separator);
 			if(!dir.isDirectory()) dir.mkdirs();
 			System.out.println(dir.getAbsolutePath());
@@ -64,9 +75,9 @@ public class SalvarAnexosController2 extends HttpServlet {
 			if(request.getPart("id_disciplina_cursada") == null) System.out.println("Part vazio");
 			else{
 				//System.out.println(request.getParts().size());
-					Part part = request.getPart("id_disciplina_cursada");
+					Part part = request.getPart("anexo");
 					String nome = "";
-					nome = "anexo-"+matricula+"-"+idSolicitacao+"-"+idDisciplinaCursada+".pdf";
+					nome = (tipoArquivo == 1 ? "ementa-" : "historico-")+matricula+"-"+idSolicitacao+"-"+idDisciplinaCursada+".pdf";
 					System.out.println(nome);
 					
 					OutputStream out = null;
@@ -88,10 +99,17 @@ public class SalvarAnexosController2 extends HttpServlet {
 				        LOGGER.log(Level.INFO, "File{0}being uploaded to {1}", new Object[]{nome, caminho});
 						
 				        Arquivo arq = new Arquivo();
-				        arq.setCaminho(file.getAbsolutePath());
-				        ArquivoDAO arqdao = new JDBCArquivoDAO();
-				        arqdao.cadastrarArquivo(arq, Integer.parseInt(idDisciplinaCursada));
+				        arq.setCaminho(caminhoRelativo + File.separator + nome);
+				        arq.setTipo(TipoArquivo.getTipoArquivo(tipoArquivo));
+				        arq.setNome(nome);
+				        if(arqdao.buscarPorDisciplinaCursada(dcdao.buscarPorId(Integer.parseInt(idDisciplinaCursada)), TipoArquivo.getTipoArquivo(tipoArquivo)).getIdArquivo() > 0){
+				        	arqdao.editar(arq);
+				        }else{
+				        	arqdao.cadastrarArquivo(arq, Integer.parseInt(idDisciplinaCursada));
+				        }
 				        
+				        
+				        System.out.println("chegou aki");
 				        request.setAttribute("id", idSolicitacao);
 				        javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
 						dispatcher.forward(request, response);
@@ -113,10 +131,22 @@ public class SalvarAnexosController2 extends HttpServlet {
 				        }
 				    }
 			}
-		}else{
+		}else if(chave == 2){
 			
+			String caminho = Constantes.getAnexoDir()+arqdao.buscarPorDisciplinaCursada(dcdao.buscarPorId(Integer.parseInt(idDisciplinaCursada)), TipoArquivo.getTipoArquivo(tipoArquivo)).getCaminho();
+			File arquivo = new File(caminho) ;
+			Path path = arquivo.toPath();
+	        
+	        String nome = arquivo.getName();
+	        int tamanho = (int) arquivo.length();
+
+	        response.setContentType(Files.probeContentType(path)); // tipo do conteúdo
+	        response.setContentLength(tamanho);  // opcional
+	        response.setHeader("Content-Disposition", "attachment; filename=\"" + nome + "\"");
+
+	        OutputStream output = response.getOutputStream();
+	        Files.copy(path, output);
 		}
-		
 	}
 	
 	private String getFileName(final Part part) {

@@ -1,10 +1,19 @@
-<%@ page import="br.ufc.russas.n2s.academus.dao.ArquivoDAO" %>
-<%@ page import="br.ufc.russas.n2s.academus.dao.JDBCArquivoDAO" %>
-		<%
-			//ArquivoDAO adao = new JDBCArquivoDAO();
-			DisciplinaCursadaDAO dcdao = new JDBCDisciplinaCursadaDAO();
-			DisciplinaCursada dc = dcdao.
-		%>
+<%@ page import="br.ufc.russas.n2s.academus.dao.DisciplinaCursadaDAO" %>
+<%@ page import="br.ufc.russas.n2s.academus.dao.JDBCDisciplinaCursadaDAO" %>
+<%@ page import="br.ufc.russas.n2s.academus.model.DisciplinaCursada" %>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%
+		//ArquivoDAO adao = new JDBCArquivoDAO();
+		DisciplinaCursadaDAO dcdao = new JDBCDisciplinaCursadaDAO();
+		DisciplinaCursada dc = dcdao.buscarPorId(Integer.parseInt(request.getParameter("id_disciplina_cursada")));
+%>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+	<body>
 		
 		<input type="button" class="btn btn-secondary btn-sm" value="Ementa" data-toggle="modal" data-target="#anexarEmenta">
 		<input type="button" class="btn btn-secondary btn-sm" value="Historico" data-toggle="modal" data-target="#anexarHistorico">
@@ -32,17 +41,25 @@
 										        <input type="hidden" id="matricula" name="matricula" value="<%=request.getParameter("matricula")%>">
 										        <input type="hidden" id="id_solicitacao" name="id_solicitacao" value="<%=request.getParameter("id_solicitacao")%>">
 										        <input type="hidden" id="id_disciplina_cursada" name="id_disciplina_cursada" value="<%=request.getParameter("id_disciplina_cursada")%>">
-										      	<input type="file" id="anexo" name="anexo" accept=".pdf">
-												<input type="submit" value="Anexar">
-												<input type="hidden" id="teste" value="deu certo" >
+										        <input type="hidden" id="tipo_arquivo" name="tipo_arquivo" value="1">
+										        <input type="hidden" id="chave" name="chave" value="0">
+										        <%if(dc.getEmenta().getIdArquivo() > 0){%>
+										        	<%=dc.getEmenta().getNome()%>
+										        <%}else{%>
+    												Nenhum arquivo anexado
+												<%}%>
+												<br>
+												<input type="file" id="anexo1" name="anexo" accept=".pdf" class="form-control-file">
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button  class="btn btn-primary btn-sm active"
-										class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" > Cancelar
-									</button>	
+									<%if(dc.getEmenta().getIdArquivo() > 0){%>
+										<input type="submit" value="Download" class="btn btn-primary btn-sm active" onclick="atribuirValor(2)">
+									<%}%>
+									<input type="submit" disabled="disabled" value="AnexarEmenta" class="btn btn-primary btn-sm active" onclick="atribuirValor(1)">
+									<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
 								</div>
 							</form>
 						</div>
@@ -64,27 +81,45 @@
 								<div class="modal-body">
 									<div class="card">
 										<div class="card-header">
-											<label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">Histórico</label>
+											<label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">HistÃ³rico</label>
 										</div>
 										<div class="card-body">
 											<div class="form-row">
 										        <input type="hidden" id="matricula" name="matricula" value="<%=request.getParameter("matricula")%>">
 										        <input type="hidden" id="id_solicitacao" name="id_solicitacao" value="<%=request.getParameter("id_solicitacao")%>">
 										        <input type="hidden" id="id_disciplina_cursada" name="id_disciplina_cursada" value="<%=request.getParameter("id_disciplina_cursada")%>">
-										        <%if()%>
-										        
-										        <input type="file" id="anexo" name="anexo" accept=".pdf">
-												<input type="submit" value="Anexar">
+										        <input type="hidden" id="tipo_arquivo" name="tipo_arquivo" value="2">
+										        <input type="hidden" id="chave" name="chave" value="0">
+										        <%if(dc.getHistorico().getIdArquivo() > 0){%>
+										        	<%=dc.getHistorico().getNome()%>
+										        <%}else{%>
+    												Nenhum arquivo anexado
+												<%}%>
+												<br>
+												<input type="file" id="anexo2" name="anexo" accept=".pdf" class="form-control-file">
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button  class="btn btn-primary btn-sm active"
-										class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" > Cancelar
-									</button>	
+									<%if(dc.getHistorico().getIdArquivo() > 0){%>
+										<input type="submit" value="Download" class="btn btn-primary btn-sm active" onclick="atribuirValor(2)">
+									<%}%>
+									<input type="submit" disabled="disabled" value="AnexarHistorico" class="btn btn-primary btn-sm active" onclick="atribuirValor(1)">	
+									<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
 								</div>
 							</form>
 						</div>
 						</div>
 					</div>
+	</body>
+	<script>
+		function atribuirValor(i){
+			document.getElementById("chave").value = i;
+		}
+		function abilitarAnexacaoEmenta(){
+			if(document.getElementById("anexo"))
+		}
+	</script>
+</html>
+					
