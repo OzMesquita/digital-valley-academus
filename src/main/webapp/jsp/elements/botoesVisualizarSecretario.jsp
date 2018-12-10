@@ -1,30 +1,55 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="java.util.*"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Listagem de Disciplinas</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-	integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
-	crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/design.css" />
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.css" />
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.standalone.css" />
-</head>
-<body>
-	<div class="form-group">
-		Anexar Ementa
-		Validar Documento
-	</div>
-</body>
-</html>
+<div class="modal-footer">
+			<%
+		if((boolean)request.getAttribute("Avaliar")){
+	%>
+<input type="button" class="btn btn-primary btn-sm"
+		style="height: 30px;" value="Avaliar"
+		data-toggle="modal" data-target="#testeCoor">
+
+<a href="Inicio"><input type="button" class="btn btn-primary btn-sm"
+	style="height: 30px;" value="Cancelar"></a>
+</div>
+			<!-- Modal -->
+			<div class="modal fade" id="testeCoor" tabindex="1"
+				role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalLabel">Confirmar cadastro
+								da seleção</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					<form method="POST" action="AnaliseCoordenador" id="form<%=(String)request.getAttribute("id")%>">
+					<div class="modal-body">
+						<div class="card">
+							<div class="card-header">
+								<label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">INSERIR RESULTADOS</label>
+							</div>
+							<div class="card-body">
+								<div class="form-group">
+								<label for="resultadoInput"><b> Resultado </b></label>
+							        <input type="radio" name="resultado" class="form-control custom-select" value="valido" required>Valido
+							        <input type="radio" name="resultado" class="form-control custom-select" value="invalido" required>Invalido
+						            <div class="invalid-feedback">
+						                            
+						        	</div>
+						        	<br>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+							<button  class="btn btn-primary btn-sm" form="form<%=(String)request.getAttribute("id")%>"
+								 style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("id") %>" > Confirmar
+							</button>
+					</div>
+					</form>
+				</div>
+				</div>
+			</div>
+<%
+		}
+%>

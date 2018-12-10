@@ -185,11 +185,11 @@
     <url-pattern>/Sair</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>SalvarAnexosController2</servlet-name>
-    <servlet-class>br.ufc.russas.n2s.academus.controller.SalvarAnexosController2</servlet-class>
+    <servlet-name>GerenciarAnexosController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.GerenciarAnexosController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>SalvarAnexosController2</servlet-name>
+    <servlet-name>GerenciarAnexosController</servlet-name>
     <url-pattern>/SalvarAnexos</url-pattern>
   </servlet-mapping>
   <filter>

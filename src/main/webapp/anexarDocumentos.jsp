@@ -3,6 +3,7 @@
 <%@ page import="br.ufc.russas.n2s.academus.model.DisciplinaCursada" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.PerfilAcademus" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.NivelAcademus" %>
+<%@ page import="br.ufc.russas.n2s.academus.model.Status" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.SolicitacaoDAO" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC" %>
 <%@ page import="br.ufc.russas.n2s.academus.util.Constantes" %>
@@ -116,8 +117,7 @@
 												<th scope="col">Carga</th>
 												<th scope="col">Semestre</th>
 												<th scope="col">Nota</th>
-												<th scope="col">Anexos</th>
-												<th colspan="2">Operações</th>
+												<th colspan="2">Anexos</th>
 											</tr>
 										</thead>
 										<%
@@ -130,17 +130,108 @@
 											<td><%=disCursada.getSemestre()%></td>
 											<td><%=disCursada.getNota()%></td>
 											<td>
-												<%=solicitacao.getSolicitante().getMatricula()%>
-											</td>
-											<td>
-												<jsp:include page="jsp/elements/botoesAnexarDocumentos.jsp">
-													<jsp:param value="<%=solicitacao.getSolicitante().getMatricula()%>" name="matricula"/>
-													<jsp:param value="<%=solicitacao.getIdSolicitacao()%>" name="id_solicitacao"/>
-													<jsp:param value="<%=disCursada.getId()%>" name="id_disciplina_cursada"/>
-												</jsp:include>
+												<input type="button" class="btn btn-secondary btn-sm" value="Ementa" data-toggle="modal" data-target="#anexarEmenta-<%=disCursada.getId()%>">
+												<input type="button" class="btn btn-secondary btn-sm" value="Historico" data-toggle="modal" data-target="#anexarHistorico-<%=disCursada.getId()%>">
 											</td>
 										</tr>
 				
+										<!-- Modal -->
+										<div class="modal fade" id="anexarEmenta-<%=disCursada.getId()%>" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+											<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="modalLabel">Anexar Documentos</h5>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+												<form action="SalvarAnexos" method="Post" enctype="multipart/form-data">
+													
+													<div class="modal-body">
+														<div class="card">
+															<div class="card-header">
+																<label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">Ementa</label>
+															</div>
+															<div class="card-body">
+																<div class="form-row">
+															        <input type="hidden" id="matricula" name="matricula" value="<%=solicitacao.getSolicitante().getMatricula()%>">
+										        					<input type="hidden" id="id_solicitacao" name="id_solicitacao" value="<%=solicitacao.getIdSolicitacao()%>">
+										        					<input type="hidden" id="id_disciplina_cursada" name="id_disciplina_cursada" value="<%=disCursada.getId()%>">
+															        <input type="hidden" id="tipo_arquivo" name="tipo_arquivo" value="1">
+															        <input type="hidden" id="chave1" name="chave" value="0">
+															        <%if(disCursada.getEmenta().getIdArquivo() > 0){%>
+															        	<%=disCursada.getEmenta().getNome()%>
+															        <%}else{%>
+					    												Nenhum arquivo anexado
+																	<%}%>
+																	<br>
+																	<input type="file" id="anexo1-<%=disCursada.getId()%>" name="anexo" accept=".pdf" class="form-control-file" onchange="teste1(<%=disCursada.getId()%>)">
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="modal-footer">
+														<input type="submit" id="submitEmenta-<%=disCursada.getId()%>" disabled="disabled" value="Anexar Ementa" class="btn btn-primary btn-sm active" onclick="atribuirValor1(1)">
+														<%if(disCursada.getEmenta().getIdArquivo() > 0){%>
+															<input type="submit" value="Download" class="btn btn-primary btn-sm active" onclick="atribuirValor1(2)">
+														<%}%>
+														
+														<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
+													</div>
+												</form>
+											</div>
+											</div>
+										</div>
+										
+										<!-- Modal -->
+										<div class="modal fade" id="anexarHistorico-<%=disCursada.getId()%>" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+											<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="modalLabel">Anexar Documentos</h5>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+												<form action="SalvarAnexos" method="Post" enctype="multipart/form-data">
+													<div class="modal-body">
+														<div class="card">
+															<div class="card-header">
+																<label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">Histórico</label>
+															</div>
+															<div class="card-body">
+																<div class="form-row">
+															        <input type="hidden" id="matricula" name="matricula" value="<%=solicitacao.getSolicitante().getMatricula()%>">
+										        					<input type="hidden" id="id_solicitacao" name="id_solicitacao" value="<%=solicitacao.getIdSolicitacao()%>">
+										        					<input type="hidden" id="id_disciplina_cursada" name="id_disciplina_cursada" value="<%=disCursada.getId()%>">
+															        <input type="hidden" id="tipo_arquivo" name="tipo_arquivo" value="2">
+															        <input type="hidden" id="chave2" name="chave" value="0">
+															        <%if(disCursada.getHistorico().getIdArquivo() > 0){%>
+															        	<%=disCursada.getHistorico().getNome()%>
+															        <%}else{%>
+					    												Nenhum arquivo anexado
+																	<%}%>
+																	<br>
+																	<input type="file" id="anexo2-<%=disCursada.getId()%>" name="anexo" accept=".pdf" class="form-control-file" onchange="teste2(<%=disCursada.getId()%>)">
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="modal-footer">
+														<input type="submit" id="submitHistorico-<%=disCursada.getId()%>" disabled="disabled" value="Anexar Historico" class="btn btn-primary btn-sm active" onclick="atribuirValor2(1)">
+														<%if(disCursada.getHistorico().getIdArquivo() > 0){%>
+															<input type="submit" value="Download" class="btn btn-primary btn-sm active" onclick="atribuirValor2(2)">
+														<%}%>
+															
+														<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
+													</div>
+												</form>
+											</div>
+											</div>
+										</div>
+										
 										<%
 											}
 										%>
@@ -157,10 +248,8 @@
 							<br>
 							<br>
 						     	
-						     	<!-- <input type="hidden" name="id_disciplina_cursada" id="id_disciplina_cursada" value="0">
-						     	<input type="hidden" name="matricula" id="matricula" value="<%=solicitacao.getSolicitante().getMatricula()%>">
-						     	<input type="hidden" name="id_solicitacao" id="id_solicitacao" value="<%=solicitacao.getIdSolicitacao()%>">  -->
 						     	<a href="Inicio" type="button" id="enviar" class="btn btn-secondary"> Cancelar </a>
+						     	<c:import url="BotoesVisualizar" charEncoding="UTF-8"></c:import>
 				     
 					</div>
 					<!-- </form> -->
@@ -175,4 +264,28 @@
 			</div>
 		</div>
 	</body>
+	<script>
+		function atribuirValor1(i){
+			document.getElementById("chave1").value = i;
+		}
+		function atribuirValor2(i){
+			document.getElementById("chave2").value = i;
+		}
+		function teste1(id){
+			if(document.getElementById("anexo1-"+id).value != ""){
+				document.getElementById("submitEmenta-"+id).disabled = "";
+			}
+			if(document.getElementById("anexo1-"+id).value == ""){
+				document.getElementById("submitEmenta-"+id).disabled = "disabled";
+			}
+		}
+		function teste2(id){
+			if(document.getElementById("anexo2-"+id).value != ""){
+				document.getElementById("submitHistorico-"+id).disabled = "";
+			}
+			if(document.getElementById("anexo2-"+id).value == ""){
+				document.getElementById("submitHistorico-"+id).disabled = "disabled";
+			}
+		}
+	</script>
 </html>

@@ -30,14 +30,14 @@ import br.ufc.russas.n2s.academus.model.TipoArquivo;
 import br.ufc.russas.n2s.academus.util.Constantes;
 
 @MultipartConfig
-public class SalvarAnexosController2 extends HttpServlet {
+public class GerenciarAnexosController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final static Logger LOGGER = Logger.getLogger(SalvarAnexosController.class.getCanonicalName());
+	private final static Logger LOGGER = Logger.getLogger(GerenciarAnexosController.class.getCanonicalName());
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SalvarAnexosController2() {
+    public GerenciarAnexosController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -66,15 +66,12 @@ public class SalvarAnexosController2 extends HttpServlet {
 			
 			String caminhoRelativo = File.separator+matricula+File.separator+idSolicitacao+File.separator+idDisciplinaCursada;
 			String caminho = Constantes.getAnexoDir()+caminhoRelativo;
-			System.out.println(caminho);
 			
 			File dir = new File(caminho+File.separator);
 			if(!dir.isDirectory()) dir.mkdirs();
-			System.out.println(dir.getAbsolutePath());
 			if(!Files.isWritable(dir.toPath())) System.out.println("Não é possivel escrever um arquivo");
 			if(request.getPart("id_disciplina_cursada") == null) System.out.println("Part vazio");
 			else{
-				//System.out.println(request.getParts().size());
 					Part part = request.getPart("anexo");
 					String nome = "";
 					nome = (tipoArquivo == 1 ? "ementa-" : "historico-")+matricula+"-"+idSolicitacao+"-"+idDisciplinaCursada+".pdf";
@@ -95,7 +92,6 @@ public class SalvarAnexosController2 extends HttpServlet {
 				        while ((read = filecontent.read(bytes)) != -1) {
 				            out.write(bytes, 0, read);
 				        }
-				        //writer.println("New file " + nome + " created at " + caminho);
 				        LOGGER.log(Level.INFO, "File{0}being uploaded to {1}", new Object[]{nome, caminho});
 						
 				        Arquivo arq = new Arquivo();
@@ -115,8 +111,7 @@ public class SalvarAnexosController2 extends HttpServlet {
 						dispatcher.forward(request, response);
 						
 				    } catch (FileNotFoundException fne) {
-				        //writer.println("You either did not specify a file to upload or are trying to upload a file to a protected or nonexistent location.");
-				        //writer.println("<br/> ERROR: " + fne.getMessage());
+				        fne.getMessage();
 				
 				        LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}", new Object[]{fne.getMessage()});
 				    } finally {
@@ -147,18 +142,6 @@ public class SalvarAnexosController2 extends HttpServlet {
 	        OutputStream output = response.getOutputStream();
 	        Files.copy(path, output);
 		}
-	}
-	
-	private String getFileName(final Part part) {
-	    final String partHeader = part.getHeader("content-disposition");
-	    LOGGER.log(Level.INFO, "Part Header = {0}", partHeader);
-	    for (String content : part.getHeader("content-disposition").split(";")) {
-	        if (content.trim().startsWith("filename")) {
-	            return content.substring(
-	                    content.indexOf('=') + 1).trim().replace("\"", "");
-	        }
-	    }
-	    return null;
 	}
 	
 	public static boolean isWritable(File arquivo) {
