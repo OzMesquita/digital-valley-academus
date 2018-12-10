@@ -44,7 +44,7 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 
 	@Override
 	public List<PerfilAcademus> listar() {
-		String sql = "SELECT id_pessoa_usuario, id_nivel, is_admin FROM academus.perfil_academus;";
+		String sql = "SELECT id_pessoa_usuario, id_nivel, is_admin FROM academus.perfil_academus order by id_pessoa_usuario;";
 		ArrayList<PerfilAcademus> perfis = new ArrayList<PerfilAcademus>();
 		
 		Connection conn = ConnectionPool.getConnection();

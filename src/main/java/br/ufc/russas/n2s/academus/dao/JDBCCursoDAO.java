@@ -37,7 +37,7 @@ public class JDBCCursoDAO implements CursoDAO{
 	public List<Curso> listar() {
 		String sql = "SELECT academus.curso.id_curso, academus.curso.nome "
 				+ "FROM academus.curso LEFT JOIN academus.coordenador "
-				+ "ON academus.curso.id_curso = academus.coordenador.id_curso";
+				+ "ON academus.curso.id_curso = academus.coordenador.id_curso ORDER BY id_curso";
 		List<Curso> cursos = new ArrayList<Curso>();
 		
 		Connection conn = ConnectionPool.getConnection();

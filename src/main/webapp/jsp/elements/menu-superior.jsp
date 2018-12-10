@@ -1,7 +1,7 @@
 <%@ page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
-<a class="navbar-brand" href=""> Logo do Academus </a> 
+<a class="navbar-brand" href="Inicio"> Logo do Academus </a> 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
    	</button>

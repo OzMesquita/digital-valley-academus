@@ -42,7 +42,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 
 	@Override
 	public List<MatrizCurricular> listar() {
-		String sql = "select * from academus.matriz_curricular";
+		String sql = "select * from academus.matriz_curricular order by id_matriz;";
 		ComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
@@ -118,7 +118,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 	
 	@Override
 	public List<MatrizCurricular> buscarPorCurso(int idCurso){
-		String sql = "select * from academus.matriz_curricular where id_curso = "+idCurso+";";
+		String sql = "select * from academus.matriz_curricular where id_curso = "+idCurso+" order by id_matriz;";
 		ComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
@@ -157,7 +157,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 	
 	@Override
 	public List<MatrizCurricular> buscarPorNome(String nome){
-		String sql = "select * from academus.matriz_curricular where nome like '%"+nome+"%';";
+		String sql = "select * from academus.matriz_curricular where nome like '%"+nome+"%' order by id_matriz;";
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
 		Connection conn = ConnectionPool.getConnection();
