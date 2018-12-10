@@ -45,7 +45,7 @@ public class JDBCHistoricoDAO implements HistoricoDAO{
 
 	@Override
 	public List<Historico> buscarPorSolicitacao(Solicitacao sol) {
-		String sql =  "select * from academus.historico where id_solicitacao = "+sol.getIdSolicitacao()+" order by id_historico;";
+		String sql =  "select * from academus.historico where id_solicitacao = "+sol.getIdSolicitacao()+";";
 		ArrayList<Historico> lh = new ArrayList<Historico>();
 		PerfilAcademusDAO pad = new JDBCPerfilAcademusDAO();
 		

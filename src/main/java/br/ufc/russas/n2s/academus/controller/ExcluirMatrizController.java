@@ -28,10 +28,8 @@ public class ExcluirMatrizController extends HttpServlet {
 			MatrizCurricularDAO daoMat = new JDBCMatrizCurricularDAO();
 			MatrizCurricular mat = daoMat.buscarPorId(idMatriz);
 			
-			if(daoMat.verificarSeEstaSendoUtilizada(idMatriz) == false){
-				daoMat.excluir(mat);
-			}
 			
+			daoMat.excluir(mat);
 		}
 		
 		try {

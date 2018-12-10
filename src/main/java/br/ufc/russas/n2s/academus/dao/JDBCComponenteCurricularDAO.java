@@ -42,7 +42,7 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 	@Override
 	public List<ComponenteCurricular> listar(int idMatriz) {
 		JDBCDisciplinaDAO d = new JDBCDisciplinaDAO();
-		String sql = "SELECT * FROM academus.componente_curricular WHERE id_matriz = "+ idMatriz +" ORDER BY id_disciplina_matriz;";
+		String sql = "SELECT * FROM academus.componente_curricular WHERE id_matriz = "+ idMatriz +";";
 		List<ComponenteCurricular> listaComponentes = new ArrayList<ComponenteCurricular>();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -199,7 +199,7 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 		String sql = "select distinct academus.disciplina.* from academus.disciplina, academus.componente_curricular, academus.disciplina_pre_requisito "
 				+ "where academus.componente_curricular.id_disciplina_matriz = "+idComponente+" "
 						+ "and academus.disciplina.id_disciplina = academus.disciplina_pre_requisito.id_disciplina_pre_requisito "
-						+ "and academus.componente_curricular.id_disciplina_matriz = academus.disciplina_pre_requisito.id_disciplina_matriz order by id_disciplina;";
+						+ "and academus.componente_curricular.id_disciplina_matriz = academus.disciplina_pre_requisito.id_disciplina_matriz;";
 		
 		List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
 		
