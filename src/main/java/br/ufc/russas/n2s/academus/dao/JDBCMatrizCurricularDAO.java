@@ -41,14 +41,17 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 	}
 
 	@Override
-	public List<MatrizCurricular> listar() {
-		String sql = "select * from academus.matriz_curricular order by id_matriz;";
+	public List<MatrizCurricular> listar(int limiteInf, int limiteSup) {
+		String sql = "select * from academus.matriz_curricular order by id_matriz offset ? limit ?;";
 		ComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, limiteInf);
+			ps.setInt(2, limiteSup);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
@@ -156,13 +159,57 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 	}
 	
 	@Override
-	public List<MatrizCurricular> buscarPorNome(String nome){
-		String sql = "select * from academus.matriz_curricular where nome like '%"+nome+"%' order by id_matriz;";
+	public List<MatrizCurricular> buscarPorCurso(int idCurso, int limiteInf, int limiteSup){
+		String sql = "select * from academus.matriz_curricular where id_curso = "+idCurso+" order by id_matriz offset ? limit ?;";
+		ComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, limiteInf);
+			ps.setInt(2, limiteSup);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				MatrizCurricular aux = new MatrizCurricular();
+				aux.setIdMatriz(rs.getInt("id_matriz"));
+				aux.setNome(rs.getString("nome"));
+				aux.setPeriodoLetivo(rs.getString("periodo_letivo"));
+				aux.setCarga(rs.getInt("carga_horario"));
+				aux.setPrazoMinimo(rs.getInt("prazo_minimo"));
+				aux.setPrazoMaximo(rs.getInt("prazo_maximo"));
+				aux.setVigente(rs.getBoolean("vigente"));
+				aux.setAtivo(rs.getBoolean("ativo"));
+				aux.setIdCurso(rs.getInt("id_curso"));
+				aux.setComponentes(cc.listar(rs.getInt("id_matriz")));
+				
+				listaMatrizes.add(aux);
+			}
+			
+			rs.close();
+			ps.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return listaMatrizes;
+	}
+	
+	@Override
+	public List<MatrizCurricular> buscarPorNome(String nome, int limiteInf, int limiteSup){
+		String sql = "select * from academus.matriz_curricular where nome like '%"+nome+"%' order by id_matriz offset ? limit ?;";
+		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, limiteInf);
+			ps.setInt(2, limiteSup);
+			
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()){

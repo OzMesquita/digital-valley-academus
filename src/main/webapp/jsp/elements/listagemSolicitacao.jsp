@@ -10,7 +10,8 @@
 	</button>
 	<div class="dropdown-menu dropdown-menu-left">
 		<%
-		PerfilAcademus usuario = (PerfilAcademus)session.getAttribute("usuario"); 
+		PerfilAcademus usuario = (PerfilAcademus)session.getAttribute("usuario");
+		String statusSoli = (request.getParameter("solicitacao") != null) ? request.getParameter("solicitacao") : "null";
 		
 		if (usuario.getNivel() == NivelAcademus.ALUNO){
 		%>
@@ -65,12 +66,8 @@
 		</thead>
 				<%
  
-	
-		List<Solicitacao> solicitacoes = (List<Solicitacao>) request.getAttribute("listaSol");
-
-		if(solicitacoes == null){
-			solicitacoes = (List<Solicitacao>) session.getAttribute("listaSol");
-		}
+		
+		List<Solicitacao> solicitacoes = (List<Solicitacao>) session.getAttribute("listaSol");
 		
 		if(solicitacoes != null){
 			for (Solicitacao soli : solicitacoes) {
@@ -103,7 +100,7 @@
   <ul class="pagination justify-content-center">
     <li class="page-item <%if(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0){%>disabled<%}%>">
       
-      <form method="post" action="Inicio" id="formPag">
+      <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">
       	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -1);}%>">
       	Anterior
       	</button>
@@ -112,7 +109,7 @@
     </li>
     <li class="page-item <%if(solicitacoes.size() < 10){%>disabled<%}%>">
     
-      <form method="post" action="Inicio" id="formPag">
+      <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">
       	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +1);}%>">
       	Proximo
       	</button>

@@ -64,7 +64,16 @@
 							</thead>
 							<%
 								MatrizCurricularDAO dao = new JDBCMatrizCurricularDAO();
-								List<MatrizCurricular> contatos = dao.listar();
+								List<MatrizCurricular> contatos;
+							
+								if(request.getParameter("pagina") == null){
+									contatos = dao.listar(0, 10);
+								}
+								else{
+									int pag = Integer.parseInt(request.getParameter("pagina"));
+									contatos = dao.listar(pag*10, 10);
+								}
+								
 								for (MatrizCurricular contato : contatos) {
 							%>
 							<tr>
@@ -100,6 +109,28 @@
 	
 						</table>
 					</div>
+					<nav aria-label="Page navigation example">
+					  <ul class="pagination justify-content-center">
+					    <li class="page-item <%if(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0){%>disabled<%}%>">
+					      
+					      <form method="post" action="ListarMatrizes" id="formPag">
+					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -1);}%>">
+					      	Anterior
+					      	</button>
+					      </form>
+					      
+					    </li>
+					    <li class="page-item <%if(contatos.size() < 10){%>disabled<%}%>">
+					    
+					      <form method="post" action="ListarMatrizes" id="formPag">
+					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +1);}%>">
+					      	Proximo
+					      	</button>
+					      </form>
+					      
+					    </li>
+					  </ul>
+					</nav>
 				</div>
 			</div>
 		</div>

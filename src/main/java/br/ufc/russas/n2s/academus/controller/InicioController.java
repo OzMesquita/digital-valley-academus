@@ -275,7 +275,6 @@ public class InicioController extends HttpServlet {
 			}
 			session.setAttribute("listaSol", listaSol);
 			
-			
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio.jsp");
 			
 			dispatcher.forward(request, response);

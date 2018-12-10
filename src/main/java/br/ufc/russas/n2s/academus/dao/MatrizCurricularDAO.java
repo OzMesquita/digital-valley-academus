@@ -8,7 +8,7 @@ public interface MatrizCurricularDAO {
 	
 	public MatrizCurricular cadastrar(MatrizCurricular mat);
 	
-	public List<MatrizCurricular> listar();
+	public List<MatrizCurricular> listar(int limiteInf, int limiteSup);
 	
 	public MatrizCurricular buscarPorId(int idMatriz);
 	
@@ -16,7 +16,9 @@ public interface MatrizCurricularDAO {
 	
 	public List<MatrizCurricular> buscarPorCurso(int idCurso);
 	
-	public List<MatrizCurricular> buscarPorNome(String nome);
+	public List<MatrizCurricular> buscarPorCurso(int idCurso, int limiteInf, int limiteSup);
+	
+	public List<MatrizCurricular> buscarPorNome(String nome, int limiteInf, int limiteSup);
 	
 	public MatrizCurricular editar(MatrizCurricular mat);
 	

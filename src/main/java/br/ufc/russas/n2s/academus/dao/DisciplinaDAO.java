@@ -10,6 +10,8 @@ public interface DisciplinaDAO {
 	
 	public List<Disciplina> listar();
 	
+	public List<Disciplina> listar(int limiteInf, int limiteSup);
+	
 	public Disciplina buscarPorId(String id);
 	
 	public List<Disciplina> buscarPorNome(String nome);

@@ -73,10 +73,6 @@
     <servlet-class>br.ufc.russas.n2s.academus.controller.VisualizarSolicitacaoController</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>ListarSolicitacaoController</servlet-name>
-    <servlet-class>br.ufc.russas.n2s.academus.controller.ListarSolicitacaoController</servlet-class>
-  </servlet>
-  <servlet>
     <servlet-name>CadastrarCursoController</servlet-name>
     <servlet-class>br.ufc.russas.n2s.academus.controller.CadastrarCursoController</servlet-class>
   </servlet>
@@ -155,10 +151,6 @@
   <servlet-mapping>
     <servlet-name>VisualizarSolicitacaoController</servlet-name>
     <url-pattern>/VisualizarSolicitacao</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>ListarSolicitacaoController</servlet-name>
-    <url-pattern>/VisualizarSolicitacoes</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>CadastrarCursoController</servlet-name>
