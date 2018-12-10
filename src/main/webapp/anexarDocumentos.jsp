@@ -116,7 +116,8 @@
 												<th scope="col">Carga</th>
 												<th scope="col">Semestre</th>
 												<th scope="col">Nota</th>
-												<th colspan="2">Anexos</th>
+												<th scope="col">Anexos</th>
+												<th colspan="2">Operações</th>
 											</tr>
 										</thead>
 										<%
@@ -129,12 +130,14 @@
 											<td><%=disCursada.getSemestre()%></td>
 											<td><%=disCursada.getNota()%></td>
 											<td>
+												<%=solicitacao.getSolicitante().getMatricula()%>
+											</td>
+											<td>
 												<jsp:include page="jsp/elements/botoesAnexarDocumentos.jsp">
 													<jsp:param value="<%=solicitacao.getSolicitante().getMatricula()%>" name="matricula"/>
 													<jsp:param value="<%=solicitacao.getIdSolicitacao()%>" name="id_solicitacao"/>
 													<jsp:param value="<%=disCursada.getId()%>" name="id_disciplina_cursada"/>
 												</jsp:include>
-												<%=disCursada.getId()%>
 											</td>
 										</tr>
 				

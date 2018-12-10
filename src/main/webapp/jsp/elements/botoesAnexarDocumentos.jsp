@@ -58,7 +58,7 @@
 									<%if(dc.getEmenta().getIdArquivo() > 0){%>
 										<input type="submit" value="Download" class="btn btn-primary btn-sm active" onclick="atribuirValor(2)">
 									<%}%>
-									<input type="submit" value="AnexarEmenta" class="btn btn-primary btn-sm active" onclick="atribuirValor(1)">
+									<input type="submit" disabled="disabled" value="AnexarEmenta" class="btn btn-primary btn-sm active" onclick="atribuirValor(1)">
 									<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
 								</div>
 							</form>
@@ -118,7 +118,7 @@
 			document.getElementById("chave").value = i;
 		}
 		function abilitarAnexacaoEmenta(){
-			if(document.getElementById("anexo1").value)
+			if(document.getElementById("anexo"))
 		}
 	</script>
 </html>
