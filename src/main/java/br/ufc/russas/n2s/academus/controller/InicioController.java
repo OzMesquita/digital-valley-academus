@@ -64,11 +64,35 @@ public class InicioController extends HttpServlet {
 					}
 					
 				} else if (tipoSolicitacao.equals("validado")) {
-					listaSol = sodao.listarValidada();
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listarValidada(0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listarValidada(pag*qtdRegPorPag, qtdRegPorPag);
+					}
+					
 				} else if(tipoSolicitacao.equals("analizado")) {
-					listaSol = sodao.listarAnalizado();
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listarAnalizado(0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listarAnalizado(pag*qtdRegPorPag, qtdRegPorPag);
+					}
+					
 				} else if(tipoSolicitacao.equals("finalizado")) {
-					listaSol = sodao.listarFinalizado();
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listarFinalizado(0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listarFinalizado(pag*qtdRegPorPag, qtdRegPorPag);
+					}
+					
 				} else {
 					
 					if(request.getParameter("pagina") == null){
@@ -93,11 +117,37 @@ public class InicioController extends HttpServlet {
 					}
 					
 				} else if (tipoSolicitacao.equals("submetido")) {
-					listaSol = sodao.listarSubmetida((Aluno)per.getPessoa());
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listarSubmetida((Aluno)per.getPessoa(), 0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listarSubmetida((Aluno)per.getPessoa(), qtdRegPorPag*pag, qtdRegPorPag);
+					}
+					
+					
 				} else if (tipoSolicitacao.equals("andamento")) {
-					listaSol = sodao.listarAndamento((Aluno)per.getPessoa());
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listarAndamento((Aluno)per.getPessoa(), 0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listarAndamento((Aluno)per.getPessoa(), qtdRegPorPag*pag, qtdRegPorPag);
+					}
+										
+					
 				} else if(tipoSolicitacao.equals("finalizado")) {
-					listaSol = sodao.listarFinalizado((Aluno)per.getPessoa());
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listarFinalizado((Aluno)per.getPessoa(), 0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listarFinalizado((Aluno)per.getPessoa(), qtdRegPorPag*pag, qtdRegPorPag);
+					}
+					
 				} else {
 					
 					if(request.getParameter("pagina") == null){
@@ -121,11 +171,35 @@ public class InicioController extends HttpServlet {
 					}
 					
 				} else if (tipoSolicitacao.equals("submetido")) {
-					listaSol = sodao.listarSubmetida();
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listarSubmetida(0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listarSubmetida(pag*qtdRegPorPag, qtdRegPorPag);
+					}
+					
 				} else if (tipoSolicitacao.equals("validado")) {
-					listaSol = sodao.listarValidada();
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listarValidada(0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listarValidada(pag*qtdRegPorPag, qtdRegPorPag);
+					}
+					
 				} else if(tipoSolicitacao.equals("finalizado")) {
-					listaSol = sodao.listarFinalizado();
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listarFinalizado(0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listarFinalizado(pag*qtdRegPorPag, qtdRegPorPag);
+					}
+
 				} else {
 					
 					if(request.getParameter("pagina") == null){
@@ -139,15 +213,55 @@ public class InicioController extends HttpServlet {
 				}
 			} else if(per.getNivel() == NivelAcademus.COORDENADOR) {
 				if (tipoSolicitacao == null) {
-					listaSol = sodao.listar((Coordenador)per.getPessoa());
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listar((Coordenador)per.getPessoa(), 0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listar((Coordenador)per.getPessoa(), pag*qtdRegPorPag, qtdRegPorPag);
+					}
+
 				} else if (tipoSolicitacao.equals("analizado")) {
-					listaSol = sodao.listarAnalizado((Coordenador)per.getPessoa());
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listarAnalizado((Coordenador)per.getPessoa(), 0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listarAnalizado((Coordenador)per.getPessoa(), pag*qtdRegPorPag, qtdRegPorPag);
+					}
+
 				} else if (tipoSolicitacao.equals("andamento")) {
-					listaSol = sodao.listarAndemanto((Coordenador)per.getPessoa());
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listarAndemanto((Coordenador)per.getPessoa(), 0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listarAndemanto((Coordenador)per.getPessoa(), pag*qtdRegPorPag, qtdRegPorPag);
+					}
+					
 				} else if(tipoSolicitacao.equals("finalizado")) {
-					listaSol = sodao.listarFinalizado((Coordenador)per.getPessoa());
+					
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listarFinalizado((Coordenador)per.getPessoa(), 0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listarFinalizado((Coordenador)per.getPessoa(), pag*qtdRegPorPag, qtdRegPorPag);
+					}
+					
 				} else {
-					listaSol = sodao.listar((Coordenador)per.getPessoa());
+
+					if(request.getParameter("pagina") == null){
+						listaSol = sodao.listar((Coordenador)per.getPessoa(), 0, qtdRegPorPag);
+					}
+					else{
+						int pag = Integer.parseInt(request.getParameter("pagina"));
+						listaSol = sodao.listar((Coordenador)per.getPessoa(), pag*qtdRegPorPag, qtdRegPorPag);
+					}
+					
 				}
 			} else if(per.getNivel() == NivelAcademus.PROFESSOR) {
 				//listaSol = sodao.listar();
