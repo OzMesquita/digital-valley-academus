@@ -146,6 +146,7 @@
 		<%
 			}
 		}%>
+		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
 	</body>
 	<script>
 		var componentes = [];

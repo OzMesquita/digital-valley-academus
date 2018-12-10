@@ -19,6 +19,12 @@ h2{
 h3{
     font-size: 12px;
 }
+
+.page-footer.panel-custom {
+    background: red;
+    color: white;
+}
+
 .card{
     margin-top: 5px;
 }
