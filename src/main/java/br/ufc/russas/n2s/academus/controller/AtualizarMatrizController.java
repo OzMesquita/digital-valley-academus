@@ -83,42 +83,9 @@ public class AtualizarMatrizController extends HttpServlet {
 			ma.setComponentes(compObjs);
 				
 			daoMatriz.editar(ma);
-				
 			/*
-			while(request.getParameter("comp-id-"+i) != null) {
-				 
-				String compId = request.getParameter("comp-id-"+i);//recuperando id da disciplina add como componente
-				Natureza compNatureza = Natureza.getNatureza(request.getParameter("comp-natureza-"+i));// recuperando natureza da disciplina add como componente
-				String[] compPreRequisitos = (request.getParameter("comp-preRequisitos-"+i) != "-") ? request.getParameter("comp-preRequisitos-"+i).split(";"): new String[0];
-				ArrayList<Disciplina> prObjs = new ArrayList<Disciplina>();
-				Disciplina disciplina = ddao.buscarPorId(compId);
-				for(String pr : compPreRequisitos){
-					prObjs.add(ddao.buscarPorId(pr));
-				}
-				ComponenteCurricular cc = new ComponenteCurricular();
-				cc.setIdComponente(id);
-				cc.setDisciplina(disciplina);
-				cc.setNatureza(compNatureza);
-				cc.setPreRequisitos(prObjs);
-				compObjs.add(cc);
-			}
-				
-			MatrizCurricular ma = new MatrizCurricular();
-				
-			ma.setIdMatriz(id);
-			ma.setNome(nome);
-			ma.setPeriodoLetivo(periodoLetivo);
-			ma.setCarga(cargaHoraria);
-			ma.setPrazoMinimo(prazoMinimo);
-			ma.setPrazoMaximo(prazoMaximo);
-			ma.setVigente(vigente);
-			ma.setAtivo(ativo);
-			ma.setIdCurso(curso);
-			ma.setComponentes(compObjs);
-			
-			
-			//daoMatriz.editar(ma);
-			System.out.println("Deu certo!");
+			Problema:	- falta colocar os componentes atribuidos na matriz(O banco não está fazendo).
+						- Fazer a verificação de quando for alterar um componente, verificar se ele não possui alguma solicitação.
 			*/
 			request.setAttribute("mensagem","MS");
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("ListarMatrizes");
