@@ -40,7 +40,7 @@
 						            <div class="invalid-feedback">
 						                            
 						        	</div>
-						        	<br>
+						        	<br><br>
 						
 						        <label for="justificativaInput"><b> Justificativa </b></label> 
 									<textarea rows="8" id="justificativaInput" name="justificativaInput" class="form-control" aria-describedby="tituloHelp" required></textarea>
@@ -56,6 +56,7 @@
 							<button  class="btn btn-primary btn-sm" form="form<%=(String)request.getAttribute("id")%>"
 								 style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("id") %>" > Confirmar
 							</button>
+							<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancelar</button>
 							</td>
 					</div>
 					</form>

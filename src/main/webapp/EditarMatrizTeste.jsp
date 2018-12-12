@@ -72,7 +72,7 @@
 							if( deuCerto && matriz.getIdMatriz() != -1 ) {
 						%>
 											
-						 <form action="AtualizarMatrizController" method="post">
+						 <form action="AtualizarMatriz" method="post">
 						 
 						 <label for="nomeMatrizInput">Id*</label>
 						 <input type="text" name="id_matriz" value="<%=matriz.getIdMatriz()%>" class="form-control" id="idMatrizInput" aria-describedby="tituloHelp" placeholder="Digite o código da matriz curricular" readonly required>
@@ -205,6 +205,11 @@
 						</div>
 				</div>
 			</div>
+			<div id="botoes" class="modal-footer">
+				<button type="submit" name="button" class="btn btn-primary btn-sm">Confirmar</button>
+				<a href="ListarMatrizes">
+				<button type="button" class="btn btn-primary btn-sm">Cancelar</button></a>
+			</div>
 		</form>
 						<%
 							} else {
@@ -216,8 +221,6 @@
 					</div>
 				</div>
 			</div>
-			
-		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
 	</body>
 	<script>
 	var vigente = document.getElementById("vigenteInput");
@@ -279,10 +282,10 @@
 		for(i=0;i<listaComponentes.length;i++){
 			if(listaComponentes[i] !== null){
 				list.innerHTML += '<tr name="teste+'+i+'">'+
-								  '<td>'+listaComponentes[i].id+'<input type="hidden" name="comp-id-'+i+'" value="'+listaComponentes[i].id+'"></td>'+
-								  '<td>'+listaComponentes[i].nome+'<input type="hidden" name="comp-nome-'+i+'" value="'+listaComponentes[i].nome+'"></td>'+
-								  '<td>'+listaComponentes[i].natureza+'<input type="hidden" name="comp-natureza-'+i+'" value="'+listaComponentes[i].natureza+'"></td>'+
-								  '<td>'+listaComponentes[i].preRequisitos+'<input type="hidden" name="comp-preRequisitos-'+i+'" value="'+listaComponentes[i].preRequisitos+'"></td>'+
+								  '<td>'+listaComponentes[i].id+'<input type="hidden" name="comp-id" value="'+listaComponentes[i].id+'"></td>'+
+								  '<td>'+listaComponentes[i].nome+'<input type="hidden" name="comp-nome" value="'+listaComponentes[i].nome+'"></td>'+
+								  '<td>'+listaComponentes[i].natureza+'<input type="hidden" name="comp-natureza" value="'+listaComponentes[i].natureza+'"></td>'+
+								  '<td>'+listaComponentes[i].preRequisitos+'<input type="hidden" name="comp-preRequisitos" value="'+listaComponentes[i].preRequisitos+'"></td>'+
 								  '<td><button type="button" class="btn btn-light btn-sm material-icons float-right" style="font-size: 15px;" onclick="removeComponente('+i+')">clear</button></td>'+
 								  '</tr>';
 			}

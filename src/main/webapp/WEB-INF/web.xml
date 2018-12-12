@@ -17,6 +17,10 @@
     <servlet-class>br.ufc.russas.n2s.academus.controller.VisualizarMatrizController</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>AtualizarMatrizController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.AtualizarMatrizController</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>ExcluirDisciplinaController</servlet-name>
     <servlet-class>br.ufc.russas.n2s.academus.controller.ExcluirDisciplinaController</servlet-class>
   </servlet>
@@ -103,6 +107,10 @@
   <servlet-mapping>
     <servlet-name>VisualizarMatrizController</servlet-name>
     <url-pattern>/VisualizarMatriz</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AtualizarMatrizController</servlet-name>
+    <url-pattern>/AtualizarMatriz</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ExcluirDisciplinaController</servlet-name>

@@ -135,5 +135,20 @@
 			</div>
 		</div>
 		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
+		<% 
+					String mensagem = (String) request.getAttribute("mensagem");
+					if(mensagem != null){
+						if (mensagem.equals("MS")){
+					%>
+						<script type="text/javascript">
+        					alert("A Matriz foi alterada com sucesso!");
+    					</script>
+					<%	} else if(mensagem.equals("MN")){
+						%>
+						<script type="text/javascript">
+        					alert("Não foi possível alterar a Matriz, por conter solicitações nas disciplinas associadas.");
+    					</script>
+					<%	}
+					}%>
 	</body>
 </html>
