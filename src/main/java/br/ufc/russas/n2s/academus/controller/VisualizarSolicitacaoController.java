@@ -32,13 +32,18 @@ public class VisualizarSolicitacaoController extends HttpServlet {
 			
 			String ans = request.getParameter("button");
 			request.setAttribute("id", ans);
-			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSolicitacao.jsp");
+			
 			
 			if(per.getNivel() == NivelAcademus.SECRETARIO) {
-				dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
+				dispatcher.forward(request, response);
+				return;
 			}
-			
-			dispatcher.forward(request, response);
+			else{
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSolicitacao.jsp");
+				dispatcher.forward(request, response);
+				return;
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

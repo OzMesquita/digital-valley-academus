@@ -21,7 +21,6 @@
 	try{
 		System.out.print((String)(request.getAttribute("id")));
 		solicitacao = dao.buscarPorId(Integer.parseInt((String)(request.getAttribute("id"))));
-		//solicitacao = dao.buscarPorId(2);
 	} catch(Exception e){
 		deuCerto = false;
 		System.out.print("Deu nao");
@@ -263,6 +262,7 @@
 				</div>
 			</div>
 		</div>
+		 </div>
 		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
 	</body>
 	<script>

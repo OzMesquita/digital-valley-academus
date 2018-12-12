@@ -46,6 +46,7 @@ public class BotoesVisualizarController extends HttpServlet {
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/elements/botoesVisualizarAluno.jsp");
 				dispatcher.forward(request, response);
+				return;
 				
 			} else if( per.getNivel() == NivelAcademus.SECRETARIO) {
 				if (Status.getCodigo(Status.VALIDANDO) == Status.getCodigo(sol.getStatus())) {
@@ -56,6 +57,7 @@ public class BotoesVisualizarController extends HttpServlet {
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/elements/botoesVisualizarSecretario.jsp");
 				dispatcher.forward(request, response);
+				return;
 				
 			} else if(per.getNivel() == NivelAcademus.COORDENADOR) {
 				if (Status.getCodigo(Status.ANALIZANDO) == Status.getCodigo(sol.getStatus())) {
@@ -66,6 +68,8 @@ public class BotoesVisualizarController extends HttpServlet {
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/elements/botoesVisualizarCoordenador.jsp");
 				dispatcher.forward(request, response);
+				return;
+				
 			} else if(per.getNivel() == NivelAcademus.PROFESSOR) {
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("");
@@ -75,7 +79,8 @@ public class BotoesVisualizarController extends HttpServlet {
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("");
 				dispatcher.forward(request, response);
-			
+				return;
+				
 			}
 			
 		}catch (Exception e) {

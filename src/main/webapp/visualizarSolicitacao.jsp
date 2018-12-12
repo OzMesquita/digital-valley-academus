@@ -139,17 +139,12 @@
 							<label for="resultadoInput"><b> Resultado </b></label>
 							<input type="text" name="resultadoInput" value="<%= solicitacao.getResultado() %>" class="form-control" id="resultadoInput" aria-describedby="tituloHelp" readonly required>
 	
-							<div class="invalid-feedback">
-	                            
-	                        </div>
+					
 							<br>
 							<br>
-							
 						     
-								<c:import url="BotoesVisualizar" charEncoding="UTF-8"></c:import>
-				     
-						
-						
+							<c:import url="BotoesVisualizar" charEncoding="UTF-8"></c:import>
+							
 					</div>
 					<%
 					} else {
@@ -159,19 +154,19 @@
 					}
 					%>
 				</div>
-				
 			</div>
-			<% 
-					String mensagem = (String) request.getAttribute("mensagem");
-					if(mensagem != null){
-						if (mensagem.equals("AN")){
-					%>
-						<script type="text/javascript">
-        					alert("Avaliação Inválida! \nCampos de resultado e justificativa devem ser preenchidos.");
-    					</script>
-					<%	}
-					}%>
+		</div>
 		</div>
 		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
 	</body>
+	<% 
+		String mensagem = (String) request.getAttribute("mensagem");
+		if(mensagem != null){
+			if (mensagem.equals("AN")){
+		%>
+			<script type="text/javascript">
+     					alert("Avaliação Inválida! \nCampos de resultado e justificativa devem ser preenchidos.");
+ 					</script>
+		<%	}
+	}%>
 </html>
