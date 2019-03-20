@@ -2,19 +2,26 @@
 <%@page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Solicitacao"%>
 <%@ page import="java.util.*"%>
-
+<!-- Essa pagina faz a listagem de todas as solicitacoes que podem ser vistas pelos usuários -->
 <div class="dropdown">
 	<button type="button" class="btn dropdown-toggle btn-sm btn-icon filtro_tela" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		<i class="material-icons">filter_list</i>
 		Filtrar
 	</button>
 	<div class="dropdown-menu dropdown-menu-left">
+		<!-- Mostra as opcoes de filtro pelos usuarios -->
 		<%
 		PerfilAcademus usuario = (PerfilAcademus)session.getAttribute("usuario");
 		String statusSoli = (request.getParameter("solicitacao") != null) ? request.getParameter("solicitacao") : "null";
 		
 		if (usuario.getNivel() == NivelAcademus.ALUNO){
 		%>
+		<!-- Filtro do usuario "Aluno"
+			 - Todas: Todas as solicitações do Aluno
+			 - Submetidas: Todas as solicitações que foram submetidas pelo aluno
+			 - Andamento: Todas as solicitações do aluno que já passaram pelo Secretário
+			 - Finalizadas: Todas as solicitações do aluno que estejam finalizadas
+		-->
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações possíveis de editar</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=andamento">Solicitações em andamento</a>
@@ -22,6 +29,12 @@
 		
 		<% } else if (usuario.getNivel() == NivelAcademus.SECRETARIO){
 		%>
+		<!-- Filtro do usuario "Secretário"
+			 - Todas: Todas as solicitações do Sistema
+			 - Submetidas: Todas as solicitações que foram submetidas do sistema
+			 - Validadas: Todas as solicitações validadas pelo Secretário
+			 - Finalizadas: Todas as solicitações que estejam finalizadas
+		-->
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações submetidas</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=validado">Solicitações para validar</a>
@@ -29,6 +42,11 @@
 		
 		<% } else if (usuario.getNivel() == NivelAcademus.COORDENADOR){ 
 		%>
+		<!-- Filtro do usuario "Coordenador"
+			 - Todas: Todas as solicitações referentes as curso do Coordenador
+			 - Analisando: Todas as solicitações do curso que o coordenador tem que avaliar
+			 - Finalizadas: Todas as solicitações do curso que estejam finalizadas
+		-->
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=analizado">Solicitações para analizar</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
@@ -39,6 +57,9 @@
 		
 		<% } else if(usuario.getIsAdmin()){
 		%>
+		<!-- Filtro do usuario Admim
+			- Todas os status de todas as solicitaçoes
+		-->
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações submetidas</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=validado">Solicitações para validar</a>

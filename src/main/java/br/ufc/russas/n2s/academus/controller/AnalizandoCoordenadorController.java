@@ -1,3 +1,6 @@
+/* Controller da pagina Visualizar Solicitacao opcao "Avaliar" de coordenador.
+ * Nesta pagina são salvo as informações passadas na avaliaçao do coordenador (Resultado e Justificativa) 
+ */
 package br.ufc.russas.n2s.academus.controller;
 
 import java.io.IOException;
@@ -30,7 +33,7 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 			int id = Integer.parseInt(request.getParameter("button"));
 			
 			String mensagem = "";
-			
+			//Verificando se todas as informações estao vazias
 			if (resultado != null && (justificativa != null || justificativa == "") && id != 0) {
 	
 				if(resultado.equals("Sim")) {
@@ -40,32 +43,33 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 				} else {
 					resultado = "INDEFINIDO";
 				}
-				
+				// Procurando no banco
 				SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
 				Solicitacao solicitacao = sodao.buscarPorId(id);
+				
+				// Verifica se a solicitação esta no banco e seu resultado não foi invalido
 				if(solicitacao == null || resultado.equals("INDEFINIDO")) {
 					mensagem = "Erro";
-				} else {
 					
+				} else {
+					// armezena as informações no banco
 					solicitacao.setResultado(resultado);
 					solicitacao.setJustificativa(justificativa);
 					solicitacao.setStatus(Status.FINALIZADO);
 					
 					sodao.editar(solicitacao);
-					mensagem = "AS";
+					mensagem = "AS";// Mensagem "Avalização Sucesso"
 				}
 			} else {
+				//As informações estão vazias e não foram passadas corretamente
 				mensagem = "AN";
 				request.setAttribute("id", id);
 				request.setAttribute("mensagem", mensagem);
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSocilitacao.jsp");
+				// Mantem as informações e mantem na mesma pagina
 				
 				dispatcher.forward(request, response);
 			}
-			request.setAttribute("mensagem", mensagem);
-			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");
-			
-			dispatcher.forward(request, response);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

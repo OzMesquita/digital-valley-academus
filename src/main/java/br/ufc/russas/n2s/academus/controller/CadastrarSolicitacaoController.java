@@ -33,6 +33,8 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Verificando se não possui informações nulas
+		
 		if(	(request.getParameter("componenteInput") != null) &&
 			request.getParameterValues("disc-nome") != null &&
 			request.getParameterValues("disc-carga") != null &&
@@ -41,6 +43,7 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 			request.getParameterValues("disc-instituicao") != null &&
 			request.getSession().getAttribute("usuario") != null){
 			
+			// Obtendo as irformações da pagina cadastroSolicitacao.jsp
 			String componente = request.getParameter("componenteInput");
 			String[] nomeDisciplinas = request.getParameterValues("disc-nome");
 			String[] cargaDisciplinas = request.getParameterValues("disc-carga");
@@ -49,13 +52,17 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 			String[] instituicaoDisciplinas = request.getParameterValues("disc-instituicao");
 			PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
 			ArrayList<DisciplinaCursada> disciplinasCursadas = new ArrayList<DisciplinaCursada>();
+			
 			ComponenteCurricularDAO ccd = new JDBCComponenteCurricularDAO();
 			SolicitacaoDAO sd = new JDBCSolicitacaoDAO();
 			Solicitacao solicitacao = new Solicitacao();
 			
+			// Preenchendo o Array disciplinas cursadas do solicitacao com as disciplinas cursadas do aluno 
 			for(int i=0; i<nomeDisciplinas.length; i++){
 				disciplinasCursadas.add(new DisciplinaCursada(semestreDisciplinas[i], Float.parseFloat(notaDisciplinas[i]), Integer.parseInt(cargaDisciplinas[i]), nomeDisciplinas[i], instituicaoDisciplinas[i]));
 			}
+			
+			// Aranezanando as informacoes no banco de dados
 			
 			solicitacao.setSolicitante((Aluno) usuario.getPessoa());
 			solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
@@ -67,7 +74,7 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 				sd.cadastrar(solicitacao);
 			}
 			
-			request.setAttribute("mensagem", "CS");
+			request.setAttribute("mensagem", "CS"); // Mensagem de operação realizada com sucesso
 			try {
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");
 				
@@ -81,7 +88,8 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 		else{
 			
 			try {
-				request.setAttribute("mensagem", "CN");
+				request.setAttribute("mensagem", "CN"); // Mensagem de erro, com informacao(oes) nulas
+				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroSolicitacao.jsp");
 				
 				dispatcher.forward(request, response);

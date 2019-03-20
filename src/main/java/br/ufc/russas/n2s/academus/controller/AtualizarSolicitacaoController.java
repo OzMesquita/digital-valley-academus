@@ -39,6 +39,9 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			
+			// Pegando as informações da pagina EditarSolicitação.jsp
+			
 			int id = Integer.parseInt(request.getParameter("button"));
 			String componente = request.getParameter("componenteInput");
 			String[] nomeDisciplinas = request.getParameterValues("disc-nome");
@@ -49,6 +52,7 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 			PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
 			ArrayList<DisciplinaCursada> disciplinasCursadas = new ArrayList<DisciplinaCursada>();
 			
+			// Verificando se possui pelo menos uma disciplina cursada na solicitacao 
 			if(nomeDisciplinas != null) {
 				for(int i=0; i<nomeDisciplinas.length; i++){
 					
@@ -62,6 +66,7 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 				
 				Solicitacao solicitacao = sd.buscarPorId(id);
 				
+				// Verificando se a solicitação é do usuário que está logado
 				if (solicitacao.getSolicitante().getId() == usuario.getPessoa().getId()) {
 					if(componente != null) {
 						solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
@@ -69,14 +74,17 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 					solicitacao.setStatus(Status.SUBMETIDO);
 					solicitacao.setDisciplinasCursadas(disciplinasCursadas);
 					
+					// colocando as informações no banco
+					// solifitação
 					sd.editar(solicitacao);
+					// as diciplinas cursadas de solicitaçao
 					dcd.excluir(solicitacao);
 					dcd.cadastrar(disciplinasCursadas, solicitacao.getIdSolicitacao());
 					
 					
-					request.setAttribute("mensagem", "ES");
+					request.setAttribute("mensagem", "ES"); // Mensagem de conclussão com sucesso
 				} else {
-					request.setAttribute("mensagem", "Erro");
+					request.setAttribute("mensagem", "EN");// Mensagem de erro, usuário não é dono da solicitação
 				}
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");
@@ -85,7 +93,8 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 				
 			} else {
 				request.setAttribute("id", id);
-				request.setAttribute("mensagem", "NS");
+				request.setAttribute("mensagem", "NS"); // Mensagem de operação por não ter disciplinas cursadas
+				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("EditarSolicitacao");
 				
 				dispatcher.forward(request, response);

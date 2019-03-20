@@ -41,30 +41,46 @@
 					<c:import url="jsp/elements/listagemSolicitacao.jsp" charEncoding="UTF-8"></c:import>
 				</div>
 			</div>
-			<% 
-					String mensagem = (String) request.getAttribute("mensagem");
+			<%		
+				// Mensagens dadas aos usuarios do que aconteceu com o sistema
+				// "mensagem" é repassado pelos controllers do sistema
+				String mensagem = (String) request.getAttribute("mensagem");
 					if(mensagem != null){
+						
 						if (mensagem.equals("ES")){
+							
+						// Mensagem de confirmação da pagina EditarSolicitação.jsp, controller AtualizarSolicitaçaoController
+						// Solicitação atualizada com sucesso
 					%>
 						<script type="text/javascript">
         					alert("Solicitação atualizada com sucesso!");
     					</script>
+    					
 					<%	} else if(mensagem.equals("EN")){
+						
+						// Mensagem de Erro da pagina EditarSolicitacao.jsp, controller AtualizarSolicitacaoController
+						// Erro, não pode editar a solicitação por nao ser dono da solicitacao 
 						%>
 						<script type="text/javascript">
         					alert("ERRO. Você não é dono desta solicitação");
     					</script>
+    					
 					<%	}else if(mensagem.equals("CS")){
+						
+						//Mensagem de confirmação da pagina CadastroSolicitacao.jsp, controller CadastrarSolicitacaoController
+						// Cadastro  da solicitacao realizado com sucesso
 						%>
 						<script type="text/javascript">
         					alert("Cadastro da solicitação realizado com sucesso! \nEntregue as documentações necessárias para a secretaria do curso. \nQualquer dúvida, leia o edital do aproveitamento de disciplinas.");
     					</script>
+    					
 						<%
 						} else if(mensagem.equals("AS")){
 							%>
 							<script type="text/javascript">
 	        					alert("Avaliação da solicitação realizada com sucesso!");
 	    					</script>
+	    					
 						<%
 						} else if(mensagem.equals("AN")){
 							%>
@@ -72,6 +88,7 @@
 	        					alert("Avaliação inválida! Tente novamente mais tarde.");
 	    					</script>
 						<%
+						
 						} else if(mensagem.equals("Erro")){
 							%>
 							<script type="text/javascript">
