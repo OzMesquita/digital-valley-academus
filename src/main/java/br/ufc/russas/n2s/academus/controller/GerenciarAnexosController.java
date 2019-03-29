@@ -55,15 +55,28 @@ public class GerenciarAnexosController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArquivoDAO arqdao = new JDBCArquivoDAO();
 		DisciplinaCursadaDAO dcdao = new JDBCDisciplinaCursadaDAO();
+		
+		// Tentar fazer chaves diferentes para o tipo os arquivos de disciplina curasdas
+		
 		int chave = Integer.parseInt(request.getParameter("chave"));
 		
+		String teste = request.getParameter("button");
 		String matricula = request.getParameter("matricula");
 		String idSolicitacao = request.getParameter("id_solicitacao");
 		String idDisciplinaCursada = request.getParameter("id_disciplina_cursada");
 		int tipoArquivo = Integer.parseInt(request.getParameter("tipo_arquivo"));
 		
+		if(teste.equals("2"))
+			chave = 2;
+		
+		//System.out.println(teste+"   merda");
+		//System.out.println(chave);
+		//System.out.println(matricula);
+		//System.out.println(idSolicitacao);
+		//System.out.println(idDisciplinaCursada);
+		//System.out.println(tipoArquivo);
+		
 		if(chave == 1){
-			
 			String caminhoRelativo = File.separator+matricula+File.separator+idSolicitacao+File.separator+idDisciplinaCursada;
 			String caminho = Constantes.getAnexoDir()+caminhoRelativo;
 			
@@ -107,7 +120,7 @@ public class GerenciarAnexosController extends HttpServlet {
 				        
 				        System.out.println("chegou aki");
 				        request.setAttribute("id", idSolicitacao);
-				        javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
+				        javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentosTeste.jsp");
 						dispatcher.forward(request, response);
 						
 				    } catch (FileNotFoundException fne) {
@@ -115,6 +128,7 @@ public class GerenciarAnexosController extends HttpServlet {
 				
 				        LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}", new Object[]{fne.getMessage()});
 				    } finally {
+				    	
 				        if (out != null) {
 				            out.close();
 				        }
@@ -127,9 +141,9 @@ public class GerenciarAnexosController extends HttpServlet {
 				    }
 			}
 		}else if(chave == 2){
-			
 			String caminho = Constantes.getAnexoDir()+arqdao.buscarPorDisciplinaCursada(dcdao.buscarPorId(Integer.parseInt(idDisciplinaCursada)), TipoArquivo.getTipoArquivo(tipoArquivo)).getCaminho();
 			File arquivo = new File(caminho) ;
+			System.out.print(caminho);
 			Path path = arquivo.toPath();
 	        
 	        String nome = arquivo.getName();
@@ -141,6 +155,13 @@ public class GerenciarAnexosController extends HttpServlet {
 
 	        OutputStream output = response.getOutputStream();
 	        Files.copy(path, output);
+		} else {
+			System.out.println("Não funcionou o chave");
+			
+			request.setAttribute("id", idSolicitacao);
+	        javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentosTeste.jsp");
+	        dispatcher.forward(request, response);
+	        
 		}
 	}
 	
