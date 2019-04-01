@@ -158,7 +158,7 @@
 										        					<input type="hidden" id="id_solicitacao" name="id_solicitacao" value="<%=solicitacao.getIdSolicitacao()%>">
 										        					<input type="hidden" id="id_disciplina_cursada" name="id_disciplina_cursada" value="<%=disCursada.getId()%>">
 															        <input type="hidden" id="tipo_arquivo" name="tipo_arquivo" value="1">
-															        <input type="hidden" id="chave1" name="chave" value="0">
+															        <input type="hidden" id="chave1" name="chave" value="1">
 															        <%if(disCursada.getEmenta().getIdArquivo() > 0){%>
 															        	<%=disCursada.getEmenta().getNome()%>
 															        <%}else{%>
@@ -171,9 +171,11 @@
 														</div>
 													</div>
 													<div class="modal-footer">
-														<input type="submit" id="submitEmenta-<%=disCursada.getId()%>" disabled="disabled" value="Anexar Ementa" class="btn btn-primary btn-sm active" onclick="atribuirValor1(1)">
+														<input type="submit" id="submitEmenta-<%=disCursada.getId()%>" name="button" disabled="disabled" value="Anexar Ementa" class="btn btn-primary btn-sm active" onclick="atribuirValor1(1)">
 														<%if(disCursada.getEmenta().getIdArquivo() > 0){%>
-															<input type="submit" value="Download" class="btn btn-primary btn-sm active" onclick="atribuirValor1(2)">
+															<!-- <a href="C://n2s//academus//anexo//375102//21//8//ementa-375102-21-8.pdf" class="btn btn-primary btn-sm active" onclick="atribuirValor1(2)" download>Download</a>-->
+															<!--  <input type="submit" value="Download" name="button" class="btn btn-primary btn-sm active" onclick="atribuirValor1(2)">-->
+															<button value="2" name="button" onclick="atribuirValor1(2)" class="btn btn-primary btn-sm active">Download</button>
 														<%}%>
 														
 														<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
@@ -206,7 +208,7 @@
 										        					<input type="hidden" id="id_solicitacao" name="id_solicitacao" value="<%=solicitacao.getIdSolicitacao()%>">
 										        					<input type="hidden" id="id_disciplina_cursada" name="id_disciplina_cursada" value="<%=disCursada.getId()%>">
 															        <input type="hidden" id="tipo_arquivo" name="tipo_arquivo" value="2">
-															        <input type="hidden" id="chave2" name="chave" value="0">
+															        <input type="hidden" id="chave2" name="chave" value="1">
 															        <%if(disCursada.getHistorico().getIdArquivo() > 0){%>
 															        	<%=disCursada.getHistorico().getNome()%>
 															        <%}else{%>
@@ -219,9 +221,10 @@
 														</div>
 													</div>
 													<div class="modal-footer">
-														<input type="submit" id="submitHistorico-<%=disCursada.getId()%>" disabled="disabled" value="Anexar Historico" class="btn btn-primary btn-sm active" onclick="atribuirValor2(1)">
+														<input type="submit" id="submitHistorico-<%=disCursada.getId()%>" name="button" disabled="disabled" value="Anexar Historico" class="btn btn-primary btn-sm active" onclick="atribuirValor2(1)">
 														<%if(disCursada.getHistorico().getIdArquivo() > 0){%>
-															<input type="submit" value="Download" class="btn btn-primary btn-sm active" onclick="atribuirValor2(2)">
+															<!--  <input type="submit" value="Download" class="btn btn-primary btn-sm active" onclick="atribuirValor2(2)">-->
+															<button value="2" name="button" onclick="atribuirValor1(2)" class="btn btn-primary btn-sm active">Download</button>
 														<%}%>
 															
 														<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
@@ -266,6 +269,8 @@
 	</body>
 	<script>
 		function atribuirValor1(i){
+			console.log(i);
+			console.log("Enrtouzud\afeayuegawte");
 			document.getElementById("chave1").value = i;
 		}
 		function atribuirValor2(i){
