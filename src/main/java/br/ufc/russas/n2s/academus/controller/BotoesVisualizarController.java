@@ -51,13 +51,14 @@ public class BotoesVisualizarController extends HttpServlet {
 			} else if( per.getNivel() == NivelAcademus.SECRETARIO) {
 				if (Status.getCodigo(Status.VALIDANDO) == Status.getCodigo(sol.getStatus())) {
 					request.setAttribute("Avaliar", true);
+					System.out.println("Avaliando");
 				} else {
-					request.setAttribute("Avaliar", false);
+					request.setAttribute("Avaliar", true);
 				}
-				
-				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/elements/botoesVisualizarSecretario.jsp");
+				System.out.println("Teastando");
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/elements/botoesVisualizarSecretarioAnexarDocumentos.jsp");
+				System.out.println("Teastando 2");
 				dispatcher.forward(request, response);
-				return;
 				
 			} else if(per.getNivel() == NivelAcademus.COORDENADOR) {
 				if (Status.getCodigo(Status.ANALIZANDO) == Status.getCodigo(sol.getStatus())) {

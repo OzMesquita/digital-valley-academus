@@ -1,6 +1,3 @@
-/* Controller da pagina Visualizar Solicitacao opcao "Avaliar" de coordenador.
- * Nesta pagina são salvo as informações passadas na avaliaçao do coordenador (Resultado e Justificativa) 
- */
 package br.ufc.russas.n2s.academus.controller;
 
 import java.io.IOException;
@@ -15,10 +12,10 @@ import br.ufc.russas.n2s.academus.dao.SolicitacaoDAO;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
 import br.ufc.russas.n2s.academus.model.Status;
 
-public class AnalizandoCoordenadorController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class AnaliseSecretarioController extends HttpServlet {
+private static final long serialVersionUID = 1L;
     
-    public AnalizandoCoordenadorController() {
+    public AnaliseSecretarioController() {
         super();
     }
 
@@ -30,40 +27,43 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 		try {		
 			String resultado = request.getParameter("resultado");
 			String justificativa = request.getParameter("justificativaInput");
-			int id = Integer.parseInt(request.getParameter("button"));
+			int idSolicitacao = Integer.parseInt(request.getParameter("button"));
 			
 			String mensagem = "";
 			//Verificando se todas as informações estao vazias
-			if (resultado != null && (justificativa != null || justificativa == "") && id != 0) {
-	
-				if(resultado.equals("Sim")) {
-					resultado = "DEFERIDO";
-				} else if(resultado.equals("Nao")) {
-					resultado = "INDEFERIDO";
-				} else {
-					resultado = "INDEFINIDO";
-				}
+			if (resultado != null && idSolicitacao != 0) {
+				if(justificativa == null)
+					justificativa = "";
 				// Procurando no banco
 				SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
-				Solicitacao solicitacao = sodao.buscarPorId(id);
+				Solicitacao solicitacao = sodao.buscarPorId(idSolicitacao);
 				
 				// Verifica se a solicitação esta no banco e seu resultado não foi invalido
 				if(solicitacao == null || resultado.equals("INDEFINIDO")) {
 					mensagem = "Erro";
 					
 				} else {
-					// armezena as informações no banco
-					solicitacao.setResultado(resultado);
-					solicitacao.setJustificativa(justificativa);
-					solicitacao.setStatus(Status.FINALIZADO);
+					// armezena as informações no banco para cada tipo de resultado
+					
+					if(resultado.equals("Valido")) {
+						solicitacao.setStatus(Status.ANALIZANDO);
+						mensagem = "ASS";// Mensagem "Avalização Secretario Sucesso"
+					} else if(resultado.equals("Invalido")) {
+						solicitacao.setResultado("INDEFERIDO");
+						solicitacao.setJustificativa(justificativa);
+						solicitacao.setStatus(Status.FINALIZADO);
+						mensagem = "AIS";// Mensagem "Avalização de Invalida do Secretario Sucesso"
+					} else {
+						resultado = "INDEFINIDO";
+					}
 					
 					sodao.editar(solicitacao);
-					mensagem = "AS";// Mensagem "Avalização Sucesso"
+					
 				}
 			} else {
 				//As informações estão vazias e não foram passadas corretamente
 				mensagem = "AN";
-				request.setAttribute("id", id);
+				request.setAttribute("id", idSolicitacao);
 				request.setAttribute("mensagem", mensagem);
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSocilitacao.jsp");
 				// Mantem as informações e mantem na mesma pagina
@@ -81,5 +81,4 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
 }

@@ -81,6 +81,10 @@
     <servlet-class>br.ufc.russas.n2s.academus.controller.CadastrarCursoController</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>AnaliseSecretarioController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.AnaliseSecretarioController</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>AnalisandoCoordenadorController</servlet-name>
     <servlet-class>br.ufc.russas.n2s.academus.controller.AnalizandoCoordenadorController</servlet-class>
   </servlet>
@@ -163,6 +167,10 @@
   <servlet-mapping>
     <servlet-name>CadastrarCursoController</servlet-name>
     <url-pattern>/CadastrarCurso</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AnaliseSecretarioController</servlet-name>
+    <url-pattern>/AnaliseSecretario</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>AnalisandoCoordenadorController</servlet-name>
