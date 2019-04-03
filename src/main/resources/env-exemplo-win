@@ -1,0 +1,9 @@
+ANEXO_DIR=C:\\n2s\\academus\\anexo
+DATABASE_CONF_DIR=C:\\n2s\\academus\\bd_academus.txt
+EMAIL_CONF_DIR=C:\\n2s\\academus\\email.txt
+APP_URL=/Academus
+PRE_URL=localhost:8080
+APP_IMG_URL=/Academus/resources/images
+APP_CSS_URL=/Academus/resources/css
+NUMBER_OF_ROWS_PER_PAGE=20
+SESSION_MSG=msg
