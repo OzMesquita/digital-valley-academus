@@ -269,8 +269,7 @@
 	</body>
 	<script>
 		function atribuirValor1(i){
-			console.log(i);
-			console.log("Enrtouzud\afeayuegawte");
+			
 			document.getElementById("chave1").value = i;
 		}
 		function atribuirValor2(i){
