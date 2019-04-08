@@ -7,3 +7,4 @@ APP_IMG_URL=/Academus/resources/images
 APP_CSS_URL=/Academus/resources/css
 NUMBER_OF_ROWS_PER_PAGE=20
 SESSION_MSG=msg
+GUARDIAO_APP=/guardiao

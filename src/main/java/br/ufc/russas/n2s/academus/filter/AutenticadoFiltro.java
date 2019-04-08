@@ -94,7 +94,7 @@ public class AutenticadoFiltro implements Filter {
 					
 				}else {
 					
-					((HttpServletResponse) response).sendRedirect("/Controle_de_Acesso/");
+					((HttpServletResponse) response).sendRedirect(br.ufc.russas.n2s.academus.util.Constantes.getGuardiaoApp());
 					
 				}
 			}else if(session.getAttribute("usuario") != null && 
@@ -105,7 +105,7 @@ public class AutenticadoFiltro implements Filter {
 				
 			}else {
 
-				((HttpServletResponse) response).sendRedirect("/Controle_de_Acesso/");
+				((HttpServletResponse) response).sendRedirect(br.ufc.russas.n2s.academus.util.Constantes.getGuardiaoApp());
 				
 			}
 		}

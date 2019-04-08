@@ -13,6 +13,7 @@ public class Constantes {
 	private static String SESSION_MSG;
 	private static String DATABASE_CONF_DIR;
 	private static String EMAIL_CONF_DIR;
+	private static String GUARDIAO_APP;
 	
 	private Constantes(){
 		
@@ -29,6 +30,7 @@ public class Constantes {
 		NUMBER_OF_ROWS_PER_PAGE = Integer.valueOf(dotEnv.get("NUMBER_OF_ROWS_PER_PAGE"));
 		SESSION_MSG = dotEnv.get("SESSION_MSG");
 		PRE_URL = dotEnv.get("PRE_URL");
+		GUARDIAO_APP = dotEnv.get("GUARDIAO_APP");
 	}
 	
 	public static String getAnexoDir() {
@@ -65,6 +67,10 @@ public class Constantes {
 
 	public static String getEmailConfDir() {
 		return EMAIL_CONF_DIR;
+	}
+	
+	public static String getGuardiaoApp() {
+		return GUARDIAO_APP;
 	}
 	
 	
