@@ -922,4 +922,487 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		return listaSolicitacao;
 	}
 	
+	
+	////////Funções que retornam o número de solicitações////////
+	
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @return Retorna a quantidade de solicitações cadastradas descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoes(int pagina) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @param aluno - Aluno que submeteu as solicitações
+	 * @return Retorna a quantidade de solicitações cadastradas pelo aluno descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoes(int pagina, Aluno aluno) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where id_solicitante=?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, aluno.getId());
+			ps.setInt(2, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @param coordenador - Coordenador que está usando o sistema
+	 * @return Retorna a quantidade de solicitações que seram analisadas pelo coordenador descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoes(int pagina, Coordenador coordenador) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status != ? AND id_curso = ?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
+			ps.setInt(2, coordenador.getCurso().getIdCurso());
+			ps.setInt(3, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @return Retorna a quantidade de solicitações submetidas descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoesSubmetidas(int pagina) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status=?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
+			ps.setInt(2, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @param aluno - Aluno que submeteu as solicitações
+	 * @return Retorna a quantidade de solicitações submetidas pelo aluno descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoesSubmetidas(int pagina, Aluno aluno) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status=? AND id_solicitante=?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
+			ps.setInt(2, aluno.getId());
+			ps.setInt(3, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @return Retorna a quantidade de solicitações validadas descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoesValidadas(int pagina) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status=?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.VALIDANDO));
+			ps.setInt(2, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @return Retorna a quantidade de solicitações analizadas descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoesAnalizadas(int pagina) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status=?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
+			ps.setInt(2, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @param coordenador - Coordenador que está usando o sistema
+	 * @return Retorna a quantidade de solicitações analizadas pelo coordenador descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoesAnalizadas(int pagina, Coordenador coordenador) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status=? AND id_curso=?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
+			ps.setInt(2, coordenador.getCurso().getIdCurso());
+			ps.setInt(3, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @return Retorna a quantidade de solicitações finalizadas descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoesFinalizadas(int pagina) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status=?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
+			ps.setInt(2, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @param aluno - Aluno que submeteu as solicitações
+	 * @return Retorna a quantidade de solicitações finalizadas do aluno, descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoesFinalizadas(int pagina, Aluno aluno) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status=? AND id_solicitante=?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
+			ps.setInt(2, aluno.getId());
+			ps.setInt(3, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @param coordenador - Coordenador que está usando o sistema
+	 * @return Retorna a quantidade de solicitações finalizadas descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoesFinalizadas(int pagina, Coordenador coordenador) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status=? AND id_curso=?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
+			ps.setInt(2, coordenador.getCurso().getIdCurso());
+			ps.setInt(3, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @return Retorna a quantidade de solicitações em andamento, descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoesAndamento(int pagina) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status!=? and status!=?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
+			ps.setInt(2, Status.getCodigo(Status.CANCELADO));
+			ps.setInt(3, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @param aluno - Aluno que submeteu as solicitações
+	 * @return Retorna a quantidade de solicitações em andamento do aluno, descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoesAndamento(int pagina, Aluno aluno) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status!=? AND status!=? AND id_solicitante=?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
+			ps.setInt(2, Status.getCodigo(Status.CANCELADO));
+			ps.setInt(3, aluno.getId());
+			ps.setInt(4, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	/**
+	 * @author Antonio Igor
+	 * @param pagina - Página atual
+	 * @param coordenador - Coordenador que está usando o sistema
+	 * @return Retorna a quantidade de solicitações em andamento relacionadas ao coordenador, descartando as solicitações mostradas nas páginas anteriores
+	 */
+	@Override
+	public int numSolicitacoesAndamento(int pagina, Coordenador coordenador) {
+		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status!=? AND status!=? AND id_curso=?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
+			ps.setInt(2, Status.getCodigo(Status.CANCELADO));
+			ps.setInt(3, coordenador.getCurso().getIdCurso());
+			ps.setInt(4, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
 }

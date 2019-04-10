@@ -45,4 +45,24 @@ public interface SolicitacaoDAO {
 	public List<Solicitacao> listarSubmetida(Aluno a, int limiteInf, int limiteSup);
 	
 	public int idUltimaSolicitacao(String matricula);
+	
+	public int numSolicitacoes(int pagina);
+	public int numSolicitacoes(int pagina, Aluno aluno);
+	public int numSolicitacoes(int pagina, Coordenador coordenador);
+	
+	public int numSolicitacoesAnalizadas(int pagina);
+	public int numSolicitacoesAnalizadas(int pagina, Coordenador coordenador);
+	
+	public int numSolicitacoesFinalizadas(int pagina);
+	public int numSolicitacoesFinalizadas(int pagina, Aluno aluno);
+	public int numSolicitacoesFinalizadas(int pagina, Coordenador coordenador);
+	
+	public int numSolicitacoesSubmetidas(int pagina);
+	public int numSolicitacoesSubmetidas(int pagina, Aluno aluno);
+	
+	public int numSolicitacoesValidadas(int pagina);
+	
+	public int numSolicitacoesAndamento(int pagina);
+	public int numSolicitacoesAndamento(int pagina, Aluno aluno);
+	public int numSolicitacoesAndamento(int pagina, Coordenador coordenador);
 }

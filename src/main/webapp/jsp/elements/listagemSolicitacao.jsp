@@ -89,6 +89,7 @@
  
 		
 		List<Solicitacao> solicitacoes = (List<Solicitacao>) session.getAttribute("listaSol");
+		int numSolicitacoes = (Integer) session.getAttribute("numSolicitacoes");
 		
 		if(solicitacoes != null){
 			for (Solicitacao soli : solicitacoes) {
@@ -119,23 +120,78 @@
 
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
-    <li class="page-item <%if(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0){%>disabled<%}%>">
+  
+    <%if(!(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 2)){%>
+    <li class="page-item">
+      
+      <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">
+      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -3);}%>">
+      	<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -2);}%>
+      	</button>
+      </form>
+      
+    </li>
+    <%}%>
+    
+    <%if(!(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 1)){%>
+    <li class="page-item">
+      
+      <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">
+      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -2);}%>">
+      	<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -1);}%>
+      	</button>
+      </form>
+      
+    </li>
+    <%}%>
+    
+    <%if(!(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0)){%>
+    <li class="page-item">
       
       <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">
       	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -1);}%>">
-      	Anterior
+      	<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")));}%>
       	</button>
       </form>
       
     </li>
-    <li class="page-item <%if(solicitacoes.size() < 10){%>disabled<%}%>">
+    <%}%>
+    <li class="page-item disabled">
+    	<span class="page-link"><%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina"))+1);}%></span>
+    </li>
+    <%if(numSolicitacoes >= 10){%>
+    <li class="page-item">
     
       <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">
       	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +1);}%>">
-      	Proximo
+      	<%if(request.getParameter("pagina") == null){%>2<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +2);}%>
       	</button>
       </form>
       
     </li>
+    <%}%>
+    <%if(numSolicitacoes >= 20){%>
+    <li class="page-item">
+    
+      <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">
+      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>2<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +2);}%>">
+      	<%if(request.getParameter("pagina") == null){%>3<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +3);}%>
+      	</button>
+      </form>
+      
+    </li>
+    <%}%>
+    <%if(numSolicitacoes >= 30){%>
+    <li class="page-item">
+    
+      <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">
+      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>3<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +3);}%>">
+      	<%if(request.getParameter("pagina") == null){%>4<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +4);}%>
+      	</button>
+      </form>
+      
+    </li>
+    <%}%>
+    
   </ul>
 </nav>
