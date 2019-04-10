@@ -1,15 +1,11 @@
 
 <div class="modal-footer">
-			<%
-		if((boolean)request.getAttribute("Avaliar")){
-	%>
+			
 	<!-- Botao Avaliar -->
 <input type="button" class="btn btn-primary btn-sm"
 		style="height: 30px;" value="Avaliar"
 		data-toggle="modal" data-target="#testeCoor">
-	<%
-		}
-	%>
+	
 	<!-- Botao Cancelar -->
 <a href="Inicio"><input type="button" class="btn btn-primary btn-sm"
 	style="height: 30px;" value="Cancelar"></a>

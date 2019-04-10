@@ -208,6 +208,14 @@
     <servlet-name>GerenciarAnexosController</servlet-name>
     <url-pattern>/SalvarAnexos</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>DownloadAnexosController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.DownloadAnexosController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DownloadAnexosController</servlet-name>
+    <url-pattern>/DownloadAnexos</url-pattern>
+  </servlet-mapping>
   <filter>
   	<filter-name>setCharacterEncodingFilter</filter-name>
   	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>

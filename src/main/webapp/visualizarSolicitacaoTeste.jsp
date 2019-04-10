@@ -12,7 +12,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  
  <%
-	
+ 	
+ 	PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
+ 
 	Solicitacao solicitacao = new Solicitacao();
 	SolicitacaoDAO dao = new DAOFactoryJDBC().criarSolicitacaoDAO();
 	
@@ -131,56 +133,73 @@
 											<td><%=disCursada.getSemestre()%></td>
 											<td><%=disCursada.getNota()%></td>
 											<td>
-												<input type="button" class="btn btn-secondary btn-sm" value="Download" data-toggle="modal" data-target="#anexarDownload">
+												<input type="button" class="btn btn-secondary btn-sm" value="Download" data-toggle="modal" data-target="#anexarDownload-<%=disCursada.getId()%>">
 											</td>
 										</tr>
-										
-										<%
-											}
-										%>
 										<!-- Modal -->
-										<div class="modal fade" id="anexarDownload" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+										<div class="modal fade" id="anexarDownload-<%=disCursada.getId()%>" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 											<div class="modal-dialog modal-lg">
 											<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="modalLabel">Downloads</h5>
-														<button type="button" class="close" data-dismiss="modal"
-															aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													
-														<div class="modal-body">
-														<div class="card">
-															<div class="card-header">
-																<label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">Ementa</label>
+												<div class="modal-header">
+													<h5 class="modal-title" id="modalLabel">Downloads</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<form action="DownloadAnexos" method="Post" enctype="multipart/form-data">
+												
+													<div class="modal-body">
+													<div class="card">
+														<div class="card-header">
+															<label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">Ementa</label>
+														</div>
+														<div class="card-body">
+															<div class="form-row">
+																<%if(disCursada.getEmenta().getIdArquivo() > 0){ %>
+																	<h2><input type="checkbox" name="anexo" id="anexo" value="1" /> <%=disCursada.getEmenta().getNome()%><br/></h2>
+															       	
+															    <%}else{%>
+					    											Nenhum arquivo anexado
+																<%}%>
+															       
 															</div>
-															<div class="card-body">
-																<div class="form-row">
-															       <h2><input type="checkbox" name="Anexo" value="ementa"/> Ementa<br/></h2>
-																</div>
-															</div>
+														</div>
 															
-															<div class="card-header">
-																<label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">Historico</label>
-															</div>
-															<div class="card-body">
-																<div class="form-row">
-															        <h2><input type="checkbox" name="Anexo" value="ementa"/> Historico<br/></h2>
-																</div>
+														<div class="card-header">
+															<label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">Historico</label>
+														</div>
+														<div class="card-body">
+															<div class="form-row">
+															<%if(disCursada.getHistorico().getIdArquivo() > 0){ %>
+																<h2><input type="checkbox" name="anexo" id="anexo" value="2"/> <%=disCursada.getHistorico().getNome()%></h2><br/>
+															<%}else{%>
+					    										Nenhum arquivo anexado
+															<%}%>
 															</div>
 														</div>
-														</div>
+													</div>
+													</div>
 														
-														<div class="modal-footer">
-															<button value="2" name="button" onclick="atribuirValor1(2)" class="btn btn-primary btn-sm active">Download</button>
+													<div class="modal-footer">
+														<%if(disCursada.getEmenta().getIdArquivo() > 0 || disCursada.getHistorico().getIdArquivo() > 0){%>
+															<input type="hidden" id="matricula" name="matricula" value="<%=solicitacao.getSolicitante().getMatricula()%>">
+										        			<input type="hidden" id="id_solicitacao" name="id_solicitacao" value="<%=solicitacao.getIdSolicitacao()%>">
+										        			<input type="hidden" id="id_disciplina_cursada" name="id_disciplina_cursada" value="<%=disCursada.getId()%>">
+															
+															<button value="1" name="button" class="btn btn-primary btn-sm active">Download</button>
+															
+														<%}%>
 															<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
-														</div>
-													
-													
+													</div>
+												</form>
 											</div>
 											</div>
 										</div>
+										<%
+											}
+										%>
+										
 										
 									</table>
 								</div>
@@ -192,8 +211,16 @@
 					
 							<br>
 							<br>
-						     
-							<c:import url="BotoesVisualizar" charEncoding="UTF-8"></c:import>
+							<%if(per.getNivel() == NivelAcademus.ALUNO){%>
+						    	<c:import url="jsp/elements/botoesVisualizarAluno.jsp" charEncoding="UTF-8"></c:import>
+							
+							<%} else if(per.getNivel() == NivelAcademus.SECRETARIO){ %>
+								<c:import url="jsp/elements/botoesVisualizarSecretarioAnexarDocumentos.jsp" charEncoding="UTF-8"></c:import>
+								
+							<% } else if(per.getNivel() == NivelAcademus.COORDENADOR){ %>
+								<c:import url="jsp/elements/botoesVisualizarCoordenador.jsp" charEncoding="UTF-8"></c:import>
+								
+							<% } %>
 					</div>
 					<%
 					} else {
