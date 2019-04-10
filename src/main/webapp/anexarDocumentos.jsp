@@ -6,7 +6,7 @@
 <%@ page import="br.ufc.russas.n2s.academus.model.Status" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.SolicitacaoDAO" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC" %>
-<%@ page import="br.ufc.russas.n2s.academus.util.Constantes" %>
+<%@ page import="util.Constantes" %>
 <%@ page import="java.util.*"%>
  
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
@@ -250,7 +250,6 @@
 							<br>
 							<br>
 						     	
-						     	<!--  <a href="Inicio" type="button" id="enviar" class="btn btn-secondary"> Cancelar </a> -->
 						     	<c:import url="BotoesVisualizar" charEncoding="UTF-8"></c:import>
 				     
 					</div>

@@ -21,6 +21,7 @@ import dao.DAOFactory;
 import dao.PessoaDAO;
 import model.EnumPerfil;
 import model.Pessoa;
+import util.Constantes;
 
 public class AutenticadoFiltro implements Filter {
 
@@ -94,7 +95,7 @@ public class AutenticadoFiltro implements Filter {
 					
 				}else {
 					
-					((HttpServletResponse) response).sendRedirect(br.ufc.russas.n2s.academus.util.Constantes.getGuardiaoApp());
+					((HttpServletResponse) response).sendRedirect(Constantes.getGuardiaoApp());
 					
 				}
 			}else if(session.getAttribute("usuario") != null && 
@@ -105,7 +106,7 @@ public class AutenticadoFiltro implements Filter {
 				
 			}else {
 
-				((HttpServletResponse) response).sendRedirect(br.ufc.russas.n2s.academus.util.Constantes.getGuardiaoApp());
+				((HttpServletResponse) response).sendRedirect(Constantes.getGuardiaoApp());
 				
 			}
 		}

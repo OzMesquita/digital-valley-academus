@@ -8,7 +8,7 @@
 <%@ page import="br.ufc.russas.n2s.academus.model.Aluno"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.NivelAcademus"%>
-<%@ page import="br.ufc.russas.n2s.academus.util.Constantes" %>
+<%@ page import="util.Constantes" %>
 <%@ page import="java.util.*"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>

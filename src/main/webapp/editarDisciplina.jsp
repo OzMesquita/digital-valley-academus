@@ -1,7 +1,7 @@
 <%@ page import="br.ufc.russas.n2s.academus.dao.DisciplinaDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Disciplina"%>
-<%@ page import="br.ufc.russas.n2s.academus.util.Constantes"%>
+<%@ page import="util.Constantes"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.NivelAcademus"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
 <%@ page import="java.util.*"%>

@@ -7,7 +7,7 @@
 <%@ page import="br.ufc.russas.n2s.academus.model.Curso"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Professor"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Coordenador"%>
-<%@ page import="br.ufc.russas.n2s.academus.util.Constantes"%>
+<%@ page import="util.Constantes"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.NivelAcademus"%>
 <%@ page import="java.util.*"%>

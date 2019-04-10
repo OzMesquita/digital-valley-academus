@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import br.ufc.russas.n2s.academus.util.Facade;
+
 public class ConnectionPool {
 	
 	private static List<Connection> pool;
@@ -45,9 +47,10 @@ public class ConnectionPool {
 	}
 	
 	private static Connection createConnection(){
-		String url = "jdbc:postgresql://192.169.1.2:5432/n2s-ufc";
-		String usuario = "postgres";
-		String senha = "postgres";
+		String bd [] = Facade.lerArquivoBancoDeDados();
+		String url = bd[0];
+		String usuario = bd[1];
+		String senha = bd[2];
 		
 		Connection conn = null;
 		

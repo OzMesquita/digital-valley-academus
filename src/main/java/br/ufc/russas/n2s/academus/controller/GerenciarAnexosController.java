@@ -27,7 +27,7 @@ import br.ufc.russas.n2s.academus.dao.JDBCArquivoDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCDisciplinaCursadaDAO;
 import br.ufc.russas.n2s.academus.model.Arquivo;
 import br.ufc.russas.n2s.academus.model.TipoArquivo;
-import br.ufc.russas.n2s.academus.util.Constantes;
+import util.Constantes;
 
 @MultipartConfig
 public class GerenciarAnexosController extends HttpServlet {
