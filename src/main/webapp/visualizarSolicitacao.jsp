@@ -12,7 +12,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  
  <%
-	PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");	
+ 	
+ 	PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
  
 	Solicitacao solicitacao = new Solicitacao();
 	SolicitacaoDAO dao = new DAOFactoryJDBC().criarSolicitacaoDAO();
@@ -132,7 +133,7 @@
 											<td><%=disCursada.getSemestre()%></td>
 											<td><%=disCursada.getNota()%></td>
 											<td>
-												<input type="button" class="btn btn-secondary btn-sm" value="Download" data-toggle="modal" data-target="#anexarDownload">
+												<input type="button" class="btn btn-secondary btn-sm" value="Download" data-toggle="modal" data-target="#anexarDownload-<%=disCursada.getId()%>">
 											</td>
 										</tr>
 										<!-- Modal -->
@@ -146,11 +147,8 @@
 														<span aria-hidden="true">&times;</span>
 													</button>
 												</div>
-												<form action="DownloadAnexos" method="Post">
-													<input type="hidden" id="matricula" name="matricula" value="<%=solicitacao.getSolicitante().getMatricula()%>">
-										        	<input type="hidden" id="id_solicitacao" name="id_solicitacao" value="<%=solicitacao.getIdSolicitacao()%>">
-										        	<input type="hidden" id="id_disciplina_cursada" name="id_disciplina_cursada" value="<%=disCursada.getId()%>">
-										        	
+												<form action="DownloadAnexos" method="Post" enctype="multipart/form-data">
+												
 													<div class="modal-body">
 													<div class="card">
 														<div class="card-header">
@@ -185,13 +183,15 @@
 														
 													<div class="modal-footer">
 														<%if(disCursada.getEmenta().getIdArquivo() > 0 || disCursada.getHistorico().getIdArquivo() > 0){%>
+															<input type="hidden" id="matricula" name="matricula" value="<%=solicitacao.getSolicitante().getMatricula()%>">
+										        			<input type="hidden" id="id_solicitacao" name="id_solicitacao" value="<%=solicitacao.getIdSolicitacao()%>">
+										        			<input type="hidden" id="id_disciplina_cursada" name="id_disciplina_cursada" value="<%=disCursada.getId()%>">
 															
-															<button value="1" name="teste" id="teste" class="btn btn-primary btn-sm active">Download</button>
+															<button value="1" name="button" class="btn btn-primary btn-sm active">Download</button>
 															
 														<%}%>
 															<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
 													</div>
-													
 												</form>
 											</div>
 											</div>
