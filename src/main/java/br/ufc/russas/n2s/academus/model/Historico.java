@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import model.Pessoa;
-
 public class Historico implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -19,13 +17,6 @@ public class Historico implements Serializable{
 		this.setData(LocalDate.now());
 		this.setHorario(LocalTime.now());
 		this.setDescricao("INDEFINIDO");
-	}
-
-	public Historico(Pessoa responsavel, int tipoMensagem) {
-		this.setData(LocalDate.now());
-		this.setHorario(LocalTime.now());
-		this.setResponsavel(new PerfilAcademus(responsavel));
-		this.gerarDescricao(tipoMensagem);
 	}
 	
 	public Historico(PerfilAcademus responsavel, int tipoMensagem) {
@@ -65,9 +56,9 @@ public class Historico implements Serializable{
 	
 	public void gerarDescricao(int i){
 		String string = "";
-		if(i == 1) string = "O(A) aluno(a) "+getResponsavel().getPessoa().getNome()+" cadastrou esta solicitação";
-		if(i == 2) string = "O(A) secretário(a) "+getResponsavel().getPessoa().getNome()+" validou esta solicitação";
-		if(i == 3) string = "O(A) coordenador(a) "+getResponsavel().getPessoa().getNome()+" avaliou esta solicitação";
+		if(i == 1) string = "O(A) aluno(a) "+getResponsavel().getNome()+" cadastrou esta solicitação";
+		if(i == 2) string = "O(A) secretário(a) "+getResponsavel().getNome()+" validou esta solicitação";
+		if(i == 3) string = "O(A) coordenador(a) "+getResponsavel().getNome()+" avaliou esta solicitação";
 		setDescricao(string);
 	}
 	
