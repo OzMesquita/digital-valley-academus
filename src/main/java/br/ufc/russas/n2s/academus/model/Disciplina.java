@@ -7,6 +7,7 @@ public class Disciplina implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String nome;
+	private Ementa ementa;
 	private int carga;
 	private int creditos;
 	
@@ -28,6 +29,12 @@ public class Disciplina implements Serializable{
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	public Ementa getEmenta() {
+		return ementa;
+	}
+	public void setEmenta(Ementa ementa) {
+		this.ementa = ementa;
 	}
 	public int getCarga() {
 		return carga;

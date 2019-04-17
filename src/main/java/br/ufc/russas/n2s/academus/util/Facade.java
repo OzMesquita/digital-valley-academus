@@ -14,7 +14,6 @@ public class Facade {
 	private Facade() {
 		//
 	}
-	
 
 	public static String[] lerArquivoBancoDeDados() {
 		String[] bd = new String[3];

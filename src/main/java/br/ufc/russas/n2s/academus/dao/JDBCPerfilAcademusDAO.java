@@ -11,11 +11,6 @@ import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 
-import dao.DAOFactory;
-import dao.JDBCPessoaDAO;
-import dao.JDBCServidorDAO;
-import model.Pessoa;
-import model.Servidor;
 
 public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 
@@ -89,6 +84,51 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 	@Override
 	public PerfilAcademus buscarPorId(int id) {
 		String sql = "SELECT id_pessoa_usuario, id_nivel, is_admin FROM academus.perfil_academus WHERE id_pessoa_usuario = "+ id +";";
+		PerfilAcademus perfil = new PerfilAcademus();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()){
+				
+				perfil.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				
+				if(perfil.getNivel() == NivelAcademus.ALUNO){
+					perfil.setPessoa(new JDBCAlunoDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
+				} else if(perfil.getNivel() == NivelAcademus.COORDENADOR){
+					perfil.setPessoa(new JDBCCoordenadorDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
+				} else if(perfil.getNivel() == NivelAcademus.SECRETARIO){
+					Servidor serv = daoServidor.buscar(rs.getInt("id_pessoa_usuario"));
+					serv.getUsuario().setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id_pessoa_usuario")));
+					serv.getUsuario().setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id_pessoa_usuario")));
+					
+					perfil.setPessoa(serv);
+					
+				} else if(perfil.getNivel() == NivelAcademus.PROFESSOR){
+					perfil.setPessoa(new JDBCProfessorDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
+				}
+				
+				perfil.setIsAdmin(rs.getBoolean("is_admin"));
+			}
+			
+			ps.close();
+			rs.close();
+
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return perfil;
+	}
+	
+	@Override
+	public PerfilAcademus buscarPorCPF(String cpf) {
+		String sql = "SELECT id_pessoa_usuario, id_nivel, is_admin FROM academus.perfil_academus WHERE cpf = "+ cpf +";";
 		PerfilAcademus perfil = new PerfilAcademus();
 		
 		Connection conn = ConnectionPool.getConnection();
