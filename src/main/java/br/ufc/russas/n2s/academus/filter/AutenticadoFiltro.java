@@ -58,11 +58,14 @@ public class AutenticadoFiltro implements Filter {
 					if(perDAO.buscarPorCPF(user.getCpf()) == null) {
 						if(user.getUsuario().getPerfil() == EnumPerfil.ALUNO) {
 							Aluno userAluno = new Aluno();
+							userAluno.setIdGuardiao(user.getId());
 							userAluno.setNome(user.getNome());
 							userAluno.setCPF(user.getCpf());
 							userAluno.setEmail(user.getEmail());
+							userAluno.setIsAdmin(false);
 							userAluno.setMatricula(((model.Aluno)user).getMatricula());
-							userAluno.setSemestreIngresso(((model.Aluno)user).getSemestreIngresso());							
+							userAluno.setSemestreIngresso(((model.Aluno)user).getSemestreIngresso());
+							userAluno.setNivel(NivelAcademus.ALUNO);						
 							
 							br.ufc.russas.n2s.academus.model.Curso curso = new br.ufc.russas.n2s.academus.model.Curso();
 							curso.setIdCurso(((model.Aluno)user).getCurso().getId());
@@ -75,9 +78,11 @@ public class AutenticadoFiltro implements Filter {
 						} else if(user.getUsuario().getPerfil() == EnumPerfil.SERVIDOR) {
 							if(((Servidor)user).getCargo() == EnumCargo.PROFESSOR) {
 								Professor userProfessor = new Professor();
+								userProfessor.setIdGuardiao(user.getId());
 								userProfessor.setNome(user.getNome());
 								userProfessor.setCPF(user.getCpf());
 								userProfessor.setEmail(user.getEmail());
+								userProfessor.setIsAdmin(false);
 								userProfessor.setSiape(((model.Servidor)user).getSiape());
 								userProfessor.setCurso(new br.ufc.russas.n2s.academus.model.Curso());
 								userProfessor.setNivel(NivelAcademus.PROFESSOR);
@@ -88,9 +93,11 @@ public class AutenticadoFiltro implements Filter {
 								
 							} else if(((Servidor)user).getCargo() == EnumCargo.SECRETARIO) {
 								Funcionario userFuncionario = new Funcionario();
+								userFuncionario.setIdGuardiao(user.getId());
 								userFuncionario.setNome(user.getNome());
 								userFuncionario.setCPF(user.getCpf());
 								userFuncionario.setEmail(user.getEmail());
+								userFuncionario.setIsAdmin(false);
 								userFuncionario.setSiape(((model.Servidor)user).getSiape());
 								userFuncionario.setCurso(new br.ufc.russas.n2s.academus.model.Curso());
 								userFuncionario.setNivel(NivelAcademus.SECRETARIO);
@@ -101,10 +108,13 @@ public class AutenticadoFiltro implements Filter {
 								
 							} else {
 								Funcionario userFuncionario = new Funcionario();
+								userFuncionario.setIdGuardiao(user.getId());
 								userFuncionario.setNome(user.getNome());
 								userFuncionario.setCPF(user.getCpf());
 								userFuncionario.setEmail(user.getEmail());
+								userFuncionario.setIsAdmin(false);
 								userFuncionario.setSiape(((model.Servidor)user).getSiape());
+								userFuncionario.setCurso(new br.ufc.russas.n2s.academus.model.Curso());
 								userFuncionario.setNivel(NivelAcademus.INDEFINIDO);
 								
 								//Falta colocar no banco
@@ -114,10 +124,13 @@ public class AutenticadoFiltro implements Filter {
 							}
 						} else {
 							PerfilAcademus userVisitante = new PerfilAcademus();
+							userVisitante.setIdGuardiao(user.getId());
 							userVisitante.setNome(user.getNome());
 							userVisitante.setEmail(user.getEmail());
 							userVisitante.setCPF(user.getCpf());
+							userVisitante.setIsAdmin(false);
 							userVisitante.setNivel(NivelAcademus.INDEFINIDO);
+							userVisitante.setCurso(new br.ufc.russas.n2s.academus.model.Curso());
 							
 							userAcademus = userVisitante;
 							

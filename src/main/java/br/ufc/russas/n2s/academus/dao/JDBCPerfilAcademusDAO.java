@@ -16,17 +16,31 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 
 	@Override
 	public PerfilAcademus cadastrar(PerfilAcademus perfil) {
-		String sql = "INSERT INTO academus.perfil_academus(id_pessoa_usuario, id_nivel, is_admin) VALUES (?, ?, ?);";
-		
+		//String sql = "INSERT INTO academus.perfil_academus(id_pessoa_usuario, id_nivel, is_admin) VALUES (?, ?, ?);";
+		String sql = "INSERT INTO academus.perfil_academus( id_pessoa_usuario, id_nivel, is_admin, nome, email, cpf, id_curso) VALUES (?, ?, ?, ?, ?, ?, ?); " + 
+				"SELECT id_perfil_academus FROM academus.perfil_academus WHERE id_pessoa_usuario = ?;";
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement insert = conn.prepareStatement(sql);
-			insert.setInt(1, perfil.getPessoa().getId());
+			
+			
+			insert.setInt(1, perfil.getIdGuardiao());
 			insert.setInt(2, NivelAcademus.getCodigo(perfil.getNivel()));
 			insert.setBoolean(3, perfil.getIsAdmin());
+			insert.setString(4, perfil.getNome());
+			insert.setString(5, perfil.getEmail());
+			insert.setString(6, perfil.getCPF());
+			insert.setInt(7, perfil.getCurso().getIdCurso());
+			
+			insert.setInt(8, perfil.getIdGuardiao());
 			
 			insert.execute();
+			ResultSet rs = insert.executeQuery();
+			
+			perfil.setId(rs.getInt("id_perfil_academus"));
+			
 			insert.close();
+			rs.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -39,34 +53,30 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 
 	@Override
 	public List<PerfilAcademus> listar() {
-		String sql = "SELECT id_pessoa_usuario, id_nivel, is_admin FROM academus.perfil_academus order by id_pessoa_usuario;";
+		//String sql = "SELECT id_pessoa_usuario, id_nivel, is_admin FROM academus.perfil_academus order by id_pessoa_usuario;";
+		String sql = "SELECT * FROM academus.perfil_academus Order by id_perfil_academus;";
 		ArrayList<PerfilAcademus> perfis = new ArrayList<PerfilAcademus>();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
-			JDBCPessoaDAO daoPessoa = (JDBCPessoaDAO) DAOFactory.criarPessoaDAO();
-			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
+			CursoDAO curdao = new DAOFactoryJDBC().criarCursoDAO();
+			
 			while (rs.next()) {
-				PerfilAcademus temp = new PerfilAcademus();
+				PerfilAcademus perfil = new PerfilAcademus();
 				
-				Pessoa tempPessoa = daoPessoa.buscarPorId(rs.getInt("id_pessoa_usuario"));
+				perfil.setIdGuardiao(rs.getInt("id_pessoa_usuario"));
+				perfil.setId(rs.getInt("id_perfil_academus"));
+				perfil.setIsAdmin(rs.getBoolean("is_admin"));
+				perfil.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				perfil.setNome(rs.getString("nome"));
+				perfil.setEmail(rs.getString("email"));
+				perfil.setCPF(rs.getString("cpf"));
+				perfil.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
-				if(tempPessoa != null){
-					temp.setPessoa(tempPessoa);
-					temp.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
-					temp.setIsAdmin(rs.getBoolean("is_admin"));
-					
-					perfis.add(temp);
-				}
-				else{
-					//Esta cadastrado no Academus mas nãoo esta na base de dados
-					//que o JDBCPessoaDAO esta utilizando, se tiver dando erro atualize
-					//o bd.txt no c:\n2s
-				}
-				
+				perfis.add(perfil);
 			}
 			
 			ps.close();
@@ -83,7 +93,8 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 
 	@Override
 	public PerfilAcademus buscarPorId(int id) {
-		String sql = "SELECT id_pessoa_usuario, id_nivel, is_admin FROM academus.perfil_academus WHERE id_pessoa_usuario = "+ id +";";
+		//String sql = "SELECT id_pessoa_usuario, id_nivel, is_admin FROM academus.perfil_academus WHERE id_pessoa_usuario = "+ id +";";
+		String sql = "SELECT * FROM academus.perfil_academus WHERE id_perfil_academus = "+ id +";";
 		PerfilAcademus perfil = new PerfilAcademus();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -92,26 +103,19 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
+			CursoDAO curdao = new DAOFactoryJDBC().criarCursoDAO();
+			
 			if(rs.next()){
 				
-				perfil.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
-				
-				if(perfil.getNivel() == NivelAcademus.ALUNO){
-					perfil.setPessoa(new JDBCAlunoDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
-				} else if(perfil.getNivel() == NivelAcademus.COORDENADOR){
-					perfil.setPessoa(new JDBCCoordenadorDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
-				} else if(perfil.getNivel() == NivelAcademus.SECRETARIO){
-					Servidor serv = daoServidor.buscar(rs.getInt("id_pessoa_usuario"));
-					serv.getUsuario().setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id_pessoa_usuario")));
-					serv.getUsuario().setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id_pessoa_usuario")));
-					
-					perfil.setPessoa(serv);
-					
-				} else if(perfil.getNivel() == NivelAcademus.PROFESSOR){
-					perfil.setPessoa(new JDBCProfessorDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
-				}
-				
+				perfil.setIdGuardiao(rs.getInt("id_pessoa_usuario"));
+				perfil.setId(rs.getInt("id_perfil_academus"));
 				perfil.setIsAdmin(rs.getBoolean("is_admin"));
+				perfil.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				perfil.setNome(rs.getString("nome"));
+				perfil.setEmail(rs.getString("email"));
+				perfil.setCPF(rs.getString("cpf"));
+				perfil.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				
 			}
 			
 			ps.close();
@@ -128,36 +132,28 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 	
 	@Override
 	public PerfilAcademus buscarPorCPF(String cpf) {
-		String sql = "SELECT id_pessoa_usuario, id_nivel, is_admin FROM academus.perfil_academus WHERE cpf = "+ cpf +";";
+		String sql = "SELECT * FROM academus.perfil_academus WHERE cpf = "+ cpf +";";
 		PerfilAcademus perfil = new PerfilAcademus();
 		
 		Connection conn = ConnectionPool.getConnection();
+		
 		try{
-			JDBCServidorDAO daoServidor = (JDBCServidorDAO) DAOFactory.criarServidorDAO();
-			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
+			CursoDAO curdao = new DAOFactoryJDBC().criarCursoDAO();
+			
 			if(rs.next()){
 				
-				perfil.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
-				
-				if(perfil.getNivel() == NivelAcademus.ALUNO){
-					perfil.setPessoa(new JDBCAlunoDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
-				} else if(perfil.getNivel() == NivelAcademus.COORDENADOR){
-					perfil.setPessoa(new JDBCCoordenadorDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
-				} else if(perfil.getNivel() == NivelAcademus.SECRETARIO){
-					Servidor serv = daoServidor.buscar(rs.getInt("id_pessoa_usuario"));
-					serv.getUsuario().setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id_pessoa_usuario")));
-					serv.getUsuario().setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id_pessoa_usuario")));
-					
-					perfil.setPessoa(serv);
-					
-				} else if(perfil.getNivel() == NivelAcademus.PROFESSOR){
-					perfil.setPessoa(new JDBCProfessorDAO().buscarPorId(rs.getInt("id_pessoa_usuario")));
-				}
-				
+				perfil.setIdGuardiao(rs.getInt("id_pessoa_usuario"));
+				perfil.setId(rs.getInt("id_perfil_academus"));
 				perfil.setIsAdmin(rs.getBoolean("is_admin"));
+				perfil.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				perfil.setNome(rs.getString("nome"));
+				perfil.setEmail(rs.getString("email"));
+				perfil.setCPF(rs.getString("cpf"));
+				perfil.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				
 			}
 			
 			ps.close();
@@ -174,14 +170,19 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 
 	@Override
 	public PerfilAcademus editar(PerfilAcademus perfil) {
-		String sql = "UPDATE academus.perfil_academus SET id_nivel = ?, is_admin = ? WHERE id_pessoa_usuario = ?;";
+		String sql = "UPDATE academus.perfil_academus SET id_nivel=?, is_admin=?, nome=?, email=?, cpf=?, id_curso=? WHERE id_perfil_academus = ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement editar = conn.prepareStatement(sql);
 			editar.setInt(1, NivelAcademus.getCodigo(perfil.getNivel()));
 			editar.setBoolean(2, perfil.getIsAdmin());
-			editar.setInt(3, perfil.getPessoa().getId());
+			editar.setString(3, perfil.getNome());
+			editar.setString(4, perfil.getEmail());
+			editar.setString(5, perfil.getCPF());
+			editar.setInt(6, perfil.getCurso().getIdCurso());
+			
+			editar.setInt(7, perfil.getId());
 			
 			editar.executeUpdate();
 			editar.close();
@@ -197,12 +198,12 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 
 	@Override
 	public void excluir(PerfilAcademus perfil) {
-		String sql = "DELETE FROM academus.perfil_academus WHERE id_pessoa_usuario = ?;";
+		String sql = "DELETE FROM academus.perfil_academus WHERE id_perfil_academus = ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement excluir = conn.prepareStatement(sql);
-			excluir.setInt(1, perfil.getPessoa().getId());
+			excluir.setInt(1, perfil.getId());
 			
 			excluir.executeUpdate();
 			excluir.close();
