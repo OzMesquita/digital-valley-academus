@@ -4,6 +4,7 @@ import java.io.Serializable;
 public class PerfilAcademus implements Serializable{
 	
 	private final static long serialVersionUID = 1L;
+	private int id_guardiao;
 	private int id;
 	private String nome;
 	private String email;
@@ -26,6 +27,18 @@ public class PerfilAcademus implements Serializable{
 		this.cpf = cpf;
 		this.curso = curso;
 		this.nivel = nivel;
+	}
+	public int getIdGuardiao() {
+		return id_guardiao;
+	}
+	public void setIdGuardiao(int id_guardiao) {
+		this.id_guardiao = id_guardiao;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getNome() {
 		return nome;

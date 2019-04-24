@@ -4,52 +4,99 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
+import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.Professor;
-import dao.DAOFactory;
-import model.EnumCargo;
-import model.Pessoa;
-import model.Usuario;
 
 public class JDBCProfessorDAO implements ProfessorDAO{
 	//.:Observações:. 
 	// - As disciplinas ministradas pelos professores não estão sendo setadas na busca
 
 	@Override
+	public Professor cadastrar(Professor professor) {
+		String sql = "INSERT INTO academus.funcionario(id_perfil_academus, siape) VALUES (?, ?);";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PerfilAcademusDAO perdao = new DAOFactoryJDBC().criarPerfilAcademusDAO();
+			professor = (Professor) perdao.cadastrar(professor);
+			
+			PreparedStatement insert = conn.prepareStatement(sql);
+			
+			insert.setInt(1, professor.getId());
+			insert.setString(2, professor.getSiape());
+			
+			insert.execute();
+			insert.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return professor;
+	}
+
+	@Override
+	public Professor editar(Professor professor) {
+		String sql = "UPDATE academus.funcionario SET siape = ? WHERE id_perfil_academus = ?;";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PerfilAcademusDAO perdao = new DAOFactoryJDBC().criarPerfilAcademusDAO();
+			professor = (Professor) perdao.cadastrar(professor);
+			
+			PreparedStatement insert = conn.prepareStatement(sql);
+			
+			insert.setString(1, professor.getSiape());
+			insert.setInt(2, professor.getId());
+			
+			insert.execute();
+			insert.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return professor;
+	}
+	
+	@Override
 	public List<Professor> listar() {
-		String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE u.id_pessoa_usuario = p.id_pessoa_prof AND u.id_pessoa_usuario = s.id_pessoa_usuario ORDER BY id_pessoa_prof;";
+		
+		//String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE u.id_pessoa_usuario = p.id_pessoa_prof AND u.id_pessoa_usuario = s.id_pessoa_usuario ORDER BY id_pessoa_prof;";
+		String SQL = "SELECT * FROM perfil_academus AS p, funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.id_nivel=? ORDER BY f.id_perfil_academus;";
 		List<Professor> professores = new ArrayList<Professor>();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try {
 			PreparedStatement ps = conn.prepareStatement(SQL);
 			ResultSet rs = ps.executeQuery();
+			ps.setInt(2, NivelAcademus.getCodigo(NivelAcademus.PROFESSOR));
+			CursoDAO cdao = new DAOFactoryJDBC().criarCursoDAO();
 			
 			while (rs.next()) {
+				
+				
 				Professor professor = new Professor();
-				Usuario usuario = new Usuario();
 				
-				usuario.setLogin(rs.getString("login"));
-				usuario.setNivel(rs.getInt("nivel"));
-				usuario.setPerfil(rs.getInt("perfil"));
-				usuario.setSenha(rs.getString("senha"));
-				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id_pessoa_usuario")));
-				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id_pessoa_usuario")));
-				
-				professor.setId(rs.getInt("id_pessoa_prof"));
+				professor.setId(rs.getInt("id_perfil_academus"));
 				professor.setNome(rs.getString("nome"));
-				professor.setCpf(rs.getString("cpf"));
-				professor.setDataNascimento(LocalDate.parse(rs.getString("data_nascimento")));
+				professor.setCPF(rs.getString("cpf"));
 				professor.setEmail(rs.getString("email"));
+				professor.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				professor.setIsAdmin(rs.getBoolean("is_admin"));
 				professor.setSiape(rs.getString("siape"));
-				professor.setCargo(EnumCargo.PROFESSOR);
+				professor.setCurso(cdao.buscarPorId(rs.getInt("id_curso")));
 				
-				usuario.setPessoa(professor);
-				professor.setUsuario(usuario);
+				//DisciplinaDAO ddao = new DAOFactoryJDBC().criarDisciplinaDAO();
+				//falta setar as diciplinas do professor
 				
 				professores.add(professor);
 				
@@ -69,36 +116,31 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 
 	@Override
 	public Professor buscarPorId(int id) {
-		String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE p.id_pessoa_prof=? AND u.id_pessoa_usuario = p.id_pessoa_prof AND p.id_pessoa_prof = s.id_pessoa_usuario";
+		//String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE p.id_pessoa_prof=? AND u.id_pessoa_usuario = p.id_pessoa_prof AND p.id_pessoa_prof = s.id_pessoa_usuario";
+		String SQL = "SELECT * FROM perfil_academus AS p, funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.id_perfil_academus = ? AND p.id_nivel=?;";
 		Professor professor = new Professor();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try {
 			PreparedStatement ps = conn.prepareStatement(SQL);
 			ps.setInt(1, id);
+			ps.setInt(2, NivelAcademus.PROFESSOR.ordinal());
 			
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
-				Usuario usuario = new Usuario();
+				CursoDAO cdao = new DAOFactoryJDBC().criarCursoDAO();
 				
-				usuario.setLogin(rs.getString("login"));
-				usuario.setNivel(rs.getInt("nivel"));
-				usuario.setPerfil(rs.getInt("perfil"));
-				usuario.setSenha(rs.getString("senha"));
-				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(id));
-				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(id));
-				
-				professor.setId(rs.getInt("id_pessoa_prof"));
+				professor.setId(rs.getInt("id_perfil_academus"));
 				professor.setNome(rs.getString("nome"));
-				professor.setCpf(rs.getString("cpf"));
-				professor.setDataNascimento(LocalDate.parse(rs.getString("data_nascimento")));
+				professor.setCPF(rs.getString("cpf"));
 				professor.setEmail(rs.getString("email"));
+				professor.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				professor.setIsAdmin(rs.getBoolean("is_admin"));
 				professor.setSiape(rs.getString("siape"));
-				professor.setCargo(EnumCargo.PROFESSOR);
+				professor.setCurso(cdao.buscarPorId(rs.getInt("id_curso")));
 				
-				usuario.setPessoa(professor);
-				professor.setUsuario(usuario);;
+				// falta setar as disciplinas que ele é professor
 
 			}
 			
@@ -116,7 +158,8 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 
 	@Override
 	public Professor buscarPorSiape(String siape) {
-		String SQL = "SELECT * FROM servidor AS s, professor AS prof, pessoa_usuario AS u WHERE s.siape = ? AND s.id_pessoa_usuario = u.id_pessoa_usuario AND u.id_pessoa_usuario =  prof.id_pessoa_prof";
+		//String SQL = "SELECT * FROM servidor AS s, professor AS prof, pessoa_usuario AS u WHERE s.siape = ? AND s.id_pessoa_usuario = u.id_pessoa_usuario AND u.id_pessoa_usuario =  prof.id_pessoa_prof";
+		String SQL = "SELECT * FROM academus.perfil_academus AS p, academus.funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND f.siape =? AND p.id_nivel=?";
 		Professor professor = new Professor();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -124,29 +167,23 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 
 			PreparedStatement ps = conn.prepareStatement(SQL);
 			ps.setString(1, siape);
+			ps.setInt(2, NivelAcademus.PROFESSOR.ordinal());
 			
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
-				Usuario usuario = new Usuario();
+				CursoDAO cdao = new DAOFactoryJDBC().criarCursoDAO();
 				
-				usuario.setLogin(rs.getString("login"));
-				usuario.setNivel(rs.getInt("nivel"));
-				usuario.setPerfil(rs.getInt("perfil"));
-				usuario.setSenha(rs.getString("senha"));
-				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id_pessoa_usuario")));
-				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id_pessoa_usuario")));
-				
-				professor.setId(rs.getInt("id_pessoa_prof"));
+				professor.setId(rs.getInt("id_perfil_academus"));
 				professor.setNome(rs.getString("nome"));
-				professor.setCpf(rs.getString("cpf"));
-				professor.setDataNascimento(LocalDate.parse(rs.getString("data_nascimento")));
+				professor.setCPF(rs.getString("cpf"));
 				professor.setEmail(rs.getString("email"));
+				professor.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				professor.setIsAdmin(rs.getBoolean("is_admin"));
 				professor.setSiape(rs.getString("siape"));
-				professor.setCargo(EnumCargo.PROFESSOR);
+				professor.setCurso(cdao.buscarPorId(rs.getInt("id_curso")));
 				
-				usuario.setPessoa(professor);
-				professor.setUsuario(usuario);
+				// falta setar as disciplinas que ele é professor
 			}
 			
 			rs.close();
@@ -161,7 +198,8 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 		return professor;
 	}
 
-	@Override
+	
+	/*@Override
 	public boolean isProfessor(Pessoa pessoa) {
 		String sql = "SELECT public.pessoa_usuario.nome, public.professor.id_pessoa_prof "
 				+ "FROM public.professor INNER JOIN public.pessoa_usuario "
@@ -187,5 +225,6 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 		}
 		return false;
 	}
+	*/
 	
 }

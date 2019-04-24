@@ -36,6 +36,11 @@ public class DAOFactoryJDBC implements DAOFactory{
 	public DisciplinaDAO criarDisciplinaDAO() {
 		return new JDBCDisciplinaDAO();
 	}
+	
+	@Override
+	public JDBCFuncionarioDAO criarFuncionarioDAO() {
+		return new JDBCFuncionarioDAO();
+	}
 
 	@Override
 	public HistoricoDAO criarHistoricoDAO() {

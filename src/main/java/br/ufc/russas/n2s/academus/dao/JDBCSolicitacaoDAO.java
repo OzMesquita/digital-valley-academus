@@ -9,8 +9,9 @@ import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Aluno;
-import br.ufc.russas.n2s.academus.model.Coordenador;
 import br.ufc.russas.n2s.academus.model.Historico;
+import br.ufc.russas.n2s.academus.model.NivelAcademus;
+import br.ufc.russas.n2s.academus.model.Professor;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
 import br.ufc.russas.n2s.academus.model.Status;
 
@@ -219,56 +220,57 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listar(Coordenador c, int limiteInf, int limiteSup) {
+	public List<Solicitacao> listar(Professor c, int limiteInf, int limiteSup) {
 		List<Solicitacao> solicitacoes = new ArrayList<>();
 		String sql = "SELECT * FROM academus.solicitacao WHERE status != ? AND id_curso = ? order by id_solicitacao offset ? limit ?;";
-		
-		Connection conn = ConnectionPool.getConnection();
-		try{
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
-			ps.setInt(2, c.getCurso().getIdCurso());
-			ps.setInt(3, limiteInf);
-			ps.setInt(4, limiteSup);
-			
-			ResultSet rs = ps.executeQuery();
-			
-			//DAOFactory df = new DAOFactoryJDBC();
-			DAOFactoryJDBC df = new DAOFactoryJDBC();
-			
-			//DAO's necessárias
-			AlunoDAO aludao = df.criarAlunoDAO();
-			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
-			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			HistoricoDAO hisdao = df.criarHistoricoDAO();
-			CursoDAO curdao = df.criarCursoDAO();
-			
-			while(rs.next()){
+		if(c.getNivel() == NivelAcademus.COORDENADOR) {
+			Connection conn = ConnectionPool.getConnection();
+			try{
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
+				ps.setInt(2, c.getCurso().getIdCurso());
+				ps.setInt(3, limiteInf);
+				ps.setInt(4, limiteSup);
 				
-				Solicitacao aux = new Solicitacao();
+				ResultSet rs = ps.executeQuery();
 				
-				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
-				aux.setStatus(Status.getStatus(rs.getInt("status")));
-				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
-				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
-				aux.setDisciplinasCursadas(dcd.buscar(aux));
-				aux.setJustificativa(rs.getString("justificativa"));
-				aux.setResultado(rs.getString("resultado"));
-				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
-				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				//DAOFactory df = new DAOFactoryJDBC();
+				DAOFactoryJDBC df = new DAOFactoryJDBC();
 				
-				solicitacoes.add(aux);
+				//DAO's necessárias
+				AlunoDAO aludao = df.criarAlunoDAO();
+				ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+				DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+				HistoricoDAO hisdao = df.criarHistoricoDAO();
+				CursoDAO curdao = df.criarCursoDAO();
+				
+				while(rs.next()){
+					
+					Solicitacao aux = new Solicitacao();
+					
+					aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+					aux.setStatus(Status.getStatus(rs.getInt("status")));
+					aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+					aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+					aux.setDisciplinasCursadas(dcd.buscar(aux));
+					aux.setJustificativa(rs.getString("justificativa"));
+					aux.setResultado(rs.getString("resultado"));
+					aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+					aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+					
+					solicitacoes.add(aux);
+				}
+				
+				ps.close();
+				rs.close();
+				
+			}catch(SQLException e){
+				e.printStackTrace();
+			}finally{
+				ConnectionPool.releaseConnection(conn);
 			}
 			
-			ps.close();
-			rs.close();
-			
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			ConnectionPool.releaseConnection(conn);
 		}
-		
 		return solicitacoes;
 	}
 
@@ -326,56 +328,58 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listarAnalizado(Coordenador c, int limiteInf, int limiteSup){
+	public List<Solicitacao> listarAnalizado(Professor c, int limiteInf, int limiteSup){
 		List<Solicitacao> solicitacoes = new ArrayList<>();
 		String sql = "SELECT * FROM academus.solicitacao WHERE status = ? AND id_curso = ? order by id_solicitacao offset ? limit ?;";
 		
-		Connection conn = ConnectionPool.getConnection();
-		try{
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
-			ps.setInt(2, c.getCurso().getIdCurso());
-			ps.setInt(3, limiteInf);
-			ps.setInt(4, limiteSup);
-			
-			ResultSet rs = ps.executeQuery();
-			
-			//DAOFactory df = new DAOFactoryJDBC();
-			DAOFactoryJDBC df = new DAOFactoryJDBC();
-			
-			//DAO's necessárias
-			AlunoDAO aludao = df.criarAlunoDAO();
-			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
-			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			HistoricoDAO hisdao = df.criarHistoricoDAO();
-			CursoDAO curdao = df.criarCursoDAO();
-			
-			while(rs.next()){
+		if(c.getNivel() == NivelAcademus.COORDENADOR) {
+			Connection conn = ConnectionPool.getConnection();
+			try{
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
+				ps.setInt(2, c.getCurso().getIdCurso());
+				ps.setInt(3, limiteInf);
+				ps.setInt(4, limiteSup);
 				
-				Solicitacao aux = new Solicitacao();
+				ResultSet rs = ps.executeQuery();
 				
-				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
-				aux.setStatus(Status.getStatus(rs.getInt("status")));
-				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
-				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
-				aux.setDisciplinasCursadas(dcd.buscar(aux));
-				aux.setJustificativa(rs.getString("justificativa"));
-				aux.setResultado(rs.getString("resultado"));
-				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
-				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				//DAOFactory df = new DAOFactoryJDBC();
+				DAOFactoryJDBC df = new DAOFactoryJDBC();
 				
-				solicitacoes.add(aux);
+				//DAO's necessárias
+				AlunoDAO aludao = df.criarAlunoDAO();
+				ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+				DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+				HistoricoDAO hisdao = df.criarHistoricoDAO();
+				CursoDAO curdao = df.criarCursoDAO();
+				
+				while(rs.next()){
+					
+					Solicitacao aux = new Solicitacao();
+					
+					aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+					aux.setStatus(Status.getStatus(rs.getInt("status")));
+					aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+					aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+					aux.setDisciplinasCursadas(dcd.buscar(aux));
+					aux.setJustificativa(rs.getString("justificativa"));
+					aux.setResultado(rs.getString("resultado"));
+					aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+					aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+					
+					solicitacoes.add(aux);
+				}
+				
+				ps.close();
+				rs.close();
+				
+			}catch(SQLException e){
+				e.printStackTrace();
+			}finally{
+				ConnectionPool.releaseConnection(conn);
 			}
 			
-			ps.close();
-			rs.close();
-			
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			ConnectionPool.releaseConnection(conn);
 		}
-		
 		return solicitacoes;
 	}
 	
@@ -435,57 +439,59 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listarAndemanto(Coordenador c, int limiteInf, int limiteSup) {
+	public List<Solicitacao> listarAndemanto(Professor c, int limiteInf, int limiteSup) {
 		List<Solicitacao> solicitacoes = new ArrayList<>();
 		String sql = "SELECT * FROM academus.solicitacao WHERE id_curso = ? AND status != ? AND status != ? order by id_solicitacao offset ? limit ?;";
 		
-		Connection conn = ConnectionPool.getConnection();
-		try{
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, c.getCurso().getIdCurso());
-			ps.setInt(2, Status.getCodigo(Status.FINALIZADO));
-			ps.setInt(3, Status.getCodigo(Status.CANCELADO));
-			ps.setInt(4, limiteInf);
-			ps.setInt(5, limiteSup);
-			
-			ResultSet rs = ps.executeQuery();
-			
-			//DAOFactory df = new DAOFactoryJDBC();
-			DAOFactoryJDBC df = new DAOFactoryJDBC();
-			
-			//DAO's necessárias
-			AlunoDAO aludao = df.criarAlunoDAO();
-			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
-			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			HistoricoDAO hisdao = df.criarHistoricoDAO();
-			CursoDAO curdao = df.criarCursoDAO();
-			
-			while(rs.next()){
+		if(c.getNivel() == NivelAcademus.COORDENADOR) {
+			Connection conn = ConnectionPool.getConnection();
+			try{
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, c.getCurso().getIdCurso());
+				ps.setInt(2, Status.getCodigo(Status.FINALIZADO));
+				ps.setInt(3, Status.getCodigo(Status.CANCELADO));
+				ps.setInt(4, limiteInf);
+				ps.setInt(5, limiteSup);
 				
-				Solicitacao aux = new Solicitacao();
+				ResultSet rs = ps.executeQuery();
 				
-				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
-				aux.setStatus(Status.getStatus(rs.getInt("status")));
-				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
-				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
-				aux.setDisciplinasCursadas(dcd.buscar(aux));
-				aux.setJustificativa(rs.getString("justificativa"));
-				aux.setResultado(rs.getString("resultado"));
-				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
-				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				//DAOFactory df = new DAOFactoryJDBC();
+				DAOFactoryJDBC df = new DAOFactoryJDBC();
 				
-				solicitacoes.add(aux);
+				//DAO's necessárias
+				AlunoDAO aludao = df.criarAlunoDAO();
+				ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+				DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+				HistoricoDAO hisdao = df.criarHistoricoDAO();
+				CursoDAO curdao = df.criarCursoDAO();
+				
+				while(rs.next()){
+					
+					Solicitacao aux = new Solicitacao();
+					
+					aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+					aux.setStatus(Status.getStatus(rs.getInt("status")));
+					aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+					aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+					aux.setDisciplinasCursadas(dcd.buscar(aux));
+					aux.setJustificativa(rs.getString("justificativa"));
+					aux.setResultado(rs.getString("resultado"));
+					aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+					aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+					
+					solicitacoes.add(aux);
+				}
+				
+				ps.close();
+				rs.close();
+				
+			}catch(SQLException e){
+				e.printStackTrace();
+			}finally{
+				ConnectionPool.releaseConnection(conn);
 			}
 			
-			ps.close();
-			rs.close();
-			
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			ConnectionPool.releaseConnection(conn);
 		}
-		
 		return solicitacoes;
 	}
 
@@ -544,56 +550,58 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listarFinalizado(Coordenador c, int limiteInf, int limiteSup) {
+	public List<Solicitacao> listarFinalizado(Professor c, int limiteInf, int limiteSup) {
 		List<Solicitacao> solicitacoes = new ArrayList<>();
 		String sql = "SELECT * FROM academus.solicitacao WHERE id_curso = ? AND status = ? order by id_solicitacao offset ? limit ?;";
 		
-		Connection conn = ConnectionPool.getConnection();
-		try{
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, c.getCurso().getIdCurso());
-			ps.setInt(2, Status.getCodigo(Status.FINALIZADO));
-			ps.setInt(3, limiteInf);
-			ps.setInt(4, limiteSup);
-			
-			ResultSet rs = ps.executeQuery();
-			
-			//DAOFactory df = new DAOFactoryJDBC();
-			DAOFactoryJDBC df = new DAOFactoryJDBC();
-			
-			//DAO's necessárias
-			AlunoDAO aludao = df.criarAlunoDAO();
-			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
-			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			HistoricoDAO hisdao = df.criarHistoricoDAO();
-			CursoDAO curdao = df.criarCursoDAO();
-			
-			while(rs.next()){
+		if(c.getNivel() == NivelAcademus.COORDENADOR) {
+			Connection conn = ConnectionPool.getConnection();
+			try{
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, c.getCurso().getIdCurso());
+				ps.setInt(2, Status.getCodigo(Status.FINALIZADO));
+				ps.setInt(3, limiteInf);
+				ps.setInt(4, limiteSup);
 				
-				Solicitacao aux = new Solicitacao();
+				ResultSet rs = ps.executeQuery();
 				
-				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
-				aux.setStatus(Status.getStatus(rs.getInt("status")));
-				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
-				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
-				aux.setDisciplinasCursadas(dcd.buscar(aux));
-				aux.setJustificativa(rs.getString("justificativa"));
-				aux.setResultado(rs.getString("resultado"));
-				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
-				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				//DAOFactory df = new DAOFactoryJDBC();
+				DAOFactoryJDBC df = new DAOFactoryJDBC();
 				
-				solicitacoes.add(aux);
+				//DAO's necessárias
+				AlunoDAO aludao = df.criarAlunoDAO();
+				ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
+				DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+				HistoricoDAO hisdao = df.criarHistoricoDAO();
+				CursoDAO curdao = df.criarCursoDAO();
+				
+				while(rs.next()){
+					
+					Solicitacao aux = new Solicitacao();
+					
+					aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+					aux.setStatus(Status.getStatus(rs.getInt("status")));
+					aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+					aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+					aux.setDisciplinasCursadas(dcd.buscar(aux));
+					aux.setJustificativa(rs.getString("justificativa"));
+					aux.setResultado(rs.getString("resultado"));
+					aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+					aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+					
+					solicitacoes.add(aux);
+				}
+				
+				ps.close();
+				rs.close();
+				
+			}catch(SQLException e){
+				e.printStackTrace();
+			}finally{
+				ConnectionPool.releaseConnection(conn);
 			}
 			
-			ps.close();
-			rs.close();
-			
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			ConnectionPool.releaseConnection(conn);
 		}
-		
 		return solicitacoes;
 	}
 
@@ -999,31 +1007,32 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	 * @return Retorna a quantidade de solicitações que seram analisadas pelo coordenador descartando as solicitações mostradas nas páginas anteriores
 	 */
 	@Override
-	public int numSolicitacoes(int pagina, Coordenador coordenador) {
+	public int numSolicitacoes(int pagina, Professor coordenador) {
+		
 		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status != ? AND id_curso = ?) " + 
 				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
 		int resultSql = 0;
-		
-		Connection conn = ConnectionPool.getConnection();
-		try{
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
-			ps.setInt(2, coordenador.getCurso().getIdCurso());
-			ps.setInt(3, pagina*10);
-			ResultSet rs = ps.executeQuery();
-			
-			if(rs.next())
-				resultSql = rs.getInt(1);
-			
-			rs.close();
-			ps.close();
-
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			ConnectionPool.releaseConnection(conn);
+		if(coordenador.getNivel() == NivelAcademus.COORDENADOR) {
+			Connection conn = ConnectionPool.getConnection();
+			try{
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
+				ps.setInt(2, coordenador.getCurso().getIdCurso());
+				ps.setInt(3, pagina*10);
+				ResultSet rs = ps.executeQuery();
+				
+				if(rs.next())
+					resultSql = rs.getInt(1);
+				
+				rs.close();
+				ps.close();
+	
+			}catch(SQLException e){
+				e.printStackTrace();
+			}finally{
+				ConnectionPool.releaseConnection(conn);
+			}
 		}
-		
 		return resultSql;
 	}
 	
@@ -1168,31 +1177,32 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	 * @return Retorna a quantidade de solicitações analizadas pelo coordenador descartando as solicitações mostradas nas páginas anteriores
 	 */
 	@Override
-	public int numSolicitacoesAnalizadas(int pagina, Coordenador coordenador) {
+	public int numSolicitacoesAnalizadas(int pagina, Professor coordenador) {
 		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status=? AND id_curso=?) " + 
 				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
 		int resultSql = 0;
-		
-		Connection conn = ConnectionPool.getConnection();
-		try{
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
-			ps.setInt(2, coordenador.getCurso().getIdCurso());
-			ps.setInt(3, pagina*10);
-			ResultSet rs = ps.executeQuery();
+		if(coordenador.getNivel() == NivelAcademus.COORDENADOR) {
+			Connection conn = ConnectionPool.getConnection();
+			try{
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
+				ps.setInt(2, coordenador.getCurso().getIdCurso());
+				ps.setInt(3, pagina*10);
+				ResultSet rs = ps.executeQuery();
+				
+				if(rs.next())
+					resultSql = rs.getInt(1);
+				
+				rs.close();
+				ps.close();
+	
+			}catch(SQLException e){
+				e.printStackTrace();
+			}finally{
+				ConnectionPool.releaseConnection(conn);
+			}
 			
-			if(rs.next())
-				resultSql = rs.getInt(1);
-			
-			rs.close();
-			ps.close();
-
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			ConnectionPool.releaseConnection(conn);
 		}
-		
 		return resultSql;
 	}
 	
@@ -1271,31 +1281,32 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	 * @return Retorna a quantidade de solicitações finalizadas descartando as solicitações mostradas nas páginas anteriores
 	 */
 	@Override
-	public int numSolicitacoesFinalizadas(int pagina, Coordenador coordenador) {
+	public int numSolicitacoesFinalizadas(int pagina, Professor coordenador) {
 		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status=? AND id_curso=?) " + 
 				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
 		int resultSql = 0;
-		
-		Connection conn = ConnectionPool.getConnection();
-		try{
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
-			ps.setInt(2, coordenador.getCurso().getIdCurso());
-			ps.setInt(3, pagina*10);
-			ResultSet rs = ps.executeQuery();
+		if(coordenador.getNivel() == NivelAcademus.COORDENADOR) {
+			Connection conn = ConnectionPool.getConnection();
+			try{
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
+				ps.setInt(2, coordenador.getCurso().getIdCurso());
+				ps.setInt(3, pagina*10);
+				ResultSet rs = ps.executeQuery();
+				
+				if(rs.next())
+					resultSql = rs.getInt(1);
+				
+				rs.close();
+				ps.close();
+	
+			}catch(SQLException e){
+				e.printStackTrace();
+			}finally{
+				ConnectionPool.releaseConnection(conn);
+			}
 			
-			if(rs.next())
-				resultSql = rs.getInt(1);
-			
-			rs.close();
-			ps.close();
-
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			ConnectionPool.releaseConnection(conn);
 		}
-		
 		return resultSql;
 	}
 	
@@ -1376,32 +1387,33 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	 * @return Retorna a quantidade de solicitações em andamento relacionadas ao coordenador, descartando as solicitações mostradas nas páginas anteriores
 	 */
 	@Override
-	public int numSolicitacoesAndamento(int pagina, Coordenador coordenador) {
+	public int numSolicitacoesAndamento(int pagina, Professor coordenador) {
 		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status!=? AND status!=? AND id_curso=?) " + 
 				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
 		int resultSql = 0;
-		
-		Connection conn = ConnectionPool.getConnection();
-		try{
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
-			ps.setInt(2, Status.getCodigo(Status.CANCELADO));
-			ps.setInt(3, coordenador.getCurso().getIdCurso());
-			ps.setInt(4, pagina*10);
-			ResultSet rs = ps.executeQuery();
+		if(coordenador.getNivel() == NivelAcademus.COORDENADOR) {
+			Connection conn = ConnectionPool.getConnection();
+			try{
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, Status.getCodigo(Status.FINALIZADO));
+				ps.setInt(2, Status.getCodigo(Status.CANCELADO));
+				ps.setInt(3, coordenador.getCurso().getIdCurso());
+				ps.setInt(4, pagina*10);
+				ResultSet rs = ps.executeQuery();
+				
+				if(rs.next())
+					resultSql = rs.getInt(1);
+				
+				rs.close();
+				ps.close();
+	
+			}catch(SQLException e){
+				e.printStackTrace();
+			}finally{
+				ConnectionPool.releaseConnection(conn);
+			}
 			
-			if(rs.next())
-				resultSql = rs.getInt(1);
-			
-			rs.close();
-			ps.close();
-
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			ConnectionPool.releaseConnection(conn);
 		}
-		
 		return resultSql;
 	}
 	

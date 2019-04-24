@@ -16,6 +16,8 @@ public interface DAOFactory {
 	
 	public DisciplinaDAO criarDisciplinaDAO();
 	
+	public FuncionarioDAO criarFuncionarioDAO();
+	
 	public HistoricoDAO criarHistoricoDAO();
 	
 	public MatrizCurricularDAO criarMatrizCurricularDAO();
