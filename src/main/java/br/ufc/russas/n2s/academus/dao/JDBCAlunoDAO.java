@@ -11,6 +11,7 @@ import java.util.List;
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Curso;
+import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import dao.DAOFactory;
 import model.Usuario;
 
@@ -18,7 +19,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 
 	@Override
 	public Aluno buscarPorId(int id) {
-		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u WHERE u_a.id_pessoa_usuario=? AND u_a.id_pessoa_usuario = u.id_pessoa_usuario;";
+		String sql = "SELECT * FROM aluno AS ALUNO, perfil_academus AS PA WHERE ALUNO.id_perfil_academus=? AND ALUNO.id_perfil_academus = PA.id_perfil_academus;";
 		Aluno aluno = new Aluno();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -29,30 +30,20 @@ public class JDBCAlunoDAO implements AlunoDAO{
 			ResultSet rs = ps.executeQuery();
 
 			if(rs.next()){
-				Usuario usuario = new Usuario();
+				//Usuario usuario = new Usuario();
 				
 				Curso curso = new DAOFactoryJDBC().criarCursoDAO().buscarPorId(rs.getInt("id_curso"));
 				
-				//Informações de model.Usuário
-				usuario.setLogin(rs.getString("login")); //ok
-				usuario.setSenha(rs.getString("senha")); //ok
-				usuario.setNivel(rs.getInt("nivel")); //ok
-				usuario.setPerfil(rs.getInt("perfil")); //ok
-				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(id)); //ok Não sei que tokens são esses
-				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(id)); //ok obs:informação do core
 				
-				//Informações de model.Pessoa
-				aluno.setUsuario(usuario);
-				aluno.setId(rs.getInt("id_pessoa_usuario")); //ok
+				//Informações de perfil_academus
+				aluno.setId(rs.getInt("id_perfil_academus")); //ok
 				aluno.setNome(rs.getString("nome")); //ok
-				aluno.setCpf(rs.getString("cpf")); //ok
-				aluno.setDataNascimento(LocalDate.parse(rs.getString("data_nascimento"))); //ok
 				aluno.setEmail(rs.getString("email")); //ok
-				usuario.setPessoa(aluno); //ok informação recursiva, isso é estranho
-								
+				aluno.setCPF(rs.getString("cpf")); //ok
+				aluno.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				aluno.setCurso(curso);						
 				
 				//Informações de Aluno
-				aluno.setCurso(curso);
 				aluno.setMatricula(rs.getString("matricula"));
 				aluno.setSemestreIngresso(rs.getString("semestre_ingresso"));
 				
@@ -72,7 +63,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 
 	@Override
 	public Aluno buscarPorMatricula(String matricula) {
-		String sql = "SELECT * FROM aluno AS a, pessoa_usuario AS p_u, curso AS c WHERE a.matricula= ? AND a.id_pessoa_usuario = p_u.id_pessoa_usuario AND a.id_curso = c.id_curso";
+		String sql = "SELECT * FROM aluno AS ALUNO, perfil_academus AS PA, curso AS CURSO WHERE ALUNO.matricula= ? AND ALUNO.id_perfil_academus = PA.id_perfil_academus AND PA.id_curso = CURSO.id_curso";
 		Aluno aluno = new Aluno();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -83,26 +74,15 @@ public class JDBCAlunoDAO implements AlunoDAO{
 			ResultSet rs = ps.executeQuery();
 
 			if(rs.next()){
-				Usuario usuario = new Usuario();
 				
 				Curso curso = new DAOFactoryJDBC().criarCursoDAO().buscarPorId(rs.getInt("id_curso"));
 				
-				//Informações de model.Usuário
-				usuario.setLogin(rs.getString("login")); //ok
-				usuario.setSenha(rs.getString("senha")); //ok
-				usuario.setNivel(rs.getInt("nivel")); //ok
-				usuario.setPerfil(rs.getInt("perfil")); //ok
-				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id_pessoa_usuario"))); //ok Não sei que tokens são esses
-				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id_pessoa_usuario"))); //ok obs:informação do core
-				
-				//Informações de model.Pessoa
-				aluno.setUsuario(usuario);
-				aluno.setId(rs.getInt("id_pessoa_usuario")); //ok
+				//Informações de perfil_academus
+				aluno.setId(rs.getInt("id_perfil_academus")); //ok
 				aluno.setNome(rs.getString("nome")); //ok
-				aluno.setCpf(rs.getString("cpf")); //ok
-				aluno.setDataNascimento(LocalDate.parse(rs.getString("data_nascimento"))); //ok
+				aluno.setCPF(rs.getString("cpf")); //ok
 				aluno.setEmail(rs.getString("email")); //ok
-				usuario.setPessoa(aluno); //ok informação recursiva, isso é estranho
+				aluno.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
 								
 				
 				//Informações de Aluno
@@ -126,7 +106,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 
 	@Override
 	public List<Aluno> buscarPorNome(String nome) {
-		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u, curso AS c WHERE u_a.id_pessoa_usuario = u.id_pessoa_usuario AND u_a.id_curso = c.id_curso AND  UPPER(u.nome) like UPPER(?) ;";
+		String sql = "SELECT * FROM aluno AS ALUNO, perfil_academus AS PA, curso AS CURSO WHERE ALUNO.id_perfil_academus = PA.id_perfil_academus AND PA.id_curso = CURSO.id_curso AND  UPPER(PA.nome) like UPPER(?) ;";
 		List<Aluno> alunos = new ArrayList<Aluno>();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -137,26 +117,15 @@ public class JDBCAlunoDAO implements AlunoDAO{
 			
 			while (rs.next()) {
 				Aluno aluno = new Aluno();
-				Usuario usuario = new Usuario();
 				
 				Curso curso = new DAOFactoryJDBC().criarCursoDAO().buscarPorId(rs.getInt("id_curso"));
 				
-				//Informações de model.Usuário
-				usuario.setLogin(rs.getString("login")); //ok
-				usuario.setSenha(rs.getString("senha")); //ok
-				usuario.setNivel(rs.getInt("nivel")); //ok
-				usuario.setPerfil(rs.getInt("perfil")); //ok
-				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id_pessoa_usuario"))); //ok Não sei que tokens são esses
-				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id_pessoa_usuario"))); //ok obs:informação do core
-				
-				//Informações de model.Pessoa
-				aluno.setUsuario(usuario);
-				aluno.setId(rs.getInt("id_pessoa_usuario")); //ok
+				//Informações de perfil_academus
+				aluno.setId(rs.getInt("id_perfil_academus")); //ok
 				aluno.setNome(rs.getString("nome")); //ok
-				aluno.setCpf(rs.getString("cpf")); //ok
-				aluno.setDataNascimento(LocalDate.parse(rs.getString("data_nascimento"))); //ok
+				aluno.setCPF(rs.getString("cpf")); //ok
 				aluno.setEmail(rs.getString("email")); //ok
-				usuario.setPessoa(aluno); //ok informação recursiva, isso é estranho
+				aluno.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
 								
 				
 				//Informações de Aluno
@@ -181,7 +150,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 
 	@Override
 	public List<Aluno> listar() {
-		String sql = "SELECT * FROM aluno AS u_a, pessoa_usuario AS u, curso AS c WHERE u_a.id_pessoa_usuario = u.id_pessoa_usuario AND u_a.id_curso = c.id_curso order by matricula order by matricula;";
+		String sql = "SELECT * FROM aluno AS ALUNO, perfil_academus AS PA, curso AS CURSO WHERE ALUNO.id_perfil_academus = PA.id_perfil_academus AND PA.id_curso = CURSO.id_curso order by matricula;";
 		List<Aluno> alunos = new ArrayList<Aluno>();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -191,26 +160,15 @@ public class JDBCAlunoDAO implements AlunoDAO{
 			
 			while (rs.next()) {
 				Aluno aluno = new Aluno();
-				Usuario usuario = new Usuario();
 				
 				Curso curso = new DAOFactoryJDBC().criarCursoDAO().buscarPorId(rs.getInt("id_curso"));
 				
-				//Informações de model.Usuário
-				usuario.setLogin(rs.getString("login")); //ok
-				usuario.setSenha(rs.getString("senha")); //ok
-				usuario.setNivel(rs.getInt("nivel")); //ok
-				usuario.setPerfil(rs.getInt("perfil")); //ok
-				usuario.setToken(DAOFactory.criarUsuarioDAO().buscarToken(rs.getInt("id_pessoa_usuario"))); //ok Não sei que tokens são esses
-				usuario.setTokenUsuario(DAOFactory.criarUsuarioDAO().buscarTokenTemp(rs.getInt("id_pessoa_usuario"))); //ok obs:informação do core
-				
-				//Informações de model.Pessoa
-				aluno.setUsuario(usuario);
-				aluno.setId(rs.getInt("id_pessoa_usuario")); //ok
+				//Informações de perfil_academus
+				aluno.setId(rs.getInt("id_perfil_academus")); //ok
 				aluno.setNome(rs.getString("nome")); //ok
-				aluno.setCpf(rs.getString("cpf")); //ok
-				aluno.setDataNascimento(LocalDate.parse(rs.getString("data_nascimento"))); //ok
+				aluno.setCPF(rs.getString("cpf")); //ok
 				aluno.setEmail(rs.getString("email")); //ok
-				usuario.setPessoa(aluno); //ok informação recursiva, isso é estranho
+				aluno.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
 								
 				
 				//Informações de Aluno
