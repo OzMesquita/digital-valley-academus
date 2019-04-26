@@ -12,11 +12,65 @@ import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Curso;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
+import br.ufc.russas.n2s.academus.model.Professor;
 import dao.DAOFactory;
 import model.Usuario;
 
 public class JDBCAlunoDAO implements AlunoDAO{
 
+	@Override
+	public Aluno cadastrar(Aluno aluno) {
+		String sql = "INSERT INTO academus.aluno(id_perfil_academus, matricula) VALUES (?, ?);";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PerfilAcademusDAO perdao = new DAOFactoryJDBC().criarPerfilAcademusDAO();
+			aluno = (Aluno) perdao.cadastrar(aluno);
+			
+			PreparedStatement insert = conn.prepareStatement(sql);
+			
+			insert.setInt(1, aluno.getId());
+			insert.setString(2, aluno.getMatricula());
+			
+			insert.execute();
+			insert.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return aluno;
+	}
+
+	@Override
+	public Aluno editar(Aluno aluno) {
+
+		String sql = "UPDATE academus.aluno SET matricula = ? WHERE id_perfil_academus = ?;";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PerfilAcademusDAO perdao = new DAOFactoryJDBC().criarPerfilAcademusDAO();
+			aluno = (Aluno) perdao.cadastrar(aluno);
+			
+			PreparedStatement insert = conn.prepareStatement(sql);
+			
+			insert.setString(1, aluno.getMatricula());
+			insert.setInt(2, aluno.getId());
+			
+			insert.execute();
+			insert.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return aluno;
+	}
+	
 	@Override
 	public Aluno buscarPorId(int id) {
 		String sql = "SELECT * FROM aluno AS ALUNO, perfil_academus AS PA WHERE ALUNO.id_perfil_academus=? AND ALUNO.id_perfil_academus = PA.id_perfil_academus;";
