@@ -78,7 +78,7 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 		try {
 			PreparedStatement ps = conn.prepareStatement(SQL);
 			ResultSet rs = ps.executeQuery();
-			ps.setInt(2, NivelAcademus.getCodigo(NivelAcademus.PROFESSOR));
+			ps.setInt(1, NivelAcademus.getCodigo(NivelAcademus.PROFESSOR));
 			CursoDAO cdao = new DAOFactoryJDBC().criarCursoDAO();
 			
 			while (rs.next()) {
@@ -197,6 +197,119 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 
 		return professor;
 	}
+
+	@Override
+	public boolean possuiCoordenador(int id_curso) {
+		String sql = "SELECT COUNT(*) FROM academus.perfil_academus WHERE id_curso="+id_curso+" AND id_nivel="+NivelAcademus.getCodigo(NivelAcademus.COORDENADOR)+";";
+		
+		Connection conn = ConnectionPool.getConnection();
+		int result = 0;
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			if(result > 0) {
+				return true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return false;
+	}
+
+	@Override
+	public void retirarCoordenador(int id_curso, Professor professor) {
+		String sql = "UPDATE academus.perfil_academus SET id_nivel=? id_curso=? WHERE id_perfil_academus = ?;";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement editar = conn.prepareStatement(sql);
+			editar.setInt(1, NivelAcademus.getCodigo(NivelAcademus.PROFESSOR));
+			editar.setInt(2, id_curso);
+			
+			editar.setInt(3, professor.getId());
+			
+			editar.executeUpdate();
+			editar.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+	}
+
+	@Override
+	public void cadastrarCoordenador(int id_curso, Professor professor) {
+		String sql = "UPDATE academus.perfil_academus SET id_nivel=? id_curso=? WHERE id_perfil_academus = ?;";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement editar = conn.prepareStatement(sql);
+			editar.setInt(1, NivelAcademus.getCodigo(NivelAcademus.COORDENADOR));
+			editar.setInt(2, id_curso);
+			
+			editar.setInt(3, professor.getId());
+			
+			editar.executeUpdate();
+			editar.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+	}
+
+	@Override
+	public Professor isCoordenador(int idCurso) {
+		String SQL = "SELECT * FROM perfil_academus AS p, funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.id_curso=? AND p.id_nivel=?;";
+		Professor professor = new Professor();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(SQL);
+			ps.setInt(1, idCurso);
+			ps.setInt(2, NivelAcademus.PROFESSOR.ordinal());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()){
+				CursoDAO cdao = new DAOFactoryJDBC().criarCursoDAO();
+				
+				professor.setId(rs.getInt("id_perfil_academus"));
+				professor.setNome(rs.getString("nome"));
+				professor.setCPF(rs.getString("cpf"));
+				professor.setEmail(rs.getString("email"));
+				professor.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				professor.setIsAdmin(rs.getBoolean("is_admin"));
+				professor.setSiape(rs.getString("siape"));
+				professor.setCurso(cdao.buscarPorId(rs.getInt("id_curso")));
+				
+				// falta setar as disciplinas que ele é professor
+
+			}
+			
+			rs.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return professor;
+	}
+	
 
 	
 	/*@Override

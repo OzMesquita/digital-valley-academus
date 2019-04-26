@@ -8,8 +8,6 @@ public interface DAOFactory {
 	
 	public ComponenteCurricularDAO criarComponenteCurricularDAO();
 	
-	public CoordenadorDAO criarCoordenadorDAO();
-	
 	public CursoDAO criarCursoDAO();
 	
 	public DisciplinaCursadaDAO criarDisciplinaCursadaDAO();
