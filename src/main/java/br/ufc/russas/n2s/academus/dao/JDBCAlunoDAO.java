@@ -30,7 +30,6 @@ public class JDBCAlunoDAO implements AlunoDAO{
 			ResultSet rs = ps.executeQuery();
 
 			if(rs.next()){
-				//Usuario usuario = new Usuario();
 				
 				Curso curso = new DAOFactoryJDBC().criarCursoDAO().buscarPorId(rs.getInt("id_curso"));
 				
