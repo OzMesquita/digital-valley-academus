@@ -41,7 +41,7 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 			request.getParameterValues("disc-semestre") != null &&
 			request.getParameterValues("disc-nota") != null &&
 			request.getParameterValues("disc-instituicao") != null &&
-			request.getSession().getAttribute("usuario") != null){
+			request.getSession().getAttribute("userAcademus") != null){
 			
 			// Obtendo as irformações da pagina cadastroSolicitacao.jsp
 			String componente = request.getParameter("componenteInput");
@@ -50,7 +50,7 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 			String[] semestreDisciplinas = request.getParameterValues("disc-semestre");
 			String[] notaDisciplinas = request.getParameterValues("disc-nota");
 			String[] instituicaoDisciplinas = request.getParameterValues("disc-instituicao");
-			PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
+			PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("userAcademus");
 			ArrayList<DisciplinaCursada> disciplinasCursadas = new ArrayList<DisciplinaCursada>();
 			
 			ComponenteCurricularDAO ccd = new JDBCComponenteCurricularDAO();
@@ -64,11 +64,11 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 			
 			// Aranezanando as informacoes no banco de dados
 			
-			solicitacao.setSolicitante((Aluno) usuario.getPessoa());
+			solicitacao.setSolicitante((Aluno) usuario);
 			solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
 			solicitacao.setStatus(Status.SUBMETIDO);
 			solicitacao.setDisciplinasCursadas(disciplinasCursadas);
-			solicitacao.setCurso(((Aluno) usuario.getPessoa()).getCurso());
+			solicitacao.setCurso(((Aluno) usuario).getCurso());
 			
 			if(disciplinasCursadas.size() > 0){
 				sd.cadastrar(solicitacao);

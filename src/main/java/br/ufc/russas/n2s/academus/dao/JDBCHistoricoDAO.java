@@ -17,7 +17,7 @@ public class JDBCHistoricoDAO implements HistoricoDAO{
 	
 	@Override
 	public Historico cadastrar(Historico his, int idSolicitacao){
-		String sql = "insert into academus.historico (data_resultado, horario, descricao, id_pessoa_usuario, id_solicitacao) "
+		String sql = "insert into academus.historico (data_resultado, horario, descricao, id_perfil_academus, id_solicitacao) "
 				+ "values (?,?,?,?,?)";
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -28,7 +28,7 @@ public class JDBCHistoricoDAO implements HistoricoDAO{
 			ps.setTime(2, Time.valueOf(his.getHorario()));
 			System.out.println("Deu certo");
 			ps.setString(3, his.getDescricao());
-			ps.setInt(4, his.getResponsavel().getPessoa().getId());
+			ps.setInt(4, his.getResponsavel().getId());
 			ps.setInt(5, idSolicitacao);
 			
 			ps.execute();
@@ -58,7 +58,7 @@ public class JDBCHistoricoDAO implements HistoricoDAO{
 				Historico h = new Historico();
 				h.setData(rs.getDate("data_resultado").toLocalDate());
 				h.setHorario(rs.getTime("horario").toLocalTime());
-				h.setResponsavel(pad.buscarPorId(rs.getInt("id_pessoa_usuario")));
+				h.setResponsavel(pad.buscarPorId(rs.getInt("id_perfil_usuario")));
 				h.setDescricao(rs.getString("descricao"));
 				lh.add(h);
 			}

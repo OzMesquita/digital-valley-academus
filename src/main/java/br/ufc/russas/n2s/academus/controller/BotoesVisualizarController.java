@@ -31,7 +31,7 @@ public class BotoesVisualizarController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession();
-			PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
+			PerfilAcademus per = (PerfilAcademus) session.getAttribute("userAcademus");
 			
 			int id = Integer.parseInt((String)request.getAttribute("id"));
 			SolicitacaoDAO sd = new DAOFactoryJDBC().criarSolicitacaoDAO();

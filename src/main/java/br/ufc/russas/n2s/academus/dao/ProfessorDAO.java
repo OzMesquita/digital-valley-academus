@@ -16,5 +16,13 @@ public interface ProfessorDAO {
 	
 	public Professor buscarPorSiape(String siape);
 	
+	public boolean possuiCoordenador(int id_curso);
+	
+	public void retirarCoordenador(int id_curso, Professor professor);
+	
+	public void cadastrarCoordenador(int id_curso, Professor professor);
+
+	public Professor isCoordenador(int idCurso);
+	
 	//public boolean isProfessor(Pessoa pessoa);
 }

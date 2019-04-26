@@ -18,11 +18,6 @@ public class DAOFactoryJDBC implements DAOFactory{
 	}
 
 	@Override
-	public CoordenadorDAO criarCoordenadorDAO() {
-		return new JDBCCoordenadorDAO();
-	}
-
-	@Override
 	public CursoDAO criarCursoDAO() {
 		return new JDBCCursoDAO();
 	}
@@ -38,7 +33,7 @@ public class DAOFactoryJDBC implements DAOFactory{
 	}
 	
 	@Override
-	public JDBCFuncionarioDAO criarFuncionarioDAO() {
+	public FuncionarioDAO criarFuncionarioDAO() {
 		return new JDBCFuncionarioDAO();
 	}
 

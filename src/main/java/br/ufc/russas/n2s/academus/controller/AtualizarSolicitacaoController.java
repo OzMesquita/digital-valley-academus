@@ -49,7 +49,7 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 			String[] semestreDisciplinas = request.getParameterValues("disc-semestre");
 			String[] notaDisciplinas = request.getParameterValues("disc-nota");
 			String[] instituicaoDisciplinas = request.getParameterValues("disc-instituicao");
-			PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
+			PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("userAcademus");
 			ArrayList<DisciplinaCursada> disciplinasCursadas = new ArrayList<DisciplinaCursada>();
 			
 			// Verificando se possui pelo menos uma disciplina cursada na solicitacao 
@@ -67,7 +67,7 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 				Solicitacao solicitacao = sd.buscarPorId(id);
 				
 				// Verificando se a solicitação é do usuário que está logado
-				if (solicitacao.getSolicitante().getId() == usuario.getPessoa().getId()) {
+				if (solicitacao.getSolicitante().getId() == usuario.getId()) {
 					if(componente != null) {
 						solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
 					}

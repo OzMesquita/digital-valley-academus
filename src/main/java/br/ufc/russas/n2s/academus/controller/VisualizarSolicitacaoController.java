@@ -28,7 +28,7 @@ public class VisualizarSolicitacaoController extends HttpServlet {
 		
 		try {
 			HttpSession session = request.getSession();
-			PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
+			PerfilAcademus per = (PerfilAcademus) session.getAttribute("userAcademus");
 			
 			String ans = request.getParameter("button");
 			request.setAttribute("id", ans);
