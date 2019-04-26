@@ -13,9 +13,9 @@ import javax.servlet.http.HttpSession;
 import br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC;
 import br.ufc.russas.n2s.academus.dao.SolicitacaoDAO;
 import br.ufc.russas.n2s.academus.model.Aluno;
-import br.ufc.russas.n2s.academus.model.Coordenador;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
+import br.ufc.russas.n2s.academus.model.Professor;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
 
 public class InicioController extends HttpServlet {
@@ -34,7 +34,7 @@ public class InicioController extends HttpServlet {
 		
 		try {
 			HttpSession session = request.getSession();
-			PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
+			PerfilAcademus per = (PerfilAcademus) session.getAttribute("userAcademus");
 
 						
 			SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
@@ -122,63 +122,63 @@ public class InicioController extends HttpServlet {
 				if (tipoSolicitacao == null) {
 					
 					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listar((Aluno)per.getPessoa(), 0 , qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoes(0, (Aluno)per.getPessoa());
+						listaSol = sodao.listar((Aluno)per, 0 , qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoes(0, (Aluno)per);
 					}
 					else{
 						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listar((Aluno)per.getPessoa(), qtdRegPorPag*pag , qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoes(pag, (Aluno)per.getPessoa());
+						listaSol = sodao.listar((Aluno)per, qtdRegPorPag*pag , qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoes(pag, (Aluno)per);
 					}
 					
 				} else if (tipoSolicitacao.equals("submetido")) {
 					
 					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listarSubmetida((Aluno)per.getPessoa(), 0, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesSubmetidas(0, (Aluno)per.getPessoa());
+						listaSol = sodao.listarSubmetida((Aluno)per, 0, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoesSubmetidas(0, (Aluno)per);
 					}
 					else{
 						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listarSubmetida((Aluno)per.getPessoa(), qtdRegPorPag*pag, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesSubmetidas(pag, (Aluno)per.getPessoa());
+						listaSol = sodao.listarSubmetida((Aluno)per, qtdRegPorPag*pag, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoesSubmetidas(pag, (Aluno)per);
 					}
 					
 					
 				} else if (tipoSolicitacao.equals("andamento")) {
 					
 					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listarAndamento((Aluno)per.getPessoa(), 0, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesAndamento(0, (Aluno)per.getPessoa());
+						listaSol = sodao.listarAndamento((Aluno)per, 0, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoesAndamento(0, (Aluno)per);
 					}
 					else{
 						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listarAndamento((Aluno)per.getPessoa(), qtdRegPorPag*pag, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesAndamento(pag, (Aluno)per.getPessoa());
+						listaSol = sodao.listarAndamento((Aluno)per, qtdRegPorPag*pag, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoesAndamento(pag, (Aluno)per);
 					}
 										
 					
 				} else if(tipoSolicitacao.equals("finalizado")) {
 					
 					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listarFinalizado((Aluno)per.getPessoa(), 0, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesFinalizadas(0, (Aluno)per.getPessoa());
+						listaSol = sodao.listarFinalizado((Aluno)per, 0, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoesFinalizadas(0, (Aluno)per);
 					}
 					else{
 						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listarFinalizado((Aluno)per.getPessoa(), qtdRegPorPag*pag, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesFinalizadas(pag, (Aluno)per.getPessoa());
+						listaSol = sodao.listarFinalizado((Aluno)per, qtdRegPorPag*pag, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoesFinalizadas(pag, (Aluno)per);
 					}
 					
 				} else {
 					
 					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listar((Aluno)per.getPessoa(), 0 , qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoes(0, (Aluno)per.getPessoa());
+						listaSol = sodao.listar((Aluno)per, 0 , qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoes(0, (Aluno)per);
 					}
 					else{
 						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listar((Aluno)per.getPessoa(), qtdRegPorPag*pag , qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoes(pag, (Aluno)per.getPessoa());
+						listaSol = sodao.listar((Aluno)per, qtdRegPorPag*pag , qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoes(pag, (Aluno)per);
 					}
 				}
 				
@@ -248,61 +248,61 @@ public class InicioController extends HttpServlet {
 				if (tipoSolicitacao == null) {
 					
 					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listar((Coordenador)per.getPessoa(), 0, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoes(0, (Coordenador)per.getPessoa());
+						listaSol = sodao.listar((Professor)per, 0, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoes(0, (Professor)per);
 					}
 					else{
 						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listar((Coordenador)per.getPessoa(), pag*qtdRegPorPag, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoes(pag, (Coordenador)per.getPessoa());
+						listaSol = sodao.listar((Professor)per, pag*qtdRegPorPag, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoes(pag, (Professor)per);
 					}
 
 				} else if (tipoSolicitacao.equals("analizado")) {
 					
 					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listarAnalizado((Coordenador)per.getPessoa(), 0, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesAnalizadas(0, (Coordenador)per.getPessoa());
+						listaSol = sodao.listarAnalizado((Professor)per, 0, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoesAnalizadas(0, (Professor)per);
 					}
 					else{
 						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listarAnalizado((Coordenador)per.getPessoa(), pag*qtdRegPorPag, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesAnalizadas(pag, (Coordenador)per.getPessoa());
+						listaSol = sodao.listarAnalizado((Professor)per, pag*qtdRegPorPag, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoesAnalizadas(pag, (Professor)per);
 					}
 
 				} else if (tipoSolicitacao.equals("andamento")) {
 					
 					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listarAndemanto((Coordenador)per.getPessoa(), 0, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesAndamento(0, (Coordenador)per.getPessoa());
+						listaSol = sodao.listarAndemanto((Professor)per, 0, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoesAndamento(0, (Professor)per);
 					}
 					else{
 						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listarAndemanto((Coordenador)per.getPessoa(), pag*qtdRegPorPag, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesAndamento(pag, (Coordenador)per.getPessoa());
+						listaSol = sodao.listarAndemanto((Professor)per, pag*qtdRegPorPag, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoesAndamento(pag, (Professor)per);
 					}
 					
 				} else if(tipoSolicitacao.equals("finalizado")) {
 					
 					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listarFinalizado((Coordenador)per.getPessoa(), 0, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesFinalizadas(0, (Coordenador)per.getPessoa());
+						listaSol = sodao.listarFinalizado((Professor)per, 0, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoesFinalizadas(0, (Professor)per);
 					}
 					else{
 						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listarFinalizado((Coordenador)per.getPessoa(), pag*qtdRegPorPag, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesFinalizadas(pag, (Coordenador)per.getPessoa());
+						listaSol = sodao.listarFinalizado((Professor)per, pag*qtdRegPorPag, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoesFinalizadas(pag, (Professor)per);
 					}
 					
 				} else {
 
 					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listar((Coordenador)per.getPessoa(), 0, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoes(0, (Coordenador)per.getPessoa());
+						listaSol = sodao.listar((Professor)per, 0, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoes(0, (Professor)per);
 					}
 					else{
 						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listar((Coordenador)per.getPessoa(), pag*qtdRegPorPag, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoes(pag, (Coordenador)per.getPessoa());
+						listaSol = sodao.listar((Professor)per, pag*qtdRegPorPag, qtdRegPorPag);
+						numSolicitacoes = sodao.numSolicitacoes(pag, (Professor)per);
 					}
 					
 				}
