@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import br.ufc.russas.n2s.academus.dao.AlunoDAO;
 import br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC;
+import br.ufc.russas.n2s.academus.dao.FuncionarioDAO;
 import br.ufc.russas.n2s.academus.dao.PerfilAcademusDAO;
-import br.ufc.russas.n2s.academus.model.Aluno;
+import br.ufc.russas.n2s.academus.dao.ProfessorDAO;
 import br.ufc.russas.n2s.academus.model.Funcionario;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
@@ -25,6 +27,7 @@ import model.Pessoa;
 import model.Servidor;
 import model.Usuario;
 import dao.DAOFactory;
+import util.Constantes;
 import util.Facade;
 
 public class AutenticadoFiltro implements Filter {
@@ -54,70 +57,74 @@ public class AutenticadoFiltro implements Filter {
 					
 					PerfilAcademusDAO perDAO = new DAOFactoryJDBC().criarPerfilAcademusDAO();
 					PerfilAcademus userAcademus = new PerfilAcademus();
+					userAcademus.setIsAdmin(false);
 					
-					if(perDAO.buscarPorCPF(user.getCpf()) == null) {
+					if(perDAO.buscarPorCPF(user.getCpf()).getCPF().equals("")) {
 						if(user.getUsuario().getPerfil() == EnumPerfil.ALUNO) {
-							Aluno userAluno = new Aluno();
+							br.ufc.russas.n2s.academus.model.Aluno userAluno = new br.ufc.russas.n2s.academus.model.Aluno();
+							
+							dao.AlunoDAO test = DAOFactory.criarAlunoDAO();
+							model.Aluno alu = test.buscar(user.getId());
+							
 							userAluno.setIdGuardiao(user.getId());
 							userAluno.setNome(user.getNome());
 							userAluno.setCPF(user.getCpf());
 							userAluno.setEmail(user.getEmail());
 							userAluno.setIsAdmin(false);
-							userAluno.setMatricula(((model.Aluno)user).getMatricula());
-							userAluno.setSemestreIngresso(((model.Aluno)user).getSemestreIngresso());
-							userAluno.setNivel(NivelAcademus.ALUNO);						
+							userAluno.setMatricula(alu.getMatricula());
+							userAluno.setSemestreIngresso(alu.getSemestreIngresso());
+							userAluno.setNivel(NivelAcademus.ALUNO);
 							
 							br.ufc.russas.n2s.academus.model.Curso curso = new br.ufc.russas.n2s.academus.model.Curso();
-							curso.setIdCurso(((model.Aluno)user).getCurso().getId());
-							curso.setNome(((model.Aluno)user).getCurso().getNome());
+							curso.setIdCurso(alu.getCurso().getId());
+							curso.setNome(alu.getCurso().getNome());
 							userAluno.setCurso(curso);
-							//Falta colocar no banco
+							//banco
+							AlunoDAO aludao = new DAOFactoryJDBC().criarAlunoDAO();
+							aludao.cadastrar(userAluno);
 							
 							userAcademus = userAluno;
 							
+							
 						} else if(user.getUsuario().getPerfil() == EnumPerfil.SERVIDOR) {
-							if(((Servidor)user).getCargo() == EnumCargo.PROFESSOR) {
+							
+							dao.ServidorDAO serdao = DAOFactory.criarServidorDAO();
+							model.Servidor serv = serdao.buscar(user.getId());
+							
+							if(serv.getCargo() == EnumCargo.PROFESSOR) {
+								
 								Professor userProfessor = new Professor();
 								userProfessor.setIdGuardiao(user.getId());
 								userProfessor.setNome(user.getNome());
 								userProfessor.setCPF(user.getCpf());
-								userProfessor.setEmail(user.getEmail());
 								userProfessor.setIsAdmin(false);
-								userProfessor.setSiape(((model.Servidor)user).getSiape());
+								userProfessor.setEmail(user.getEmail());
+								
+								userProfessor.setSiape(serv.getSiape());
 								userProfessor.setCurso(new br.ufc.russas.n2s.academus.model.Curso());
 								userProfessor.setNivel(NivelAcademus.PROFESSOR);
 								
-								//Falta colocar no banco
-								
+								//banco
+								ProfessorDAO prodao = new DAOFactoryJDBC().criarProfessorDAO();
+								prodao.cadastrar(userProfessor);
+
 								userAcademus = userProfessor;
 								
-							} else if(((Servidor)user).getCargo() == EnumCargo.SECRETARIO) {
-								Funcionario userFuncionario = new Funcionario();
-								userFuncionario.setIdGuardiao(user.getId());
-								userFuncionario.setNome(user.getNome());
-								userFuncionario.setCPF(user.getCpf());
-								userFuncionario.setEmail(user.getEmail());
-								userFuncionario.setIsAdmin(false);
-								userFuncionario.setSiape(((model.Servidor)user).getSiape());
-								userFuncionario.setCurso(new br.ufc.russas.n2s.academus.model.Curso());
-								userFuncionario.setNivel(NivelAcademus.SECRETARIO);
-								
-								//Falta colocar no banco
-								
-								userAcademus = userFuncionario;
-								
 							} else {
+								
 								Funcionario userFuncionario = new Funcionario();
 								userFuncionario.setIdGuardiao(user.getId());
 								userFuncionario.setNome(user.getNome());
 								userFuncionario.setCPF(user.getCpf());
 								userFuncionario.setEmail(user.getEmail());
 								userFuncionario.setIsAdmin(false);
-								userFuncionario.setSiape(((model.Servidor)user).getSiape());
+								userFuncionario.setSiape(serv.getSiape());
 								userFuncionario.setCurso(new br.ufc.russas.n2s.academus.model.Curso());
 								userFuncionario.setNivel(NivelAcademus.INDEFINIDO);
 								
-								//Falta colocar no banco
+								//banco
+								FuncionarioDAO fundao = new DAOFactoryJDBC().criarFuncionarioDAO();
+								fundao.cadastrar(userFuncionario);
 								
 								userAcademus = userFuncionario;
 								
@@ -132,11 +139,13 @@ public class AutenticadoFiltro implements Filter {
 							userVisitante.setNivel(NivelAcademus.INDEFINIDO);
 							userVisitante.setCurso(new br.ufc.russas.n2s.academus.model.Curso());
 							
+							PerfilAcademusDAO perdao = new DAOFactoryJDBC().criarPerfilAcademusDAO();
+							perdao.cadastrar(userVisitante);
 							userAcademus = userVisitante;
 							
 						}
 					} else {
-						userAcademus = perDAO.buscarPorCPF(user.getCpf());
+						userAcademus = br.ufc.russas.n2s.academus.util.Facade.buscarPerfilPorCPF(user.getCpf());
 					}
 					
 					session.setAttribute("userAcademus", userAcademus);
@@ -144,12 +153,12 @@ public class AutenticadoFiltro implements Filter {
 					// voltando pro Original
 					chain.doFilter(request, response);
 				}else {
-					((HttpServletResponse) response).sendRedirect("/Controle_de_Acesso/");
+					((HttpServletResponse) response).sendRedirect(Constantes.getGuardiaoApp());
 				}
 			}else if(session.getAttribute("usuario")!= null && DAOFactory.criarUsuarioDAO().buscarTokenTemp(((Usuario)session.getAttribute("usuario")).getPessoa().getId())!=null && ((Usuario)session.getAttribute("usuario")).getTokenUsuario().equals(DAOFactory.criarUsuarioDAO().buscarTokenTemp(((Usuario)session.getAttribute("usuario")).getPessoa().getId()))){
 				chain.doFilter(request, response);
 			}else {
-				((HttpServletResponse) response).sendRedirect("/Controle_de_Acesso/");
+				((HttpServletResponse) response).sendRedirect(Constantes.getGuardiaoApp());
 			}
 		}				
 	}

@@ -43,7 +43,7 @@ public class InicioController extends HttpServlet {
 			
 			String tipoSolicitacao = request.getParameter("solicitacao");
 			
-			if (per.getIsAdmin()) {
+			/*if (per.getIsAdmin()) {
 				if (tipoSolicitacao == null) {
 					
 					if(request.getParameter("pagina") == null){
@@ -117,7 +117,7 @@ public class InicioController extends HttpServlet {
 					}
 					
 				}
-			} else if( per.getNivel() == NivelAcademus.ALUNO) {
+			} else*/ if( per.getNivel() == NivelAcademus.ALUNO) {
 				
 				if (tipoSolicitacao == null) {
 					

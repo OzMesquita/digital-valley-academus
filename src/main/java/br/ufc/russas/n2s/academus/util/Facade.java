@@ -5,6 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC;
+import br.ufc.russas.n2s.academus.model.Aluno;
+import br.ufc.russas.n2s.academus.model.Funcionario;
+import br.ufc.russas.n2s.academus.model.PerfilAcademus;
+import br.ufc.russas.n2s.academus.model.Professor;
 import util.Constantes;
 
 
@@ -14,7 +19,24 @@ public class Facade {
 	private Facade() {
 		//
 	}
-
+	
+	public static PerfilAcademus buscarPerfilPorCPF(String cpf) {
+		Aluno aluno = new DAOFactoryJDBC().criarAlunoDAO().buscarPorCPF(cpf);
+		if(aluno != null) {
+			return aluno;
+		}
+		Professor pro = new DAOFactoryJDBC().criarProfessorDAO().buscarPorCPF(cpf);
+		if(pro != null) {
+			return pro;
+		}
+		Funcionario func = new DAOFactoryJDBC().criarProfessorDAO().buscarPorCPF(cpf);
+		if(func != null) {
+			return func;
+		}
+		PerfilAcademus per = new DAOFactoryJDBC().criarPerfilAcademusDAO().buscarPorCPF(cpf);
+		return per;
+	}
+	
 	public static String[] lerArquivoBancoDeDados() {
 		String[] bd = new String[3];
 		try {			

@@ -14,9 +14,9 @@ public class PerfilAcademus implements Serializable{
 	private boolean isAdmin;
 	
 	public PerfilAcademus() {
-		this.nome = "DESCONHECIDO";
-		this.email = "DESCONHECIDO";
-		this.cpf = "DESCONHECIDO";
+		this.nome = "";
+		this.email = "";
+		this.cpf = "";
 		this.setNivel(NivelAcademus.INDEFINIDO);
 		this.curso = new Curso();
 		this.isAdmin = false;
