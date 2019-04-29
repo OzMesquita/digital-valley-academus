@@ -7,7 +7,7 @@
    	</button>
    
    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">	
-   		<%if(((PerfilAcademus) session.getAttribute("usuario")).getIsAdmin()){%>
+   		<%if(((PerfilAcademus) session.getAttribute("userAcademus")).getIsAdmin()){%>
        <div class="navbar-nav">
            <a class="nav-item nav-link" href="ListarDisciplinas"> Listar Disciplinas</a>
            <a class="nav-item nav-link" href="BuscarDisciplina"> Buscar Disciplinas</a>

@@ -5,7 +5,7 @@
     <div class="btn-group-vertical d-flex flex-column border" role="group">
     <strong><p class="btn btn-sm" align="center">Opções</p></strong>
     <% 
-		PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
+		PerfilAcademus per = (PerfilAcademus) session.getAttribute("userAcademus");
 		if (per != null){
 			if (per.getIsAdmin()){
 				%>
@@ -28,8 +28,7 @@
 			} else{
 				%>
 				<a href="elements/aviso.jsp" class="btn btn-light btn-sm text-left">Cadastrar</a>
-				<a href="elements/aviso.jsp" class="btn btn-light btn-sm text-left">Editar</a>  
-        		<a href="elements/aviso.jsp" class="btn btn-light btn-sm text-left">Remover</a>
+				<a href="elements/aviso.jsp" class="btn btn-light btn-sm text-left">Editar</a>
         		<a href="elements/aviso.jsp" class="btn btn-light btn-sm text-left">Listar</a>
 				<%				
 				}

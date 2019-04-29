@@ -11,7 +11,7 @@
 	<div class="dropdown-menu dropdown-menu-left">
 		<!-- Mostra as opcoes de filtro pelos usuarios -->
 		<%
-		PerfilAcademus usuario = (PerfilAcademus)session.getAttribute("usuario");
+		PerfilAcademus usuario = (PerfilAcademus)session.getAttribute("userAcademus");
 		String statusSoli = (request.getParameter("solicitacao") != null) ? request.getParameter("solicitacao") : "null";
 		
 		if (usuario.getNivel() == NivelAcademus.ALUNO){
