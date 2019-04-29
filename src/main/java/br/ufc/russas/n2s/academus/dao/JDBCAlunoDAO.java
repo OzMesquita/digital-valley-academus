@@ -20,7 +20,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 
 	@Override
 	public Aluno cadastrar(Aluno aluno) {
-		String sql = "INSERT INTO academus.aluno(id_perfil_academus, matricula) VALUES (?, ?);";
+		String sql = "INSERT INTO academus.aluno(id_perfil_academus, matricula, semestre_ingresso) VALUES (?, ?, ?);";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -31,6 +31,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 			
 			insert.setInt(1, aluno.getId());
 			insert.setString(2, aluno.getMatricula());
+			insert.setString(3, aluno.getSemestreIngresso());
 			
 			insert.execute();
 			insert.close();
@@ -47,7 +48,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 	@Override
 	public Aluno editar(Aluno aluno) {
 
-		String sql = "UPDATE academus.aluno SET matricula = ? WHERE id_perfil_academus = ?;";
+		String sql = "UPDATE academus.aluno SET matricula = ?, semestre_ingresso = ? WHERE id_perfil_academus = ?;";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -57,7 +58,8 @@ public class JDBCAlunoDAO implements AlunoDAO{
 			PreparedStatement insert = conn.prepareStatement(sql);
 			
 			insert.setString(1, aluno.getMatricula());
-			insert.setInt(2, aluno.getId());
+			insert.setString(2, aluno.getSemestreIngresso());
+			insert.setInt(3, aluno.getId());
 			
 			insert.execute();
 			insert.close();
