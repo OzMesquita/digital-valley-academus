@@ -9,7 +9,7 @@ public class Curso implements Serializable{
 	private String nome;
 	
 	public Curso(){
-		this.setIdCurso(-1);
+		this.setIdCurso(0);
 		this.setNome("INDEFINIDO");
 	}
 	

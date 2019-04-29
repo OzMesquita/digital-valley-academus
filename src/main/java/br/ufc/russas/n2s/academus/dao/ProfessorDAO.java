@@ -23,6 +23,8 @@ public interface ProfessorDAO {
 	public void cadastrarCoordenador(int id_curso, Professor professor);
 
 	public Professor isCoordenador(int idCurso);
+
+	public Professor buscarPorCPF(String cpf);
 	
 	//public boolean isProfessor(Pessoa pessoa);
 }

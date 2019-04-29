@@ -17,12 +17,10 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 	@Override
 	public PerfilAcademus cadastrar(PerfilAcademus perfil) {
 		//String sql = "INSERT INTO academus.perfil_academus(id_pessoa_usuario, id_nivel, is_admin) VALUES (?, ?, ?);";
-		String sql = "INSERT INTO academus.perfil_academus( id_pessoa_usuario, id_nivel, is_admin, nome, email, cpf, id_curso) VALUES (?, ?, ?, ?, ?, ?, ?); " + 
-				"SELECT id_perfil_academus FROM academus.perfil_academus WHERE id_pessoa_usuario = ?;";
+		String sql = "INSERT INTO academus.perfil_academus( id_pessoa_usuario, id_nivel, is_admin, nome, email, cpf, id_curso) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement insert = conn.prepareStatement(sql);
-			
 			
 			insert.setInt(1, perfil.getIdGuardiao());
 			insert.setInt(2, NivelAcademus.getCodigo(perfil.getNivel()));
@@ -32,15 +30,9 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 			insert.setString(6, perfil.getCPF());
 			insert.setInt(7, perfil.getCurso().getIdCurso());
 			
-			insert.setInt(8, perfil.getIdGuardiao());
-			
 			insert.execute();
-			ResultSet rs = insert.executeQuery();
-			
-			perfil.setId(rs.getInt("id_perfil_academus"));
-			
 			insert.close();
-			rs.close();
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -131,14 +123,48 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 	}
 	
 	@Override
+	public int buscarPorIdAcademus(int idGuardiao) {
+		//String sql = "SELECT id_pessoa_usuario, id_nivel, is_admin FROM academus.perfil_academus WHERE id_pessoa_usuario = "+ id +";";
+		String sql = "SELECT id_perfil_academus FROM academus.perfil_academus WHERE id_pessoa_usuario = "+ idGuardiao +";";
+		
+		int idAcademus = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			CursoDAO curdao = new DAOFactoryJDBC().criarCursoDAO();
+			
+			if(rs.next()){
+				
+				idAcademus = rs.getInt("id_perfil_academus");
+				
+			}
+			
+			ps.close();
+			rs.close();
+
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return idAcademus;
+	}
+	
+	@Override
 	public PerfilAcademus buscarPorCPF(String cpf) {
-		String sql = "SELECT * FROM academus.perfil_academus WHERE cpf = "+ cpf +";";
+		String sql = "SELECT * FROM academus.perfil_academus WHERE cpf = ?;";
 		PerfilAcademus perfil = new PerfilAcademus();
 		
 		Connection conn = ConnectionPool.getConnection();
 		
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, cpf);
 			ResultSet rs = ps.executeQuery();
 			
 			CursoDAO curdao = new DAOFactoryJDBC().criarCursoDAO();
@@ -152,7 +178,7 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 				perfil.setNome(rs.getString("nome"));
 				perfil.setEmail(rs.getString("email"));
 				perfil.setCPF(rs.getString("cpf"));
-				perfil.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				//perfil.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
 			}
 			

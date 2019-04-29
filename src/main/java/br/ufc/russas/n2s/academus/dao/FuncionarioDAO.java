@@ -16,4 +16,6 @@ public interface FuncionarioDAO {
 	public Funcionario buscarPorId(int id);
 	
 	public Funcionario buscarPorSiape(String siape);
+
+	public Funcionario buscarPorCPF(String cpf);
 }

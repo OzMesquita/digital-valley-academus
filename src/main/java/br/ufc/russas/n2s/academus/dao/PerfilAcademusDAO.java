@@ -17,5 +17,7 @@ public interface PerfilAcademusDAO {
 	public PerfilAcademus editar(PerfilAcademus perfil);
 	
 	public void excluir(PerfilAcademus perfil);
+
+	public int buscarPorIdAcademus(int idGuardiao);
 	
 }

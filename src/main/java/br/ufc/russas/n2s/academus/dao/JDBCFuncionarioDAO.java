@@ -23,6 +23,7 @@ public class JDBCFuncionarioDAO implements FuncionarioDAO{
 		try{
 			PerfilAcademusDAO perdao = new DAOFactoryJDBC().criarPerfilAcademusDAO();
 			funcionario = (Funcionario) perdao.cadastrar(funcionario);
+			funcionario.setId(perdao.buscarPorIdAcademus(funcionario.getIdGuardiao()));
 			
 			PreparedStatement insert = conn.prepareStatement(sql);
 			
@@ -70,7 +71,7 @@ public class JDBCFuncionarioDAO implements FuncionarioDAO{
 	@Override
 	public List<Funcionario> listar() {
 		
-		String SQL = "SELECT * FROM perfil_academus AS p, funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus ORDER BY f.id_perfil_academus;";
+		String SQL = "SELECT * FROM academus.perfil_academus AS p, academus.funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus ORDER BY f.id_perfil_academus;";
 		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -112,13 +113,54 @@ public class JDBCFuncionarioDAO implements FuncionarioDAO{
 	@Override
 	public Funcionario buscarPorId(int id) {
 		
-		String SQL = "SELECT * FROM perfil_academus AS p, funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.id_perfil_academus = ?;";
-		Funcionario funcionario = new Funcionario();
+		String SQL = "SELECT * FROM academus.perfil_academus AS p, academus.funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.id_perfil_academus = ?;";
+		Funcionario funcionario = null;
 		
 		Connection conn = ConnectionPool.getConnection();
 		try {
 			PreparedStatement ps = conn.prepareStatement(SQL);
 			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()){
+				CursoDAO cdao = new DAOFactoryJDBC().criarCursoDAO();
+				
+				funcionario = new Funcionario();
+				funcionario.setId(rs.getInt("id_perfil_academus"));
+				funcionario.setNome(rs.getString("nome"));
+				funcionario.setCPF(rs.getString("cpf"));
+				funcionario.setEmail(rs.getString("email"));
+				funcionario.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				funcionario.setIsAdmin(rs.getBoolean("is_admin"));
+				funcionario.setSiape(rs.getString("siape"));
+				funcionario.setCurso(cdao.buscarPorId(rs.getInt("id_curso")));
+				
+
+			}
+			
+			rs.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return funcionario;
+	}
+	
+	@Override
+	public Funcionario buscarPorCPF(String cpf) {
+		
+		String SQL = "SELECT * FROM academus.perfil_academus AS p, academus.funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.cpf = ?;";
+		Funcionario funcionario = new Funcionario();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(SQL);
+			ps.setString(1, cpf);
 			
 			ResultSet rs = ps.executeQuery();
 			
