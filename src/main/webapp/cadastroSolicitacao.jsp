@@ -12,10 +12,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-	PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
+	PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("userAcademus");
 
 	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
-	Aluno a = (Aluno) usuario.getPessoa();
+	Aluno a = (Aluno) usuario;
 	List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(a.getCurso().getIdCurso());
 %>
 

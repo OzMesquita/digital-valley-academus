@@ -16,11 +16,10 @@
 
 <%
 	
-	PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("usuario");
+	Aluno aluno = (Aluno) request.getSession().getAttribute("userAcademus");
 
 	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
-	Aluno a = (Aluno) usuario.getPessoa();
-	List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(a.getCurso().getIdCurso());	
+	List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(aluno.getCurso().getIdCurso());	
 	
 	Solicitacao solicitacao = new Solicitacao();
 	SolicitacaoDAO daoS = new DAOFactoryJDBC().criarSolicitacaoDAO();

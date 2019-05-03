@@ -13,7 +13,7 @@
  
  <%
  	
- 	PerfilAcademus per = (PerfilAcademus) session.getAttribute("usuario");
+ 	PerfilAcademus per = (PerfilAcademus) session.getAttribute("userAcademus");
  
 	Solicitacao solicitacao = new Solicitacao();
 	SolicitacaoDAO dao = new DAOFactoryJDBC().criarSolicitacaoDAO();
