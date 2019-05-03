@@ -3,10 +3,9 @@ package br.ufc.russas.n2s.academus.model;
 public enum Status {
 	
 	CANCELADO(1, "CANCELADO"),
-	SUBMETIDO(2, "SUBMETIDO"),
-	VALIDANDO(3, "VALIDANDO"),
-	ANALIZANDO(4, "ANALIZANDO"),
-	FINALIZADO(5, "FINALIZADO");
+	SOLICITADO(2, "SOLICITADO"),
+	ANALIZANDO(3, "ANALIZANDO"),
+	FINALIZADO(4, "FINALIZADO");
 	
 	private final int codigo;
 	private final String descricao;
@@ -29,15 +28,12 @@ public enum Status {
 			return Status.CANCELADO;
 		}
 		if(codigo == 2){
-			return Status.SUBMETIDO;
+			return Status.SOLICITADO;
 		}
 		if(codigo == 3){
-			return Status.VALIDANDO;
-		}
-		if(codigo == 4){
 			return Status.ANALIZANDO;
 		}
-		if(codigo == 5){
+		if(codigo == 4){
 			return Status.FINALIZADO;
 		}
 		

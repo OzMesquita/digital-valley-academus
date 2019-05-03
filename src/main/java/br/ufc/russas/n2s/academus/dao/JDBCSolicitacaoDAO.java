@@ -227,7 +227,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			Connection conn = ConnectionPool.getConnection();
 			try{
 				PreparedStatement ps = conn.prepareStatement(sql);
-				ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
+				ps.setInt(1, Status.getCodigo(Status.SOLICITADO));
 				ps.setInt(2, c.getCurso().getIdCurso());
 				ps.setInt(3, limiteInf);
 				ps.setInt(4, limiteSup);
@@ -439,7 +439,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 	}
 
 	@Override
-	public List<Solicitacao> listarAndemanto(Professor c, int limiteInf, int limiteSup) {
+	public List<Solicitacao> listarAndamento(Professor c, int limiteInf, int limiteSup) {
 		List<Solicitacao> solicitacoes = new ArrayList<>();
 		String sql = "SELECT * FROM academus.solicitacao WHERE id_curso = ? AND status != ? AND status != ? order by id_solicitacao offset ? limit ?;";
 		
@@ -614,7 +614,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, a.getId());
-			ps.setInt(2, Status.getCodigo(Status.SUBMETIDO));
+			ps.setInt(2, Status.getCodigo(Status.SOLICITADO));
 			ps.setInt(3, limiteInf);
 			ps.setInt(4, limiteSup);
 			
@@ -830,7 +830,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
+			ps.setInt(1, Status.getCodigo(Status.SOLICITADO));
 			ps.setInt(2, limiteInf);
 			ps.setInt(3, limiteSup);
 			
@@ -875,64 +875,8 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		
 		return listaSolicitacao;
 	}
-	
-	@Override
-	public List<Solicitacao> listarValidada(int limiteInf, int limiteSup){
-		String sql = "select * from academus.solicitacao where status=? order by id_solicitacao offset ? limit ?;";
-		List<Solicitacao> listaSolicitacao = new ArrayList<Solicitacao>();
-		
-		Connection conn = ConnectionPool.getConnection();
-		try{
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.VALIDANDO));
-			ps.setInt(2, limiteInf);
-			ps.setInt(3, limiteSup);
-			
-			ResultSet rs = ps.executeQuery();
-			
-			
-			//DAOFactory df = new DAOFactoryJDBC();
-			DAOFactoryJDBC df = new DAOFactoryJDBC();
-			
-			//DAO's necessárias
-			AlunoDAO aludao = df.criarAlunoDAO();
-			ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO(); //PROBLEMA
-			DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
-			HistoricoDAO hisdao = df.criarHistoricoDAO();
-			CursoDAO curdao = df.criarCursoDAO();
-			
-			while(rs.next()){
-				
-				Solicitacao aux = new Solicitacao();
-				
-				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
-				aux.setStatus(Status.getStatus(rs.getInt("status")));
-				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
-				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
-				aux.setDisciplinasCursadas(dcd.buscar(aux));
-				aux.setJustificativa(rs.getString("justificativa"));
-				aux.setResultado(rs.getString("resultado"));
-				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
-				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
-				
-				listaSolicitacao.add(aux);
-			}
-			
-			rs.close();
-			ps.close();
-
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			ConnectionPool.releaseConnection(conn);
-		}
-		
-		return listaSolicitacao;
-	}
-	
 	
 	////////Funções que retornam o número de solicitações////////
-	
 	
 	/**
 	 * @author Antonio Igor
@@ -1016,7 +960,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			Connection conn = ConnectionPool.getConnection();
 			try{
 				PreparedStatement ps = conn.prepareStatement(sql);
-				ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
+				ps.setInt(1, Status.getCodigo(Status.SOLICITADO));
 				ps.setInt(2, coordenador.getCurso().getIdCurso());
 				ps.setInt(3, pagina*10);
 				ResultSet rs = ps.executeQuery();
@@ -1050,7 +994,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
+			ps.setInt(1, Status.getCodigo(Status.SOLICITADO));
 			ps.setInt(2, pagina*10);
 			ResultSet rs = ps.executeQuery();
 			
@@ -1084,42 +1028,9 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.SUBMETIDO));
+			ps.setInt(1, Status.getCodigo(Status.SOLICITADO));
 			ps.setInt(2, aluno.getId());
 			ps.setInt(3, pagina*10);
-			ResultSet rs = ps.executeQuery();
-			
-			if(rs.next())
-				resultSql = rs.getInt(1);
-			
-			rs.close();
-			ps.close();
-
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			ConnectionPool.releaseConnection(conn);
-		}
-		
-		return resultSql;
-	}
-	
-	/**
-	 * @author Antonio Igor
-	 * @param pagina - Página atual
-	 * @return Retorna a quantidade de solicitações validadas descartando as solicitações mostradas nas páginas anteriores
-	 */
-	@Override
-	public int numSolicitacoesValidadas(int pagina) {
-		String sql = "WITH cte AS (SELECT * FROM academus.solicitacao where status=?) " + 
-				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
-		int resultSql = 0;
-		
-		Connection conn = ConnectionPool.getConnection();
-		try{
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.VALIDANDO));
-			ps.setInt(2, pagina*10);
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next())

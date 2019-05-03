@@ -71,7 +71,7 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 					if(componente != null) {
 						solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
 					}
-					solicitacao.setStatus(Status.SUBMETIDO);
+					solicitacao.setStatus(Status.SOLICITADO);
 					solicitacao.setDisciplinasCursadas(disciplinasCursadas);
 					
 					// colocando as informações no banco

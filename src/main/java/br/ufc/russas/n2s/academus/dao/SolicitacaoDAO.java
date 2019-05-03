@@ -20,8 +20,6 @@ public interface SolicitacaoDAO {
 	
 	public List<Solicitacao> listarSubmetida(int limiteInf, int limiteSup);
 	
-	public List<Solicitacao> listarValidada(int limiteInf, int limiteSup);
-	
 	public Solicitacao buscarPorId(int id);
 	
 	public Solicitacao editar(Solicitacao sol);
@@ -36,7 +34,7 @@ public interface SolicitacaoDAO {
 	
 	public List<Solicitacao> listarAndamento(Aluno a, int limiteInf, int limiteSup);
 	
-	public List<Solicitacao> listarAndemanto(Professor c, int limiteInf, int limiteSup);
+	public List<Solicitacao> listarAndamento(Professor c, int limiteInf, int limiteSup);
 	
 	public List<Solicitacao> listarFinalizado(Aluno a, int limiteInf, int limiteSup);
 	
@@ -59,8 +57,6 @@ public interface SolicitacaoDAO {
 	
 	public int numSolicitacoesSubmetidas(int pagina);
 	public int numSolicitacoesSubmetidas(int pagina, Aluno aluno);
-	
-	public int numSolicitacoesValidadas(int pagina);
 	
 	public int numSolicitacoesAndamento(int pagina);
 	public int numSolicitacoesAndamento(int pagina, Aluno aluno);

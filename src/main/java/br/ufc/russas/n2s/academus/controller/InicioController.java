@@ -68,18 +68,6 @@ public class InicioController extends HttpServlet {
 						numSolicitacoes = sodao.numSolicitacoesSubmetidas(pag);
 					}
 					
-				} else if (tipoSolicitacao.equals("validado")) {
-					
-					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listarValidada(0, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesValidadas(0);
-					}
-					else{
-						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listarValidada(pag*qtdRegPorPag, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesValidadas(pag);
-					}
-					
 				} else if(tipoSolicitacao.equals("analizado")) {
 					
 					if(request.getParameter("pagina") == null){
@@ -207,18 +195,6 @@ public class InicioController extends HttpServlet {
 						numSolicitacoes = sodao.numSolicitacoesSubmetidas(pag);
 					}
 					
-				} else if (tipoSolicitacao.equals("validado")) {
-					
-					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listarValidada(0, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesValidadas(0);
-					}
-					else{
-						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listarValidada(pag*qtdRegPorPag, qtdRegPorPag);
-						numSolicitacoes = sodao.numSolicitacoesValidadas(pag);
-					}
-					
 				} else if(tipoSolicitacao.equals("finalizado")) {
 					
 					if(request.getParameter("pagina") == null){
@@ -272,12 +248,12 @@ public class InicioController extends HttpServlet {
 				} else if (tipoSolicitacao.equals("andamento")) {
 					
 					if(request.getParameter("pagina") == null){
-						listaSol = sodao.listarAndemanto((Professor)per, 0, qtdRegPorPag);
+						listaSol = sodao.listarAndamento((Professor)per, 0, qtdRegPorPag);
 						numSolicitacoes = sodao.numSolicitacoesAndamento(0, (Professor)per);
 					}
 					else{
 						int pag = Integer.parseInt(request.getParameter("pagina"));
-						listaSol = sodao.listarAndemanto((Professor)per, pag*qtdRegPorPag, qtdRegPorPag);
+						listaSol = sodao.listarAndamento((Professor)per, pag*qtdRegPorPag, qtdRegPorPag);
 						numSolicitacoes = sodao.numSolicitacoesAndamento(pag, (Professor)per);
 					}
 					
