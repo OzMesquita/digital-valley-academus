@@ -1,13 +1,9 @@
 <div class="modal-footer">
-			<%
-		if((boolean)request.getAttribute("Avaliar")){
-	%>
+		
 <input type="button" class="btn btn-primary btn-sm"
 		style="height: 30px;" value="Avaliar"
 		data-toggle="modal" data-target="#testeCoor">
-	<%
-		}
-	%>
+	
 <a href="Inicio"><input type="button" class="btn btn-primary btn-sm"
 	style="height: 30px;" value="Cancelar"></a>
 </div>

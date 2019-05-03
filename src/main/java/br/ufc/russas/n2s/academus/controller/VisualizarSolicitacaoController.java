@@ -27,23 +27,23 @@ public class VisualizarSolicitacaoController extends HttpServlet {
 		
 		
 		try {
-			HttpSession session = request.getSession();
-			PerfilAcademus per = (PerfilAcademus) session.getAttribute("userAcademus");
+			//HttpSession session = request.getSession();
+			//PerfilAcademus per = (PerfilAcademus) session.getAttribute("userAcademus");
 			
 			String ans = request.getParameter("button");
 			request.setAttribute("id", ans);
 			
 			
-			if(per.getNivel() == NivelAcademus.SECRETARIO) {
+			/*if(per.getNivel() == NivelAcademus.SECRETARIO) {
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
 				dispatcher.forward(request, response);
 				return;
 			}
-			else{
+			else{*/
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSolicitacao.jsp");
 				dispatcher.forward(request, response);
 				return;
-			}
+			//}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -108,6 +108,15 @@
 				</button>
 				</td>
 			</form>
+			<% if(usuario.getNivel() == NivelAcademus.SECRETARIO){ %>
+			<form method="POST" action="RegistarEntrega" id="form-<%=soli.getIdSolicitacao()%>">
+				<td>
+				<button  class="btn btn-primary btn-sm" form="form<%=soli.getIdSolicitacao()%>" class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="registroId" value="<%=soli.getIdSolicitacao() %>" >
+				Registrar Entrega
+				</button>
+				</td>
+			</form>
+			<%} %>
 		</tr>
 		
 		<%
