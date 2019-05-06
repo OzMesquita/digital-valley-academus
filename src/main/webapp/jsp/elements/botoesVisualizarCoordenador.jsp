@@ -2,17 +2,12 @@
 	- Avaliar : Aparece um modal para a avaliacao do aluno, responde se o aluno foi DEFERIDO ou INDEFERIDO e justifica a resposta.			
 	- Cancelar : Redireciona a pagina para Inicio 
   -->
-<div class="modal-footer">
-			
+  		
 	<!-- Botao Avaliar -->
 <input type="button" class="btn btn-primary btn-sm"
 		style="height: 30px;" value="Avaliar"
 		data-toggle="modal" data-target="#testeCoor">
 	
-	<!-- Botao Cancelar -->
-<a href="Inicio"><input type="button" class="btn btn-primary btn-sm"
-	style="height: 30px;" value="Cancelar"></a>
-</div>
 			<!-- Modal de Avaliar -->
 			<div class="modal fade" id="testeCoor" tabindex="1"
 				role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

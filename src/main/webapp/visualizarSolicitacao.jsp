@@ -1,3 +1,4 @@
+<%@page import="br.ufc.russas.n2s.academus.model.Status"%>
 <%@ page import="util.Constantes"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Solicitacao" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.Aluno" %>
@@ -211,16 +212,19 @@
 					
 							<br>
 							<br>
-							<%if(per.getNivel() == NivelAcademus.ALUNO){%>
+							<div class="modal-footer">
+							<!-- Botao Cancelar -->
+								<a href="Inicio">
+								<input type="button" class="btn btn-primary btn-sm" style="height: 30px;" value="Cancelar"></a>
+	
+							<%if(per.getNivel() == NivelAcademus.ALUNO && solicitacao.getStatus() == Status.SOLICITADO){%>
 						    	<c:import url="jsp/elements/botoesVisualizarAluno.jsp" charEncoding="UTF-8"></c:import>
 							
-							<%} else if(per.getNivel() == NivelAcademus.SECRETARIO){ %>
-								<c:import url="jsp/elements/botoesVisualizarSecretarioAnexarDocumentos.jsp" charEncoding="UTF-8"></c:import>
-								
-							<% } else if(per.getNivel() == NivelAcademus.COORDENADOR){ %>
+							<% } else if(per.getNivel() == NivelAcademus.COORDENADOR && solicitacao.getStatus() == Status.ANALIZANDO){ %>
 								<c:import url="jsp/elements/botoesVisualizarCoordenador.jsp" charEncoding="UTF-8"></c:import>
 								
 							<% } %>
+							</div>
 					</div>
 					<%
 					} else {

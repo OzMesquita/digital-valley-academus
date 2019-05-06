@@ -1,3 +1,4 @@
+<%@page import="br.ufc.russas.n2s.academus.model.Status"%>
 <%@page import="br.ufc.russas.n2s.academus.model.NivelAcademus"%>
 <%@page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Solicitacao"%>
@@ -37,7 +38,6 @@
 		-->
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações submetidas</a>
-		<a class="dropdown-item" href="Inicio?solicitacao=validado">Solicitações para validar</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
 		
 		<% } else if (usuario.getNivel() == NivelAcademus.COORDENADOR){ 
@@ -62,7 +62,6 @@
 		-->
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações submetidas</a>
-		<a class="dropdown-item" href="Inicio?solicitacao=validado">Solicitações para validar</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=analizado">Solicitações para analizar</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
 		<% } else { %>
@@ -101,21 +100,21 @@
 			<td><%=soli.getSolicitante().getNome()%></td>
 			<td><%=soli.getDisciplinaAlvo().getDisciplina().getNome()%></td>
 			<td><%=soli.getResultado()%></td>
+			<td>
 			<form method="POST" action="VisualizarSolicitacao" id="form<%=soli.getIdSolicitacao()%>">
-				<td>
-				<button  class="btn btn-primary btn-sm" form="form<%=soli.getIdSolicitacao()%>" class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=soli.getIdSolicitacao() %>" >
+				<button class="btn btn-primary btn-sm" form="form<%=soli.getIdSolicitacao()%>" class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=soli.getIdSolicitacao() %>" >
 				Visualizar
 				</button>
-				</td>
 			</form>
-			<% if(usuario.getNivel() == NivelAcademus.SECRETARIO){ %>
-			<form method="POST" action="RegistarEntrega" id="form-<%=soli.getIdSolicitacao()%>">
-				<td>
-				<button  class="btn btn-primary btn-sm" form="form<%=soli.getIdSolicitacao()%>" class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="registroId" value="<%=soli.getIdSolicitacao() %>" >
+			</td>
+			<% if(usuario.getNivel() == NivelAcademus.SECRETARIO && soli.getStatus() == Status.SOLICITADO){ %>
+			<td>
+			<form method="POST" action="RegistrarEntrega" id="res<%=soli.getIdSolicitacao()%>">
+				<button class="btn btn-primary btn-sm" form="res<%=soli.getIdSolicitacao()%>" class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="registro" value="<%=soli.getIdSolicitacao() %>" >
 				Registrar Entrega
 				</button>
-				</td>
 			</form>
+			</td>
 			<%} %>
 		</tr>
 		

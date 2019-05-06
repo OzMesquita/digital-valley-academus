@@ -1,5 +1,4 @@
-<div class="form-group">
-	<div class="modal-footer">
+
 	<!-- Botoes de Aluno 
 		- Editar: redireciona para a pagina EditarSolicitacao.jsp
 		- Cancelar: redireciona a pagina para Inicio.jsp  -->
@@ -10,10 +9,3 @@
 			class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("id")%>" > Editar
 		</button>
 	</form>
-	
-	<!-- Botao Cancelar -->
-	<a href="Inicio">
-		<input type="button" class="btn btn-primary btn-sm"
-			style="height: 30px;" value="Cancelar"></a>
-	</div>
-</div>
