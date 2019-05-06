@@ -19,7 +19,7 @@ public class App
         //System.out.println(Natureza.getDescricao(n));
     	//System.out.println( "Hello World!" );
         MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
-    	List<MatrizCurricular> matrizes = daoMC.listar();
+    	List<MatrizCurricular> matrizes = daoMC.listar(0, 10);
     	for(MatrizCurricular mc : matrizes){
     		System.out.println(mc.getInfoComponentes());
     	}
