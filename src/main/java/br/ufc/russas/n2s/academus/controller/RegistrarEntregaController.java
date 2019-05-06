@@ -21,7 +21,7 @@ public class RegistrarEntregaController  extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {		
 			
-			int idSolicitacao = Integer.parseInt(request.getParameter("registroId"));
+			String idSolicitacao = request.getParameter("registro");
 			request.setAttribute("id", idSolicitacao);
 			
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
@@ -30,6 +30,7 @@ public class RegistrarEntregaController  extends HttpServlet{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("redirect.jsp");
 		}
 	}
 }

@@ -1,14 +1,14 @@
 
 <div class="modal-footer">
-			
+		<!-- Botao Cancelar -->
+	<a href="Inicio"><input type="button" class="btn btn-primary btn-sm"
+	style="height: 30px;" value="Cancelar"></a>
+		
 	<!-- Botao Avaliar -->
-<input type="button" class="btn btn-primary btn-sm"
+	<input type="button" class="btn btn-primary btn-sm"
 		style="height: 30px;" value="Avaliar"
 		data-toggle="modal" data-target="#testeCoor">
 	
-	<!-- Botao Cancelar -->
-<a href="Inicio"><input type="button" class="btn btn-primary btn-sm"
-	style="height: 30px;" value="Cancelar"></a>
 </div>
 					
 					<!-- Modal -->

@@ -31,7 +31,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Visualizando Solicitação</title>
+		<title>Registrar Entrega</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 		
@@ -56,10 +56,10 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
 						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>					
-						<li class="breadcrumb-item active" aria-current="page">Visualizar Solicitação</li>
+						<li class="breadcrumb-item active" aria-current="page">Registrar Entrega</li>
 					</ol>
 					</nav>
-					<h1>Visualizar Solicitação</h1>
+					<h1>Registrar Entrega de Documentação</h1>
 					
 					<br>
 					<%
@@ -75,37 +75,7 @@
 	                            
 	                        </div>
 							<br> 
-							
-							<label for="nomeInput"><b> Status da Solicitação </b></label> 
-							<input type="text" name="nome" value="<%= solicitacao.getStatus() %>" class="form-control" id="nomeInput" aria-describedby="tituloHelp" readonly required> 
-							
-							<div class="invalid-feedback">
-	                            
-	                        </div>
-							<br> 
-							
-							<label for="cargaInput"><b> Nome do Solicitante </b></label> 
-							<input type="text" name="componenteCurricular" value="<%=solicitacao.getSolicitante().getNome() %>" class="form-control" id="cargaInput" aria-describedby="tituloHelp" readonly required> 
-							
-							 <div class="invalid-feedback">
-	                            
-	                        </div>
-							<br> 
-							
-							<label for="creditosInput"><b> Nome da Disciplina </b></label> 
-							<input type="text" name="creditos" value="<%=solicitacao.getDisciplinaAlvo().getDisciplina().getNome() %>" class="form-control" id="creditosInput" aria-describedby="tituloHelp" readonly required> 
-							 
-							<div class="invalid-feedback">
-	                            
-	                        </div>
-	                        <br>
-	                        
-	                        <label for="justificativaInput"><b> Justificativa </b></label> 
-							<textarea rows="8" id="justificativa" name="justificativa" class="form-control" aria-describedby="tituloHelp" readonly required> <%= solicitacao.getJustificativa() %></textarea>
-							<div class="invalid-feedback">
-	                            
-	                        </div>
-							<br>			
+										
 							<label for="disciplinasCursadasInput"><b> Lista de Disciplinas Cursadas</b></label>
 								<div class="form-group table-responsive">
 									<table class="table">
@@ -239,14 +209,6 @@
 										%>
 									</table>
 								</div>
-							<br>
-								
-							<label for="resultadoInput"><b> Resultado </b></label>
-							<input type="text" name="resultadoInput" value="<%= solicitacao.getResultado() %>" class="form-control" id="resultadoInput" aria-describedby="tituloHelp" readonly required>
-	
-							<div class="invalid-feedback">
-	                            
-	                        </div>
 							<br>
 							<br>
 						     	
