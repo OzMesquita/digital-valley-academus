@@ -29,7 +29,7 @@ public class Facade {
 		if(pro != null) {
 			return pro;
 		}
-		Funcionario func = new DAOFactoryJDBC().criarProfessorDAO().buscarPorCPF(cpf);
+		Funcionario func = new DAOFactoryJDBC().criarFuncionarioDAO().buscarPorCPF(cpf);
 		if(func != null) {
 			return func;
 		}

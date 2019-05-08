@@ -160,14 +160,13 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 	@Override
 	public Professor buscarPorCPF(String cpf) {
 		//String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE p.id_pessoa_prof=? AND u.id_pessoa_usuario = p.id_pessoa_prof AND p.id_pessoa_prof = s.id_pessoa_usuario";
-		String SQL = "SELECT * FROM academus.perfil_academus AS p, academus.funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.cpf = ? AND p.id_nivel=?;";
+		String SQL = "SELECT * FROM academus.perfil_academus AS p, academus.funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.cpf = ?";
 		Professor professor = null;
 		
 		Connection conn = ConnectionPool.getConnection();
 		try {
 			PreparedStatement ps = conn.prepareStatement(SQL);
 			ps.setString(1, cpf);
-			ps.setInt(2, NivelAcademus.PROFESSOR.ordinal());
 			
 			ResultSet rs = ps.executeQuery();
 			

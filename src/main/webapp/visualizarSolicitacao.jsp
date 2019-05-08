@@ -148,7 +148,7 @@
 														<span aria-hidden="true">&times;</span>
 													</button>
 												</div>
-												<form action="DownloadAnexos" method="Post" enctype="multipart/form-data">
+												<form action="DownloadAnexos" method="Post">
 												
 													<div class="modal-body">
 													<div class="card">
