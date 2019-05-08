@@ -10,7 +10,6 @@ import java.util.List;
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Funcionario;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
-import br.ufc.russas.n2s.academus.model.Professor;
 
 public class JDBCFuncionarioDAO implements FuncionarioDAO{
 
@@ -155,7 +154,7 @@ public class JDBCFuncionarioDAO implements FuncionarioDAO{
 	public Funcionario buscarPorCPF(String cpf) {
 		
 		String SQL = "SELECT * FROM academus.perfil_academus AS p, academus.funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.cpf = ?;";
-		Funcionario funcionario = new Funcionario();
+		Funcionario funcionario = null;
 		
 		Connection conn = ConnectionPool.getConnection();
 		try {
@@ -167,6 +166,7 @@ public class JDBCFuncionarioDAO implements FuncionarioDAO{
 			if(rs.next()){
 				CursoDAO cdao = new DAOFactoryJDBC().criarCursoDAO();
 				
+				funcionario = new Funcionario();
 				funcionario.setId(rs.getInt("id_perfil_academus"));
 				funcionario.setNome(rs.getString("nome"));
 				funcionario.setCPF(rs.getString("cpf"));

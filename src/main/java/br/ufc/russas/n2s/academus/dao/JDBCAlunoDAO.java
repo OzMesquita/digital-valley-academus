@@ -91,6 +91,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 				aluno.setNome(rs.getString("nome")); //ok
 				aluno.setEmail(rs.getString("email")); //ok
 				aluno.setCPF(rs.getString("cpf")); //ok
+				aluno.setIsAdmin(rs.getBoolean("is_admin"));
 				aluno.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
 				aluno.setCurso(curso);						
 				
@@ -133,6 +134,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 				aluno.setId(rs.getInt("id_perfil_academus")); //ok
 				aluno.setNome(rs.getString("nome")); //ok
 				aluno.setEmail(rs.getString("email")); //ok
+				aluno.setIsAdmin(rs.getBoolean("is_admin"));
 				aluno.setCPF(rs.getString("cpf")); //ok
 				aluno.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
 				aluno.setCurso(curso);						
@@ -175,6 +177,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 				aluno.setId(rs.getInt("id_perfil_academus")); //ok
 				aluno.setNome(rs.getString("nome")); //ok
 				aluno.setCPF(rs.getString("cpf")); //ok
+				aluno.setIsAdmin(rs.getBoolean("is_admin"));
 				aluno.setEmail(rs.getString("email")); //ok
 				aluno.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
 								
@@ -220,6 +223,7 @@ public class JDBCAlunoDAO implements AlunoDAO{
 				aluno.setCPF(rs.getString("cpf")); //ok
 				aluno.setEmail(rs.getString("email")); //ok
 				aluno.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				aluno.setIsAdmin(rs.getBoolean("is_admin"));
 								
 				
 				//Informações de Aluno
