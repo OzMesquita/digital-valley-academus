@@ -126,8 +126,8 @@
 							</div>
 							<div class="modal-footer">
 								<div id="botoes" class="controls">
-									<button type="submit" class="btn btn-primary btn-sm">Confirmar</button>
 									<a href="Inicio"><button type="button" class="btn btn-primary btn-sm">Cancelar</button></a>
+									<button type="submit" class="btn btn-primary btn-sm">Confirmar</button>
 								</div>
 							</div>
 						</form>

@@ -158,7 +158,7 @@
 														<div class="card-body">
 															<div class="form-row">
 																<%if(disCursada.getEmenta().getIdArquivo() > 0){ %>
-																	<h2><input type="checkbox" name="anexo" id="anexo" value="1" /> <%=disCursada.getEmenta().getNome()%><br/></h2>
+																	<h2><input type="checkbox" name="anexo" id="anexo1-<%=disCursada.getId()%>" value="1" onchange="teste(<%=disCursada.getId()%>>)"/> <%=disCursada.getEmenta().getNome()%><br/></h2>
 															       	
 															    <%}else{%>
 					    											Nenhum arquivo anexado
@@ -173,7 +173,7 @@
 														<div class="card-body">
 															<div class="form-row">
 															<%if(disCursada.getHistorico().getIdArquivo() > 0){ %>
-																<h2><input type="checkbox" name="anexo" id="anexo" value="2"/> <%=disCursada.getHistorico().getNome()%></h2><br/>
+																<h2><input type="checkbox" name="anexo" id="anexo2-<%=disCursada.getId()%>" value="2" onchange="teste(<%=disCursada.getId()%>)"/> <%=disCursada.getHistorico().getNome()%></h2><br/>
 															<%}else{%>
 					    										Nenhum arquivo anexado
 															<%}%>
@@ -183,15 +183,16 @@
 													</div>
 														
 													<div class="modal-footer">
+														<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
+														
 														<%if(disCursada.getEmenta().getIdArquivo() > 0 || disCursada.getHistorico().getIdArquivo() > 0){%>
 															<input type="hidden" id="matricula" name="matricula" value="<%=solicitacao.getSolicitante().getMatricula()%>">
 										        			<input type="hidden" id="id_solicitacao" name="id_solicitacao" value="<%=solicitacao.getIdSolicitacao()%>">
 										        			<input type="hidden" id="id_disciplina_cursada" name="id_disciplina_cursada" value="<%=disCursada.getId()%>">
 															
-															<button value="1" name="button" class="btn btn-primary btn-sm active">Download</button>
+															<button value="1" name="button" id="submitAnexo-<%=disCursada.getId()%>" class="btn btn-primary btn-sm active">Download</button>
 															
 														<%}%>
-															<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
 													</div>
 												</form>
 											</div>
@@ -215,7 +216,7 @@
 							<div class="modal-footer">
 							<!-- Botao Cancelar -->
 								<a href="Inicio">
-								<input type="button" class="btn btn-primary btn-sm" style="height: 30px;" value="Cancelar"></a>
+								<input type="button" class="btn btn-primary btn-sm" style="height: 30px;" value="Voltar"></a>
 	
 							<%if(per.getNivel() == NivelAcademus.ALUNO && solicitacao.getStatus() == Status.SOLICITADO){%>
 						    	<c:import url="jsp/elements/botoesVisualizarAluno.jsp" charEncoding="UTF-8"></c:import>
@@ -238,6 +239,16 @@
 		</div>
 		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
 	</body>
+	<script>
+	function teste1(id){
+		if(document.getElementById("anexo1-"+id).value != "0"){
+			document.getElementById("submitAnexo-"+id).disabled = "";
+		}
+		if(document.getElementById("anexo1-"+id).value == "0"){
+			document.getElementById("submitAnexo-"+id).disabled = "disabled";
+		}
+	}
+	</script>
 	<% 
 		String mensagem = (String) request.getAttribute("mensagem");
 		if(mensagem != null){

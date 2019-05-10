@@ -50,12 +50,11 @@
 							</div>
 					</div>
 					<div class="modal-footer">
-							
+							<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancelar</button>
 							<!-- Se conrfirma a avaliacao, é redirecionado ao controlle AnalisandoCoordenador -->
 							<button  class="btn btn-primary btn-sm" form="form<%=(String)request.getAttribute("id")%>"
 								 style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("id") %>" > Confirmar
 							</button>
-							<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancelar</button>
 							
 					</div>
 					</form>

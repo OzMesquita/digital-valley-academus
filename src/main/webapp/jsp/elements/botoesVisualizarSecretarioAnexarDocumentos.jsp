@@ -53,13 +53,12 @@
 									</div>
 							</div>
 							<div class="modal-footer">
+									<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancelar</button>
 									<td>
 									<button  class="btn btn-primary btn-sm active" form="form<%=(String)request.getAttribute("id")%>"
 										class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("id") %>" > Confirmar
 									</button>
 									</td>
-									
-									<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancelar</button>
 										
 									
 							</div>
