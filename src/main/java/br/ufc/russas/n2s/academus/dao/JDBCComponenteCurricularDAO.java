@@ -17,7 +17,7 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 	
 	@Override
 	public ComponenteCurricular cadastrar(ComponenteCurricular comp, MatrizCurricular matriz) {
-		String sql = "INSERT INTO academus.componente_curricular(id_matriz, id_disciplina, natureza, semestre) VALUES (?, ?, ?, ?);";
+		String sql = "INSERT INTO academus.componente_curricular(id_matriz, id_disciplina, natureza) VALUES (?, ?, ?);";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try {			

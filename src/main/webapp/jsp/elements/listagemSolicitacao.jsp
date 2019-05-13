@@ -76,7 +76,7 @@
 		<thead>
 			
 			<tr>
-				<th scope="col">Codigo de Solicitação</th>
+				<th scope="col">Código da Solicitação</th>
 				<th scope="col">Status</th>
 				<th scope="col">Solicitante</th>
 				<th scope="col">Disciplina</th>

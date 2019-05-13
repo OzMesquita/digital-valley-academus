@@ -59,7 +59,7 @@
 			        	
 			         <br>	
 						
-					 <label for="prazoMinimoInput"> Prazo minímo para conclusão*</label>
+					 <label for="prazoMinimoInput"> Prazo mínimo para conclusão*</label>
 					 <input type="text" name="prazo_minimo" class="form-control" id="prazoMinimoInput" aria-describedby="tituloHelp" placeholder="Digite o número minímo  de semestres para concluir o curso" required>
 					 <small id="tituloHelp" class="form-text text-muted"> Exemplo: 8 </small>		
 				

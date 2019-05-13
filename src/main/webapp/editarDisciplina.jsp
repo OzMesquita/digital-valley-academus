@@ -58,7 +58,7 @@
 						<li class="breadcrumb-item active" aria-current="page">Editar Disciplina</li>
 					</ol>
 					</nav>
-					<h1>Atualizar Disciplina</h1>
+					<h1>Editar Disciplina</h1>
 					<br>
 					<%
 						if(!disciplina.getId().equals("INDEFINIDO") && deuCerto){

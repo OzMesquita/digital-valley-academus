@@ -64,10 +64,10 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
 						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>					
-						<li class="breadcrumb-item active" aria-current="page">Atualizar Matriz</li>
+						<li class="breadcrumb-item active" aria-current="page">Editar Matriz</li>
 					</ol>
 					</nav>
-					<h1>Atualizar Matriz Curricular</h1>
+					<h1>Editar Matriz Curricular</h1>
 						<%
 							if( deuCerto && matriz.getIdMatriz() != -1 ) {
 						%>
@@ -98,7 +98,7 @@
 				        	
 				         <br>	
 							
-						 <label for="prazoMinimoInput"> Prazo minímo para conclusão*</label>
+						 <label for="prazoMinimoInput"> Prazo mínimo para conclusão*</label>
 						 <input type="number" name="prazo_minimo" value="<%=matriz.getPrazoMinimo()%>" class="form-control" id="prazoMinimoInput" aria-describedby="tituloHelp" placeholder="Digite o número minímo  de semestres para concluir o curso" required>
 						 <small id="tituloHelp" class="form-text text-muted"> Exemplo: 8 </small>		
 					

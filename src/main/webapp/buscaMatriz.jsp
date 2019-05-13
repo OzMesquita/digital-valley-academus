@@ -59,7 +59,7 @@
 										<th scope="col">Nome</th>
 										<th scope="col">Período Letivo</th>
 										<th scope="col">Carga</th>
-										<th scope="col">Prazo minímo</th>
+										<th scope="col">Prazo mínimo</th>
 										<th scope="col">Prazo máximo</th>
 										<th scope="col">Vigente</th>		
 										<th scope="col">Ativo</th>

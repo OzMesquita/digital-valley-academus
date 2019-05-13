@@ -7,6 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import br.ufc.russas.n2s.academus.dao.ComponenteCurricularDAO;
+import br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC;
 import br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCMatrizCurricularDAO;
 import br.ufc.russas.n2s.academus.model.ComponenteCurricular;
@@ -67,6 +70,8 @@ public class AtualizarMatrizController extends HttpServlet {
 				cc.setDisciplina(dis);
 				cc.setNatureza(natureza);
 				cc.setPreRequisitos(DisciplinaPreReq);
+				
+				compObjs.add(cc);
 			}
 				
 			MatrizCurricular ma = new MatrizCurricular();
@@ -83,9 +88,15 @@ public class AtualizarMatrizController extends HttpServlet {
 			ma.setComponentes(compObjs);
 				
 			daoMatriz.editar(ma);
+			
+			ComponenteCurricularDAO ccdao = new DAOFactoryJDBC().criarComponenteCurricularDAO();
+			
+			for(ComponenteCurricular cc : compObjs) {
+				ccdao.cadastrar(cc, ma);
+			}
 			/*
-			Problema:	- falta colocar os componentes atribuidos na matriz(O banco não está fazendo).
-						- Fazer a verificação de quando for alterar um componente, verificar se ele não possui alguma solicitação.
+			Problema:	- Fazer a verificação de quando for alterar um componente, verificar se ele não possui alguma solicitação.
+						- Adicionar Pre-Requisitos
 			*/
 			request.setAttribute("mensagem","MS");
 			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("ListarMatrizes");
