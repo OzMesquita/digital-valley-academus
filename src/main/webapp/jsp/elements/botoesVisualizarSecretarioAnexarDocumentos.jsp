@@ -1,14 +1,14 @@
 
 <div class="modal-footer">
-			
+		<!-- Botao Cancelar -->
+	<a href="Inicio"><input type="button" class="btn btn-primary btn-sm"
+	style="height: 30px;" value="Cancelar"></a>
+		
 	<!-- Botao Avaliar -->
-<input type="button" class="btn btn-primary btn-sm"
+	<input type="button" class="btn btn-primary btn-sm"
 		style="height: 30px;" value="Avaliar"
 		data-toggle="modal" data-target="#testeCoor">
 	
-	<!-- Botao Cancelar -->
-<a href="Inicio"><input type="button" class="btn btn-primary btn-sm"
-	style="height: 30px;" value="Cancelar"></a>
 </div>
 					
 					<!-- Modal -->
@@ -53,13 +53,12 @@
 									</div>
 							</div>
 							<div class="modal-footer">
+									<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancelar</button>
 									<td>
 									<button  class="btn btn-primary btn-sm active" form="form<%=(String)request.getAttribute("id")%>"
 										class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("id") %>" > Confirmar
 									</button>
 									</td>
-									
-									<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancelar</button>
 										
 									
 							</div>

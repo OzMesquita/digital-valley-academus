@@ -206,9 +206,11 @@
 				</div>
 			</div>
 			<div id="botoes" class="modal-footer">
-				<button type="submit" name="button" class="btn btn-primary btn-sm">Confirmar</button>
 				<a href="ListarMatrizes">
-				<button type="button" class="btn btn-primary btn-sm">Cancelar</button></a>
+					<button type="button" class="btn btn-primary btn-sm">Cancelar</button></a>
+				
+				<button type="submit" name="button" class="btn btn-primary btn-sm">Confirmar</button>
+				
 			</div>
 		</form>
 						<%

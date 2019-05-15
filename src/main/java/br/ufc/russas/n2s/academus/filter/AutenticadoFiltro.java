@@ -24,7 +24,6 @@ import br.ufc.russas.n2s.academus.model.Professor;
 import model.EnumCargo;
 import model.EnumPerfil;
 import model.Pessoa;
-import model.Servidor;
 import model.Usuario;
 import dao.DAOFactory;
 import util.Constantes;
@@ -57,9 +56,9 @@ public class AutenticadoFiltro implements Filter {
 					
 					PerfilAcademusDAO perDAO = new DAOFactoryJDBC().criarPerfilAcademusDAO();
 					PerfilAcademus userAcademus = new PerfilAcademus();
-					userAcademus.setIsAdmin(false);
+					userAcademus = perDAO.buscarPorCPF(user.getCpf());
 					
-					if(perDAO.buscarPorCPF(user.getCpf()).getCPF().equals("")) {
+					if(userAcademus.getCPF().equals("")) {
 						if(user.getUsuario().getPerfil() == EnumPerfil.ALUNO) {
 							br.ufc.russas.n2s.academus.model.Aluno userAluno = new br.ufc.russas.n2s.academus.model.Aluno();
 							
@@ -145,7 +144,7 @@ public class AutenticadoFiltro implements Filter {
 							
 						}
 					} else {
-						userAcademus = br.ufc.russas.n2s.academus.util.Facade.buscarPerfilPorCPF(user.getCpf());
+						userAcademus = br.ufc.russas.n2s.academus.util.Facade.buscarPerfilPorCPF(user.getCpf(),userAcademus.getNivel());
 					}
 					
 					session.setAttribute("userAcademus", userAcademus);

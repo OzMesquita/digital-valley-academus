@@ -135,8 +135,6 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
-			CursoDAO curdao = new DAOFactoryJDBC().criarCursoDAO();
-			
 			if(rs.next()){
 				
 				idAcademus = rs.getInt("id_perfil_academus");
@@ -178,7 +176,7 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 				perfil.setNome(rs.getString("nome"));
 				perfil.setEmail(rs.getString("email"));
 				perfil.setCPF(rs.getString("cpf"));
-				//perfil.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				perfil.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
 				
 			}
 			

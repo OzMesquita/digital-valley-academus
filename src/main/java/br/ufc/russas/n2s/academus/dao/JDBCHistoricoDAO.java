@@ -58,7 +58,7 @@ public class JDBCHistoricoDAO implements HistoricoDAO{
 				Historico h = new Historico();
 				h.setData(rs.getDate("data_resultado").toLocalDate());
 				h.setHorario(rs.getTime("horario").toLocalTime());
-				h.setResponsavel(pad.buscarPorId(rs.getInt("id_perfil_usuario")));
+				h.setResponsavel(pad.buscarPorId(rs.getInt("id_perfil_academus")));
 				h.setDescricao(rs.getString("descricao"));
 				lh.add(h);
 			}

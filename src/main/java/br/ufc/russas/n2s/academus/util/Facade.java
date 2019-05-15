@@ -8,6 +8,7 @@ import java.io.IOException;
 import br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC;
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Funcionario;
+import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 import br.ufc.russas.n2s.academus.model.Professor;
 import util.Constantes;
@@ -20,21 +21,28 @@ public class Facade {
 		//
 	}
 	
-	public static PerfilAcademus buscarPerfilPorCPF(String cpf) {
-		Aluno aluno = new DAOFactoryJDBC().criarAlunoDAO().buscarPorCPF(cpf);
-		if(aluno != null) {
+	public static PerfilAcademus buscarPerfilPorCPF(String cpf, NivelAcademus nivel) {
+		if(nivel == NivelAcademus.ALUNO) {
+			Aluno aluno = new DAOFactoryJDBC().criarAlunoDAO().buscarPorCPF(cpf);
 			return aluno;
 		}
-		Professor pro = new DAOFactoryJDBC().criarProfessorDAO().buscarPorCPF(cpf);
-		if(pro != null) {
+		if(nivel == NivelAcademus.PROFESSOR || nivel == NivelAcademus.COORDENADOR) {
+			Professor pro = new DAOFactoryJDBC().criarProfessorDAO().buscarPorCPF(cpf);
 			return pro;
 		}
-		Funcionario func = new DAOFactoryJDBC().criarProfessorDAO().buscarPorCPF(cpf);
-		if(func != null) {
+		if(nivel == NivelAcademus.SECRETARIO) {
+			Funcionario func = new DAOFactoryJDBC().criarFuncionarioDAO().buscarPorCPF(cpf);
 			return func;
 		}
-		PerfilAcademus per = new DAOFactoryJDBC().criarPerfilAcademusDAO().buscarPorCPF(cpf);
-		return per;
+		if(nivel == NivelAcademus.INDEFINIDO) {
+			Funcionario func = new DAOFactoryJDBC().criarFuncionarioDAO().buscarPorCPF(cpf);
+			if(func != null)
+				return func;
+			
+			PerfilAcademus per = new DAOFactoryJDBC().criarPerfilAcademusDAO().buscarPorCPF(cpf);
+			return per;
+		}
+		return new PerfilAcademus();
 	}
 	
 	public static String[] lerArquivoBancoDeDados() {

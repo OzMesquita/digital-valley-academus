@@ -75,8 +75,8 @@
 	
 							<div class="modal-footer">
 								<div id="botoes" class="controls">
-									<button type="submit" class="btn btn-primary">Confirmar</button>
 									<button type="button" class="btn btn-primary">Cancelar</button>
+									<button type="submit" class="btn btn-primary">Confirmar</button>
 								</div>
 							</div>
 						</form>
