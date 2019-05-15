@@ -44,10 +44,15 @@
 					</nav>
 					
 					<div class="form-group table-responsive">
-					<form class="form-inline" method="post" action="BuscarDisciplina">
-						<input class="form-control" style="width: 250px;" type="number"
-							name="id_disciplina" placeholder="Código da disciplina" required>&nbsp;
-						<button class="btn btn-sm btn-primary" type="submit">Procurar</button>
+					<form method="post" action="BuscarDisciplina">
+						<label for="buscainput"><h2><b> Escolha forma de pesquisa </b></h2></label> 
+						<h2><INPUT TYPE="radio" name="opcao" VALUE="1" CHECKED> código
+						<INPUT TYPE="radio" name="opcao" VALUE="2"> nome</h2>
+						<br>
+					<a class="form-inline">
+						<input class="form-control" style="width: 250px;" style='text-transform:uppercase'
+							name="id_disciplina" placeholder="Código ou nome da disciplina" required>&nbsp;
+						<button class="btn btn-sm btn-primary" type="submit">Procurar</button></a>
 					</form>
 					<br/>
 					<table class="table">
@@ -62,25 +67,39 @@
 						</thead>
 						<%
 							if(request.getParameter("id_disciplina") != null){
-								Disciplina disciplina = new Disciplina();
-								DisciplinaDAO dao = new JDBCDisciplinaDAO();
-								disciplina.setId(request.getParameter("id_disciplina"));
+								int tipobusca = Integer.parseInt(request.getParameter("opcao"));
+								String id_disciplina = request.getParameter("id_disciplina");
 								
-								disciplina = dao.buscarPorId(disciplina.getId());
-								if (!disciplina.getId().equals("INDEFINIDO")){
-								%>
-								<tr>
-									<td><%=disciplina.getId()%></td>
-									<td><%=disciplina.getNome()%></td>
-									<td><%=disciplina.getCarga()%></td>
-									<td><%=disciplina.getCreditos()%></td>
-									<td><a href="editarDisciplina.jsp?id=<%=disciplina.getId()%>" class="btn btn-secondary btn-sm" style="height: 30px;">Editar</a></td>
-									<td><a href="jsp/elements/aviso.jsp" class="btn btn-secondary btn-sm" style="height: 30px;">Remover</a></td>
-								</tr>
-								<%
-								} else {%>						
-									<tr><td><p>Nenhuma disciplina foi encontrada! </p></td></tr>
-								<%
+								DisciplinaDAO dao = new JDBCDisciplinaDAO();
+								List<Disciplina> disciplinas = new ArrayList();
+								if(tipobusca == 1){
+									Disciplina disciplina = new Disciplina();
+									disciplina = dao.buscarPorId(id_disciplina);
+									disciplinas.add(disciplina);
+								}else if (tipobusca == 2){
+									disciplinas = dao.buscarPorNome(id_disciplina);
+								}
+								
+								for(Disciplina disciplina : disciplinas){
+									if (!disciplina.getId().equals("INDEFINIDO")){
+									%>
+									<tr>
+										<td><%=disciplina.getId()%></td>
+										<td><%=disciplina.getNome()%></td>
+										<td><%=disciplina.getCarga()%></td>
+										<td><%=disciplina.getCreditos()%></td>
+										<td><form method="POST" action="EditarDisciplina">
+											<button class="btn btn-secondary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=disciplina.getId()%>" >
+												Editar
+											</button>
+										</form></td>
+										<td><a href="jsp/elements/aviso.jsp" class="btn btn-secondary btn-sm" style="height: 30px;">Remover</a></td>
+									</tr>
+									<%
+									} else {%>						
+										<tr><td><p>Nenhuma disciplina foi encontrada! </p></td></tr>
+									<%
+									}
 								}
 								
 							} else {

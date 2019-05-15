@@ -67,32 +67,32 @@
 					<div class="form-group">						
 						<form action="EditarDisciplina" method="post">
 							<label for="idInput">Código da Disciplina*</label> 
-							<input type="text" name="id_disciplina" value="<%= disciplina.getId() %>" class="form-control" id="idInput" aria-describedby="tituloHelp" placeholder="Digite o código da Disciplina" readonly required > 
-							
+							<input type="text" pattern="[a-zA-Z\s]{3}[0-9]{4}$" name="id_disciplina" value="<%= disciplina.getId() %>" class="form-control" id="idInput" aria-describedby="tituloHelp" placeholder="Digite o código da Disciplina" required > 
+							<small id="tituloHelp" class="form-text text-muted"> Exemplo: RUS1001</small> 
 							<div class="invalid-feedback">
 	                            
 	                        </div>
 							<br> 
 							
 							<label for="nomeInput"> Nome da Disciplina*</label> 
-							<input type="text" name="nome" value="<%= disciplina.getNome() %>" class="form-control" id="nomeInput" aria-describedby="tituloHelp" placeholder="Digite o nome da Disciplina" required> 
-							
+							<input type="text" pattern="[a-zA-Z\sÇçÁáÀàÉéÍíÓóÚú]+$" name="nome" value="<%= disciplina.getNome() %>" class="form-control" id="nomeInput" aria-describedby="tituloHelp" placeholder="Digite o nome da Disciplina" required> 
+							<small id="tituloHelp" class="form-text text-muted"> Exemplo: CÁLCULO I </small> 
 							<div class="invalid-feedback">
 	                            
 	                        </div>
 							<br> 
 							
 							<label for="cargaInput">  Carga Horária*</label> 
-							<input type="text" name="carga" value="<%= disciplina.getCarga() %>" class="form-control" id="cargaInput" aria-describedby="tituloHelp" placeholder="Digite a carga horária" required> 
-							
-							 <div class="invalid-feedback">
+							<input  type="number" min="16" step="16" name="carga" value="<%= disciplina.getCarga() %>" class="form-control" id="cargaInput" aria-describedby="tituloHelp" placeholder="Digite a carga horária" required> 
+							<small id="tituloHelp" class="form-text text-muted"> Exemplo: 64</small> 
+							<div class="invalid-feedback">
 	                            
 	                        </div>
 							<br> 
 							
 							<label for="creditosInput"> Créditos da Disciplina*</label> 
-							<input type="text" name="creditos" value="<%= disciplina.getCreditos() %>" class="form-control" id="creditosInput" aria-describedby="tituloHelp" placeholder="Digite os créditos da disciplina" required> 
-							 
+							<input  type="number" min="1" step="1" name="creditos" value="<%= disciplina.getCreditos() %>" class="form-control" id="creditosInput" aria-describedby="tituloHelp" placeholder="Digite os créditos da disciplina" required> 
+							<small id="tituloHelp" class="form-text text-muted"> Exemplo: 4</small> 
 							<div class="invalid-feedback">
 	                            
 	                        </div>
@@ -101,7 +101,7 @@
 							<div class="modal-footer">
 								<div id="botoes" class="controls">
 									<a class="btn btn-primary" href="ListarDisciplinas">Cancelar</a>
-									<button type="submit" class="btn btn-primary">Confirmar</button>
+									<button type="submit" name="id_antigo" value="<%= disciplina.getId()%>" class="btn btn-primary">Confirmar</button>
 								</div>
 							</div>
 						</form>	

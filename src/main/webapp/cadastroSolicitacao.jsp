@@ -56,9 +56,9 @@
 						<br>
 						<form action="CadastrarSolicitacao" method="post">
 							<div class="form-group">
-								<label for="matrizInput">Matriz escolhida</label>
+								<label for="matrizInput">Matriz</label>
 								<select id="matrizInput" class="form-control" onchange="listarComponentes()" required>
-									<option value="" selected="selected" disabled="disabled">Selecione a disciplina para a solicitação</option>
+									<option value="" selected="selected" disabled="disabled">Selecione a matriz para a solicitação</option>
 									<%for(MatrizCurricular matriz : matrizes){%>
 										<option id="matrizOption-<%=matriz.getIdMatriz()%>" value="<%=matriz.getInfoComponentes()%>"><%=matriz.getNome()%></option>
 									<%}%>

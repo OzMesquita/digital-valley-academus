@@ -6,13 +6,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO;
+import br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC;
+import br.ufc.russas.n2s.academus.dao.DisciplinaDAO;
 import br.ufc.russas.n2s.academus.model.Disciplina;
 
 public class EditarDisciplinaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private JDBCDisciplinaDAO daoCadastro = new JDBCDisciplinaDAO();
+	private DisciplinaDAO disciplina_dao = new DAOFactoryJDBC().criarDisciplinaDAO();
 
     public EditarDisciplinaController() {
         super();
@@ -24,22 +25,43 @@ public class EditarDisciplinaController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("button") == null && request.getParameter("id_disciplina") != null) { // Se entrou aqui é porque está editando
-			String id = request.getParameter("id_disciplina");
-			String nome = request.getParameter("nome");
-			int carga = Integer.parseInt(request.getParameter("carga"));
-			int creditos = Integer.parseInt(request.getParameter("creditos"));
-	
-			Disciplina dis = new Disciplina();
-			
-			dis.setId(id);
-			dis.setNome(nome);
-			dis.setCarga(carga);
-			dis.setCreditos(creditos);
-	
-			daoCadastro.editar(dis);
-	
 			try {
-
+				String id = request.getParameter("id_disciplina");
+				String nome = request.getParameter("nome");
+				int carga = Integer.parseInt(request.getParameter("carga"));
+				int creditos = Integer.parseInt(request.getParameter("creditos"));
+				String id_antigo = request.getParameter("id_antigo");
+				
+				String mensagem = "";
+		
+				Disciplina disciplina = disciplina_dao.buscarPorId(id);
+				if(disciplina == null || id.equals(id_antigo)) {
+					disciplina = disciplina_dao.buscarPorId(id_antigo);
+					Disciplina nova_disciplina = new Disciplina();
+					nova_disciplina.setId(id);
+					nova_disciplina.setNome(nome);
+					nova_disciplina.setCarga(carga);
+					nova_disciplina.setCreditos(creditos);
+					
+					if(id == id_antigo) {
+						disciplina_dao.editar(nova_disciplina);
+						System.out.println("Editando Disciplina");
+					} else {
+						disciplina_dao.excluir(disciplina);
+						disciplina_dao.cadastrar(nova_disciplina);
+						System.out.println("Apagando e criando uma nova");
+					}
+					mensagem = "Disciplina alterada com sucesso";
+				} else {
+					System.out.println("ID ja existente");
+					mensagem = "Id da disciplina ja existente";
+					request.setAttribute("id", id_antigo);
+					javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("editarDisciplina.jsp");
+					dispatcher.forward(request, response);
+				}
+		
+			
+				request.setAttribute("mensagem", mensagem);
 				response.sendRedirect("ListarDisciplinas");
 				
 			} catch (Exception e) {

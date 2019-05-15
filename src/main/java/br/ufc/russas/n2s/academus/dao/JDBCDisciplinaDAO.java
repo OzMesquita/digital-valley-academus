@@ -106,7 +106,7 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 	@Override
 	public Disciplina buscarPorId(String id) {
 		String sql = "select * from academus.disciplina where id_disciplina = '"+id+"';";
-		Disciplina aux = new Disciplina();
+		Disciplina aux = null;
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
@@ -114,6 +114,7 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()){
+				aux = new Disciplina();
 				aux.setId(rs.getString("id_disciplina"));
 				aux.setNome(rs.getString("nome"));
 				aux.setCarga(rs.getInt("carga"));
@@ -134,13 +135,12 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 
 	@Override
 	public List<Disciplina> buscarPorNome(String nome) {
-		String sql = "select * from academus.disciplina where nome like '%?%' order by id_disciplina;";
+		String sql = "select * from academus.disciplina where nome ilike '%"+nome+"%' order by id_disciplina";
 		List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, nome);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()){

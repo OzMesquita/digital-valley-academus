@@ -4,7 +4,7 @@ public enum Status {
 	
 	CANCELADO(1, "CANCELADO"),
 	SOLICITADO(2, "SOLICITADO"),
-	ANALIZANDO(3, "ANALIZANDO"),
+	ANALIZANDO(3, "ANALISANDO"),
 	FINALIZADO(4, "FINALIZADO");
 	
 	private final int codigo;
