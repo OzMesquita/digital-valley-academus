@@ -96,7 +96,7 @@
 		%>
 		<tr>
 			<td><%=soli.getIdSolicitacao()%></td>
-			<td><%=soli.getStatus()%></td>
+			<td><%=soli.getStatus().name()%></td>
 			<td><%=soli.getSolicitante().getNome()%></td>
 			<td><%=soli.getDisciplinaAlvo().getDisciplina().getNome()%></td>
 			<td><%=soli.getResultado()%></td>

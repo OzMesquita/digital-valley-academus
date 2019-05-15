@@ -86,7 +86,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 	public MatrizCurricular buscarPorId(int idMatriz){
 		String sql = "select * from academus.matriz_curricular where id_matriz = "+idMatriz+";";
 		ComponenteCurricularDAO cc = new JDBCComponenteCurricularDAO();
-		MatrizCurricular aux = new MatrizCurricular();
+		MatrizCurricular aux = null;
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{

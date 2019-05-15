@@ -45,22 +45,18 @@ public class EditarDisciplinaController extends HttpServlet {
 					
 					if(id == id_antigo) {
 						disciplina_dao.editar(nova_disciplina);
-						System.out.println("Editando Disciplina");
 					} else {
 						disciplina_dao.excluir(disciplina);
 						disciplina_dao.cadastrar(nova_disciplina);
-						System.out.println("Apagando e criando uma nova");
 					}
 					mensagem = "Disciplina alterada com sucesso";
 				} else {
-					System.out.println("ID ja existente");
 					mensagem = "Id da disciplina ja existente";
 					request.setAttribute("id", id_antigo);
 					javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("editarDisciplina.jsp");
 					dispatcher.forward(request, response);
 				}
-		
-			
+				
 				request.setAttribute("mensagem", mensagem);
 				response.sendRedirect("ListarDisciplinas");
 				

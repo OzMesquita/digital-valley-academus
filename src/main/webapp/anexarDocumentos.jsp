@@ -83,7 +83,7 @@
 											<tr>
 												<th scope="col">Nome</th>
 												<th scope="col">Instituição</th>
-												<th scope="col">Carga</th>
+												<th scope="col">Carga Horária</th>
 												<th scope="col">Semestre</th>
 												<th scope="col">Nota</th>
 												<th colspan="2">Anexos</th>
@@ -100,7 +100,7 @@
 											<td><%=disCursada.getNota()%></td>
 											<td>
 												<input type="button" class="btn btn-secondary btn-sm" value="Ementa" data-toggle="modal" data-target="#anexarEmenta-<%=disCursada.getId()%>">
-												<input type="button" class="btn btn-secondary btn-sm" value="Historico" data-toggle="modal" data-target="#anexarHistorico-<%=disCursada.getId()%>">
+												<input type="button" class="btn btn-secondary btn-sm" value="Histórico" data-toggle="modal" data-target="#anexarHistorico-<%=disCursada.getId()%>">
 											</td>
 										</tr>
 				

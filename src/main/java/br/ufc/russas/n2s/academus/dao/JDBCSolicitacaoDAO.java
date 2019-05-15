@@ -336,7 +336,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			Connection conn = ConnectionPool.getConnection();
 			try{
 				PreparedStatement ps = conn.prepareStatement(sql);
-				ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
+				ps.setInt(1, Status.getCodigo(Status.ANALISANDO));
 				ps.setInt(2, c.getCurso().getIdCurso());
 				ps.setInt(3, limiteInf);
 				ps.setInt(4, limiteSup);
@@ -667,7 +667,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
+			ps.setInt(1, Status.getCodigo(Status.ANALISANDO));
 			ps.setInt(2, limiteInf);
 			ps.setInt(3, limiteSup);
 			
@@ -1062,7 +1062,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
+			ps.setInt(1, Status.getCodigo(Status.ANALISANDO));
 			ps.setInt(2, pagina*10);
 			ResultSet rs = ps.executeQuery();
 			
@@ -1096,7 +1096,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 			Connection conn = ConnectionPool.getConnection();
 			try{
 				PreparedStatement ps = conn.prepareStatement(sql);
-				ps.setInt(1, Status.getCodigo(Status.ANALIZANDO));
+				ps.setInt(1, Status.getCodigo(Status.ANALISANDO));
 				ps.setInt(2, coordenador.getCurso().getIdCurso());
 				ps.setInt(3, pagina*10);
 				ResultSet rs = ps.executeQuery();

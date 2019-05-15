@@ -46,7 +46,7 @@ private static final long serialVersionUID = 1L;
 					// armezena as informações no banco para cada tipo de resultado
 					
 					if(resultado.equals("Valido")) {
-						solicitacao.setStatus(Status.ANALIZANDO);
+						solicitacao.setStatus(Status.ANALISANDO);
 						mensagem = "ASS";// Mensagem "Avalização Secretario Sucesso"
 					} else if(resultado.equals("Invalido")) {
 						solicitacao.setResultado("INDEFERIDO");

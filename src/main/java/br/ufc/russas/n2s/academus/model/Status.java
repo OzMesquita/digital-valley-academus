@@ -4,7 +4,7 @@ public enum Status {
 	
 	CANCELADO(1, "CANCELADO"),
 	SOLICITADO(2, "SOLICITADO"),
-	ANALIZANDO(3, "ANALISANDO"),
+	ANALISANDO(3, "ANALISANDO"),
 	FINALIZADO(4, "FINALIZADO");
 	
 	private final int codigo;
@@ -31,7 +31,7 @@ public enum Status {
 			return Status.SOLICITADO;
 		}
 		if(codigo == 3){
-			return Status.ANALIZANDO;
+			return Status.ANALISANDO;
 		}
 		if(codigo == 4){
 			return Status.FINALIZADO;

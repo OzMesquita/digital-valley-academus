@@ -114,7 +114,7 @@
 											<tr>
 												<th scope="col">Nome</th>
 												<th scope="col">Instituição</th>
-												<th scope="col">Carga</th>
+												<th scope="col">Carga Horária</th>
 												<th scope="col">Semestre</th>
 												<th scope="col">Nota</th>
 												<th scope="col">Anexos</th>
@@ -158,7 +158,7 @@
 														<div class="card-body">
 															<div class="form-row">
 																<%if(disCursada.getEmenta().getIdArquivo() > 0){ %>
-																	<h2><input type="checkbox" name="anexo" id="anexo1-<%=disCursada.getId()%>" value="1" onchange="teste(<%=disCursada.getId()%>>)"/> <%=disCursada.getEmenta().getNome()%><br/></h2>
+																	<h2><input type="checkbox" name="anexo" id="anexo1-<%=disCursada.getId()%>" value="1" onchange="teste(<%=disCursada.getId()%>)"/> <%=disCursada.getEmenta().getNome()%><br/></h2>
 															       	
 															    <%}else{%>
 					    											Nenhum arquivo anexado
@@ -168,7 +168,7 @@
 														</div>
 															
 														<div class="card-header">
-															<label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">Historico</label>
+															<label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">Histórico</label>
 														</div>
 														<div class="card-body">
 															<div class="form-row">
@@ -221,7 +221,7 @@
 							<%if(per.getNivel() == NivelAcademus.ALUNO && solicitacao.getStatus() == Status.SOLICITADO){%>
 						    	<c:import url="jsp/elements/botoesVisualizarAluno.jsp" charEncoding="UTF-8"></c:import>
 							
-							<% } else if(per.getNivel() == NivelAcademus.COORDENADOR && solicitacao.getStatus() == Status.ANALIZANDO){ %>
+							<% } else if(per.getNivel() == NivelAcademus.COORDENADOR && solicitacao.getStatus() == Status.ANALISANDO){ %>
 								<c:import url="jsp/elements/botoesVisualizarCoordenador.jsp" charEncoding="UTF-8"></c:import>
 								
 							<% } %>
