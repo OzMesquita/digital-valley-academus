@@ -15,7 +15,7 @@
            <a class="nav-item nav-link" href="ListarMatrizes"> Listar Matrizes</a>
            <a class="nav-item nav-link" href="BuscarMatriz"> Buscar Matrizes</a>
            <a class="nav-item nav-link" href="CadastrarMatriz"> Cadastrar Matrizes</a>
-           
+           <a class="nav-item nav-link" href="GerenciarPerfis"> Gerenciar Perfis</a>
        </div>
        <%}%>      
    </div>
