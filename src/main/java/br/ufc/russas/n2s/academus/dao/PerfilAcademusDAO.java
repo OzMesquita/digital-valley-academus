@@ -14,6 +14,8 @@ public interface PerfilAcademusDAO {
 	
 	public PerfilAcademus buscarPorCPF(String cpf);
 	
+	public List<PerfilAcademus> buscarPorNome(String nome);
+	
 	public PerfilAcademus editar(PerfilAcademus perfil);
 	
 	public void excluir(PerfilAcademus perfil);

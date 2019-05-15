@@ -193,6 +193,48 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 		
 		return perfil;
 	}
+	
+	@Override
+	public List<PerfilAcademus> buscarPorNome(String nome) {
+		String sql = "SELECT * FROM academus.perfil_academus WHERE nome LIKE ?;";
+		
+		ArrayList<PerfilAcademus> perfis = new ArrayList<PerfilAcademus>();
+		Connection conn = ConnectionPool.getConnection();
+		
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, "%" + nome + "%");
+			ResultSet rs = ps.executeQuery();
+			
+			CursoDAO curdao = new DAOFactoryJDBC().criarCursoDAO();
+			
+			while(rs.next()){
+				PerfilAcademus perfil = new PerfilAcademus();
+				
+				perfil.setIdGuardiao(rs.getInt("id_pessoa_usuario"));
+				perfil.setId(rs.getInt("id_perfil_academus"));
+				perfil.setIsAdmin(rs.getBoolean("is_admin"));
+				perfil.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				perfil.setNome(rs.getString("nome"));
+				perfil.setEmail(rs.getString("email"));
+				perfil.setCPF(rs.getString("cpf"));
+				perfil.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				
+				perfis.add(perfil);
+				
+			}
+			
+			ps.close();
+			rs.close();
+
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return perfis;
+	}
 
 	@Override
 	public PerfilAcademus editar(PerfilAcademus perfil) {
