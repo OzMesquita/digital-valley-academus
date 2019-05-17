@@ -46,20 +46,22 @@ public class CadastrarDisciplinaController extends HttpServlet {
 				dis.setNome(nome);
 				dis.setCarga(carga);
 				dis.setCreditos(creditos);
-
-
-				
 				
 				
 				try {
+					daoCadastro.cadastrar(dis);
 					
-					
+					request.setAttribute("success", "Disciplina cadastrada com sucesso.");
 					javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroDisciplina.jsp");
 					
 					dispatcher.forward(request, response);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
+					request.setAttribute("erro", "Ocorreu um erro ao cadastrar a disciplina. <br>Erro:<br>" + e.getMessage());
+					javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroDisciplina.jsp");
+					
+					dispatcher.forward(request, response);
 				}
 			}
 			else{
