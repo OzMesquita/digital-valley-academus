@@ -43,7 +43,7 @@
 			<form method="post" action="ExcluirDisciplina" id="formEx<%=contato.getId()%>">
 				<td>
 					<button  class="btn btn-primary btn-sm " form="formEx<%=contato.getId()%>" style="height: 30px;" type="submit" name="buttonEx" value="<%=contato.getId()%>" >
-					Remover
+					Excluir
 					</button>
 					</a>
 				</td>
