@@ -58,18 +58,23 @@ public class CadastrarMatrizController extends HttpServlet {
 			ma.setVigente(vigente);
 			ma.setAtivo(ativo);
 			ma.setIdCurso(curso);
-			
-			daoCadastroMatriz.cadastrar(ma);
 
 			try {
+				daoCadastroMatriz.cadastrar(ma);
+				
+				request.setAttribute("success", "Matriz cadastrada com sucesso.");
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroMatriz.jsp");
 				dispatcher.forward(request, response);
 
 			} catch (Exception e) {
 				e.printStackTrace();
+				request.setAttribute("erro", "Ocorreu um erro ao cadastrar a matriz. <br>Erro:<br>" + e.getMessage());
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroMatriz.jsp");
+				dispatcher.forward(request, response);
 			}
 		}else{
 			try {
+				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroMatriz.jsp");
 				dispatcher.forward(request, response);
 
