@@ -34,12 +34,11 @@ public class CadastrarDisciplinaController extends HttpServlet {
 
 			if(request.getParameter("id_disciplina") != null &&
 					request.getParameter("nome") != null &&
-					request.getParameter("carga") != null &&
-					request.getParameter("creditos") != null){
+					request.getParameter("carga") != null){
 				String id = request.getParameter("id_disciplina").toUpperCase();
 				String nome = request.getParameter("nome").toUpperCase();
 				int carga = Integer.parseInt(request.getParameter("carga"));
-				int creditos = Integer.parseInt(request.getParameter("creditos"));
+				int creditos = carga/16;
 
 				Disciplina dis = new Disciplina();
 				
@@ -49,10 +48,12 @@ public class CadastrarDisciplinaController extends HttpServlet {
 				dis.setCreditos(creditos);
 
 
-				daoCadastro.cadastrar(dis);
+				
 				
 				
 				try {
+					
+					
 					javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroDisciplina.jsp");
 					
 					dispatcher.forward(request, response);

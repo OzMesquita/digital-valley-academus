@@ -90,13 +90,14 @@
 	                        </div>
 							<br> 
 							
+							<!-- Retirado pois vai ser calculado a partir da carga
 							<label for="creditosInput"> Créditos da Disciplina*</label> 
 							<input  type="number" min="1" step="1" name="creditos" value="<%= disciplina.getCreditos() %>" class="form-control" id="creditosInput" aria-describedby="tituloHelp" placeholder="Digite os créditos da disciplina" required> 
 							<small id="tituloHelp" class="form-text text-muted"> Exemplo: 4</small> 
 							<div class="invalid-feedback">
 	                            
 	                        </div>
-							<br>						
+							<br> -->						
 							
 							<div class="modal-footer">
 								<div id="botoes" class="controls">

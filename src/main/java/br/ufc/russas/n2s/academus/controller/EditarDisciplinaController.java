@@ -29,7 +29,7 @@ public class EditarDisciplinaController extends HttpServlet {
 				String id = request.getParameter("id_disciplina");
 				String nome = request.getParameter("nome");
 				int carga = Integer.parseInt(request.getParameter("carga"));
-				int creditos = Integer.parseInt(request.getParameter("creditos"));
+				int creditos = carga/16;
 				String id_antigo = request.getParameter("id_antigo");
 				
 				String mensagem = "";

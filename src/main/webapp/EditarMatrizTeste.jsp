@@ -162,6 +162,8 @@
 		           <input type="hidden" id="tam" value="<%=i%>">
 		           <%//System.out.println(i);%>
 	           	</div>
+	          </div>
+	          <div class="component-feedback">
 	          </div>                          
 	        <br>
 	        <div class="content">
@@ -248,7 +250,16 @@
 	var numPreRequisitos = 0;
 	
 	function adicionarComponente(){
-		if(document.getElementById("componentesInput").value !== ""){
+		if (listaPreRequisitos.includes(document.getElementById("componentesInput").value)){
+			$('.component-feedback').append(
+				'<div class="alert alert-danger alert-dismissible fade show" role="alert">'+
+				'	A disciplina não pode ter ela própria como pré requisito.'+
+				'	<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+			    '		<span aria-hidden="true">&times;</span>'+
+			  	'	</button>'+
+				'</div>'		
+			);
+		} else if(document.getElementById("componentesInput").value !== ""){
 			var disciplina = new Object();
 			disciplina.id = document.getElementById("componentesInput").value.substring(0,7);
 			disciplina.nome = document.getElementById("componentesInput").value.substring(10);
@@ -256,7 +267,7 @@
 			disciplina.preRequisitos = "";
 			if(listaPreRequisitos.length>0){
 				for(j=0;j<listaPreRequisitos.length;j++){
-					if(listaPreRequisitos[j] !== ""){
+					if(listaPreRequisitos[j] !== "" && listaPreRequisitos[j].substring(0,7) !== disciplina.id){
 						if(j>0){disciplina.preRequisitos += "; ";}
 						disciplina.preRequisitos += listaPreRequisitos[j].substring(0,7);
 					}
@@ -314,7 +325,18 @@
 	}
 	
 	function adicionarPreRequisito(){
-		if(document.getElementById("preRequisitosInput").value !== ""){
+		
+		
+		if (listaPreRequisitos.includes(document.getElementById("preRequisitosInput").value)){
+			$('.component-feedback').append(
+				'<div class="alert alert-warning alert-dismissible fade show" role="alert">'+
+				'	O Pré-requisito já foi adicionado.'+
+				'	<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+			    '		<span aria-hidden="true">&times;</span>'+
+			  	'	</button>'+
+				'</div>'		
+			);
+		} else if(document.getElementById("preRequisitosInput").value !== ""){
 			var preRequisito = document.getElementById("preRequisitosInput").value;
 			listaPreRequisitos[numPreRequisitos] = preRequisito;
 			numPreRequisitos++;

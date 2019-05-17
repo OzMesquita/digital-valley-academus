@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 		
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -54,18 +55,18 @@
 			         <br>
 			         
 					 <label for="cargaMatrizInput"> Carga horária total*</label>
-					 <input type="text" name="carga_horaria" class="form-control" id="cargaMatrizInput" aria-describedby="tituloHelp" placeholder="Digite a carga horária total" required>
+					 <input type="number" min="1" step="1" name="carga_horaria" class="form-control" id="cargaMatrizInput" aria-describedby="tituloHelp" placeholder="Digite a carga horária total" required>
 					 <small id="tituloHelp" class="form-text text-muted"> Exemplo: 3200 </small>		
 			        	
 			         <br>	
 						
 					 <label for="prazoMinimoInput"> Prazo mínimo para conclusão*</label>
-					 <input type="text" name="prazo_minimo" class="form-control" id="prazoMinimoInput" aria-describedby="tituloHelp" placeholder="Digite o número minímo  de semestres para concluir o curso" required>
+					 <input type="number" min="1" step="1" name="prazo_minimo" class="form-control" id="prazoMinimoInput" aria-describedby="tituloHelp" placeholder="Digite o número minímo  de semestres para concluir o curso" required>
 					 <small id="tituloHelp" class="form-text text-muted"> Exemplo: 8 </small>		
 				
 			         <br>	
 					 <label for="prazoMaximoInput"> Prazo máximo para conclusão*</label>
-					 <input type="text" name="prazo_maximo" class="form-control" id="prazoMaximoInput" aria-describedby="tituloHelp" placeholder="Digite o número máximo de semestres para concluir o curso" required>
+					 <input type="number" min="1" step="1" name="prazo_maximo" class="form-control" id="prazoMaximoInput" aria-describedby="tituloHelp" placeholder="Digite o número máximo de semestres para concluir o curso" required>
 					 <small id="tituloHelp" class="form-text text-muted"> Exemplo: 12 </small>		
 				
 			         <br>
@@ -111,4 +112,15 @@
 		</div>
 		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
 	</body>
+	<script type="text/javascript">
+	
+	$(document).ready(function(){
+	    $('#periodoInput').mask('0000.x', {
+	    										translation: {
+	    											'x': {pattern: /[1-2]/}
+	    										}
+	    									});
+	});
+	
+	</script>
 </html>
