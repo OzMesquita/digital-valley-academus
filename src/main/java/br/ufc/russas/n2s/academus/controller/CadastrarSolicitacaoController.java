@@ -76,7 +76,7 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 			
 			request.setAttribute("mensagem", "CS"); // Mensagem de operação realizada com sucesso
 			try {
-				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("redirect.jsp");
 				
 				dispatcher.forward(request, response);
 				

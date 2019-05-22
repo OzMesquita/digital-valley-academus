@@ -87,7 +87,7 @@ public class AtualizarSolicitacaoController extends HttpServlet {
 					request.setAttribute("mensagem", "EN");// Mensagem de erro, usuário não é dono da solicitação
 				}
 				
-				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("redirect.jsp");
 				
 				dispatcher.forward(request, response);
 				

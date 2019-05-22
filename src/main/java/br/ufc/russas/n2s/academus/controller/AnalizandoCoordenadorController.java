@@ -73,7 +73,7 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 			}
 			
 			request.setAttribute("mensagem", mensagem);
-			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("Inicio");
+			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("redirect.jsp");
 			
 			dispatcher.forward(request, response);
 			
