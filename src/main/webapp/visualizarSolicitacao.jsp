@@ -217,7 +217,6 @@
 							<!-- Botao Cancelar -->
 								<a href="Inicio">
 								<input type="button" class="btn btn-primary btn-sm" style="height: 30px;" value="Voltar"></a>
-	
 							<%if(per.getNivel() == NivelAcademus.ALUNO && solicitacao.getStatus() == Status.SOLICITADO){%>
 						    	<c:import url="jsp/elements/botoesVisualizarAluno.jsp" charEncoding="UTF-8"></c:import>
 							

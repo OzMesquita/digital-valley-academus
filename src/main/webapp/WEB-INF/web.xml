@@ -108,6 +108,10 @@
     <servlet-name>BotoesVisualizarController</servlet-name>
     <servlet-class>br.ufc.russas.n2s.academus.controller.BotoesVisualizarController</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>GerarPdfSolicitacaoController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.GerarPdfSolicitacaoController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ExcluirMatrizController</servlet-name>
   	<url-pattern>/ExcluirMatriz</url-pattern>
@@ -207,6 +211,10 @@
   <servlet-mapping>
     <servlet-name>Sair</servlet-name>
     <url-pattern>/Sair</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>GerarPdfSolicitacaoController</servlet-name>
+  	<url-pattern>/GerarPDF</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>GerenciarAnexosController</servlet-name>

@@ -14,6 +14,8 @@ public class Constantes {
 	private static String DATABASE_CONF_DIR;
 	private static String EMAIL_CONF_DIR;
 	private static String GUARDIAO_APP;
+	private static String LOGO_UFC;
+	private static String TEMP_DIR;
 	
 	private Constantes(){
 		
@@ -31,6 +33,8 @@ public class Constantes {
 		SESSION_MSG = dotEnv.get("SESSION_MSG");
 		PRE_URL = dotEnv.get("PRE_URL");
 		GUARDIAO_APP = dotEnv.get("GUARDIAO_APP");
+		LOGO_UFC = dotEnv.get("LOGO_UFC");
+		TEMP_DIR = dotEnv.get("TEMP_DIR");
 	}
 	
 	public static String getAnexoDir() {
@@ -73,5 +77,12 @@ public class Constantes {
 		return GUARDIAO_APP;
 	}
 	
+	public static String getLogoUfc() {
+		return LOGO_UFC;
+	}
+	
+	public static String getTempDir() {
+		return TEMP_DIR;
+	}
 	
 }
