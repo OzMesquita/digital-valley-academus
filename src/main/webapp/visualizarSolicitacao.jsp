@@ -190,7 +190,7 @@
 										        			<input type="hidden" id="id_solicitacao" name="id_solicitacao" value="<%=solicitacao.getIdSolicitacao()%>">
 										        			<input type="hidden" id="id_disciplina_cursada" name="id_disciplina_cursada" value="<%=disCursada.getId()%>">
 															
-															<button value="1" name="button" id="submitAnexo-<%=disCursada.getId()%>" class="btn btn-primary btn-sm active">Download</button>
+															<button value="1" disabled name="button" id="submitAnexo-<%=disCursada.getId()%>" class="btn btn-primary btn-sm active" onclick="atribuirValor2(1)">Download</button>
 															
 														<%}%>
 													</div>
@@ -214,6 +214,7 @@
 							<br>
 							<br>
 							<div class="modal-footer">
+							
 							<!-- Botao Cancelar -->
 								<a href="Inicio">
 								<input type="button" class="btn btn-primary btn-sm" style="height: 30px;" value="Voltar"></a>
@@ -239,11 +240,11 @@
 		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
 	</body>
 	<script>
-	function teste1(id){
-		if(document.getElementById("anexo1-"+id).value != "0"){
+	function teste(id){
+		if((document.getElementById("anexo1-"+id).checked == true) || document.getElementById("anexo2-"+id).checked == true){
 			document.getElementById("submitAnexo-"+id).disabled = "";
 		}
-		if(document.getElementById("anexo1-"+id).value == "0"){
+		if((document.getElementById("anexo1-"+id).checked == false) && (document.getElementById("anexo2-"+id).checked == false)){
 			document.getElementById("submitAnexo-"+id).disabled = "disabled";
 		}
 	}
