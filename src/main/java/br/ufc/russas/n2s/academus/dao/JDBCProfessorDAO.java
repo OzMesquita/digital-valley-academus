@@ -322,7 +322,7 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 		try {
 			PreparedStatement ps = conn.prepareStatement(SQL);
 			ps.setInt(1, idCurso);
-			ps.setInt(2, NivelAcademus.PROFESSOR.ordinal());
+			ps.setInt(2, NivelAcademus.getCodigo(NivelAcademus.COORDENADOR));
 			
 			ResultSet rs = ps.executeQuery();
 			

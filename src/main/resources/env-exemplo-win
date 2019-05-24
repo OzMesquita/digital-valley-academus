@@ -1,6 +1,6 @@
 ANEXO_DIR=C:\\n2s\\academus\\anexo
 TEMP_DIR=C:\\n2s\\academus\\temp
-DATABASE_CONF_DIR=C:\\n2s\\academus\\bd_academus.txt
+DATABASE_CONF_DIR=C:\\n2s\\bd.txt
 EMAIL_CONF_DIR=C:\\n2s\\academus\\email.txt
 APP_URL=/Academus
 PRE_URL=localhost:8080

@@ -60,6 +60,10 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 		Solicitacao solicitacao = soldao.buscarPorId(Integer.parseInt(request.getParameter("id")));
 		
 		try {
+			File pasta = new File(Constantes.getTempDir());
+			if(!pasta.exists())
+				pasta.mkdirs();
+			
 			File arquivo = new File(Constantes.getTempDir(),"Relatorio-"+solicitacao.getIdSolicitacao()+"-"+solicitacao.getSolicitante().getMatricula()+".pdf");
 			
 			Document documento = new Document();
@@ -79,7 +83,6 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			cabecalho.setAlignment(Paragraph.ALIGN_CENTER);
 			documento.add(cabecalho);
 			Font tituloIndentificacao = new Font(FontFamily.UNDEFINED, 13, Font.BOLD, BaseColor.BLACK);
-			Font tituloAviso = new Font(FontFamily.UNDEFINED, 13, Font.NORMAL, BaseColor.BLACK);
 			Font bold = new Font(FontFamily.UNDEFINED, 12, Font.BOLD, BaseColor.BLACK);
 			Font normal = new Font(FontFamily.UNDEFINED, 12, Font.NORMAL, BaseColor.BLACK);
 			
