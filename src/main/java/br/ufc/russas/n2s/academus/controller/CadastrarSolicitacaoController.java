@@ -62,21 +62,29 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 				disciplinasCursadas.add(new DisciplinaCursada(semestreDisciplinas[i], Float.parseFloat(notaDisciplinas[i]), Integer.parseInt(cargaDisciplinas[i]), nomeDisciplinas[i], instituicaoDisciplinas[i]));
 			}
 			
-			// Aranezanando as informacoes no banco de dados
+			//Checando se a solicitação com a mesma Disciplina pelo aluno
+			Solicitacao solExistente = sd.buscarSolicitacaoExistente(Integer.parseInt(componente), usuario.getId());
+			if(solExistente.getStatus() == Status.CANCELADO || solExistente.getStatus() == Status.FINALIZADO) {
 			
-			solicitacao.setSolicitante((Aluno) usuario);
-			solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
-			solicitacao.setStatus(Status.SOLICITADO);
-			solicitacao.setDisciplinasCursadas(disciplinasCursadas);
-			solicitacao.setCurso(((Aluno) usuario).getCurso());
-			
-			if(disciplinasCursadas.size() > 0){
-				sd.cadastrar(solicitacao);
+				// Aranezanando as informacoes no banco de dados
+				solicitacao.setSolicitante((Aluno) usuario);
+				solicitacao.setDisciplinaAlvo(ccd.buscarPorId(Integer.parseInt(componente)));
+				solicitacao.setStatus(Status.SOLICITADO);
+				solicitacao.setDisciplinasCursadas(disciplinasCursadas);
+				solicitacao.setCurso(((Aluno) usuario).getCurso());
+				
+				if(disciplinasCursadas.size() > 0){
+					sd.cadastrar(solicitacao);
+					request.setAttribute("success", "Solicitação cadastrada com sucesso.");
+				} else {
+					request.setAttribute("erro", "Ocorreu um erro ao cadastrar a solicitação.");
+				}
+			} else {
+				request.setAttribute("erro", "Você já possui uma solicitação com essa Disciplina Alvo");
 			}
 			
-			request.setAttribute("mensagem", "CS"); // Mensagem de operação realizada com sucesso
 			try {
-				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("redirect.jsp");
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroSolicitacao.jsp");
 				
 				dispatcher.forward(request, response);
 				
@@ -88,7 +96,8 @@ public class CadastrarSolicitacaoController extends HttpServlet {
 		else{
 			
 			try {
-				request.setAttribute("mensagem", "CN"); // Mensagem de erro, com informacao(oes) nulas
+				if((request.getParameter("componenteInput") != null))
+					request.setAttribute("erro", "Cadastre pelo menos uma Disciplina Cursada.");
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroSolicitacao.jsp");
 				

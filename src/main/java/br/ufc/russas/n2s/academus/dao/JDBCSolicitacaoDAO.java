@@ -172,6 +172,52 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		
 		return aux;
 	}
+	
+	@Override
+	public Solicitacao buscarSolicitacaoExistente(int idDisciplina, int idSolicitante) {
+		Connection conn = ConnectionPool.getConnection();
+		String sql = "SELECT * FROM academus.solicitacao WHERE id_solicitante = "+idSolicitante+
+				" AND id_componente = "+idDisciplina+" AND (status = "+Status.getCodigo(Status.SOLICITADO)+
+				" OR status = "+Status.getCodigo(Status.ANALISANDO)+");";
+		Solicitacao aux = new Solicitacao();
+		
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()){
+				DAOFactory df = new DAOFactoryJDBC();
+				
+				//DAO's necessárias
+				AlunoDAO aludao = df.criarAlunoDAO();
+				ComponenteCurricularDAO ccd = df.criarComponenteCurricularDAO();
+				DisciplinaCursadaDAO dcd = df.criarDisciplinaCursadaDAO();
+				HistoricoDAO hisdao = df.criarHistoricoDAO();
+				CursoDAO curdao = df.criarCursoDAO();
+				
+				aux.setIdSolicitacao(rs.getInt("id_solicitacao"));
+				aux.setStatus(Status.getStatus(rs.getInt("status")));
+				aux.setSolicitante(aludao.buscarPorId(rs.getInt("id_solicitante")));
+				aux.setDisciplinaAlvo(ccd.buscarPorId(rs.getInt("id_componente")));
+				aux.setDisciplinasCursadas(dcd.buscar(aux));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setResultado(rs.getString("resultado"));
+				aux.setHistoricoOperacoes(hisdao.buscarPorSolicitacao(aux));
+				aux.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				
+			}
+						
+			ps.close();
+			rs.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return aux;
+	}
 
 	@Override
 	public Solicitacao editar(Solicitacao sol) {
