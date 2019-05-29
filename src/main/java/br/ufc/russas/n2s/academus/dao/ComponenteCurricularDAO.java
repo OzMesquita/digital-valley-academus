@@ -23,5 +23,7 @@ public interface ComponenteCurricularDAO {
 	public void excluirPreRequisito(int idComponente, Disciplina disciplina);
 	
 	public void excluirComponente(ComponenteCurricular comp);
+
+	public void excluirComponente(int id_componente);
 	
 }
