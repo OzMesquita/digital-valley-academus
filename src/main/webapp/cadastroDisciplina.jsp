@@ -71,7 +71,7 @@
 							<br> 
 							
 							<label for="nomeInput"> Nome da Disciplina*</label> 
-							<input type="text" name="nome" pattern="[a-zA-Z\sÇçÁáÀàÉéÍíÓóÚú]+$" class="form-control" id="nomeInput" aria-describedby="tituloHelp" placeholder="Digite o nome da Disciplina" required> 
+							<input type="text" name="nome" pattern="[a-zA-Z\sÇçÁáÀàÉéÍíÓóÚúÃãõÕêÊâÂôÔ]+$" class="form-control" id="nomeInput" aria-describedby="tituloHelp" placeholder="Digite o nome da Disciplina" required> 
 							<small id="tituloHelp" class="form-text text-muted"> Exemplo: FUNDAMENTOS DE PROGRAMAÇÃO (Utilize apenas letras)</small> 
 							<div class="invalid-feedback">
 	                            

@@ -63,7 +63,7 @@
 								List<PerfilAcademus> lista_perfil;
 								PerfilAcademusDAO perfilDAO = new JDBCPerfilAcademusDAO();
 								
-								lista_perfil = perfilDAO.buscarPorNome(request.getParameter("nome_perfil"));
+								lista_perfil = perfilDAO.buscarPorNome(request.getParameter("nome_perfil").trim().toUpperCase());
 								
 								if(!lista_perfil.isEmpty()){
 									for (PerfilAcademus perfil : lista_perfil){
