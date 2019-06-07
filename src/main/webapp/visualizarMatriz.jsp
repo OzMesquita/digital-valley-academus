@@ -174,6 +174,7 @@
 									</td>
 									<td class="form-inline">
 									<form method="post" action="EditarComponente" id="edi<%=aux.getIdComponente()%>">
+										<input name="id_matriz" type="hidden" value="<%=matriz.getIdMatriz()%>">
 										<button class="btn btn-primary btn-sm" form="edi<%=aux.getIdComponente()%>" 
 										class="btn btn-primary btn-sm" style="height: 30px; margin-right:15px" type="submit" name="button"
 										value="<%=aux.getIdComponente()%>" >

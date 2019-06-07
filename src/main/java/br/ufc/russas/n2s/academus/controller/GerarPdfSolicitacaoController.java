@@ -99,7 +99,7 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			coord.setFont(normal);
 			coord.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 			coord.add("ATENÇÃO: ANEXAR HISTÓRICO ESCOLAR (ORIGINAL OU CÓPIA AUTENTICADA) E CÓPIA AUTENTICADA"+
-					" DO PROGRAMA DA DISCIPLINA (AS CERTIFICAÇÃOES MÃO PRECISAM SER CARTORIAIS, PODENDO SER "+
+					" DO PROGRAMA DA DISCIPLINA (AS CERTIFICAÇÕES NÃO PRECISAM SER CARTORIAIS, PODENDO SER "+
 					"DO ÓRGÃO EXPEDIDOR OU DIGITAL).\n\n");
 			documento.add(coord);
 			
@@ -207,7 +207,7 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			
 			identificador.clear();
 			int numDia = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-			int numMes = Calendar.getInstance().get(Calendar.MONTH);
+			int numMes = Calendar.getInstance().get(Calendar.MONTH) + 1;
 			int ano = Calendar.getInstance().get(Calendar.YEAR);
 			String dia = Integer.toString(numDia);
 			String mes = Integer.toString(numMes);
