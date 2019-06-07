@@ -158,8 +158,7 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 
 	@Override
 	public void excluirPreRequisito(int idComponente, Disciplina disciplina) {
-		String sql = "delete from academus.disciplina_pre_requisito where id_disciplina_matriz = "+idComponente+" and id_disciplina_pre_requisito = "+disciplina.getId()+";";
-		
+		String sql = "delete from academus.disciplina_pre_requisito where id_disciplina_matriz = "+idComponente+" and id_disciplina_pre_requisito = '"+disciplina.getId()+"';";
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);

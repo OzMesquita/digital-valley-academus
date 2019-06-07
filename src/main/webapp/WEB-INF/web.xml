@@ -29,8 +29,16 @@
     <servlet-class>br.ufc.russas.n2s.academus.controller.ExcluirComponenteController</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>AtualizarComponenteController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.AtualizarComponenteController</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>EditarDisciplinaController</servlet-name>
     <servlet-class>br.ufc.russas.n2s.academus.controller.EditarDisciplinaController</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>EditarComponenteController</servlet-name>
+    <servlet-class>br.ufc.russas.n2s.academus.controller.EditarComponenteController</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>CadastrarMatrizController</servlet-name>
@@ -137,12 +145,20 @@
     <url-pattern>/ExcluirDisciplina</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+  	<servlet-name>AtualizarComponenteController</servlet-name>
+  	<url-pattern>/AtualizarComponente</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
     <servlet-name>ExcluirComponenteController</servlet-name>
     <url-pattern>/ExcluirComponente</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>EditarDisciplinaController</servlet-name>
     <url-pattern>/EditarDisciplina</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EditarComponenteController</servlet-name>
+    <url-pattern>/EditarComponente</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>CadastrarMatrizController</servlet-name>
