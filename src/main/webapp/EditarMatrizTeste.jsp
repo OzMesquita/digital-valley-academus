@@ -39,7 +39,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Atualização da dados da Disciplina</title>
+		<title>Atualização da dados da Matriz</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 		

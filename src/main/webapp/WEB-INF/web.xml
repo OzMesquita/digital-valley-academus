@@ -248,6 +248,14 @@
   	<servlet-name>EditarPerfisController</servlet-name>
   	<url-pattern>/EditarPerfis</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>AssociarComponentesController</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.AssociarComponentesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AssociarComponentesController</servlet-name>
+  	<url-pattern>/AssociarComponentes</url-pattern>
+  </servlet-mapping>
   <filter>
   	<filter-name>setCharacterEncodingFilter</filter-name>
   	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>

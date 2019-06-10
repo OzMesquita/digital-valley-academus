@@ -36,6 +36,25 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 			ConnectionPool.releaseConnection(conn);
 		}
 		
+		sql = "SELECT currval('academus.disciplinas_matriz_id_disciplina_matriz_seq');";
+		
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()){
+				comp.setIdComponente(rs.getInt(1));
+			}
+			
+			rs.close();
+			ps.close();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.releaseConnection(conn);
+		}
+		
 		return comp;
 	}
 
@@ -141,9 +160,9 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 		try {
 			PreparedStatement insert = conn.prepareStatement(sql);
 			
-			for(int i=0; i < d.size(); i++){
+			for(Disciplina disc: d){
 				insert.setInt(1, idComponente);
-				insert.setString(2, d.get(i).getId());		
+				insert.setString(2, disc.getId());		
 				insert.execute();
 			}
 			

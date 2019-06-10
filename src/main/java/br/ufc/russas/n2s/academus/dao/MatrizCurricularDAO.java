@@ -10,6 +10,8 @@ public interface MatrizCurricularDAO {
 	
 	public List<MatrizCurricular> listar(int limiteInf, int limiteSup);
 	
+	public List<MatrizCurricular> listar();
+	
 	public MatrizCurricular buscarPorId(int idMatriz);
 	
 	public MatrizCurricular buscarPorSolicitacao(int idSolicitacao);

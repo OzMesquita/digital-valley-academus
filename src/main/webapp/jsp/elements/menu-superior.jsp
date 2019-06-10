@@ -8,15 +8,29 @@
    
    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">	
    		<%if(((PerfilAcademus) session.getAttribute("userAcademus")).getIsAdmin()){%>
-       <div class="navbar-nav">
-           <a class="nav-item nav-link" href="ListarDisciplinas"> Listar Disciplinas</a>
-           <a class="nav-item nav-link" href="BuscarDisciplina"> Buscar Disciplinas</a>
-           <a class="nav-item nav-link" href="CadastrarDisciplina"> Cadastrar Disciplinas</a>
-           <a class="nav-item nav-link" href="ListarMatrizes"> Listar Matrizes</a>
-           <a class="nav-item nav-link" href="BuscarMatriz"> Buscar Matrizes</a>
-           <a class="nav-item nav-link" href="CadastrarMatriz"> Cadastrar Matrizes</a>
-           <a class="nav-item nav-link" href="GerenciarPerfis"> Gerenciar Perfis</a>
-       </div>
+       <ul class="navbar-nav">
+           <li class="nav-item dropdown">
+           		<a class="nav-link dropdown-toggle" href="#" id="disciplinaDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Disciplinas</a>
+           		<div class="dropdown-menu" aria-labelledby="disciplinaDropdown">
+		          	<a class="dropdown-item" href="ListarDisciplinas"> Listar Disciplinas</a>
+		          	<a class="dropdown-item" href="BuscarDisciplina"> Buscar Disciplinas</a>
+		          	<a class="dropdown-item" href="CadastrarDisciplina"> Cadastrar Disciplinas</a>
+		        </div>
+           </li>
+           <li class="nav-item dropdown">
+           		<a class="nav-link dropdown-toggle" href="#" id="matrizDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Matrizes Curriculares</a>
+           		<div class="dropdown-menu" aria-labelledby="matrizDropdown">
+		          	<a class="dropdown-item" href="ListarMatrizes"> Listar Matrizes</a>
+		          	<a class="dropdown-item" href="BuscarMatriz"> Buscar Matrizes</a>
+		          	<a class="dropdown-item" href="CadastrarMatriz"> Cadastrar Matrizes</a>
+		          	<div class="dropdown-divider"></div>
+		          	<a class="dropdown-item" href="AssociarComponentes"> Associar Componentes</a>
+		        </div>
+           </li>
+           <li class="nav-item">
+           		<a class="nav-link" href="GerenciarPerfis"> Gerenciar Perfis</a>
+           	</li>
+       </ul>
        <%}%>      
    </div>
    
