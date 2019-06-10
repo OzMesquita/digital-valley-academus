@@ -73,11 +73,15 @@
 								DisciplinaDAO dao = new JDBCDisciplinaDAO();
 								List<Disciplina> disciplinas = new ArrayList();
 								if(tipobusca == 1){
-									Disciplina disciplina = new Disciplina();
-									disciplina = dao.buscarPorId(id_disciplina);
+									Disciplina disciplina = dao.buscarPorId(id_disciplina);
+									if(disciplina == null){
+										disciplina = new Disciplina();
+									}
 									disciplinas.add(disciplina);
 								}else if (tipobusca == 2){
 									disciplinas = dao.buscarPorNome(id_disciplina);
+									if(disciplinas.isEmpty())
+										disciplinas.add(new Disciplina());
 								}
 								
 								for(Disciplina disciplina : disciplinas){

@@ -198,8 +198,8 @@
 						
 						<div class="modal-footer">
 							<div id="botoes" class="controls">
-								<button type="submit" class="btn btn-primary">Confirmar</button>
 								<a class="btn btn-primary" href="GerenciarPerfis">Cancelar</a>
+								<button type="submit" class="btn btn-primary">Confirmar</button>
 							</div>
 						</div>
 					</form>	

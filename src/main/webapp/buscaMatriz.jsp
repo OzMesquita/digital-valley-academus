@@ -76,7 +76,7 @@
 									matriz.setIdMatriz(id_matriz);						
 									matriz = dao.buscarPorId(id_matriz); 
 									
-									if (matriz.getIdMatriz() != -1 ){
+									if (matriz != null ){
 										
 									%>
 									<tr>

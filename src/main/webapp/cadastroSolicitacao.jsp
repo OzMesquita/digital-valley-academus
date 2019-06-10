@@ -54,6 +54,29 @@
 					<div class="form-group">
 						<h1>Cadastrar Solicitação</h1>
 						<br>
+						
+						
+						<!-- Caso o cadastro seja bem sucedido vem para essa tela com uma mensagem de sucesso -->
+						<% if (request.getAttribute("success") != null){ %>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<%= request.getAttribute("success") %>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+						<% } %>
+						
+						<!-- Caso o cadastro não seja bem sucedido vem para essa tela com uma mensagem de erro -->
+						<% if (request.getAttribute("erro") != null){ %>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<%= request.getAttribute("erro") %>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+						<% } %>
+						
+						
 						<form action="CadastrarSolicitacao" method="post">
 							<div class="form-group">
 								<label for="matrizInput">Matriz</label>

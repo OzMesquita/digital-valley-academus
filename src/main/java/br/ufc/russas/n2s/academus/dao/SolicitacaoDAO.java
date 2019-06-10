@@ -22,6 +22,8 @@ public interface SolicitacaoDAO {
 	
 	public Solicitacao buscarPorId(int id);
 	
+	public Solicitacao buscarSolicitacaoExistente(int idDisciplina, int idSolicitante);
+	
 	public Solicitacao editar(Solicitacao sol);
 	
 	public void excluir(Solicitacao sol);
@@ -61,4 +63,5 @@ public interface SolicitacaoDAO {
 	public int numSolicitacoesAndamento(int pagina);
 	public int numSolicitacoesAndamento(int pagina, Aluno aluno);
 	public int numSolicitacoesAndamento(int pagina, Professor coordenador);
+
 }

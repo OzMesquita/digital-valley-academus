@@ -72,7 +72,30 @@
 								if(matriz != null && deuCerto){
 								
 							%>
+						
 					<div class="form-group">
+						<!-- mensagem de sucesso -->
+						<% if (request.getAttribute("success") != null){ %>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<%= request.getAttribute("success") %>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+						<% } %>
+						
+						<!-- mensagem de erro -->
+						<% if (request.getAttribute("erro") != null){ %>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<%= request.getAttribute("erro") %>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+						<% } %>
+						
+						<h3><b>MATRIZ CURRICULAR</b></h3>
+						
 						<div class="table-responsive">
 							<table class="table">
 								<thead>
@@ -85,7 +108,8 @@
 										<th scope="col">Prazo Maximo</th>
 										<th scope="col">Vigente</th>		
 										<th scope="col">Ativo</th>
-										<th scope="col">Código Curso</th>	
+										<th scope="col">Código Curso</th>
+										<th scope="col">Opções</th>	
 									</tr>
 								</thead>
 								
@@ -99,12 +123,18 @@
 									<td><%=(matriz.isVigente())? "Sim" : "Não"%></td>
 									<td><%=(matriz.isAtivo())? "Sim" : "Não"%></td>
 									<td><%=matriz.getIdCurso()%></td>
+									<td> <form method="POST" action="EditarMatriz" id="form<%=matriz.getIdMatriz()%>">
+										<button class="btn btn-primary btn-sm" form="form<%=matriz.getIdMatriz()%>" 
+										class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=matriz.getIdMatriz()%>" >
+										Editar
+										</button>
+									</form> </td>
 								</tr>		
 							</table>
 						</div>
 						
 						
-						<h3><b>Componentes Curriculares</b></h3>
+						<h3><b>COMPONENTES</b></h3>
 						
 						<div class="table-responsive">
 							<table class="table">
@@ -117,6 +147,8 @@
 										<th scope="col">Créditos da Disciplina</th>
 										<th scope="col">Natureza do Componente</th>
 										<th scope="col">Código do Pré Requisito</th>
+										<th scope="col">Opções</th> 
+										
 									</tr>
 								</thead>
 								
@@ -140,6 +172,24 @@
 										}
 									%>
 									</td>
+									<td class="form-inline">
+									<form method="post" action="EditarComponente" id="edi<%=aux.getIdComponente()%>">
+										<input name="id_matriz" type="hidden" value="<%=matriz.getIdMatriz()%>">
+										<button class="btn btn-primary btn-sm" form="edi<%=aux.getIdComponente()%>" 
+										class="btn btn-primary btn-sm" style="height: 30px; margin-right:15px" type="submit" name="button"
+										value="<%=aux.getIdComponente()%>" >
+										Editar
+										</button>
+									</form>
+									<form method="post" action="ExcluirComponente" id="excluir<%=aux.getIdComponente()%>">
+										<input name="id_matriz" type="hidden" value="<%=matriz.getIdMatriz()%>">
+										<button class="btn btn-primary btn-sm" form="excluir<%=aux.getIdComponente()%>" 
+										class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="id_componente"
+										value="<%=aux.getIdComponente()%>" >
+										Excluir
+										</button>
+									</form>
+									</td>
 								</tr>
 								
 								<%
@@ -156,6 +206,10 @@
 									<%
 								} 
 					%>
+					<div class="modal-footer">
+						<a href="ListarMatrizes">
+							<input type="button" class="btn btn-primary btn-sm" style="height: 30px;" value="Voltar"></a>
+					</div>
 					</div>
 					</div>
 					</div>
