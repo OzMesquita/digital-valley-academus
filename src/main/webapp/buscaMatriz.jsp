@@ -42,14 +42,18 @@
 					</ol>
 					</nav>
 					
-					<div class="form-group"> <!-- Buscar por nome também -->
-						<form  class="form-inline" method="post" action="BuscarMatriz">
-                           <input class="form-control" style="width: 250px;" type="number" name="id_matriz" placeholder="Código da matriz" required>&nbsp;
-                           <button class="btn btn-primary btn-sm" type="submit">Procurar</button>
-	                    </form>
-	                    
-	                    <form id="buscarMatrizForm" method="post" action="BuscarMatriz"></form>
-	                    
+					<div class="form-group">
+					
+	                <form method="post" action="">
+					<label for="buscainput"><h2><b> Escolha forma de pesquisa </b></h2></label> 
+					<h2><INPUT TYPE="radio" name="opcao" VALUE="1" CHECKED> código
+					<INPUT TYPE="radio" name="opcao" VALUE="2"> nome</h2>
+					<br>
+					<a class="form-inline">
+					<input class="form-control" style="width: 250px;" style='text-transform:uppercase'
+						name="id_matriz" placeholder="Código ou nome da Matriz" required>&nbsp;
+					<button class="btn btn-sm btn-primary" type="submit">Procurar</button></a>
+					</form>
 	                    <br/>
 	                    <div class="table-responsive">
 	                    	<table class="table">
@@ -70,14 +74,33 @@
 								<%
 								
 								if(request.getParameter("id_matriz") != null){
-									JDBCMatrizCurricularDAO dao = new JDBCMatrizCurricularDAO();
-									MatrizCurricular matriz = new MatrizCurricular();
-									int id_matriz = Integer.parseInt(request.getParameter("id_matriz"));
-									matriz.setIdMatriz(id_matriz);						
-									matriz = dao.buscarPorId(id_matriz); 
+									JDBCMatrizCurricularDAO daoMatriz = new JDBCMatrizCurricularDAO();
 									
-									if (matriz != null ){
-										
+									int tipobusca = Integer.parseInt(request.getParameter("opcao"));
+									String id_matriz = request.getParameter("id_matriz");
+									List<MatrizCurricular> matrizes = new ArrayList();
+									if(tipobusca == 1){ // codigo
+										MatrizCurricular matriz = null;
+									
+										try{
+											matriz = daoMatriz.buscarPorId(Integer.parseInt(id_matriz));
+										}catch(Exception e){
+											e.printStackTrace();
+											matriz = null;
+										}
+										if(matriz == null){
+											matriz = new MatrizCurricular();
+										}
+										matrizes.add(matriz);
+									}else if (tipobusca == 2){ // nome
+										matrizes = daoMatriz.buscarPorNome(id_matriz,0,10);
+										if(matrizes.isEmpty())
+											matrizes.add(new MatrizCurricular());
+									}
+									 
+									
+									for(MatrizCurricular matriz : matrizes){
+										if(!matriz.getNome().equals("INDEFINIDO")){
 									%>
 									<tr>
 										<td><%=matriz.getIdMatriz()%></td>
@@ -95,11 +118,6 @@
 											style="height: 30px;" type="submit" name="button" value="<%=matriz.getIdMatriz()%>" > Visualizar
 										</button>
 										</form></td>
-										<td><form method="post" action="EditarMatriz" id="formEdi<%=matriz.getIdMatriz()%>">
-										<button  class="btn btn-primary btn-sm" form="formEdi<%=matriz.getIdMatriz()%>"
-											style="height: 30px;" type="submit" name="button" value="<%=matriz.getIdMatriz()%>" > Editar
-										</button>
-										</form></td>
 										<td><form method="post" action="ExcluirMatriz" id="formEx<%=matriz.getIdMatriz()%>">
 										<button  class="btn btn-primary btn-sm" form="formEx<%=matriz.getIdMatriz()%>"
 											style="height: 30px;" type="submit" name="button" value="<%=matriz.getIdMatriz()%>" > Excluir
@@ -107,10 +125,11 @@
 										</form></td>
 									</tr>
 									<%
-									} else {%>						
-										<tr><td><p> Nenhuma matriz foi encontrada! </p></td></tr>
-									<%
-									}		
+										} else {%>						
+											<tr><td><p> Nenhuma matriz foi encontrada! </p></td></tr>
+										<%
+										}
+									}
 								}
 								else{
 									%>

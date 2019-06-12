@@ -241,7 +241,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 	
 	@Override
 	public List<MatrizCurricular> buscarPorNome(String nome, int limiteInf, int limiteSup){
-		String sql = "select * from academus.matriz_curricular where nome like '%"+nome+"%' order by id_matriz offset ? limit ?;";
+		String sql = "select * from academus.matriz_curricular where nome ilike '%"+nome+"%' order by id_matriz offset ? limit ?;";
 		List<MatrizCurricular> listaMatrizes = new ArrayList<MatrizCurricular>();
 		
 		Connection conn = ConnectionPool.getConnection();
