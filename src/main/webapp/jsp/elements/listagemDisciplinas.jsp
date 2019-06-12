@@ -34,14 +34,14 @@
 			<td><%=contato.getCarga()%></td> 
 			<td><%=contato.getCreditos()%></td>
 			<form method="post" action="EditarDisciplina" id="form<%=contato.getId()%>">
-				<td>
+				<td class="text-center">
 					<button  class="btn btn-primary btn-sm " form="form<%=contato.getId()%>" style="height: 30px;" type="submit" name="button" value="<%=contato.getId()%>" >
-					Editar
+					Visualizar
 					</button>
 				</td>
 			</form>
 			<form method="post" action="ExcluirDisciplina" id="formEx<%=contato.getId()%>">
-				<td>
+				<td class="text-center">
 					<button  class="btn btn-primary btn-sm " form="formEx<%=contato.getId()%>" style="height: 30px;" type="submit" name="buttonEx" value="<%=contato.getId()%>" >
 					Excluir
 					</button>
