@@ -284,7 +284,7 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 		Connection conn = ConnectionPool.getConnection();
 		try {                
             PreparedStatement update = conn.prepareStatement(sql);
-            update.setString(1, mat.getNome());            
+            update.setString(1, mat.getNome());
             update.setString(2, mat.getPeriodoLetivo());
             update.setInt(3, mat.getCarga());
             update.setInt(4, mat.getPrazoMinimo());
@@ -398,6 +398,25 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 		}
 		
 		return false;
+	}
+
+	@Override
+	public void editarVigente(int id_curso) {
+		String sql = "UPDATE academus.matriz_curricular SET vigente=false WHERE id_curso=?;";
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id_curso);
+			
+			ps.executeUpdate();
+			ps.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
 	}
 
 }

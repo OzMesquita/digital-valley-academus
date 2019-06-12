@@ -71,7 +71,27 @@
 						<%
 							if( deuCerto && matriz.getIdMatriz() != -1 ) {
 						%>
-											
+						
+						 <!-- Caso o cadastro seja bem sucedido vem para essa tela com uma mensagem de sucesso -->
+						<% if (request.getAttribute("success") != null){ %>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<%= request.getAttribute("success") %>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+						<% } %>
+						
+						<!-- Caso o cadastro não seja bem sucedido vem para essa tela com uma mensagem de erro -->
+						<% if (request.getAttribute("erro") != null){ %>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<%= request.getAttribute("erro") %>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+						<% } %>
+						
 						 <form action="AtualizarMatriz" method="post">
 						 
 						 <label for="nomeMatrizInput">Id*</label>
@@ -87,7 +107,7 @@
 						 <br> 
 					
 						 <label for="periodoInput"> Período Letivo*</label>
-						 <input type="text" name="periodo_letivo" value="<%=matriz.getPeriodoLetivo()%>" class="form-control" id="periodoInput" aria-describedby="tituloHelp" placeholder="Digite o período letivo" required>
+						 <input type="text" name="periodo_letivo" id="periodo_letivo" pattern="[0-9]{4}.[0-9]{1}$" value="<%=matriz.getPeriodoLetivo()%>" class="form-control" id="periodoInput" aria-describedby="tituloHelp" placeholder="Digite o período letivo" required>
 						 <small id="tituloHelp" class="form-text text-muted"> Exemplo: 2018.1 </small>		
 						 	
 				         <br>
@@ -127,86 +147,16 @@
 						
 						<label for="cursoInput">Curso*</label>
 						<select name="id_curso" class="form-control custom-select" id="cursoInput" required>
-										<option value="<%=matriz.getIdCurso()%>" selected="selected">Curso</option>
-										<option value="1">Engenharia de Software</option>	
-										<option value="2">Ciencia da Computação</option>											
+										<option value="1"<%if(matriz.getIdCurso() == 1){%> selected="selected"<%}%>>CIÊNCIA DA COMPUTAÇÃO</option>
+			                            <option value="2"<%if(matriz.getIdCurso() == 2){%> selected="selected"<%}%>>ENGENHARIA CIVIL</option>
+			                            <option value="3"<%if(matriz.getIdCurso() == 3){%> selected="selected"<%}%>>ENGENHARIA DE PRODUÇÃO</option>
+			                            <option value="4"<%if(matriz.getIdCurso() == 4){%> selected="selected"<%}%>>ENGENHARIA DE SOFTWARE</option> 
+			                            <option value="5"<%if(matriz.getIdCurso() == 5){%> selected="selected"<%}%>>ENGENHARIA MECÂNICA</option>  											
 									</select> 
 									<small id="tituloHelp" class="form-text text-muted"></small>
 						
 						<br>
 			<br>
-	           <div class="card">
-	           <div class="card-header">
-	           <label for="listaComponentes" class="card-title text-uppercase font-weight-bold">Componentes</label>
-	           </div>
-	           <div class="card-body">
-		           <table class="table" id="listaComponentes">
-				        <thead> 
-				           	<tr>
-				           		<th scope="col">Código</th>
-				           		<th scope="col">Nome</th>
-				           		<th scope="col">Natureza</th>
-				           		<th scope="col">Pré-Requisitos</th>
-				           		<th scope="col"></th>
-				           	</tr>
-				        <thead>
-		           </table>
-		           <%
-						int i=0;
-						for(ComponenteCurricular cc : listaComps){%>
-							<input type="hidden" id="comp-id-<%=i%>" value="<%=cc.getDisciplina().getId()%>">
-							<input type="hidden" id="comp-nome-<%=i%>" value="<%=cc.getDisciplina().getNome()%>">
-							<input type="hidden" id="comp-natureza-<%=i%>" value="<%=cc.getNatureza()%>">
-							<input type="hidden" id="comp-preRequisitos-<%=i%>" value="<%=cc.getStringPreRequisitos()%>">
-						<%i++;}%>
-		           <input type="hidden" id="tam" value="<%=i%>">
-		           <%//System.out.println(i);%>
-	           	</div>
-	          </div>
-	          <div class="component-feedback">
-	          </div>                          
-	        <br>
-	        <div class="content">
-		        <div class="form-row">
-						<div class="form-group col-md-8">
-							<label for="componentesInput">Disciplinas</label>
-								<select id="componentesInput" class="form-control">
-									<option value="" selected="selected" disabled="disabled">Selecione as disciplinas que compõem esta matriz</option>
-									<%for(Disciplina disciplina : disciplinas){%>
-										<option id="disciplinaOption-<%=disciplina.getId()%>" value="<%=disciplina.getId()%> - <%=disciplina.getNome()%>"><%=disciplina.getNome()%></option>
-									<%}%>
-								</select>
-								&nbsp;&nbsp;
-						</div>
-						<div class="form-group col-md-4">
-						<label for="naturezaInput">Natureza do Componente</label>
-							<div class="form-row">
-							<select id="naturezaInput" class="form-control col-md-7">
-								<option value="OBRIGATÓRIA" selected="selected">OBRIGATÓRIA</option>
-								<option value="OPTATIVA">OPTATIVA</option>
-							</select>
-							&nbsp;&nbsp;
-							<input type="button" class="btn btn-secondary btn-sm" onclick="adicionarComponente()" id="addComp" value="Adicionar">
-							</div>
-						</div>
-						<div class="form-group" style="margin-left: 3px">
-							<label for="preRequisitosInput">Disciplinas Pré-Requisitadas</label>
-							<div class="form-row">
-								<select id="preRequisitosInput" class="form-control" style="margin-left: 6px">
-									<option value="" selected="selected" disabled="disabled">Selecione as disciplinas previamente requisitadas por este componente</option>
-									<%for(Disciplina disciplina : disciplinas){%>
-										<option id="disciplinaOption-<%=disciplina.getId()%>" value="<%=disciplina.getId()%> - <%=disciplina.getNome()%>"><%=disciplina.getNome()%></option>
-									<%}%>
-								</select>
-								&nbsp;&nbsp;
-								<input type="button" class="btn btn-secondary btn-sm" onclick="adicionarPreRequisito()" value="Adicionar">
-							</div>
-						<br>
-					          <ul class="list-group col-md-12" id="listaPreRequisitos"></ul>                                
-					    <br>
-						</div>
-				</div>
-			</div>
 			<div id="botoes" class="modal-footer">
 				<a href="ListarMatrizes">
 					<button type="button" class="btn btn-primary btn-sm">Cancelar</button></a>
@@ -243,140 +193,26 @@
 			vigente.selectedIndex = 1;
 		}
 	}
-	
-	var listaComponentes = [];
-	var numComponentes = 0;
-	var listaPreRequisitos = [];
-	var numPreRequisitos = 0;
-	
-	function adicionarComponente(){
-		if (listaPreRequisitos.includes(document.getElementById("componentesInput").value)){
-			$('.component-feedback').append(
-				'<div class="alert alert-danger alert-dismissible fade show" role="alert">'+
-				'	A disciplina não pode ter ela própria como pré requisito.'+
-				'	<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-			    '		<span aria-hidden="true">&times;</span>'+
-			  	'	</button>'+
-				'</div>'		
-			);
-		} else if(document.getElementById("componentesInput").value !== ""){
-			var disciplina = new Object();
-			disciplina.id = document.getElementById("componentesInput").value.substring(0,7);
-			disciplina.nome = document.getElementById("componentesInput").value.substring(10);
-			disciplina.natureza = document.getElementById("naturezaInput").value;
-			disciplina.preRequisitos = "";
-			if(listaPreRequisitos.length>0){
-				for(j=0;j<listaPreRequisitos.length;j++){
-					if(listaPreRequisitos[j] !== "" && listaPreRequisitos[j].substring(0,7) !== disciplina.id){
-						if(j>0){disciplina.preRequisitos += "; ";}
-						disciplina.preRequisitos += listaPreRequisitos[j].substring(0,7);
-					}
-				}
-			}
-			if(disciplina.preRequisitos == ""){disciplina.preRequisitos = "-";}
-			//listaComponentes[numComponentes] = disciplina;
-			//numComponentes++;
-			verificarComponentesExistentes(disciplina);
-		}
-		document.getElementById("componentesInput").selectedIndex = -1;
-		document.getElementById("componentesInput").selectedIndex = 0;
-		document.getElementById("naturezaInput").selectedIndex = -1;
-		document.getElementById("naturezaInput").selectedIndex = 0;
-		listaPreRequisitos = [];
-		numPreRequisitos = 0;
-		//atualizarComponente();
-	}
-	
-	function atualizarComponente(){
-		var listpr = document.getElementById("listaPreRequisitos");
-		listpr.innerHTML = '';
-		var list = document.getElementById("listaComponentes");
-		list.innerHTML = '<tr><th scope="col">Código</th><th scope="col">Nome</th><th scope="col">Natureza</th><th scope="col">Pré-Requisitos</th><th scope="col"></th></tr>';
-		for(i=0;i<listaComponentes.length;i++){
-			if(listaComponentes[i] !== null){
-				list.innerHTML += '<tr name="teste+'+i+'">'+
-								  '<td>'+listaComponentes[i].id+'<input type="hidden" name="comp-id" value="'+listaComponentes[i].id+'"></td>'+
-								  '<td>'+listaComponentes[i].nome+'<input type="hidden" name="comp-nome" value="'+listaComponentes[i].nome+'"></td>'+
-								  '<td>'+listaComponentes[i].natureza+'<input type="hidden" name="comp-natureza" value="'+listaComponentes[i].natureza+'"></td>'+
-								  '<td>'+listaComponentes[i].preRequisitos+'<input type="hidden" name="comp-preRequisitos" value="'+listaComponentes[i].preRequisitos+'"></td>'+
-								  '<td><button type="button" class="btn btn-light btn-sm material-icons float-right" style="font-size: 15px;" onclick="removeComponente('+i+')">clear</button></td>'+
-								  '</tr>';
-			}
-		}
-	}
-	
-	function removeComponente(i){
-	    listaComponentes[i] = null;
-	    atualizarComponente();
-	}
-	
-	function verificarComponentesExistentes(disciplina){
-		aux = true;
-		for(i=0;i<listaComponentes.length; i++){
-			if((listaComponentes[i] != null) && (disciplina.id == listaComponentes[i].id)){
-				aux = false;
-			}
-		}
-		if(aux == true){
-			listaComponentes[numComponentes] = disciplina;
-			numComponentes++;
-			atualizarComponente();
-		}
-	}
-	
-	function adicionarPreRequisito(){
+	function verificarDisciplinaAproveitada(){
+		var ano = document.getElementByName("periodo_letivo").value.slice(0,4);
+		var semestre = document.getElementByName("periodo_letivo").value.slice(5);
 		
+		var data = new Date();
+		var anoAtual = data.getFullYear();
+		var mesAtual = data.getMonth();
+		var semestreAtual = 0;
+		if(mesAtual < 6)
+			semestreAtual = 1;
+		else 
+			semestreAtual = 2;
 		
-		if (listaPreRequisitos.includes(document.getElementById("preRequisitosInput").value)){
-			$('.component-feedback').append(
-				'<div class="alert alert-warning alert-dismissible fade show" role="alert">'+
-				'	O Pré-requisito já foi adicionado.'+
-				'	<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-			    '		<span aria-hidden="true">&times;</span>'+
-			  	'	</button>'+
-				'</div>'		
-			);
-		} else if(document.getElementById("preRequisitosInput").value !== ""){
-			var preRequisito = document.getElementById("preRequisitosInput").value;
-			listaPreRequisitos[numPreRequisitos] = preRequisito;
-			numPreRequisitos++;
-		}
-		document.getElementById("preRequisitosInput").selectedIndex = -1;
-		document.getElementById("preRequisitosInput").selectedIndex = 0;
-		atualizarPreRequisito();
-	}
-	
-	function atualizarPreRequisito(){
-		var listp = document.getElementById("listaPreRequisitos");
-		listp.innerHTML = '';
-		for(i=0;i<listaPreRequisitos.length;i++){
-			if(listaPreRequisitos[i] !== ""){
-				listp.innerHTML += '<li class="list-group-item">'+
-								   '<input type="hidden" name="listaPreRequisito" value="'+listaPreRequisitos[i]+'" style="display: none;">'+listaPreRequisitos[i]+
-						 		   '<button type="button" class="btn btn-light btn-sm material-icons float-right" style="font-size: 15px;" onclick="removePreRequisito('+i+')">clear</button>'+
-						 		   '</li>';
+		if(anoAtual < ano){
+			if(semestreAtual < semestre){
+				alert("O Período Letivo está no futuro");
 			}
 		}
 	}
 	
-	function removePreRequisito(i){
-	    listaPreRequisitos[i] = "";
-	    atualizarPreRequisito();
-	}
-	
-	function verificarPreRequisitosExistentes(disciplina){
-		aux = true;
-		for(i=0;i<listaPreRequisitos.length; i++){
-			if((listaPreRequisitos[i] != null) && (disciplina.id == listaPreRequisitos[i].id)){
-				aux = false;
-			}
-		}
-		if(aux == true){
-			listaPreRequisitos[numPreRequisitos] = disciplina;
-			numPreRequisitos++;
-			atualizarPreRequisito();
-		}
-	}
 	</script>
 
 </html>
