@@ -91,6 +91,11 @@
 									style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz()%>" > Visualizar
 								</button>
 								</form></td>
+								<td><form method="post" action="EditarMatriz" id="formEdi<%=contato.getIdMatriz()%>">
+								<button  class="btn btn-primary btn-sm" form="formEdi<%=contato.getIdMatriz()%>"
+									style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz()%>" > Editar
+								</button>
+								</form></td>
 								<td><form method="post" action="ExcluirMatriz" id="formEx<%=contato.getIdMatriz()%>">
 								<button  class="btn btn-primary btn-sm" form="formEx<%=contato.getIdMatriz()%>"
 									style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz()%>" > Excluir
