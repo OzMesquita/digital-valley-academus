@@ -107,7 +107,7 @@
 						 <br> 
 					
 						 <label for="periodoInput"> Período Letivo*</label>
-						 <input type="text" name="periodo_letivo" id="periodo_letivo" pattern="[0-9]{4}.[0-9]{1}$" value="<%=matriz.getPeriodoLetivo()%>" class="form-control" id="periodoInput" aria-describedby="tituloHelp" placeholder="Digite o período letivo" required>
+						 <input type="text" name="periodo_letivo" id="periodo_letivo" pattern="[0-9]{4}.[1-2]{1}$" value="<%=matriz.getPeriodoLetivo()%>" class="form-control" id="periodoInput" aria-describedby="tituloHelp" placeholder="Digite o período letivo" required>
 						 <small id="tituloHelp" class="form-text text-muted"> Exemplo: 2018.1 </small>		
 						 	
 				         <br>

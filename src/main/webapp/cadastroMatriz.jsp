@@ -72,7 +72,7 @@
 			         <br>
 			         
 			         <label for="periodoInput"> Período Letivo*</label>
-					 <input type="text" name="periodo_letivo" class="form-control" id="periodoInput" aria-describedby="tituloHelp" placeholder="Digite o período letivo" required>
+					 <input type="text" pattern="[0-9]{4}.[1-2]{1}$" name="periodo_letivo" class="form-control" id="periodoInput" aria-describedby="tituloHelp" placeholder="Digite o período letivo" required>
 					 <small id="tituloHelp" class="form-text text-muted"> Exemplo: 2018.1 </small>		
 					 	
 			         <br>
@@ -95,21 +95,21 @@
 			         <br>
 					
 					 <label for="vigenteInput">Vigente*</label>
-			                        <select name="vigente" class="form-control custom-select" id="vigenteInput" required>
+			                        <select name="vigente" class="form-control custom-select" onchange="ativoController()" id="vigenteInput" required>
 			                            <option value="" selected="selected" disabled="disabled">Selecione uma opção</option>
 			                            <option value="true">Sim</option>
 			                            <option value="false">Não</option>              
 			                        </select>
 			         <br>
-					
+					<br>
 					<label for="ativoInput">Ativo*</label>
-			                        <select name="ativo" class="form-control custom-select" id="ativoInput" required>
+			                        <select name="ativo" class="form-control custom-select" onchange="vigenteController()" id="ativoInput" required>
 			                            <option value="" selected="selected" disabled="disabled">Selecione uma opção</option>
 			                            <option value="true">Sim</option>
 			                            <option value="false">Não</option>              
 			                        </select>
 			         <br>
-					
+					<br>
 					<label for="cursoInput">Curso*</label>
 			                        <select name="id_curso" class="form-control custom-select" id="cursoInput" required>
 			                            <option value="" selected="selected" disabled="disabled">Selecione o curso</option>
@@ -136,6 +136,23 @@
 		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
 	</body>
 	<script type="text/javascript">
+	
+	var vigente = document.getElementById("vigenteInput");
+	var ativo = document.getElementById("ativoInput");
+	
+	function ativoController(){
+		if(vigente.options[vigente.selectedIndex].value == "true" && ativo.options[ativo.selectedIndex].value != "true"){
+			ativo.selectedIndex = -1;
+			ativo.selectedIndex = 1;
+		}
+	}
+	
+	function vigenteController(){
+		if(ativo.options[ativo.selectedIndex].value == "false" && vigente.options[vigente.selectedIndex].value != "false"){
+			vigente.selectedIndex = -1;
+			vigente.selectedIndex = 2;
+		}
+	}
 	
 	$(document).ready(function(){
 	    $('#periodoInput').mask('0000.x', {
