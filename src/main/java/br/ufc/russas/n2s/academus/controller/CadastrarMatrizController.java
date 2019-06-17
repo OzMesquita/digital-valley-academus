@@ -15,7 +15,7 @@ public class CadastrarMatrizController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
-	JDBCMatrizCurricularDAO daoCadastroMatriz = new JDBCMatrizCurricularDAO();
+	JDBCMatrizCurricularDAO daoMatriz = new JDBCMatrizCurricularDAO();
 
 	public CadastrarMatrizController() {
 		super();
@@ -47,7 +47,7 @@ public class CadastrarMatrizController extends HttpServlet {
 			boolean ativo = Boolean.parseBoolean((request.getParameter("ativo"))); 
 			int curso = Integer.parseInt(request.getParameter("id_curso"));
 			
-
+			
 			MatrizCurricular ma = new MatrizCurricular();
 			
 			ma.setNome(nome);
@@ -60,7 +60,12 @@ public class CadastrarMatrizController extends HttpServlet {
 			ma.setIdCurso(curso);
 
 			try {
-				daoCadastroMatriz.cadastrar(ma);
+				if(vigente) {
+					daoMatriz.editarVigente(curso);
+					ativo = true;
+				}
+				
+				daoMatriz.cadastrar(ma);
 				
 				request.setAttribute("success", "Matriz cadastrada com sucesso.");
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroMatriz.jsp");
