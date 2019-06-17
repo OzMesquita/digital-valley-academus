@@ -57,10 +57,6 @@
 								<tr>
 									<th scope="col">Código Matriz</th>
 									<th scope="col">Nome</th>
-									<!-- <form id="myform" method="post" action="VisualizarMatriz">
-								  			<input type="hidden" name="link" value="< %=contato.getIdMatriz()% >" /> 
-								  			<a onclick="document.getElementById('myform').submit();"><font color="blue"><  %=contato.getNome()% ></font></a></td>
-										</form> -->
 									<th scope="col">Período Letivo</th>
 									<th scope="col">Carga</th>
 									<th scope="col">Prazo Mínimo</th>

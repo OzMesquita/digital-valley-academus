@@ -53,6 +53,8 @@
 						<li class="breadcrumb-item active" aria-current="page">Matriz e Componentes</li>
 					</ol>
 					</nav>
+					<h1>Visualizar Matriz Curricular</h1>
+					<br>
 					<%
 								MatrizCurricular matriz = new MatrizCurricular();
 								MatrizCurricularDAO dao = new JDBCMatrizCurricularDAO();
@@ -176,7 +178,7 @@
 									<form method="post" action="EditarComponente" id="edi<%=aux.getIdComponente()%>">
 										<input name="id_matriz" type="hidden" value="<%=matriz.getIdMatriz()%>">
 										<button class="btn btn-primary btn-sm" form="edi<%=aux.getIdComponente()%>" 
-										class="btn btn-primary btn-sm" style="height: 30px; margin-right:15px" type="submit" name="button"
+										class="btn btn-primary btn-sm" style="height: 30px; margin-right:5px" type="submit" name="button"
 										value="<%=aux.getIdComponente()%>" >
 										Editar
 										</button>
