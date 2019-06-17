@@ -4,6 +4,16 @@
 <%@ page import="java.util.*"%>
 
 <div class="table-responsive">
+	<form method="post">
+		<label for="buscainput"><h2><b> Escolha forma de pesquisa </b></h2></label> 
+		<h2><INPUT TYPE="radio" name="opcao" VALUE="1"> código
+		<INPUT TYPE="radio" name="opcao" VALUE="2"> nome</h2>
+		<a class="form-inline">
+		<input class="form-control" style="width: 250px;" style='text-transform:uppercase'
+			name="id_disciplina" placeholder="Código ou nome da disciplina" <%if(request.getParameter("id_disciplina")!= null){%>value="<%=request.getParameter("id_disciplina")%>"<%}%>>&nbsp;
+		<button class="btn btn-sm btn-primary" type="submit">Procurar</button></a>
+	</form>
+	<br>
 	<table class="table">
 		<thead>
 			<tr>
@@ -16,14 +26,29 @@
 		</thead>
 		<%
 			DisciplinaDAO dao = new JDBCDisciplinaDAO();
-			List<Disciplina> contatos;
-			
-			if(request.getParameter("pagina") == null){
-				contatos = dao.listar(0, 10);
+			List<Disciplina> contatos = new ArrayList<>();
+			int tipobusca = 0;
+			int pagina = 0;
+			String id_disciplina = "";
+			if(request.getParameter("opcao") != null){
+				tipobusca = Integer.parseInt(request.getParameter("opcao"));
 			}
-			else{
-				int pag = Integer.parseInt(request.getParameter("pagina"));
-				contatos = dao.listar(pag*10, 10);
+			if(request.getParameter("pagina") != null){
+				pagina = Integer.parseInt(request.getParameter("pagina"));
+			}
+			if(request.getParameter("id_disciplina") != null){
+				id_disciplina = request.getParameter("id_disciplina");
+			}
+			if(tipobusca == 1){
+				Disciplina disciplina = dao.buscarPorId(id_disciplina);
+				if(disciplina != null){
+					contatos.add(disciplina);
+				}
+			}else if (tipobusca == 2 || !id_disciplina.equals("")){
+				contatos = dao.buscarPorNome( id_disciplina, pagina*10, 10);
+				
+			} else{
+				contatos = dao.listar(pagina*10, 10);
 			}
 			
 			for (Disciplina contato : contatos) {
@@ -52,7 +77,10 @@
 		
 		<%
 		}
-		%>
+			if(contatos.isEmpty()){
+				%>
+				<tr><td><p>Nenhuma disciplina foi encontrada! </p></td></tr>
+			<% }%>
 
 	</table>
 </div>
@@ -62,6 +90,7 @@
     <li class="page-item <%if(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0){%>disabled<%}%>">
       
       <form method="post" action="ListarDisciplinas" id="formPag">
+      	<input type="hidden" name="id_disciplina" value="<%=request.getParameter("id_disciplina")%>">
       	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -1);}%>">
       	Anterior
       	</button>
@@ -71,11 +100,11 @@
     <li class="page-item <%if(contatos.size() < 10){%>disabled<%}%>">
     
       <form method="post" action="ListarDisciplinas" id="formPag">
+      	<input type="hidden" name="id_disciplina" value="<%=request.getParameter("id_disciplina")%>">
       	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +1);}%>">
       	Proximo
       	</button>
       </form>
-      
     </li>
   </ul>
 </nav>

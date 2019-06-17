@@ -19,5 +19,7 @@ public interface DisciplinaDAO {
 	public Disciplina editar(Disciplina dis);
 	
 	public void excluir(Disciplina dis);
+
+	public List<Disciplina> buscarPorNome(String nome, int limiteInf, int limiteSup);
 	
 }

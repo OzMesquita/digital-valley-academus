@@ -43,6 +43,15 @@
 					</ol>
 					</nav>
 					<div class="table-responsive">
+					<form method="post" action="">
+						<label for="buscainput"><h2><b> Escolha forma de pesquisa </b></h2></label> 
+						<h2><INPUT TYPE="radio" name="opcao" VALUE="1"> código
+						<INPUT TYPE="radio" name="opcao" VALUE="2"> nome</h2>
+						<a class="form-inline">
+						<input class="form-control" style="width: 250px;" style='text-transform:uppercase'
+							name="id_matriz" placeholder="Código ou nome da Matriz" <%if(request.getParameter("id_matriz")!= null){%>value="<%=request.getParameter("id_matriz")%>"<%}%>>&nbsp;
+						<button class="btn btn-sm btn-primary" type="submit">Procurar</button></a>
+					</form><br>
 						<table class="table">
 							<thead>
 								<tr>
@@ -64,14 +73,34 @@
 							</thead>
 							<%
 								MatrizCurricularDAO dao = new JDBCMatrizCurricularDAO();
-								List<MatrizCurricular> contatos;
-							
-								if(request.getParameter("pagina") == null){
-									contatos = dao.listar(0, 10);
+								List<MatrizCurricular> contatos = new ArrayList<>();
+								int tipobusca = 0;
+								int pagina = 0;
+								String id_matriz = "";
+								if(request.getParameter("opcao") != null){
+									tipobusca = Integer.parseInt(request.getParameter("opcao"));
 								}
-								else{
-									int pag = Integer.parseInt(request.getParameter("pagina"));
-									contatos = dao.listar(pag*10, 10);
+								if(request.getParameter("pagina") != null){
+									pagina = Integer.parseInt(request.getParameter("pagina"));
+								}
+								if(request.getParameter("id_matriz") != null){
+									id_matriz = request.getParameter("id_matriz");
+								}
+								
+								if(tipobusca == 1){
+									try{
+										MatrizCurricular matriz = dao.buscarPorId(Integer.parseInt(id_matriz));
+										if(matriz != null){
+											contatos.add(matriz);
+										}	
+									}catch(Exception e){
+										
+									}
+								}else if (tipobusca == 2 || !id_matriz.equals("")){
+									contatos = dao.buscarPorNome( id_matriz, pagina*10, 10);
+									
+								} else{
+									contatos = dao.listar(pagina*10, 10);
 								}
 								
 								for (MatrizCurricular contato : contatos) {
@@ -100,7 +129,11 @@
 	
 							<%
 								}
-							%>
+								if(contatos.isEmpty()){
+									%>
+									<tr><td><p>Nenhuma matriz foi encontrada! </p></td></tr>
+								<% 
+								}%>
 	
 						</table>
 					</div>
@@ -109,6 +142,7 @@
 					    <li class="page-item <%if(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0){%>disabled<%}%>">
 					      
 					      <form method="post" action="ListarMatrizes" id="formPag">
+					      	<input type="hidden" name="id_disciplina" value="<%=request.getParameter("id_matriz")%>">
 					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -1);}%>">
 					      	Anterior
 					      	</button>
@@ -118,6 +152,7 @@
 					    <li class="page-item <%if(contatos.size() < 10){%>disabled<%}%>">
 					    
 					      <form method="post" action="ListarMatrizes" id="formPag">
+					      	<input type="hidden" name="id_disciplina" value="<%=request.getParameter("id_matriz")%>">
 					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +1);}%>">
 					      	Proximo
 					      	</button>
@@ -130,20 +165,5 @@
 			</div>
 		</div>
 		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
-		<% 
-					String mensagem = (String) request.getAttribute("mensagem");
-					if(mensagem != null){
-						if (mensagem.equals("MS")){
-					%>
-						<script type="text/javascript">
-        					alert("A Matriz foi alterada com sucesso!");
-    					</script>
-					<%	} else if(mensagem.equals("MN")){
-						%>
-						<script type="text/javascript">
-        					alert("Não foi possível alterar a Matriz, por conter solicitações nas disciplinas associadas.");
-    					</script>
-					<%	}
-					}%>
 	</body>
 </html>

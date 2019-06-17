@@ -164,6 +164,40 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 		
 		return listaDisciplinas;
 	}
+	
+	@Override
+	public List<Disciplina> buscarPorNome(String nome, int limiteInf, int limiteSup) {
+		String sql = "select * from academus.disciplina where nome ilike '%"+nome+"%' order by id_disciplina offset ? limit ?";
+		List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, limiteInf);
+			ps.setInt(2, limiteSup);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				Disciplina aux = new Disciplina();
+				aux.setId(rs.getString("id_disciplina"));
+				aux.setNome(rs.getString("nome"));
+				aux.setCarga(rs.getInt("carga"));
+				aux.setCreditos(rs.getInt("creditos"));
+				
+				listaDisciplinas.add(aux);
+			}
+			
+			rs.close();
+			ps.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return listaDisciplinas;
+	}
 
 	@Override
 	public Disciplina editar(Disciplina dis) {
