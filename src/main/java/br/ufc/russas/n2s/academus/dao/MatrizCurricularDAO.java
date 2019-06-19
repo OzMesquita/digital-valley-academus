@@ -18,6 +18,8 @@ public interface MatrizCurricularDAO {
 	
 	public List<MatrizCurricular> buscarPorCurso(int idCurso);
 	
+	public List<MatrizCurricular> buscarAtivosPorCurso(int idCurso);
+	
 	public List<MatrizCurricular> buscarPorCurso(int idCurso, int limiteInf, int limiteSup);
 	
 	public List<MatrizCurricular> buscarPorNome(String nome, int limiteInf, int limiteSup);

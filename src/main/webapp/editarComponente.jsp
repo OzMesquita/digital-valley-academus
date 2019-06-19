@@ -192,16 +192,37 @@
 						%>
 						<div class="modal-footer">
 								<div id="botoes" class="controls">
-									<form action="VisualizarMatriz" method="post" id="VisMat<%=id_matriz%>">
-										<button type="submit" class="btn btn-primary btn-sm" value="<%=id_matriz%>" form="VisMat<%=id_matriz%>">
-										Voltar</button>
-									</form>
+									<button type="button" name="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Voltar">
+									Voltar</button>
 									<input type="hidden" name="id_matriz" value="<%=id_matriz%>">
 									<button type="submit" name="id_comp" value="<%=comp.getIdComponente()%>" class="btn btn-primary btn-sm" form="EdiComp<%=id_matriz%>">Confirmar</button>
 									
 								</div>
 							</div>
 						</form>
+						<!-- Modal -->
+							<div class="modal fade" id="Voltar" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="modalLabel">Cancelar</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<h2>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h2>
+										</div>
+										<div class="modal-footer">
+											<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
+											<form action="VisualizarMatriz" method="post">
+												<button type="submit" class="btn btn-primary btn-sm active" name="button" value="<%=id_matriz%>">Sim</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Fim de Modal -->
 					</div>
 			</div>
 		</div>

@@ -11,7 +11,6 @@ import br.ufc.russas.n2s.academus.dao.CursoDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCCursoDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCPerfilAcademusDAO;
 import br.ufc.russas.n2s.academus.dao.PerfilAcademusDAO;
-import br.ufc.russas.n2s.academus.model.Disciplina;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 
