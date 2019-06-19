@@ -16,7 +16,7 @@
 
 	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
 	Aluno a = (Aluno) usuario;
-	List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(a.getCurso().getIdCurso());
+	List<MatrizCurricular> matrizes = daoMC.buscarAtivosPorCurso(a.getCurso().getIdCurso());
 %>
 
 <!DOCTYPE html>
