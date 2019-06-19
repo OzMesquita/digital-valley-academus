@@ -17,8 +17,7 @@
 						<div class="modal-dialog modal-lg">
 						<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="modalLabel">Confirmar cadastro
-										da seleção</h5>
+									<h5 class="modal-title" id="modalLabel">Confirmar registro da solicitação</h5>
 									<button type="button" class="close" data-dismiss="modal"
 										aria-label="Close">
 										<span aria-hidden="true">&times;</span>
@@ -38,6 +37,7 @@
 									            <option value="Valido">Valido</option>
 									        	<option value="Invalido">Invalido</option>              
 									        </select>
+									        <br>
 								            <div class="invalid-feedback">
 								                            
 								        	</div>
