@@ -157,13 +157,32 @@
 							</div>
 							<div class="modal-footer">
 								<div id="botoes" class="controls">
-									<a href="Inicio">
-										<button type="button" class="btn btn-primary btn-sm" value="<%=solicitacao.getIdSolicitacao()%>">Cancelar</button></a>
-										
+									<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Voltar">Cancelar</button>
 									<button type="submit" name="button" value="<%=solicitacao.getIdSolicitacao()%>" class="btn btn-primary btn-sm">Confirmar</button>
 									
 								</div>
 							</div>
+							<!-- Modal -->
+							<div class="modal fade" id="Voltar" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="modalLabel">Cancelar</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<h2>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h2>
+										</div>
+										<div class="modal-footer">
+											<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
+											<a href="Inicio"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Fim de Modal -->
 						</form>
 					</div>	                
 				</div>
