@@ -22,4 +22,8 @@ public interface DisciplinaDAO {
 
 	public List<Disciplina> buscarPorNome(String nome, int limiteInf, int limiteSup);
 	
+	public int countDisciplina(int pagina);
+	
+	public int countDisciplina(int pagina, String nome);
+	
 }

@@ -244,4 +244,62 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 		
 	}
 	
+	//Métodos para paginação
+	
+	@Override
+	public int countDisciplina(int pagina) {
+		String sql = "WITH cte AS (SELECT * FROM academus.disciplina) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	@Override
+	public int countDisciplina(int pagina, String nome) {
+		String sql = "WITH cte AS (SELECT * FROM academus.disciplina where nome ilike '%"+nome+"%') " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
 }
