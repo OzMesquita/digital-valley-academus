@@ -70,9 +70,12 @@
 							<%
 								MatrizCurricularDAO dao = new JDBCMatrizCurricularDAO();
 								List<MatrizCurricular> contatos = new ArrayList<>();
+								
 								int tipobusca = 0;
 								int pagina = 0;
 								String id_matriz = "";
+								int numSolicitacoes = 0;
+								
 								if(request.getParameter("opcao") != null){
 									tipobusca = Integer.parseInt(request.getParameter("opcao"));
 								}
@@ -88,15 +91,16 @@
 										MatrizCurricular matriz = dao.buscarPorId(Integer.parseInt(id_matriz));
 										if(matriz != null){
 											contatos.add(matriz);
-										}	
+										}
 									}catch(Exception e){
 										
 									}
 								}else if (tipobusca == 2 || !id_matriz.equals("")){
 									contatos = dao.buscarPorNome( id_matriz, pagina*10, 10);
-									
+									numSolicitacoes = dao.countMatriz(pagina, id_matriz);
 								} else{
 									contatos = dao.listar(pagina*10, 10);
+									numSolicitacoes = dao.countMatriz(pagina);
 								}
 								
 								for (MatrizCurricular contato : contatos) {
@@ -135,26 +139,85 @@
 					</div>
 					<nav aria-label="Page navigation example">
 					  <ul class="pagination justify-content-center">
-					    <li class="page-item <%if(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0){%>disabled<%}%>">
+					    <%if(!(request.getParameter("pagina") == null || pagina <= 2)){%>
+					    <li class="page-item">
 					      
-					      <form method="post" action="ListarMatrizes" id="formPag">
-					      	<input type="hidden" name="id_disciplina" value="<%=request.getParameter("id_matriz")%>">
+					      <form method="post" action="ListarMatriz" id="formPag">
+					      	<input type="hidden" name="id_matriz" value="<%=id_matriz%>">
+					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -3);}%>">
+					      	<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(pagina-2);}%>
+					      	</button>
+					      </form>
+					      
+					    </li>
+					    <% } %>
+					  	
+					  	
+					  	<%if(!(request.getParameter("pagina") == null || pagina <= 1)){%>
+					    <li class="page-item">
+					      
+					      <form method="post" action="ListarMatriz" id="formPag">
+					      	<input type="hidden" name="id_matriz" value="<%=id_matriz%>">
+					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -2);}%>">
+					      	<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(pagina-1);}%>
+					      	</button>
+					      </form>
+					      
+					    </li>
+					    <% } %>
+					  	
+					  	<%if(!(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0)){%>
+					    <li class="page-item">
+					      
+					      <form method="post" action="ListarMatriz" id="formPag">
+					      	<input type="hidden" name="id_matriz" value="<%=id_matriz%>">
 					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -1);}%>">
 					      	Anterior
 					      	</button>
 					      </form>
 					      
 					    </li>
-					    <li class="page-item <%if(contatos.size() < 10){%>disabled<%}%>">
+					    <% } %>
 					    
-					      <form method="post" action="ListarMatrizes" id="formPag">
-					      	<input type="hidden" name="id_disciplina" value="<%=request.getParameter("id_matriz")%>">
+					    <li class="page-item disabled">
+					    	<span class="page-link"><%if(request.getParameter("pagina") == null){%>1<%}else{out.print(pagina+1);}%></span>
+					    </li>
+					    
+					    <% if(numSolicitacoes >= 10){ %>
+					    <li class="page-item">
+					    
+					      <form method="post" action="ListarMatriz" id="formPag">
+					      	<input type="hidden" name="id_matriz" value="<%=id_matriz%>">
 					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +1);}%>">
-					      	Proximo
+					      	Próximo
 					      	</button>
 					      </form>
-					      
 					    </li>
+					    <% } %>
+					    
+					    <% if(numSolicitacoes >= 20){ %>
+					    <li class="page-item">
+					    
+					      <form method="post" action="ListarMatriz" id="formPag">
+					      	<input type="hidden" name="id_matriz" value="<%=id_matriz%>">
+					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>2<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +2);}%>">
+					      	<%if(pagina == 0){%>3<%}else{out.print(pagina +3);}%>
+					      	</button>
+					      </form>
+					    </li>
+					    <% } %>
+					    
+					    <% if(numSolicitacoes >= 30){ %>
+					    <li class="page-item">
+					    
+					      <form method="post" action="ListarMatriz" id="formPag">
+					      	<input type="hidden" name="id_matriz" value="<%=id_matriz%>">
+					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>3<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +3);}%>">
+					      	<%if(pagina == 0){%>4<%}else{out.print(pagina +4);}%>
+					      	</button>
+					      </form>
+					    </li>
+					    <% } %>
 					  </ul>
 					</nav>
 				</div>

@@ -29,5 +29,9 @@ public interface MatrizCurricularDAO {
 	public boolean verificarSeEstaSendoUtilizada(int idMat);
 	
 	public void excluir(MatrizCurricular mat);
+	
+	public int countMatriz(int pagina);
+	
+	public int countMatriz(int pagina, String nome);
 		
 }

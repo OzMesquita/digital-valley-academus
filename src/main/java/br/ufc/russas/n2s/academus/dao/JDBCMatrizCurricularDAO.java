@@ -418,5 +418,63 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 		}
 		
 	}
+	
+	//Métodos para paginação
+	
+		@Override
+		public int countMatriz(int pagina) {
+			String sql = "WITH cte AS (SELECT * FROM academus.matriz_curricular) " + 
+					"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+			
+			int resultSql = 0;
+			
+			Connection conn = ConnectionPool.getConnection();
+			try{
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, pagina*10);
+				ResultSet rs = ps.executeQuery();
+				
+				if(rs.next())
+					resultSql = rs.getInt(1);
+				
+				rs.close();
+				ps.close();
+
+			}catch(SQLException e){
+				e.printStackTrace();
+			}finally{
+				ConnectionPool.releaseConnection(conn);
+			}
+			
+			return resultSql;
+		}
+		
+		@Override
+		public int countMatriz(int pagina, String nome) {
+			String sql = "WITH cte AS (SELECT * FROM academus.matriz_curricular where nome ilike '%"+nome+"%') " + 
+					"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+			
+			int resultSql = 0;
+			
+			Connection conn = ConnectionPool.getConnection();
+			try{
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, pagina*10);
+				ResultSet rs = ps.executeQuery();
+				
+				if(rs.next())
+					resultSql = rs.getInt(1);
+				
+				rs.close();
+				ps.close();
+
+			}catch(SQLException e){
+				e.printStackTrace();
+			}finally{
+				ConnectionPool.releaseConnection(conn);
+			}
+			
+			return resultSql;
+		}
 
 }
