@@ -14,6 +14,26 @@
 		<button class="btn btn-sm btn-primary" type="submit">Procurar</button></a>
 	</form>
 	<br>
+	<!-- Caso seja bem sucedido vem para essa tela com uma mensagem de sucesso -->
+						<% if (request.getAttribute("success") != null){ %>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<%= request.getAttribute("success") %>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+						<% } %>
+						
+						<!-- Caso o cadastro não seja bem sucedido vem para essa tela com uma mensagem de erro -->
+						<% if (request.getAttribute("erro") != null){ %>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<%= request.getAttribute("erro") %>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+						<% } %>
+						
 	<table class="table">
 		<thead>
 			<tr>
@@ -75,10 +95,33 @@
 				</form>
 			</td>
 			<td class="text-center">
-				<form method="post" action="ExcluirDisciplina" id="formEx<%=contato.getId()%>">
-					<button  class="btn btn-primary btn-sm " form="formEx<%=contato.getId()%>" style="height: 30px;" type="submit" name="buttonEx" value="<%=contato.getId()%>" >
+				<button class="btn btn-primary btn-sm " style="height: 30px;" 
+					type="button" data-toggle="modal" data-target="#Excluir<%=contato.getId()%>">
 					Excluir
-					</button>
+				</button>
+				
+				<form method="post" action="ExcluirDisciplina" id="formEx<%=contato.getId()%>">
+					<!-- Modal -->
+							<div class="modal fade" id="Excluir<%=contato.getId()%>" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="modalLabel">Excluir Disciplina</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<h2>Deseja mesmo excluir esta disciplina?</h2>
+										</div>
+										<div class="modal-footer">
+											<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
+											<button type="submit" form="formEx<%=contato.getId()%>" name="buttonEx" value="<%=contato.getId()%>" class="btn btn-primary btn-sm active">Sim</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Fim de Modal -->
 				</form>
 			</td>
 		</tr>
@@ -96,6 +139,20 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
   
+  	
+  	<%if(!(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0)){%>
+    <li class="page-item">
+      
+      <form method="post" action="ListarDisciplinas" id="formPag">
+      	<input type="hidden" name="id_disciplina" value="<%=id_disciplina%>">
+      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -1);}%>">
+      	Anterior
+      	</button>
+      </form>
+      
+    </li>
+    <% } %>
+    
   	<%if(!(request.getParameter("pagina") == null || pagina <= 2)){%>
     <li class="page-item">
       
@@ -129,7 +186,7 @@
       <form method="post" action="ListarDisciplinas" id="formPag">
       	<input type="hidden" name="id_disciplina" value="<%=id_disciplina%>">
       	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -1);}%>">
-      	Anterior
+      	<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(pagina);}%>
       	</button>
       </form>
       
@@ -146,7 +203,7 @@
       <form method="post" action="ListarDisciplinas" id="formPag">
       	<input type="hidden" name="id_disciplina" value="<%=id_disciplina%>">
       	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +1);}%>">
-      	Próximo
+      	<%if(pagina == 0){%>3<%}else{out.print(pagina +2);}%>
       	</button>
       </form>
     </li>
@@ -171,6 +228,18 @@
       	<input type="hidden" name="id_disciplina" value="<%=id_disciplina%>">
       	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>3<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +3);}%>">
       	<%if(pagina == 0){%>4<%}else{out.print(pagina +4);}%>
+      	</button>
+      </form>
+    </li>
+    <% } %>
+    
+    <% if(numSolicitacoes >= 10){ %>
+    <li class="page-item">
+    
+      <form method="post" action="ListarDisciplinas" id="formPag">
+      	<input type="hidden" name="id_disciplina" value="<%=id_disciplina%>">
+      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +1);}%>">
+      	Próximo
       	</button>
       </form>
     </li>

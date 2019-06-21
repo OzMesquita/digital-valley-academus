@@ -23,22 +23,31 @@ public class ExcluirMatrizController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("button") != null){
-			int idMatriz = Integer.parseInt(request.getParameter("button"));
+			try {
+				int idMatriz = Integer.parseInt(request.getParameter("button"));
+				
+				MatrizCurricularDAO daoMat = new JDBCMatrizCurricularDAO();
+				MatrizCurricular mat = daoMat.buscarPorId(idMatriz);
+				
+				if(daoMat.verificarSeEstaSendoUtilizada(idMatriz) == false){
+					daoMat.excluir(mat);
+					request.setAttribute("success", "A Matriz excluída com sucesso.");
+				} else {
+					request.setAttribute("erro", "A Matriz está sendo utilizada, desativi-a para poder remover.");
+				}
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("listaMatrizes.jsp");
+				dispatcher.forward(request, response);
 			
-			MatrizCurricularDAO daoMat = new JDBCMatrizCurricularDAO();
-			MatrizCurricular mat = daoMat.buscarPorId(idMatriz);
-			
-			if(daoMat.verificarSeEstaSendoUtilizada(idMatriz) == false){
-				daoMat.excluir(mat);
+			} catch (Exception e) {
+				request.setAttribute("erro", "Erro! Não foi possível excluir a Matriz.");
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("listaMatrizes.jsp");
+				dispatcher.forward(request, response);
+				
+				e.printStackTrace();
 			}
-			
-		}
-		
-		try {
+		} else {
 			response.sendRedirect("ListarMatrizes");
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+		}
 	}
 
 }

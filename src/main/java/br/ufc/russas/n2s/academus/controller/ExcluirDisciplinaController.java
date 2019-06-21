@@ -23,18 +23,24 @@ public class ExcluirDisciplinaController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("buttonEx") != null){
-			String idDisc = request.getParameter("buttonEx");
-			Disciplina d = new Disciplina();
-			
-			d.setId(idDisc);
-			DisciplinaDAO daoDisc = new JDBCDisciplinaDAO();
-			
-			daoDisc.excluir(d);
-			
 			try {
-				response.sendRedirect("ListarDisciplinas");
+				String idDisc = request.getParameter("buttonEx");
+				Disciplina d = new Disciplina();
+				
+				d.setId(idDisc);
+				DisciplinaDAO daoDisc = new JDBCDisciplinaDAO();
+				
+				daoDisc.excluir(d);
+			
+				request.setAttribute("success", "Disciplina excluída com sucesso.");
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("listaDisciplinas.jsp");
+				dispatcher.forward(request, response);
 				
 			} catch (Exception e) {
+				request.setAttribute("erro", "Erro! Não foi possível excluir Disciplina.");
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("listaDisciplinas.jsp");
+				dispatcher.forward(request, response);
+				
 				e.printStackTrace();
 			}
 		}

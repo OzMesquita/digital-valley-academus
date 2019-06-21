@@ -52,6 +52,27 @@
 							name="id_matriz" placeholder="Código ou nome da Matriz" <%if(request.getParameter("id_matriz")!= null){%>value="<%=request.getParameter("id_matriz")%>"<%}%>>&nbsp;
 						<button class="btn btn-sm btn-primary" type="submit">Procurar</button></a>
 					</form><br>
+					
+					<!-- Caso o cadastro seja bem sucedido vem para essa tela com uma mensagem de sucesso -->
+						<% if (request.getAttribute("success") != null){ %>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<%= request.getAttribute("success") %>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+						<% } %>
+						
+						<!-- Caso o cadastro não seja bem sucedido vem para essa tela com uma mensagem de erro -->
+						<% if (request.getAttribute("erro") != null){ %>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<%= request.getAttribute("erro") %>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+						<% } %>
+						
 						<table class="table">
 							<thead>
 								<tr>
@@ -120,11 +141,34 @@
 									style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz()%>" > Visualizar
 								</button>
 								</form></td>
-								<td><form method="post" action="ExcluirMatriz" id="formEx<%=contato.getIdMatriz()%>">
-								<button  class="btn btn-primary btn-sm" form="formEx<%=contato.getIdMatriz()%>"
-									style="height: 30px;" type="submit" name="button" value="<%=contato.getIdMatriz()%>" > Excluir
+								<td>
+								<button  class="btn btn-primary btn-sm" style="height: 30px;" type="button"
+									data-toggle="modal" data-target="#Excluir<%=contato.getIdMatriz()%>"> Excluir
 								</button>
-								</form></td>
+								<form method="post" action="ExcluirMatriz" id="formEx<%=contato.getIdMatriz()%>">
+									<!-- Modal -->
+									<div class="modal fade" id="Excluir<%=contato.getIdMatriz()%>" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="modalLabel">Excluir Matriz</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<h2>Deseja mesmo excluir esta matriz?</h2>
+												</div>
+												<div class="modal-footer">
+													<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
+													<button type="submit" form="formEx<%=contato.getIdMatriz()%>" name="button" value="<%=contato.getIdMatriz()%>" class="btn btn-primary btn-sm active">Sim</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- Fim de Modal -->
+								</form>
+								</td>
 							</tr>
 	
 							<%
@@ -139,6 +183,19 @@
 					</div>
 					<nav aria-label="Page navigation example">
 					  <ul class="pagination justify-content-center">
+					  	<%if(!(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0)){%>
+					    <li class="page-item">
+					      
+					      <form method="post" action="ListarMatriz" id="formPag">
+					      	<input type="hidden" name="id_matriz" value="<%=id_matriz%>">
+					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -1);}%>">
+					      	Anterior
+					      	</button>
+					      </form>
+					      
+					    </li>
+					    <% } %>
+					    
 					    <%if(!(request.getParameter("pagina") == null || pagina <= 2)){%>
 					    <li class="page-item">
 					      
@@ -172,7 +229,7 @@
 					      <form method="post" action="ListarMatriz" id="formPag">
 					      	<input type="hidden" name="id_matriz" value="<%=id_matriz%>">
 					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -1);}%>">
-					      	Anterior
+					      	<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(pagina);}%>
 					      	</button>
 					      </form>
 					      
@@ -189,7 +246,7 @@
 					      <form method="post" action="ListarMatriz" id="formPag">
 					      	<input type="hidden" name="id_matriz" value="<%=id_matriz%>">
 					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +1);}%>">
-					      	Próximo
+					      	<%if(pagina == 0){%>3<%}else{out.print(pagina +2);}%>
 					      	</button>
 					      </form>
 					    </li>
@@ -218,6 +275,19 @@
 					      </form>
 					    </li>
 					    <% } %>
+					    
+					    <% if(numSolicitacoes >= 10){ %>
+					    <li class="page-item">
+					    
+					      <form method="post" action="ListarMatriz" id="formPag">
+					      	<input type="hidden" name="id_matriz" value="<%=id_matriz%>">
+					      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +1);}%>">
+					      	Próximo
+					      	</button>
+					      </form>
+					    </li>
+					    <% } %>
+					    
 					  </ul>
 					</nav>
 				</div>
