@@ -28,10 +28,13 @@ public class ExcluirComponenteController extends HttpServlet {
 			try {
 				ComponenteCurricularDAO ccd = new DAOFactoryJDBC().criarComponenteCurricularDAO();
 				System.out.println(id_matriz+ "<- id_matriz; id_componente -> "+id_componente); 
-				ccd.excluirComponente(id_componente);
-				
+				boolean deuCerto = ccd.excluirComponente(id_componente);
+				if(deuCerto)
+					request.setAttribute("sucess2", "Exclusão do componente realizada com sucesso.");
+				else
+					request.setAttribute("erro2", "Erro! O componente não pode ser removido por ter uma solicitação ligado a ele.");
+					
 				request.setAttribute("button", id_matriz);
-				request.setAttribute("sucess2", "Exclusão do componente realizada com sucesso.");
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("VisualizarMatriz");
 				dispatcher.forward(request, response);

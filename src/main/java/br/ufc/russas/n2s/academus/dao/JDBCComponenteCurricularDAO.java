@@ -212,21 +212,22 @@ public class JDBCComponenteCurricularDAO implements ComponenteCurricularDAO{
 	}
 	
 	@Override
-	public void excluirComponente(int id_componente) {
+	public boolean excluirComponente(int id_componente) {
 		String sql = "delete from academus.componente_curricular where id_disciplina_matriz = "+id_componente+";";
-		
+		boolean deuCerto = false;
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
 			ps.executeUpdate();
 			ps.close();
-			
+			deuCerto = true;
 		}catch(SQLException e){
 			e.printStackTrace();
 		} finally {
 			ConnectionPool.releaseConnection(conn);
 		}
+		return deuCerto;
 	}
 
 	@Override

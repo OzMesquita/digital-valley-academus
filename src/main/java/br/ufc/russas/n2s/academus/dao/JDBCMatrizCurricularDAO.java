@@ -345,9 +345,9 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 	}
 
 	@Override
-	public void excluir(MatrizCurricular mat) {
+	public boolean excluir(MatrizCurricular mat) {
 		String sql = "delete from academus.matriz_curricular where id_matriz = ?;";
-		
+		boolean deuCerto = false;
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -355,12 +355,13 @@ public class JDBCMatrizCurricularDAO implements MatrizCurricularDAO{
 			
 			ps.executeUpdate();
 			ps.close();
-			
+			deuCerto = true;
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
 			ConnectionPool.releaseConnection(conn);
 		}
+		return deuCerto;
 		
 	}
 

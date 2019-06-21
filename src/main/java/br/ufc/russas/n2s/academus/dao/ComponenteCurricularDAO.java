@@ -24,6 +24,6 @@ public interface ComponenteCurricularDAO {
 	
 	public void excluirComponente(ComponenteCurricular comp);
 
-	public void excluirComponente(int id_componente);
+	public boolean excluirComponente(int id_componente);
 	
 }

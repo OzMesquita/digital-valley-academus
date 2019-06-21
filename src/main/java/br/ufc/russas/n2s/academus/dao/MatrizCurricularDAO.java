@@ -30,7 +30,7 @@ public interface MatrizCurricularDAO {
 	
 	public boolean verificarSeEstaSendoUtilizada(int idMat);
 	
-	public void excluir(MatrizCurricular mat);
+	public boolean excluir(MatrizCurricular mat);
 	
 	public int countMatriz(int pagina);
 	

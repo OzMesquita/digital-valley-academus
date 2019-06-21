@@ -30,10 +30,13 @@ public class ExcluirMatrizController extends HttpServlet {
 				MatrizCurricular mat = daoMat.buscarPorId(idMatriz);
 				
 				if(daoMat.verificarSeEstaSendoUtilizada(idMatriz) == false){
-					daoMat.excluir(mat);
-					request.setAttribute("success", "A Matriz excluída com sucesso.");
+					boolean deuCerto = daoMat.excluir(mat);
+					if(deuCerto)
+						request.setAttribute("success", "Matriz excluída com sucesso.");
+					else
+						request.setAttribute("erro", "Não é possivel fazer a exclusão, por ter pelo menos uma solicitação ligada a matriz.");
 				} else {
-					request.setAttribute("erro", "A Matriz está sendo utilizada, desativi-a para poder remover.");
+					request.setAttribute("erro", "A Matriz está sendo utilizada, é necessário desativa-la para concluir essa ação.");
 				}
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("listaMatrizes.jsp");
 				dispatcher.forward(request, response);
