@@ -129,6 +129,16 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
   
+  	<li class="page-item <%if((request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0)){%>disabled<%}%>">
+      
+      <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">
+      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>0<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) -1);}%>">
+      	Anterior
+      	</button>
+      </form>
+      
+    </li>
+  
     <%if(!(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 2)){%>
     <li class="page-item">
       
@@ -200,6 +210,16 @@
       
     </li>
     <%}%>
+    
+    <li class="page-item <%if(numSolicitacoes <= 10){%>disabled<%}%>">
+    
+      <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">
+      	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +1);}%>">
+      	Próximo
+      	</button>
+      </form>
+      
+    </li>
     
   </ul>
 </nav>

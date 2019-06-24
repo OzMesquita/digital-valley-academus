@@ -77,9 +77,6 @@
 				numSolicitacoes = dao.countDisciplina(pagina);
 			}
 			
-			System.out.println("num soli:" + numSolicitacoes);
-			System.out.println("Pagina:" + pagina);
-			
 			for (Disciplina contato : contatos) {
 		%>
 		<tr>
@@ -140,8 +137,8 @@
   <ul class="pagination justify-content-center">
   
   	
-  	<%if(!(request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0)){%>
-    <li class="page-item">
+  	
+    <li class="page-item <%if((request.getParameter("pagina") == null || Integer.parseInt(request.getParameter("pagina")) <= 0)){%>disabled<%}%>">
       
       <form method="post" action="ListarDisciplinas" id="formPag">
       	<input type="hidden" name="id_disciplina" value="<%=id_disciplina%>">
@@ -151,7 +148,6 @@
       </form>
       
     </li>
-    <% } %>
     
   	<%if(!(request.getParameter("pagina") == null || pagina <= 2)){%>
     <li class="page-item">
@@ -203,7 +199,7 @@
       <form method="post" action="ListarDisciplinas" id="formPag">
       	<input type="hidden" name="id_disciplina" value="<%=id_disciplina%>">
       	<button class="page-link" type="submit" name="pagina" value="<%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina")) +1);}%>">
-      	<%if(pagina == 0){%>3<%}else{out.print(pagina +2);}%>
+      	<%if(pagina == 0){%>2<%}else{out.print(pagina +2);}%>
       	</button>
       </form>
     </li>
@@ -233,8 +229,8 @@
     </li>
     <% } %>
     
-    <% if(numSolicitacoes >= 10){ %>
-    <li class="page-item">
+    
+    <li class="page-item <% if(numSolicitacoes <= 10){ %>disabled<% } %>">
     
       <form method="post" action="ListarDisciplinas" id="formPag">
       	<input type="hidden" name="id_disciplina" value="<%=id_disciplina%>">
@@ -243,6 +239,6 @@
       	</button>
       </form>
     </li>
-    <% } %>
+    
   </ul>
 </nav>
