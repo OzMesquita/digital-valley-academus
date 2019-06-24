@@ -82,6 +82,49 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 		
 		return perfis;
 	}
+	
+	@Override
+	public List<PerfilAcademus> listar(int limiteInf, int limiteSup) {
+		
+		String sql = "SELECT * FROM academus.perfil_academus Order by id_perfil_academus offset ? limit ?;";
+		ArrayList<PerfilAcademus> perfis = new ArrayList<PerfilAcademus>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, limiteInf);
+			ps.setInt(2, limiteSup);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			CursoDAO curdao = new DAOFactoryJDBC().criarCursoDAO();
+			
+			while (rs.next()) {
+				PerfilAcademus perfil = new PerfilAcademus();
+				
+				perfil.setIdGuardiao(rs.getInt("id_pessoa_usuario"));
+				perfil.setId(rs.getInt("id_perfil_academus"));
+				perfil.setIsAdmin(rs.getBoolean("is_admin"));
+				perfil.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				perfil.setNome(rs.getString("nome"));
+				perfil.setEmail(rs.getString("email"));
+				perfil.setCPF(rs.getString("cpf"));
+				perfil.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				
+				perfis.add(perfil);
+			}
+			
+			ps.close();
+			rs.close();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return perfis;
+	}
 
 	@Override
 	public PerfilAcademus buscarPorId(int id) {
@@ -233,6 +276,51 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 		
 		return perfis;
 	}
+	
+	@Override
+	public List<PerfilAcademus> buscarPorNome(String nome, int limiteInf, int limiteSup) {
+		String sql = "SELECT * FROM academus.perfil_academus WHERE nome ILIKE ? offset ? limit ?;";
+		
+		ArrayList<PerfilAcademus> perfis = new ArrayList<PerfilAcademus>();
+		Connection conn = ConnectionPool.getConnection();
+		
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, "%" + nome + "%");
+			ps.setInt(2, limiteInf);
+			ps.setInt(3, limiteSup);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			CursoDAO curdao = new DAOFactoryJDBC().criarCursoDAO();
+			
+			while(rs.next()){
+				PerfilAcademus perfil = new PerfilAcademus();
+				
+				perfil.setIdGuardiao(rs.getInt("id_pessoa_usuario"));
+				perfil.setId(rs.getInt("id_perfil_academus"));
+				perfil.setIsAdmin(rs.getBoolean("is_admin"));
+				perfil.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				perfil.setNome(rs.getString("nome"));
+				perfil.setEmail(rs.getString("email"));
+				perfil.setCPF(rs.getString("cpf"));
+				perfil.setCurso(curdao.buscarPorId(rs.getInt("id_curso")));
+				
+				perfis.add(perfil);
+				
+			}
+			
+			ps.close();
+			rs.close();
+
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return perfis;
+	}
 
 	@Override
 	public PerfilAcademus editar(PerfilAcademus perfil) {
@@ -279,6 +367,64 @@ public class JDBCPerfilAcademusDAO implements PerfilAcademusDAO{
 		}finally{
 			ConnectionPool.releaseConnection(conn);
 		}
+	}
+	
+	//Métodos para paginação
+	
+	@Override
+	public int countPerfis(int pagina) {
+		String sql = "WITH cte AS (SELECT * FROM academus.perfil_academus) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	@Override
+	public int countPerfis(int pagina, String nome) {
+		String sql = "WITH cte AS (SELECT * FROM academus.perfil_academus where nome ilike '%"+nome+"%') " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
 	}
 
 }
