@@ -1,4 +1,3 @@
-<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page import="util.Constantes"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.NivelAcademus"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
