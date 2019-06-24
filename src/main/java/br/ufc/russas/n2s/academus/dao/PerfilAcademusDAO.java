@@ -10,11 +10,15 @@ public interface PerfilAcademusDAO {
 	
 	public List<PerfilAcademus> listar();
 	
+	public List<PerfilAcademus> listar(int limiteInf, int limiteSup);
+	
 	public PerfilAcademus buscarPorId(int id);
 	
 	public PerfilAcademus buscarPorCPF(String cpf);
 	
 	public List<PerfilAcademus> buscarPorNome(String nome);
+	
+	public List<PerfilAcademus> buscarPorNome(String nome, int limiteInf, int limiteSup);
 	
 	public PerfilAcademus editar(PerfilAcademus perfil);
 	
@@ -22,4 +26,7 @@ public interface PerfilAcademusDAO {
 
 	public int buscarPorIdAcademus(int idGuardiao);
 	
+	public int countPerfis(int pagina);
+	
+	public int countPerfis(int pagina, String nome);
 }
