@@ -27,58 +27,62 @@ private static final long serialVersionUID = 1L;
 		try {		
 			String resultado = request.getParameter("resultado");
 			String justificativa = request.getParameter("justificativaInput");
-			int idSolicitacao = Integer.parseInt(request.getParameter("button"));
+			String idSolicitacao = request.getParameter("button");
+			int idSol = Integer.parseInt(idSolicitacao);
 			
 			String mensagem = "";
 			//Verificando se todas as informações estao vazias
-			if (resultado != null && idSolicitacao != 0) {
+			if (resultado != null && idSol != 0) {
 				if(justificativa == null)
 					justificativa = "";
 				// Procurando no banco
 				SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
-				Solicitacao solicitacao = sodao.buscarPorId(idSolicitacao);
+				Solicitacao solicitacao = sodao.buscarPorId(idSol);
 				
 				// Verifica se a solicitação esta no banco e seu resultado não foi invalido
 				if(solicitacao == null || resultado.equals("INDEFINIDO")) {
-					mensagem = "Erro";
-					
+					mensagem = "Erro! Não foi possivel avaliar a solicitação";
+					request.setAttribute("erro", mensagem);
 				} else {
 					// armezena as informações no banco para cada tipo de resultado
 					
 					if(resultado.equals("Valido")) {
 						solicitacao.setStatus(Status.ANALISANDO);
-						mensagem = "ASS";// Mensagem "Avalização Secretario Sucesso"
+						mensagem = "A avaliação da Validez do documento da solicitação foi registrada com sucesso";// Mensagem "Avalização Secretario Sucesso"
 					} else if(resultado.equals("Invalido")) {
 						solicitacao.setResultado("INDEFERIDO");
 						solicitacao.setJustificativa(justificativa);
 						solicitacao.setStatus(Status.FINALIZADO);
-						mensagem = "AIS";// Mensagem "Avalização de Invalida do Secretario Sucesso"
+						mensagem = "A avaliação de Invalidez do ducumento da solicitação foi cadastrada com sucesso";// Mensagem "Avalização de Invalida do Secretario Sucesso"
 					} else {
 						resultado = "INDEFINIDO";
 					}
 					
 					sodao.editar(solicitacao);
+					request.setAttribute("success", mensagem);
 					
+					request.setAttribute("id", idSolicitacao);
+					javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSolicitacao.jsp");
+					dispatcher.forward(request, response);
+					return;
 				}
+				System.out.println(mensagem);
+				
 			} else {
 				//As informações estão vazias e não foram passadas corretamente
-				mensagem = "AN";
-				request.setAttribute("id", idSolicitacao);
-				request.setAttribute("mensagem", mensagem);
-				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSocilitacao.jsp");
-				// Mantem as informações e mantem na mesma pagina
-				
-				dispatcher.forward(request, response);
-				return;
+				mensagem = "As informações estão vazias e não foram passadas corretamente";
+				request.setAttribute("erro", mensagem);
 			}
 			
-			request.setAttribute("mensagem", mensagem);
-			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("redirect.jsp");
-			
+			request.setAttribute("id", idSolicitacao);								// anexarDocumentos.jsp
+			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
 			dispatcher.forward(request, response);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			request.setAttribute("id", request.getParameter("button"));
+			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 }

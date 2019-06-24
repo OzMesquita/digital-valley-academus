@@ -54,7 +54,7 @@ public class AtualizarComponenteController extends HttpServlet {
 			// ADICIONANDO PRE-REQUISITO
 			System.out.println("\nRequisitos Adicionados");
 			if(ids_disciplinas != null) {
-				List<Disciplina> addPreReq = new ArrayList();
+				List<Disciplina> addPreReq = new ArrayList<Disciplina>();
 				for(int i = 0; i< ids_disciplinas.length; i++) {
 					if(!ids_disciplinas[i].equals("")){
 						Disciplina dis = new Disciplina();

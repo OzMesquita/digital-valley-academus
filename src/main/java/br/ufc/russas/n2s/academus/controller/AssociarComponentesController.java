@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.taglibs.standard.tei.ForEachTEI;
-
 import br.ufc.russas.n2s.academus.dao.ComponenteCurricularDAO;
 import br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC;
 import br.ufc.russas.n2s.academus.dao.DisciplinaDAO;
@@ -53,15 +51,17 @@ public class AssociarComponentesController extends HttpServlet {
 			
 			ArrayList<Disciplina> preRequisitos = new ArrayList<Disciplina>();
 			
-			for (String id : idPreRequisitos) {
-				System.out.println(id);
-				System.out.println(id.substring(0, 7));
-				Disciplina d = disciplina_dao.buscarPorId(id.substring(0, 7));
-				System.out.println(d);
-				preRequisitos.add(d);
+			if(idPreRequisitos != null) {
+				for (String id : idPreRequisitos) {
+					System.out.println(id);
+					System.out.println(id.substring(0, 7));
+					Disciplina d = disciplina_dao.buscarPorId(id.substring(0, 7));
+					System.out.println(d);
+					preRequisitos.add(d);
+				}
+				System.out.println(idPreRequisitos);
+				System.out.println(preRequisitos);
 			}
-			System.out.println(idPreRequisitos);
-			System.out.println(preRequisitos);
 			
 			try {
 				

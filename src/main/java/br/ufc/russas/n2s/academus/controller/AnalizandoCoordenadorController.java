@@ -30,11 +30,12 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 		try {		
 			String resultado = request.getParameter("resultado");
 			String justificativa = request.getParameter("justificativaInput");
-			int id = Integer.parseInt(request.getParameter("button"));
+			String id = request.getParameter("button");
+			int id_sol = Integer.parseInt(id);
 			
 			String mensagem = "";
 			//Verificando se todas as informações estao vazias
-			if (resultado != null && (justificativa != null || justificativa == "") && id != 0) {
+			if (resultado != null && (justificativa != null || justificativa == "") && id_sol != 0) {
 	
 				if(resultado.equals("Sim")) {
 					resultado = "DEFERIDO";
@@ -45,11 +46,12 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 				}
 				// Procurando no banco
 				SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
-				Solicitacao solicitacao = sodao.buscarPorId(id);
+				Solicitacao solicitacao = sodao.buscarPorId(id_sol);
 				
 				// Verifica se a solicitação esta no banco e seu resultado não foi invalido
 				if(solicitacao == null || resultado.equals("INDEFINIDO")) {
-					mensagem = "Erro";
+					mensagem = "Erro! Não foi possível avaliar a solicitação.";
+					request.setAttribute("erro", mensagem);
 					
 				} else {
 					// armezena as informações no banco
@@ -58,23 +60,23 @@ public class AnalizandoCoordenadorController extends HttpServlet {
 					solicitacao.setStatus(Status.FINALIZADO);
 					
 					sodao.editar(solicitacao);
-					mensagem = "AS";// Mensagem "Avalização Sucesso"
+					mensagem = "A avaliação de resultado "+resultado+" foi cadastrada com sucesso.";// Mensagem "Avalização Sucesso"
+					request.setAttribute("success", mensagem);
 				}
 			} else {
 				//As informações estão vazias e não foram passadas corretamente
-				mensagem = "AN";
+				mensagem = "Erro! Não foi passado informações necessária para a ação.";
 				request.setAttribute("id", id);
-				request.setAttribute("mensagem", mensagem);
-				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSocilitacao.jsp");
+				request.setAttribute("erro", mensagem);
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSolicitacao.jsp");
+				dispatcher.forward(request, response);
 				// Mantem as informações e mantem na mesma pagina
 				
-				dispatcher.forward(request, response);
 				return;
 			}
 			
-			request.setAttribute("mensagem", mensagem);
-			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("redirect.jsp");
-			
+			request.setAttribute("id", id);
+			javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("visualizarSolicitacao.jsp");
 			dispatcher.forward(request, response);
 			
 		} catch (Exception e) {

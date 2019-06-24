@@ -45,7 +45,7 @@
 					
 					<div class="form-group table-responsive">
 					<form method="post" action="BuscarDisciplina">
-						<label for="buscainput"><h2><b> Escolha forma de pesquisa </b></h2></label> 
+						<h2><label for="buscainput"><b> Escolha forma de pesquisa </b></label></h2> 
 						<h2><INPUT TYPE="radio" name="opcao" VALUE="1" CHECKED> código
 						<INPUT TYPE="radio" name="opcao" VALUE="2"> nome</h2>
 						<br>
@@ -71,7 +71,7 @@
 								String id_disciplina = request.getParameter("id_disciplina");
 								
 								DisciplinaDAO dao = new JDBCDisciplinaDAO();
-								List<Disciplina> disciplinas = new ArrayList();
+								List<Disciplina> disciplinas = new ArrayList<Disciplina>();
 								if(tipobusca == 1){
 									Disciplina disciplina = dao.buscarPorId(id_disciplina);
 									if(disciplina == null){

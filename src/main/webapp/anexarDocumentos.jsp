@@ -61,6 +61,26 @@
 					</nav>
 					<h1>Registrar Entrega de Documentação</h1>
 					
+						<!-- Caso a mensagem bem sucedido vem para essa tela com uma mensagem de sucesso -->
+						<% if (request.getAttribute("success") != null){ %>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+								<%= request.getAttribute("success") %>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+						<% } %>
+						
+						<!-- Caso a mensagem não seja bem sucedido vem para essa tela com uma mensagem de erro -->
+						<% if (request.getAttribute("erro") != null){ %>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<%= request.getAttribute("erro") %>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    	<span aria-hidden="true">&times;</span>
+							  	</button>
+							</div>
+						<% } %>
+						
 					<br>
 					<%
 					if (solicitacao != null && deuCerto){
