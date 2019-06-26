@@ -47,7 +47,7 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
 						<li class="breadcrumb-item"><a href="Inico">Início</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Cadastro de Soliçitação</li>
+						<li class="breadcrumb-item active" aria-current="page">Cadastro de Solicitação</li>
 					</ol>
 					</nav>
 					<br>

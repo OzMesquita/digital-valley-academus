@@ -6,14 +6,14 @@
 		<span class="navbar-toggler-icon"></span>
    	</button>
    
-   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">	
+   <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">	
    		<%if(((PerfilAcademus) session.getAttribute("userAcademus")).getIsAdmin()){%>
        <ul class="navbar-nav">
            <li class="nav-item dropdown">
            		<a class="nav-link dropdown-toggle" href="#" id="disciplinaDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Disciplinas</a>
            		<div class="dropdown-menu" aria-labelledby="disciplinaDropdown">
-		          	<a class="dropdown-item" href="ListarDisciplinas"> Listar Disciplinas</a>
-		          	<a class="dropdown-item" href="CadastrarDisciplina"> Cadastrar Disciplinas</a>
+		          	<a class="dropdown-item" href="ListarDisciplinas">Listar Disciplinas</a>
+		          	<a class="dropdown-item" href="CadastrarDisciplina">Cadastrar Disciplinas</a>
 		        </div>
            </li>
            <li class="nav-item dropdown">
@@ -28,9 +28,11 @@
            <li class="nav-item">
            		<a class="nav-link" href="GerenciarPerfis"> Gerenciar Perfis</a>
            	</li>
+           	
        </ul>
-       <%}%>      
+       <%}%>
+       <a class="btn-sm btn-light" href="Sair">Voltar ao Guardião</a>      
    </div>
    
-	<a class="btn-sm btn-light text-right" href="Sair">Voltar ao Guardião</a>
+	
 </nav>
