@@ -161,7 +161,7 @@
 														</div>
 													</div>
 													<div class="modal-footer">
-														<button type="button" class="btn btn-danger btn-sm active" data-dismiss="modal">Cancelar</button>
+														<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
 														<input type="submit" id="submitEmenta-<%=disCursada.getId()%>" name="button" disabled="disabled" value="Confirmar" class="btn btn-primary btn-sm active" onclick="atribuirValor1(1)">
 														<%if(disCursada.getEmenta().getIdArquivo() > 0){%>
 															<!-- <a href="C://n2s//academus//anexo//375102//21//8//ementa-375102-21-8.pdf" class="btn btn-primary btn-sm active" onclick="atribuirValor1(2)" download>Download</a>-->
@@ -211,7 +211,7 @@
 														</div>
 													</div>
 													<div class="modal-footer">
-														<button type="button" class="btn btn-danger btn-sm active" data-dismiss="modal">Cancelar</button>
+														<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
 														<input type="submit" id="submitHistorico-<%=disCursada.getId()%>" name="button" disabled="disabled" value="Confirmar" class="btn btn-primary btn-sm active" onclick="atribuirValor2(1)">
 														<%if(disCursada.getHistorico().getIdArquivo() > 0){%>
 															<!--  <input type="submit" value="Download" class="btn btn-primary btn-sm active" onclick="atribuirValor2(2)">-->
