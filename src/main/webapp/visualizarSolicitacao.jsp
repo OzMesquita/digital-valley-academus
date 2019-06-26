@@ -82,10 +82,20 @@
 							  	</button>
 							</div>
 						<% } %>
-					
+						
 					<%
 					if (solicitacao != null && deuCerto){
 					%>
+						<!-- Aviso para o aluno -->
+						<% if(per.getNivel() == NivelAcademus.ALUNO && solicitacao.getStatus() == Status.SOLICITADO) {%>
+					    	<h2><label><b>Aviso Importante</b></label></h2>
+					    	<textarea rows="8" class="form-control" aria-describedby="tituloHelp" readonly required>
+					    	Para continuar com o processo de solicitação, vá na secretária do seu curso levando uma cópia imprimida dessa solicitação,
+					    	 da ementa e do hitorico de cada disciplina cursada colocada nesta solicitação.
+					    	</textarea>
+					    	
+						<% } %>
+						
 					<div class="form-group">						
 						<!-- <form action="VisualizarSolicitacao" method="post"> -->
 							<label for="idInput"><b> Código da Solicitação </b></label>
@@ -233,8 +243,16 @@
 					
 							<br>
 							<br>
+							<%if(per.getNivel() == NivelAcademus.ALUNO && solicitacao.getStatus() == Status.SOLICITADO){%>
+						    	<div class="modal-footer">
+									<form method="POST" action="GerarPDF" id="pdf<%=(String)request.getAttribute("id")%>">
+										<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("id")%>" 
+											style="height: 30px;" type="submit" name="id" value="<%=(String)request.getAttribute("id")%>"> Gerar PDF
+										</button>
+									</form>
+								</div>
+							<% } %>
 							<div class="modal-footer">
-							
 							<!-- Botao Cancelar -->
 								<a href="Inicio">
 								<input type="button" class="btn btn-primary btn-sm" style="height: 30px;" value="Voltar"></a>

@@ -158,7 +158,7 @@
 						<br>
 			<br>
 			<div id="botoes" class="modal-footer">
-				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Voltar">Cancelar</button>
+				<button type="button" class="btn btn-primary btn-sm" onclick="funcao()">Cancelar</button>
 				<button type="submit" name="button" class="btn btn-primary btn-sm">Confirmar</button>
 			</div>
 							<!-- Modal -->
@@ -195,6 +195,26 @@
 			</div>
 	</body>
 	<script>
+	var modificado = 0;
+	$(document).ready(function(){
+		$('input').change(function(){
+			modificado = 1;
+		});
+		$('select').change(function(){
+			modificado = 1;
+		});
+	});
+	
+	function funcao(){
+		if(modificado === 1){
+			$(document).ready(function(){
+	            $("#Voltar").modal();
+	        });
+		} else{
+			window.location.href = "ListarMatrizes";
+		}
+	}
+	
 	var vigente = document.getElementById("vigenteInput");
 	var ativo = document.getElementById("ativoInput");
 	
