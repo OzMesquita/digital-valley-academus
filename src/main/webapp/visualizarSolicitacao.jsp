@@ -98,8 +98,9 @@
 							    	Horario Livre: Segunda a Sexta: 08hs às 17hs, e Sábado: 08hs às 12hs.</h7>
 						    	</div>
 					    	</div>
-						<% } %>
 						<br><br>
+						<% } %>
+						
 					<div class="form-group">						
 						<!-- <form action="VisualizarSolicitacao" method="post"> -->
 							<label for="idInput"><b> Código da Solicitação </b></label>

@@ -91,7 +91,7 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			coord.setFont(tituloIndentificacao);
 			coord.setAlignment(Paragraph.ALIGN_CENTER);
 			coord.add("COORDENAÇÃO DO CURSO DE "+solicitacao.getCurso().getNome()+"\n");
-			coord.add("REQUERIMANTO PARA APROVEITAMENTO DE DISCIPLINA\n\n");
+			coord.add("REQUERIMENTO PARA APROVEITAMENTO DE DISCIPLINA\n\n");
 			documento.add(coord);
 			
 			//Conteudo Atenção
@@ -156,7 +156,7 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			
 			frase.clear();
 			frase.setFont(bold);
-			frase.add("O aluno acima especificado vem requerer o aproveitamento da disiplina / carga horária: \n");
+			frase.add("O aluno acima especificado vem requerer o aproveitamento da disciplina / carga horária: \n");
 			identificador.setAlignment(Paragraph.ALIGN_JUSTIFIED_ALL);
 			identificador.add(frase);
 			
