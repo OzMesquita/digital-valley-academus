@@ -8,7 +8,7 @@
    
    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">	
    		<%if(((PerfilAcademus) session.getAttribute("userAcademus")).getIsAdmin()){%>
-       <ul class="navbar-nav w-100">
+       <ul class="navbar-nav">
            <li class="nav-item dropdown">
            		<a class="nav-link dropdown-toggle" href="#" id="disciplinaDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Disciplinas</a>
            		<div class="dropdown-menu" aria-labelledby="disciplinaDropdown">
@@ -31,9 +31,7 @@
            
        </ul>
        <%}%>
-       <div class="d-flex justify-content-end w-100">
-       		<a class="btn-sm btn-light" href="Sair">Voltar ao Guardião</a>
-       </div>
+       	<a class="btn-sm btn-light ml-auto" href="Sair">Voltar ao Guardião</a>
              
    </div>
    
