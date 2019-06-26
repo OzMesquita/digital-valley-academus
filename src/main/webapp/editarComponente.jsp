@@ -192,7 +192,7 @@
 						%>
 						<div class="modal-footer">
 								<div id="botoes" class="controls">
-									<button type="button" name="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Voltar">
+									<button type="button" name="button" class="btn btn-primary btn-sm" onclick="funcao(<%=id_matriz%>)">
 									Voltar</button>
 									<input type="hidden" name="id_matriz" value="<%=id_matriz%>">
 									<button type="submit" name="id_comp" value="<%=comp.getIdComponente()%>" class="btn btn-primary btn-sm" form="EdiComp<%=id_matriz%>">Confirmar</button>
@@ -228,6 +228,35 @@
 		</div>
 	</body>
 <script>
+	
+	var modificado = 0;
+	$(document).ready(function(){
+		$('input').change(function(){
+			modificado = 1;
+		});
+		$('select').change(function(){
+			modificado = 1;
+		});
+	});
+	
+	function funcao(id){
+		if(modificado === 1){
+			$(document).ready(function(){
+	            $("#Voltar").modal();
+	        });
+		} else{
+			var url = "VisualizarMatriz";
+			var method = "POST";
+			var id_matriz = id;
+			
+			var postFormStr = "<form method='" + method + "' action='" + url + "'>\n";
+			postFormStr += "<input type='hidden' name='button' value='" + id_matriz + "'/>"; 
+			postFormStr += "</form>";
+			var formElement = $(postFormStr);
+			$('body').append(formElement);
+			$(formElement).submit();
+		}
+	}
 	
 	$(document).ready(function(){
 		atualizarListaOpcoes();

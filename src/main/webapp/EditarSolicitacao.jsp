@@ -40,7 +40,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Editar Soliçitação</title>
+		<title>Editar Solicitação</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 		
@@ -157,11 +157,12 @@
 							</div>
 							<div class="modal-footer">
 								<div id="botoes" class="controls">
-									<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#Voltar">Cancelar</button>
+									<button type="button" class="btn btn-primary btn-sm" onclick="funcao(<%=solicitacao.getIdSolicitacao()%>)">Cancelar</button>
 									<button type="submit" name="button" value="<%=solicitacao.getIdSolicitacao()%>" class="btn btn-primary btn-sm">Confirmar</button>
 									
 								</div>
 							</div>
+						</form>
 							<!-- Modal -->
 							<div class="modal fade" id="Voltar" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 								<div class="modal-dialog">
@@ -177,13 +178,15 @@
 										</div>
 										<div class="modal-footer">
 											<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
-											<a href="Inicio"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
+											<form action="VisualizarSolicitacao" method="post">
+												<button type="submit" name="button" value="<%=solicitacao.getIdSolicitacao()%>" class="btn btn-primary btn-sm active">
+												Sim</button>
+											</form>
 										</div>
 									</div>
 								</div>
 							</div>
 							<!-- Fim de Modal -->
-						</form>
 					</div>	                
 				</div>
 			</div>
@@ -203,6 +206,36 @@
 	<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
 	</body>
 	<script>
+	
+		var modificado = 0;
+		$(document).ready(function(){
+			$('input').change(function(){
+				modificado = 1;
+			});
+			$('select').change(function(){
+				modificado = 1;
+			});
+		});
+		
+		function funcao(id){
+			if(modificado === 1){
+				$(document).ready(function(){
+		            $("#Voltar").modal();
+		        });
+			} else{
+				var url = "VisualizarSolicitacao";
+				var method = "POST";
+				var id_solicitacao = id;
+				
+				var postFormStr = "<form method='" + method + "' action='" + url + "'>\n";
+				postFormStr += "<input type='hidden' name='button' value='" + id_solicitacao + "'/>"; 
+				postFormStr += "</form>";
+				var formElement = $(postFormStr);
+				$('body').append(formElement);
+				$(formElement).submit();
+			}
+		}
+		
 		var componentes = [];
 		var disciplinas = [];
 		var tam = 0;

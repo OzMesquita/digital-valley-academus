@@ -158,9 +158,10 @@
 						<br>
 			<br>
 			<div id="botoes" class="modal-footer">
-				<button type="button" class="btn btn-primary btn-sm" onclick="funcao()">Cancelar</button>
+				<button type="button" class="btn btn-primary btn-sm" onclick="funcao(<%=matriz.getIdMatriz()%>)">Cancelar</button>
 				<button type="submit" name="button" class="btn btn-primary btn-sm">Confirmar</button>
 			</div>
+		</form>
 							<!-- Modal -->
 							<div class="modal fade" id="Voltar" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 								<div class="modal-dialog">
@@ -176,13 +177,15 @@
 										</div>
 										<div class="modal-footer">
 											<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
-											<a href="ListarMatrizes"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
+											<form action="VisualizarMatriz" method="post">
+												<button type="submit" class="btn btn-primary btn-sm active" name="button" value="<%=matriz.getIdMatriz()%>">Sim</button>
+											</form>
 										</div>
 									</div>
 								</div>
 							</div>
 							<!-- Fim de Modal -->
-		</form>
+		
 						<%
 							} else {
 								%>
@@ -205,13 +208,22 @@
 		});
 	});
 	
-	function funcao(){
+	function funcao(id){
 		if(modificado === 1){
 			$(document).ready(function(){
 	            $("#Voltar").modal();
 	        });
 		} else{
-			window.location.href = "ListarMatrizes";
+			var url = "VisualizarMatriz";
+			var method = "POST";
+			var id_matriz = id;
+			
+			var postFormStr = "<form method='" + method + "' action='" + url + "'>\n";
+			postFormStr += "<input type='hidden' name='button' value='" + id_matriz + "'/>"; 
+			postFormStr += "</form>";
+			var formElement = $(postFormStr);
+			$('body').append(formElement);
+			$(formElement).submit();
 		}
 	}
 	

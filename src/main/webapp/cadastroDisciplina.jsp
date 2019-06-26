@@ -97,7 +97,7 @@
 	
 							<div class="modal-footer">
 								<div id="botoes" class="controls">
-									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Voltar">Cancelar</button>
+									<button type="button" class="btn btn-primary" onclick="funcao()">Cancelar</button>
 									<button type="submit" class="btn btn-primary">Confirmar</button>
 								</div>
 							</div>
@@ -129,4 +129,22 @@
 		</div>
 		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
 	</body>
+	<script>
+	var modificado = 0;
+	$(document).ready(function(){
+		$('input').change(function(){
+			modificado = 1;
+		});
+	});
+	
+	function funcao(){
+		if(modificado === 1){
+			$(document).ready(function(){
+	            $("#Voltar").modal();
+	        });
+		} else{
+			window.location.href = "Inicio";
+		}
+	}
+	</script>
 </html>
