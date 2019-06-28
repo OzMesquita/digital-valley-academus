@@ -86,15 +86,7 @@
 	                        </div>
 							<br> 
 							
-							<!-- Retirado pois vai ser calculado a partir da carga horária
-							<label for="creditosInput"> Créditos da Disciplina*</label> 
-							<input type="number" step="1" min="1" name="creditos" class="form-control" id="creditosInput" aria-describedby="tituloHelp" placeholder="Digite os créditos da disciplina" required> 
-							<small id="tituloHelp" class="form-text text-muted"> Exemplo: 4 </small> 
-							<div class="invalid-feedback">
-	                            
-	                        </div>
-							<br>  -->
-	
+							
 							<div class="modal-footer">
 								<div id="botoes" class="controls">
 									<button type="button" class="btn btn-primary" onclick="funcao()">Cancelar</button>

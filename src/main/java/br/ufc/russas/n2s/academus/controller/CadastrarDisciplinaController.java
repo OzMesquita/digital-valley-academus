@@ -49,9 +49,14 @@ public class CadastrarDisciplinaController extends HttpServlet {
 				
 				
 				try {
-					daoCadastro.cadastrar(dis);
+					if(daoCadastro.buscarPorId(id) == null) {
+							
+						daoCadastro.cadastrar(dis);
+						request.setAttribute("success", "Disciplina cadastrada com sucesso.");
 					
-					request.setAttribute("success", "Disciplina cadastrada com sucesso.");
+					} else {
+						request.setAttribute("erro", "Erro! Esse código já foi cadastrado no sistema. Por favor, altere-o.");
+					}
 					javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroDisciplina.jsp");
 					
 					dispatcher.forward(request, response);

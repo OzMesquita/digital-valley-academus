@@ -37,7 +37,7 @@
 			 - Finalizadas: Todas as solicitações que estejam finalizadas
 		-->
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
-		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações submetidas</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações solicitadas</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
 		
 		<% } else if (usuario.getNivel() == NivelAcademus.COORDENADOR){ 
@@ -61,7 +61,7 @@
 			- Todas os status de todas as solicitaçoes
 		-->
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
-		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações submetidas</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações solicitadas</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=analizado">Solicitações para analizar</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
 		<% } else { %>
@@ -177,7 +177,7 @@
     <li class="page-item disabled">
     	<span class="page-link"><%if(request.getParameter("pagina") == null){%>1<%}else{out.print(Integer.parseInt(request.getParameter("pagina"))+1);}%></span>
     </li>
-    <%if(numSolicitacoes >= 10){%>
+    <%if(numSolicitacoes > 10){%>
     <li class="page-item">
     
       <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">
@@ -188,7 +188,7 @@
       
     </li>
     <%}%>
-    <%if(numSolicitacoes >= 20){%>
+    <%if(numSolicitacoes > 20){%>
     <li class="page-item">
     
       <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">
@@ -199,7 +199,7 @@
       
     </li>
     <%}%>
-    <%if(numSolicitacoes >= 30){%>
+    <%if(numSolicitacoes > 30){%>
     <li class="page-item">
     
       <form method="post" action="Inicio<%if(!statusSoli.equals("null")){%>?solicitacao=<%out.print(statusSoli);}%>" id="formPag">

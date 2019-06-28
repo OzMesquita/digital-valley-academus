@@ -54,7 +54,7 @@
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
-						<li class="breadcrumb-item"><a href="Inico">Início</a></li>
+						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>
 						<li class="breadcrumb-item active" aria-current="page">Editar Disciplina</li>
 					</ol>
 					</nav>
@@ -64,6 +64,26 @@
 						if(!disciplina.getId().equals("INDEFINIDO") && deuCerto){
 					
 					%>
+					<!-- Caso o cadastro seja bem sucedido vem para essa tela com uma mensagem de sucesso -->
+					<% if (request.getAttribute("success") != null){ %>
+						<div class="alert alert-success alert-dismissible fade show" role="alert">
+							<%= request.getAttribute("success") %>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    <span aria-hidden="true">&times;</span>
+						  	</button>
+						</div>
+					<% } %>
+					
+					<!-- Caso o cadastro não seja bem sucedido vem para essa tela com uma mensagem de erro -->
+					<% if (request.getAttribute("erro") != null){ %>
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							<%= request.getAttribute("erro") %>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    	<span aria-hidden="true">&times;</span>
+						  	</button>
+						</div>
+					<% } %>
+					<br>
 					<div class="form-group">						
 						<form action="EditarDisciplina" method="post">
 							<label for="idInput">Código da Disciplina*</label> 

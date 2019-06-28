@@ -25,15 +25,15 @@ public class EditarDisciplinaController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("button") == null && request.getParameter("id_disciplina") != null) { // Se entrou aqui é porque está editando
+			
+			String id_antigo = request.getParameter("id_antigo");
 			try {
 				String id = request.getParameter("id_disciplina");
 				String nome = request.getParameter("nome");
 				int carga = Integer.parseInt(request.getParameter("carga"));
 				int creditos = carga/16;
-				String id_antigo = request.getParameter("id_antigo");
 				
-				String mensagem = "";
-		
+				
 				Disciplina disciplina = disciplina_dao.buscarPorId(id);
 				if(disciplina == null || id.equals(id_antigo)) {
 					disciplina = disciplina_dao.buscarPorId(id_antigo);
@@ -49,19 +49,25 @@ public class EditarDisciplinaController extends HttpServlet {
 						disciplina_dao.excluir(disciplina);
 						disciplina_dao.cadastrar(nova_disciplina);
 					}
-					mensagem = "Disciplina alterada com sucesso";
+					request.setAttribute("success", "Disciplina alterada com sucesso.");
+					request.setAttribute("id", id);
+					
 				} else {
-					mensagem = "Id da disciplina ja existente";
+					
+					request.setAttribute("erro", "Erro! O código da disciplina já existe.");
 					request.setAttribute("id", id_antigo);
-					javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("editarDisciplina.jsp");
-					dispatcher.forward(request, response);
+					
 				}
 				
-				request.setAttribute("mensagem", mensagem);
-				response.sendRedirect("ListarDisciplinas");
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("editarDisciplina.jsp");
+				dispatcher.forward(request, response);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
+				request.setAttribute("id", id_antigo);
+				request.setAttribute("erro", "Ocorreu um erro ao cadastrar a disciplina. <br>Erro:<br>" + e.getMessage());
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("editarDisciplina.jsp");
+				dispatcher.forward(request, response);
 			}
 		} else { // Se entrou aqui, é porque está buscando a disciplina para visualizar
 			try { 

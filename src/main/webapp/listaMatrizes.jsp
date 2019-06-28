@@ -240,7 +240,7 @@
 					    	<span class="page-link"><%if(request.getParameter("pagina") == null){%>1<%}else{out.print(pagina+1);}%></span>
 					    </li>
 					    
-					    <% if(numSolicitacoes >= 10){ %>
+					    <% if(numSolicitacoes > 10){ %>
 					    <li class="page-item">
 					    
 					      <form method="post" action="ListarMatriz" id="formPag">
@@ -252,7 +252,7 @@
 					    </li>
 					    <% } %>
 					    
-					    <% if(numSolicitacoes >= 20){ %>
+					    <% if(numSolicitacoes > 20){ %>
 					    <li class="page-item">
 					    
 					      <form method="post" action="ListarMatriz" id="formPag">
@@ -264,7 +264,7 @@
 					    </li>
 					    <% } %>
 					    
-					    <% if(numSolicitacoes >= 30){ %>
+					    <% if(numSolicitacoes > 30){ %>
 					    <li class="page-item">
 					    
 					      <form method="post" action="ListarMatriz" id="formPag">
@@ -277,7 +277,7 @@
 					    <% } %>
 					    
 					    
-					    <li class="page-item <% if(numSolicitacoes >= 10){ %>disabled<% } %>">
+					    <li class="page-item <% if(numSolicitacoes <= 10){ %>disabled<% } %>">
 					    
 					      <form method="post" action="ListarMatriz" id="formPag">
 					      	<input type="hidden" name="id_matriz" value="<%=id_matriz%>">

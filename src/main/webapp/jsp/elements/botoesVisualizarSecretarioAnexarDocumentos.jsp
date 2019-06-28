@@ -34,8 +34,8 @@
 										<label for="resultadoInput"><b> Resultado </b></label>
 									        <select type="text" name="resultado" class="form-control custom-select" id="resultado" required>
 									            <option value="" selected="selected" disabled="disabled">Selecione uma opção</option>
-									            <option value="Valido">Valido</option>
-									        	<option value="Invalido">Invalido</option>              
+									            <option value="Valido">Válido</option>
+									        	<option value="Invalido">Inválido</option>              
 									        </select>
 									        <br>
 								            <div class="invalid-feedback">
