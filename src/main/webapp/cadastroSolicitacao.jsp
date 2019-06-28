@@ -22,7 +22,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Cadastro de Soliçitação</title>
+		<title>Cadastro de Solicitação</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 		
