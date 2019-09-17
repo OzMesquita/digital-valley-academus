@@ -78,7 +78,7 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			image.scaleAbsoluteWidth(60);
 			image.scaleAbsoluteHeight(90);
 			documento.add(image);
-			Paragraph cabecalho = new Paragraph("UNIVERDADE FEDERAL DO CEARÁ \n"
+			Paragraph cabecalho = new Paragraph("UNIVERSIDADE FEDERAL DO CEARÃ� \n"
 					+ "CAMPUS RUSSAS \n\n");
 			cabecalho.setAlignment(Paragraph.ALIGN_CENTER);
 			documento.add(cabecalho);
@@ -86,21 +86,21 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			Font bold = new Font(FontFamily.UNDEFINED, 12, Font.BOLD, BaseColor.BLACK);
 			Font normal = new Font(FontFamily.UNDEFINED, 12, Font.NORMAL, BaseColor.BLACK);
 			
-			//Conteudo Coordenação
+			//Conteudo CoordenaÃ§Ã£o
 			Paragraph coord = new Paragraph();
 			coord.setFont(tituloIndentificacao);
 			coord.setAlignment(Paragraph.ALIGN_CENTER);
-			coord.add("COORDENAÇÃO DO CURSO DE "+solicitacao.getCurso().getNome()+"\n");
+			coord.add("COORDENAÃ‡ÃƒO DO CURSO DE "+solicitacao.getCurso().getNome()+"\n");
 			coord.add("REQUERIMENTO PARA APROVEITAMENTO DE DISCIPLINA\n\n");
 			documento.add(coord);
 			
-			//Conteudo Atenção
+			//Conteudo AtenÃ§Ã£o
 			coord.clear();
 			coord.setFont(normal);
 			coord.setAlignment(Paragraph.ALIGN_JUSTIFIED);
-			coord.add("ATENÇÃO: ANEXAR HISTÓRICO ESCOLAR (ORIGINAL OU CÓPIA AUTENTICADA) E CÓPIA AUTENTICADA"+
-					" DO PROGRAMA DA DISCIPLINA (AS CERTIFICAÇÕES NÃO PRECISAM SER CARTORIAIS, PODENDO SER "+
-					"DO ÓRGÃO EXPEDIDOR OU DIGITAL).\n\n");
+			coord.add("ATENÃ‡ÃƒO: ANEXAR HISTÃ“RICO ESCOLAR (ORIGINAL OU CÃ“PIA AUTENTICADA) E CÃ“PIA AUTENTICADA"+
+					" DO PROGRAMA DA DISCIPLINA (AS CERTIFICAÃ‡Ã•ES NÃƒO PRECISAM SER CARTORIAIS, PODENDO SER "+
+					"DO Ã“RGÃƒO EXPEDIDOR OU DIGITAL).\n\n");
 			documento.add(coord);
 			
 			//Conteudo Identificador
@@ -112,7 +112,7 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			
 			frase.clear();
 			frase.setFont(bold);
-			frase.add("Código da Solicitação: ");
+			frase.add("CÃ³digo da SolicitaÃ§Ã£o: ");
 			frase.setFont(normal);
 			frase.add(solicitacao.getIdSolicitacao()+"\n");
 			identificador.add(frase);
@@ -126,7 +126,7 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			
 			frase.clear();
 			frase.setFont(bold);
-			frase.add("Matrícula: ");
+			frase.add("MatrÃ­cula: ");
 			frase.setFont(normal);
 			frase.add(solicitacao.getSolicitante().getMatricula());
 			frase.setFont(bold);
@@ -147,16 +147,16 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			identificador.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 			documento.add(identificador);
 			
-			//Conteúdo Disciplinas
+			//ConteÃºdo Disciplinas
 			identificador.clear();
 			frase.clear();
 			frase.setFont(tituloIndentificacao);
-			frase.add("II. IDENTIFICAÇÃO DA DISCIPLINA: \n\n");
+			frase.add("II. IDENTIFICAÃ‡ÃƒO DA DISCIPLINA: \n\n");
 			identificador.add(frase);
 			
 			frase.clear();
 			frase.setFont(bold);
-			frase.add("O aluno acima especificado vem requerer o aproveitamento da disciplina / carga horária: \n");
+			frase.add("O aluno acima especificado vem requerer o aproveitamento da disciplina / carga horÃ¡ria: \n");
 			identificador.setAlignment(Paragraph.ALIGN_JUSTIFIED_ALL);
 			identificador.add(frase);
 			
@@ -175,7 +175,7 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			celula1.setHorizontalAlignment(Element.ALIGN_CENTER);
 			PdfPCell celula2 = new PdfPCell(new Paragraph("Ano/semestre",bold));
 			celula2.setHorizontalAlignment(Element.ALIGN_CENTER);
-			PdfPCell celula3 = new PdfPCell(new Paragraph("Instituição",bold));
+			PdfPCell celula3 = new PdfPCell(new Paragraph("InstituiÃ§Ã£o",bold));
 			celula3.setHorizontalAlignment(Element.ALIGN_CENTER);
 			
 			table.setWidths(new int[] {300,300,300});
@@ -186,7 +186,7 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			for(DisciplinaCursada disciplinaCursada : solicitacao.getDisciplinasCursadas()) {
 				/*frase.clear();
 				frase.add(disciplinaCursada.getNome()+" / "+disciplinaCursada.getCarga()+" horas \n");
-				frase.add("na instituição: "+disciplinaCursada.getInstituicao());
+				frase.add("na instituiÃ§Ã£o: "+disciplinaCursada.getInstituicao());
 				frase.add(" no ano/semestre: "+disciplinaCursada.getSemestre()+"\n\n");
 				identificador.add(frase);*/
 				
@@ -220,10 +220,10 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 			identificador.add("\nRussas-CE, "+dia+"/"+mes+"/"+ano+".\n");
 			identificador.setAlignment(Paragraph.ALIGN_RIGHT);
 			documento.add(identificador);
-			//rodapé
+			//rodapÃ©
 			Font fontFooter = new Font(FontFamily.UNDEFINED, 7, Font.NORMAL, BaseColor.BLACK);
 			PdfContentByte cb = writer.getDirectContent();
-	        Paragraph footer = new Paragraph("Universidade Federal do Ceará - CNPJ: 07.272.636/001-31", fontFooter);
+	        Paragraph footer = new Paragraph("Universidade Federal do CearÃ¡ - CNPJ: 07.272.636/001-31", fontFooter);
 	        Paragraph footer2 = new Paragraph("Campus da UFC em Russas\n", fontFooter); 
 	        
 	        ColumnText.showTextAligned(cb, Element.ALIGN_CENTER,
