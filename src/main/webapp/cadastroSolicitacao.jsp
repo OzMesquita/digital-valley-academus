@@ -326,7 +326,7 @@
 				alert("Ano deve ser preenchido");
 				return false;
 			}else if(!(obj.ano >= 1900 && obj.ano <= data.getFullYear())){
-				alert("O Ano deve ser anterior ao atual e cabível");
+				alert("O Ano deve ser anterior ou igual ao atual");
 				return false;
 			}else if((obj.semestre == "")){
 				alert("Semestre deve ser preenchido");
