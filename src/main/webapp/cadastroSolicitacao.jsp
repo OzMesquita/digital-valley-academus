@@ -89,7 +89,7 @@
 							</div>
 							<div class="form-group">
 								<label for="componenteInput">Disciplina Alvo</label>
-								<select id="componenteInput" name="componenteInput" class="form-control" required>
+								<select id="componenteInput" name="componenteInput"  class="form-control" required>
 									<option value="" selected="selected" disabled="disabled">Selecione a disciplina para a solicitação</option>
 								</select>
 							</div>
@@ -117,17 +117,17 @@
 							<div class="form-row">
 								<div class="form-group col-md-3">
 									<label for="disciplinaAproveitada">Nome da Disciplina Aproveitada</label>
-									<input type="text" id="disciplinaAproveitada" style='text-transform:uppercase' class="form-control">
+									<input type="text" id="disciplinaAproveitada" pattern="[a-zA-Z\sÇçÁáÀàÉéÍíÓóÚúÃãõÕêÊâÂôÔ]+$" style='text-transform:uppercase' class="form-control">
 								</div>
 								&nbsp;&nbsp;
 								<div class="form-group col-md-1">
 									<label for="cargaHoraria">Carga Horária</label>
-									<input type="number" min="1" id="cargaHoraria" class="form-control">
+									<input type="number" min="16" step="16" id="cargaHoraria"  class="form-control">
 								</div>
 								&nbsp;&nbsp;
 								<div class="form-group col-md-1">
 									<label for="nota">Nota</label>
-									<input type="number" min="0" max="10" id="nota" class="form-control">
+									<input type="number" min="5" step="0.01" max="10" id="nota" class="form-control">
 								</div>
 								&nbsp;&nbsp;
 								<div class="form-group col-md-1">
@@ -141,7 +141,7 @@
 								</div>
 								<div class="form-group col-md-3">
 									<label for="instituicao">Instituição</label>
-									<input type="text" id="instituicao" style='text-transform:uppercase' class="form-control">
+									<input type="text" id="instituicao"  pattern="[a-zA-Z\sÇçÁáÀàÉéÍíÓóÚúÃãõÕêÊâÂôÔ]+$" style='text-transform:uppercase' class="form-control">
 								</div>
 								<div class="form-group col-md-2">
 									<input type="button" class="btn btn-secondary col-md-6 btn-sm" onclick="adicionarDisciplinaAproveitada()" value="Adicionar">
@@ -307,6 +307,9 @@
 			if(obj.nome == ""){
 				alert("Campo Nome da Disciplina Aproveitada deve ser preenchido");
 				return false;
+			}else if(obj.nome.match(/[0-9]/g)){
+				alert("Não é permitido usar números no Nome da Disciplina Aproveitada");
+				return false;
 			}else if(!(obj.carga >= 0 )){
 				alert("Campo Carga Horária não pode ser negativo");
 				return false;
@@ -333,6 +336,9 @@
 				return false;
 			}  else if(obj.instituicao == ""){
 				alert("Campo Instituição deve ser preenchido");
+				return false;
+			}else if(obj.instituicao.match(/[0-9]/g)){
+				alert("Não é permitido usar números no Nome da Instituição");
 				return false;
 			} else if (disciplinaRepetida(obj.nome, obj.carga, obj.nota, obj.semestre, obj.ano, obj.instituicao)) {
 				alert("A Disciplina Aprovada já foi adicionada");
