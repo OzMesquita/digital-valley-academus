@@ -5,8 +5,17 @@
 
     <!--Copyright-->
     <div class="footer-copyright py-3">
-        © 2018 Copyright: Núcleo de Soluções em Software
+    	
+    
+    	
+
+        © <span id="date">  </span> Copyright: Núcleo de Soluções em Software
+        
         <a href="http://n2s.russas.ufc.br/" target="_blank"> (N2S) </a>
+        	<script>
+		var date = new Date();
+		document.getElementById("date").innerHTML = date.getFullYear();
+		</script>
     </div>
     <!--/.Copyright-->
     

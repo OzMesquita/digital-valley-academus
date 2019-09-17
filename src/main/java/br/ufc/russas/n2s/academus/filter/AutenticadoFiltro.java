@@ -31,13 +31,7 @@ import util.Facade;
 
 public class AutenticadoFiltro implements Filter {
 
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		String path = ((HttpServletRequest) request).getServletPath();
@@ -162,7 +156,6 @@ public class AutenticadoFiltro implements Filter {
 		}				
 	}
 
-	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
 		
