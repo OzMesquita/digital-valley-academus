@@ -115,7 +115,7 @@
 					        </div>   
 							<br>
 							<div class="form-row">
-								<div class="form-group col-md-3">
+								<div class="form-group col-md-4">
 									<label for="disciplinaAproveitada">Nome da Disciplina Aproveitada</label>
 									<input type="text" id="disciplinaAproveitada" pattern="[a-zA-Z\sÇçÁáÀàÉéÍíÓóÚúÃãõÕêÊâÂôÔ]+$" style='text-transform:uppercase' class="form-control">
 								</div>
@@ -143,8 +143,10 @@
 									<label for="instituicao">Instituição</label>
 									<input type="text" id="instituicao"  pattern="[a-zA-Z\sÇçÁáÀàÉéÍíÓóÚúÃãõÕêÊâÂôÔ]+$" style='text-transform:uppercase' class="form-control">
 								</div>
+							</div>
+							<div class="row justify-content-end">
 								<div class="form-group col-md-2">
-									<input type="button" class="btn btn-secondary col-md-6 btn-sm" onclick="adicionarDisciplinaAproveitada()" value="Adicionar">
+									<input type="button" class="btn btn-secondary btn-sm" onclick="adicionarDisciplinaAproveitada()" value="Adicionar">
 								</div>
 							</div>
 							<div class="modal-footer">
