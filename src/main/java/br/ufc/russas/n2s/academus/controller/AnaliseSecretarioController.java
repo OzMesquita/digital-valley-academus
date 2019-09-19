@@ -28,6 +28,8 @@ private static final long serialVersionUID = 1L;
 			String resultado = request.getParameter("resultado");
 			String justificativa = request.getParameter("justificativaInput");
 			String idSolicitacao = request.getParameter("button");
+			String ementaAnexada = request.getParameter("ementaAnexada");
+			String historicoAnexado = request.getParameter("historicoAnexado");
 			int idSol = Integer.parseInt(idSolicitacao);
 			
 			String mensagem = "";
@@ -46,14 +48,21 @@ private static final long serialVersionUID = 1L;
 				} else {
 					// armezena as informações no banco para cada tipo de resultado
 					
-					if(resultado.equals("Valido")) {
+					if(resultado.equals("Valido") && ementaAnexada.equals("1") && historicoAnexado.equals("1")) {
 						solicitacao.setStatus(Status.ANALISANDO);
-						mensagem = "A avaliação da Validez do documento da solicitação foi registrada com sucesso";// Mensagem "Avalização Secretario Sucesso"
+						mensagem = "A avaliação da Validez do documento da solicitação foi registrada com sucesso";// Mensagem "Avaliação Secretario Sucesso"
+					} else if(resultado.equals("Valido")) {
+						mensagem = "Por favor anexe todos os documentos antes de validar uma solicitação";// Mensagem de erro ao faltar algum dos anexos
+						request.setAttribute("erro", mensagem);
+						request.setAttribute("id", idSolicitacao);
+						javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("anexarDocumentos.jsp");
+						dispatcher.forward(request, response);
+						return;
 					} else if(resultado.equals("Invalido")) {
 						solicitacao.setResultado("INDEFERIDO");
 						solicitacao.setJustificativa(justificativa);
 						solicitacao.setStatus(Status.FINALIZADO);
-						mensagem = "A avaliação de Invalidez do ducumento da solicitação foi cadastrada com sucesso";// Mensagem "Avalização de Invalida do Secretario Sucesso"
+						mensagem = "A avaliação de Invalidez do ducumento da solicitação foi cadastrada com sucesso";// Mensagem "Avaliação de Invalida do Secretario Sucesso"
 					} else {
 						resultado = "INDEFINIDO";
 					}

@@ -6,7 +6,7 @@
 		
 	<!-- Botao Avaliar -->
 	<input type="button" class="btn btn-primary btn-sm"
-		style="height: 30px;" value="Avaliar"
+		style="height: 30px;" value="Avaliar" onclick="verificaAnexos(<%=(String)request.getAttribute("id") %>)"
 		data-toggle="modal" data-target="#testeCoor">
 	
 </div>
@@ -30,7 +30,10 @@
 										<label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">INSERIR RESULTADOS</label>
 									</div>
 									<div class="card-body">
-										<div class="form-group">
+									
+										<input type="hidden" id="ementaAnexada" name="ementaAnexada" value="0"/>
+										<input type="hidden" id="historicoAnexado" name="historicoAnexado" value="0"/>
+										<div class="form-group">						
 										<label for="resultadoInput"><b> Resultado </b></label>
 									        <select type="text" name="resultado" class="form-control custom-select" id="resultado" required>
 									            <option value="" selected="selected" disabled="disabled">Selecione uma opção</option>
@@ -66,3 +69,21 @@
 						</div>
 						</div>
 					</div>
+					
+					<script>
+					
+					//Verifica se todos os anexos foram colocados
+					function verificaAnexos(id){
+						console.log("chamou a funcao");
+						if($("#anexo1-"+id).value != ""){
+							document.getElementById("ementaAnexada").value = "1";
+							console.log("passou aki 1");
+						}
+						if($("#anexo2-"+id).value != ""){
+							document.getElementById("historicoAnexado").value = "1";
+							console.log("passou aki 2");
+						}
+					}
+					
+					
+					</script>

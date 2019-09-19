@@ -24,6 +24,7 @@
 	} catch(Exception e){
 		deuCerto = false;
 		System.out.print("Deu nao");
+		System.out.println(e);
 	}
 	
 %>
@@ -272,5 +273,8 @@
 				document.getElementById("submitHistorico-"+id).disabled = "disabled";
 			}
 		}
+		
+		
+			
 	</script>
 </html>
