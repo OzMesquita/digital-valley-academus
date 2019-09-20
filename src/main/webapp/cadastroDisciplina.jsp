@@ -33,7 +33,7 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
 						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>					
-						<li class="breadcrumb-item active" aria-current="page">Cadastra Disciplina</li>
+						<li class="breadcrumb-item active" aria-current="page">Cadastrar Disciplina</li>
 					</ol>
 					</nav>
 					<h1>Cadastrar Disciplina</h1>
