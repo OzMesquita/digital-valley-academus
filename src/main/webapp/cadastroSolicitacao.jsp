@@ -318,11 +318,18 @@
 			}else if((obj.carga == "")){
 				alert("Campo Carga Horária deve ser preenchido");
 				return false;
-			}else if(!(obj.nota >= 0 && obj.nota <= 10)){
+			}else if((Number(obj.carga)% 16 != 0 || Number(obj.carga)== 0 )){
+				
+				alert("Digite um valor de carga horária válido, ex: 16, 32, 48");
+				return false;
+			}else if(!(obj.nota >= 0 || obj.nota <= 10)){
 				alert("Campo de Nota deve está entre 0 e 10");
 				return false;
 			}else if((obj.nota == "")){
 				alert("Campo de Nota deve ser preenchido");
+				return false;
+			}else if((obj.nota < 5)){
+				alert("Impossível aproveitar cadeiras com nota menor que 5");
 				return false;
 			}else if((obj.ano == "")){
 				alert("Ano deve ser preenchido");
