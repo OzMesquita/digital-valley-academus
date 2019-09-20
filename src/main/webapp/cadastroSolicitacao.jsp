@@ -145,7 +145,7 @@
 								</div>
 							</div>
 							<div class="row justify-content-end">
-								<div class="form-group col-md-2">
+								<div class="form-group col-md-2 text-left p-md-0">
 									<input type="button" class="btn btn-secondary btn-sm" onclick="adicionarDisciplinaAproveitada()" value="Adicionar">
 								</div>
 							</div>
