@@ -296,6 +296,14 @@
   	<servlet-name>MenuInicial</servlet-name>
   	<url-pattern>/MenuInicial</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>ListarSolicitacaoSegundaChamada</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.ListarSolicitacaoSegundaChamadaController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ListarSolicitacaoSegundaChamada</servlet-name>
+  	<url-pattern>/ListarSolicitacaoSegundaChamada</url-pattern>
+  </servlet-mapping>
   <filter>
   	<filter-name>setCharacterEncodingFilter</filter-name>
   	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
