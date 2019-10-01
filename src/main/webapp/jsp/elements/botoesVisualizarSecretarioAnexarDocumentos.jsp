@@ -73,15 +73,12 @@
 					<script>
 					
 					//Verifica se todos os anexos foram colocados
-					function verificaAnexos(id){
-						console.log("chamou a funcao");
-						if($("#anexo1-"+id).value != ""){
-							document.getElementById("ementaAnexada").value = "1";
-							console.log("passou aki 1");
+					function verificaAnexos(){
+						if($("#anexoEmenta").attr("title") != null){
+							$("#ementaAnexada").val("1");
 						}
-						if($("#anexo2-"+id).value != ""){
-							document.getElementById("historicoAnexado").value = "1";
-							console.log("passou aki 2");
+						if($("#anexoHistorico").attr("title") != null){
+							$("#historicoAnexado").val("1");
 						}
 					}
 					

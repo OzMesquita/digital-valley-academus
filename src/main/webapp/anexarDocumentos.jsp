@@ -151,19 +151,25 @@
 															        <input type="hidden" id="tipo_arquivo" name="tipo_arquivo" value="1">
 															        <input type="hidden" id="chave1" name="chave" value="1">
 															        <%if(disCursada.getEmenta().getIdArquivo() > 0){%>
-															        	<%=disCursada.getEmenta().getNome()%>
+															        	
+															     		<div class="custom-file">
+																			<input type="file" name="anexo" class="custom-file-input" id="anexoEmenta" accept=".pdf" title="<%=disCursada.getEmenta().getNome()%>">
+																			<label id="labelEmenta" class="custom-file-label" for="anexoEmenta"><%=disCursada.getEmenta().getNome()%></label>
+																		</div>
 															        <%}else{%>
-					    												Nenhum arquivo anexado
+															        	<div class="custom-file">
+																			<input type="file" name="anexo" class="custom-file-input" id="anexoEmenta" accept=".pdf">
+																			<label id="labelEmenta" class="custom-file-label" for="anexoEmenta">Clique aqui para anexar um arquivo</label>
+																		</div>
 																	<%}%>
 																	<br>
-																	<input type="file" id="anexo1-<%=disCursada.getId()%>" name="anexo" accept=".pdf" class="form-control-file" onchange="teste1(<%=disCursada.getId()%>)">
 																</div>
 															</div>
 														</div>
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
-														<input type="submit" id="submitEmenta-<%=disCursada.getId()%>" name="button" disabled="disabled" value="Confirmar" class="btn btn-primary btn-sm active" onclick="atribuirValor1(1)">
+														<input type="submit" id="submitEmenta" name="button" disabled="disabled" value="Confirmar" class="btn btn-primary btn-sm active" onclick="atribuirValor1(1)">
 														<%if(disCursada.getEmenta().getIdArquivo() > 0){%>
 															<!-- <a href="C://n2s//academus//anexo//375102//21//8//ementa-375102-21-8.pdf" class="btn btn-primary btn-sm active" onclick="atribuirValor1(2)" download>Download</a>-->
 															<!--  <input type="submit" value="Download" name="button" class="btn btn-primary btn-sm active" onclick="atribuirValor1(2)">-->
@@ -202,18 +208,24 @@
 															        <input type="hidden" id="chave2" name="chave" value="1">
 															        <%if(disCursada.getHistorico().getIdArquivo() > 0){%>
 															        	<%=disCursada.getHistorico().getNome()%>
+															        	<div class="custom-file">
+																			<input type="file" name="anexo" class="custom-file-input" id="anexoHistorico" accept=".pdf" title="<%=disCursada.getHistorico().getNome()%>">
+																			<label id="labelHistorico" class="custom-file-label" for="anexoHistorico"><%=disCursada.getHistorico().getNome()%></label>
+																		</div>
 															        <%}else{%>
-					    												Nenhum arquivo anexado
+															        	<div class="custom-file">
+																			<input type="file" name="anexo" class="custom-file-input" id="anexoHistorico" accept=".pdf">
+																			<label id="labelHistorico" class="custom-file-label" for="anexoHistorico">Clique aqui para anexar um arquivo</label>
+																		</div>
 																	<%}%>
 																	<br>
-																	<input type="file" id="anexo2-<%=disCursada.getId()%>" name="anexo" accept=".pdf" class="form-control-file" onchange="teste2(<%=disCursada.getId()%>)">
 																</div>
 															</div>
 														</div>
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal">Cancelar</button>
-														<input type="submit" id="submitHistorico-<%=disCursada.getId()%>" name="button" disabled="disabled" value="Confirmar" class="btn btn-primary btn-sm active" onclick="atribuirValor2(1)">
+														<input type="submit" id="submitHistorico" name="button" disabled="disabled" value="Confirmar" class="btn btn-primary btn-sm active" onclick="atribuirValor2(1)">
 														<%if(disCursada.getHistorico().getIdArquivo() > 0){%>
 															<!--  <input type="submit" value="Download" class="btn btn-primary btn-sm active" onclick="atribuirValor2(2)">-->
 															<!-- <button value="2" name="button" onclick="atribuirValor1(2)" class="btn btn-primary btn-sm active">Download</button>-->
@@ -250,6 +262,20 @@
 		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
 	</body>
 	<script>
+	
+		$(document).ready(function () {
+			$("#anexoEmenta").change(function () {
+				habilitaBotaoConfirmarEmenta();
+				trocaTextoInputFileEmenta();
+			});
+			
+			$("#anexoHistorico").change(function () {
+				habilitaBotaoConfirmarHistorico();
+				trocaTextoInputFileHistorico();
+			});
+		});
+	
+	
 		function atribuirValor1(i){
 			
 			document.getElementById("chave1").value = i;
@@ -257,24 +283,42 @@
 		function atribuirValor2(i){
 			document.getElementById("chave2").value = i;
 		}
-		function teste1(id){
-			if(document.getElementById("anexo1-"+id).value != ""){
-				document.getElementById("submitEmenta-"+id).disabled = "";
+		
+		//Habilita botão de anexar ementa após carregar o arquivo 
+		function habilitaBotaoConfirmarEmenta(){
+			if(document.getElementById("anexoEmenta").value != ""){
+				document.getElementById("submitEmenta").disabled = "";
 			}
-			if(document.getElementById("anexo1-"+id).value == ""){
-				document.getElementById("submitEmenta-"+id).disabled = "disabled";
-			}
-		}
-		function teste2(id){
-			if(document.getElementById("anexo2-"+id).value != ""){
-				document.getElementById("submitHistorico-"+id).disabled = "";
-			}
-			if(document.getElementById("anexo2-"+id).value == ""){
-				document.getElementById("submitHistorico-"+id).disabled = "disabled";
+			if(document.getElementById("anexoEmenta").value == ""){
+				document.getElementById("submitEmenta").disabled = "disabled";
 			}
 		}
 		
+		//Quando o arquivo é selecionado, troca o texto do input
+		function trocaTextoInputFileEmenta() {
+			if($("#anexoEmenta").val() != ""){
+				//pega o ultimo nome do caminho do arquivo
+				$("#labelEmenta").text($("#anexoEmenta").val().split("\\").pop());
+			}
+		}
 		
+		//Habilita botão de anexar histórico após carregar o arquivo
+		function habilitaBotaoConfirmarHistorico(id){
+			if(document.getElementById("anexoHistorico").value != ""){
+				document.getElementById("submitHistorico").disabled = "";
+			}
+			if(document.getElementById("anexoHistorico").value == ""){
+				document.getElementById("submitHistorico").disabled = "disabled";
+			}
+		}
+		
+		//Quando o arquivo é selecionado, troca o texto do input
+		function trocaTextoInputFileHistorico() {
+			if($("#anexoHistorico").val() != ""){
+				//pega o ultimo nome do caminho do arquivo
+				$("#labelHistorico").text($("#anexoHistorico").val().split("\\").pop());
+			}
+		}
 			
 	</script>
 </html>
