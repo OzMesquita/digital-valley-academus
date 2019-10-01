@@ -14,8 +14,34 @@
 				<%
 			} else if (per.getNivel() == NivelAcademus.ALUNO){
 				%>
-				<a href="Inicio" class="btn btn-light btn-sm text-left">Início</a>
-        		<a href="CadastrarSolicitacao" class="btn btn-light btn-sm text-left">Cadastrar</a>
+				<div class="btn-group-vertical btn-group-sm" role="group">
+					<a id="aproveitamento" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				      Proveito de disciplina
+				    </a>
+				    <div class="dropdown-menu" aria-labelledby="aproveitamento">
+				      <a class="dropdown-item" href="CadastrarSolicitacao">Cadastrar</a>
+				      <a class="dropdown-item" href="#">Ver Histórico</a>
+				    </div>
+				</div>
+				<div class="btn-group-vertical btn-group-sm" role="group">
+					<a id="segundaChamada" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				      Segunda chamada
+				    </a>
+				    <div class="dropdown-menu" aria-labelledby="segundaChamada">
+				      <a class="dropdown-item" href="CadastrarSegundaChamada">Cadastrar</a>
+				      <a class="dropdown-item" href="#">Ver Histórico</a>
+				    </div>
+				</div>
+				<div class="btn-group-vertical btn-group-sm" role="group">
+					<a id="recorrecao" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				      Recorreção de prova
+				    </a>
+				    <div class="dropdown-menu" aria-labelledby="recorrecao">
+				      <a class="dropdown-item" href="#">Cadastrar</a>
+				      <a class="dropdown-item" href="#">Ver Histórico</a>
+				    </div>
+				</div>
+				
 				<%
 			} else if (per.getNivel() == NivelAcademus.COORDENADOR){
 				%>
