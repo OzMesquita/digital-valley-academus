@@ -280,6 +280,22 @@
   	<servlet-name>AssociarComponentesController</servlet-name>
   	<url-pattern>/AssociarComponentes</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>CadastrarSolicitacaoSegundaChamada</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.CadastrarSolicitacaoSegundaChamadaController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CadastrarSolicitacaoSegundaChamada</servlet-name>
+  	<url-pattern>/CadastrarSegundaChamada</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>MenuInicial</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.MenuInicialController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MenuInicial</servlet-name>
+  	<url-pattern>/MenuInicial</url-pattern>
+  </servlet-mapping>
   <filter>
   	<filter-name>setCharacterEncodingFilter</filter-name>
   	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
