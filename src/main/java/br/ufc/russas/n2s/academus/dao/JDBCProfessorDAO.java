@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
+import br.ufc.russas.n2s.academus.model.Disciplina;
 import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.Professor;
 
@@ -78,8 +79,9 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 		Connection conn = ConnectionPool.getConnection();
 		try {
 			PreparedStatement ps = conn.prepareStatement(SQL);
-			ResultSet rs = ps.executeQuery();
 			ps.setInt(1, NivelAcademus.getCodigo(NivelAcademus.PROFESSOR));
+			ResultSet rs = ps.executeQuery();
+			
 			CursoDAO cdao = new DAOFactoryJDBC().criarCursoDAO();
 			
 			while (rs.next()) {
@@ -113,6 +115,58 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 		}
 		
 		return professores;
+	}
+	
+	@Override
+	public List<Disciplina> listarDisciplinas(int id){
+		String sql = "SELECT * FROM academus.disciplina AS d, academus.disciplina_professor AS dp WHERE dp.id_perfil_academus = ? AND d.id_disciplina = dp.id_disciplina ORDER BY dp.id_disciplina;";
+		ArrayList<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				Disciplina aux = new Disciplina();
+				aux.setId(rs.getString("id_disciplina"));
+				aux.setNome(rs.getString("nome"));
+				aux.setCarga(rs.getInt("carga"));
+				aux.setCreditos(rs.getInt("creditos"));
+				listaDisciplinas.add(aux);
+			}
+			
+			ps.close();
+			rs.close();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return listaDisciplinas;
+	}
+	
+	@Override
+	public void removeDisciplinas(int idProfessor) {
+		String sql = "DELETE FROM academus.disciplina_professor where id_perfil_academus = ?;";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idProfessor);
+			ps.executeUpdate();
+			
+			ps.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
 	}
 
 	@Override
@@ -241,6 +295,56 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 
 		return professor;
 	}
+	
+	@Override
+	public List<Professor> buscarPorNome(String nome) {
+		
+		//String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE u.id_pessoa_usuario = p.id_pessoa_prof AND u.id_pessoa_usuario = s.id_pessoa_usuario ORDER BY id_pessoa_prof;";
+		String SQL = "SELECT * FROM academus.perfil_academus AS p, academus.funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.id_nivel=? AND p.nome ilike '%"+nome+"%' ORDER BY f.id_perfil_academus;";
+		List<Professor> professores = new ArrayList<Professor>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(SQL);
+			ps.setInt(1, NivelAcademus.getCodigo(NivelAcademus.PROFESSOR));
+			ResultSet rs = ps.executeQuery();
+			
+			CursoDAO cdao = new DAOFactoryJDBC().criarCursoDAO();
+			
+			while (rs.next()) {
+				
+				
+				Professor professor = new Professor();
+				
+				professor.setId(rs.getInt("id_perfil_academus"));
+				professor.setNome(rs.getString("nome"));
+				professor.setCPF(rs.getString("cpf"));
+				professor.setEmail(rs.getString("email"));
+				professor.setNivel(NivelAcademus.getNivel(rs.getInt("id_nivel")));
+				professor.setIsAdmin(rs.getBoolean("is_admin"));
+				professor.setSiape(rs.getString("siape"));
+				professor.setCurso(cdao.buscarPorId(rs.getInt("id_curso")));
+				
+				//DisciplinaDAO ddao = new DAOFactoryJDBC().criarDisciplinaDAO();
+				//falta setar as diciplinas do professor
+				
+				professores.add(professor);
+				
+			}
+
+			ps.close();
+			rs.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return professores;
+	}
+	
+	
 
 	@Override
 	public boolean possuiCoordenador(int id_curso) {

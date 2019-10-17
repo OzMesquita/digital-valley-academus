@@ -3,6 +3,7 @@ package br.ufc.russas.n2s.academus.dao;
 import java.util.List;
 
 import br.ufc.russas.n2s.academus.model.Disciplina;
+import br.ufc.russas.n2s.academus.model.Professor;
 
 public interface DisciplinaDAO {
 	
@@ -22,8 +23,12 @@ public interface DisciplinaDAO {
 
 	public List<Disciplina> buscarPorNome(String nome, int limiteInf, int limiteSup);
 	
+	public List<Disciplina> buscarPorCurso(int idCurso, String query);
+	
 	public int countDisciplina(int pagina);
 	
 	public int countDisciplina(int pagina, String nome);
+	
+	public void addProfessor(Professor professor, Disciplina disciplina);
 	
 }

@@ -256,6 +256,7 @@
     <servlet-name>DownloadAnexosController</servlet-name>
     <url-pattern>/DownloadAnexos</url-pattern>
   </servlet-mapping>
+  
   <servlet>
   	<servlet-name>GerenciarPerfisController</servlet-name>
   	<servlet-class>br.ufc.russas.n2s.academus.controller.GerenciarPerfisController</servlet-class>
@@ -281,6 +282,14 @@
   	<url-pattern>/AssociarComponentes</url-pattern>
   </servlet-mapping>
   <servlet>
+  	<servlet-name>AssociarDisciplinaController</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.AssociarDisciplinaController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AssociarDisciplinaController</servlet-name>
+  	<url-pattern>/AssociarDisciplina</url-pattern>
+  </servlet-mapping>
+  <servlet>
   	<servlet-name>CadastrarSolicitacaoSegundaChamada</servlet-name>
   	<servlet-class>br.ufc.russas.n2s.academus.controller.CadastrarSolicitacaoSegundaChamadaController</servlet-class>
   </servlet>
@@ -303,6 +312,30 @@
   <servlet-mapping>
   	<servlet-name>ListarSolicitacaoSegundaChamada</servlet-name>
   	<url-pattern>/ListarSolicitacaoSegundaChamada</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>AutoCompleteProf</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.AutoCompleteProfController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AutoCompleteProf</servlet-name>
+  	<url-pattern>/AutoCompleteProf</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>BuscarDisciplinaPorCurso</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.BuscarDisciplinaPorCursoController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>BuscarDisciplinaPorCurso</servlet-name>
+  	<url-pattern>/BuscarDisciplinaPorCurso</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>BuscarDisciplinaPorProfessor</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.BuscarDisciplinaPorProfessorController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>BuscarDisciplinaPorProfessor</servlet-name>
+  	<url-pattern>/BuscarDisciplinaPorProfessor</url-pattern>
   </servlet-mapping>
   <filter>
   	<filter-name>setCharacterEncodingFilter</filter-name>

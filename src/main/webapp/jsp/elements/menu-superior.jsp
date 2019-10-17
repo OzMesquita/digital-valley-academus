@@ -24,6 +24,7 @@
            		<div class="dropdown-menu" aria-labelledby="disciplinaDropdown">
 		          	<a class="dropdown-item" href="ListarDisciplinas">Listar Disciplinas</a>
 		          	<a class="dropdown-item" href="CadastrarDisciplina">Cadastrar Disciplinas</a>
+		          	<a class="dropdown-item" href="AssociarDisciplina">Associar Disciplinas</a>
 		        </div>
            	</li>
            	<li class="nav-item dropdown">

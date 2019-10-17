@@ -9,6 +9,7 @@ import java.util.List;
 
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Disciplina;
+import br.ufc.russas.n2s.academus.model.Professor;
 
 public class JDBCDisciplinaDAO implements DisciplinaDAO{
 	
@@ -198,6 +199,42 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 		
 		return listaDisciplinas;
 	}
+	
+	/**
+	 * Função que retorna disciplinas de um determinado curso, filtradas pelo id ou pelo nome.
+	 */
+	@Override
+	public List<Disciplina> buscarPorCurso(int idCurso, String query) {
+		String sql = "SELECT * FROM academus.disciplina AS d, academus.componente_curricular AS c, academus.matriz_curricular AS m WHERE d.id_disciplina = c.id_disciplina AND m.id_matriz = c.id_matriz AND m.id_curso = ? AND (d.nome ilike '%"+query+"%' OR d.id_disciplina ilike '%"+query+"%') order by c.id_disciplina";
+		List<Disciplina> listaDisciplinas = new ArrayList<Disciplina>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idCurso);
+			ResultSet rs = ps.executeQuery();
+				
+			while(rs.next()){
+				Disciplina aux = new Disciplina();
+				aux.setId(rs.getString("id_disciplina"));
+				aux.setNome(rs.getString("nome"));
+				aux.setCarga(rs.getInt("carga"));
+				aux.setCreditos(rs.getInt("creditos"));
+				
+				listaDisciplinas.add(aux);
+			}
+			
+			rs.close();
+			ps.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return listaDisciplinas;
+	}
 
 	@Override
 	public Disciplina editar(Disciplina dis) {
@@ -300,6 +337,24 @@ public class JDBCDisciplinaDAO implements DisciplinaDAO{
 		}
 		
 		return resultSql;
+	}
+	
+	public void addProfessor(Professor professor, Disciplina disciplina) {
+		String sql = "INSERT INTO academus.disciplina_professor(id_disciplina, id_perfil_academus) values (?, ?)";
+		Connection con = ConnectionPool.getConnection();
+		try {
+			PreparedStatement insert = con.prepareStatement(sql);
+			insert.setString(1, disciplina.getId());
+			insert.setInt(2, professor.getId());
+			
+			insert.execute();
+			insert.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(con);
+		}
+		
 	}
 	
 }
