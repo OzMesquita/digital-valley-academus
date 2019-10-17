@@ -1,3 +1,5 @@
+<%@page import="br.ufc.russas.n2s.academus.model.Professor"%>
+<%@page import="br.ufc.russas.n2s.academus.dao.JDBCProfessorDAO"%>
 <%@page import="br.ufc.russas.n2s.academus.dao.JDBCAlunoDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.AlunoDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Aluno"%>
@@ -11,7 +13,8 @@
 
 <%
 	PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("userAcademus");
-	
+	JDBCProfessorDAO professorDao = new JDBCProfessorDAO();
+	List<Professor> professores = professorDao.listar();
 	JDBCAlunoDAO alunoDAO = new JDBCAlunoDAO();
 	Aluno aluno = alunoDAO.buscarPorId(usuario.getId());
 %>
@@ -33,6 +36,9 @@
 		<link type="text/css" rel="stylesheet" href="<%=Constantes.getAppCssUrl()%>/design.css" />
 		<link type="text/css" rel="stylesheet" href="<%=Constantes.getAppCssUrl()%>/bootstrap-datepicker.css" />
 		<link type="text/css" rel="stylesheet" href="<%=Constantes.getAppCssUrl()%>/bootstrap-datepicker.standalone.css" />
+		
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 	</head>
 	<body>
 		<c:import url="jsp/elements/menu-superior.jsp" charEncoding="UTF-8"></c:import>
@@ -97,7 +103,18 @@
 							
 							<div class="form-group">
 								<label for="professorInput">Professor</label>
-								<input type="text" id="professorInput" name="professor" class="form-control" placeholder="Digite o nome do professor">
+								<select id="professorInput" name="professor" class="form-control">
+								<option></option>
+									<%
+										for(Professor p: professores){
+									%>
+											<option value="<%=p.getId() %>"> <%= p.getNome() %></option> 
+									<%
+										}
+									%>
+								
+								</select>
+								<!-- <input type="text" id="professorInput" name="professor" class="form-control" placeholder="Digite o nome do professor"> -->
 							</div>
 							
 							<div class="row">
@@ -164,6 +181,12 @@
 			});
 			$('select').change(function(){
 				modificado = 1;
+			});
+			
+			$('#professorInput').select2({
+				placeholder: 'Selecione um professor',
+				allowClear: true,
+				minimumInputLength: 2
 			});
 		});
 		
