@@ -29,7 +29,7 @@
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="segundaChamada">
 				      <a class="dropdown-item" href="CadastrarSegundaChamada">Cadastrar</a>
-				      <a class="dropdown-item" href="ListarSolicitacaoSegundaChamada">Ver Histórico</a>
+				      <a class="dropdown-item" href="HistoricoSegundaChamada">Ver Histórico</a>
 				    </div>
 				</div>
 				<div class="btn-group-vertical btn-group-sm" role="group">

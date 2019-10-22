@@ -270,7 +270,7 @@
 		if (listaDisciplinas.includes($("#disciplinaInput option:selected").text())){
 			$('.component-feedback').append(
 				'<div class="alert alert-warning alert-dismissible fade show" role="alert">'+
-				'	A disciplina já foi adicionada.'+
+				'	A disciplina já está associada.'+
 				'	<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
 			    '		<span aria-hidden="true">&times;</span>'+
 			  	'	</button>'+

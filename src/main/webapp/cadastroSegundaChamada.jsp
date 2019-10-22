@@ -120,8 +120,10 @@
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group">
-										<label for="disciplinaInput">Disciplina</label>
-										<input type="text" id="disciplinaInput" name="disciplina" class="form-control" placeholder="Selecione a disciplina pelo seu nome ou código">
+										<label for="discplinaInput">Lista Disciplinas</label>
+										<select id="disciplinaInput" name="disciplina" class="form-control" disabled>
+											<option>Selecione a disciplina pelo seu nome ou código</option>
+										</select>
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -181,6 +183,20 @@
 			});
 			$('select').change(function(){
 				modificado = 1;
+			});
+			
+			$('#professorInput').change(function (){
+				
+				$("#disciplinaInput").removeAttr('disabled');
+				
+				$.get('/Academus/BuscarDisciplinaPorProfessor?id='+$("#professorInput").val(), function(data){
+					
+					data.forEach(function(disc, index){
+						$("#disciplinaInput").append(
+							'<option value="'+disc.id+'">'+disc.text+'</option>'
+						);
+					});
+				});
 			});
 			
 			$('#professorInput').select2({

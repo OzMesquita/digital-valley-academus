@@ -306,12 +306,12 @@
   	<url-pattern>/MenuInicial</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>ListarSolicitacaoSegundaChamada</servlet-name>
-  	<servlet-class>br.ufc.russas.n2s.academus.controller.ListarSolicitacaoSegundaChamadaController</servlet-class>
+  	<servlet-name>HistoricoSegundaChamada</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.HistoricoSegundaChamadaController</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>ListarSolicitacaoSegundaChamada</servlet-name>
-  	<url-pattern>/ListarSolicitacaoSegundaChamada</url-pattern>
+  	<servlet-name>HistoricoSegundaChamada</servlet-name>
+  	<url-pattern>/HistoricoSegundaChamada</url-pattern>
   </servlet-mapping>
   <servlet>
   	<servlet-name>AutoCompleteProf</servlet-name>

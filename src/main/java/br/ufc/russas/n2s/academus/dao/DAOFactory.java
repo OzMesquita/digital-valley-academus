@@ -27,5 +27,7 @@ public interface DAOFactory {
 	public ProfessorDAO criarProfessorDAO();
 	
 	public SolicitacaoDAO criarSolicitacaoDAO();
+
+	public SegundaChamadaDAO criarSegundaChamadaDAO();
 	
 }

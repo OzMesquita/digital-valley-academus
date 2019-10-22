@@ -66,5 +66,10 @@ public class DAOFactoryJDBC implements DAOFactory{
 	public SolicitacaoDAO criarSolicitacaoDAO() {
 		return new JDBCSolicitacaoDAO();
 	}
+	
+	@Override
+	public SegundaChamadaDAO criarSegundaChamadaDAO() {
+		return new JDBCSegundaChamada();
+	}
 
 }
