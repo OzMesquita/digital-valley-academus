@@ -1,7 +1,7 @@
 <%@ page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
-<a class="navbar-brand" href="Inicio"><img alt="Logo do Academus" src="resources/images/logoacademus.png" width="40px" height="30px"> Academus</a> 
+<a class="navbar-brand" href="MenuInicial"><img alt="Logo do Academus" src="resources/images/logoacademus.png" width="40px" height="30px"> Academus</a> 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
    	</button>
@@ -10,7 +10,7 @@
    		
        	<ul class="navbar-nav w-100">
        		<li class="nav-item">
-           		<a href="Inicio" class="nav-link">Início</a>
+           		<a href="MenuInicial" class="nav-link">Início</a>
            	</li>
            	
            	<li class="nav-item">
