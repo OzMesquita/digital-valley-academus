@@ -28,7 +28,6 @@ public class HistoricoSegundaChamadaController extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
-		
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -103,6 +102,7 @@ public class HistoricoSegundaChamadaController extends HttpServlet{
 			if(listaSC == null) {
 				listaSC = new ArrayList<SegundaChamada>();
 			}
+			
 			session.setAttribute("listaSC", listaSC);
 			session.setAttribute("numSolicitacoes", Integer.valueOf(numSolicitacoes));
 			

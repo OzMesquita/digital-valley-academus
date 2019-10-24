@@ -18,6 +18,8 @@ public interface SegundaChamadaDAO {
 	
 	public List<SegundaChamada> listarCoordenador(Professor professor, int limitInf, int limitSup);
 	
+	public SegundaChamada buscarPorId(int idSegundaChamada);
+	
 	public SegundaChamada editar(SegundaChamada segundaChamada);
 	
 	public void excluir(SegundaChamada segundaChamada);

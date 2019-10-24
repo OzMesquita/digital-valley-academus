@@ -215,6 +215,45 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 		}
 		return listaSegundaChamada;
 	}
+	
+	@Override
+	public SegundaChamada buscarPorId(int idSegundaChamada) {
+		Connection conn = ConnectionPool.getConnection();
+		String sql = "select * from academus.segunda_chamada as sc where sc.id_segunda_chamada = ?;";
+		SegundaChamada aux = new SegundaChamada();
+		
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idSegundaChamada);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()){
+				DAOFactoryJDBC df = new DAOFactoryJDBC();
+				
+				AlunoDAO aludao = df.criarAlunoDAO();
+				DisciplinaDAO discdao = df.criarDisciplinaDAO();
+				ProfessorDAO profdao = df.criarProfessorDAO();
+				
+				aux.setIdSegundaChamada(rs.getInt("id_segunda_chamada"));
+				aux.setAluno(aludao.buscarPorId(rs.getInt("id_aluno")));
+				aux.setProfessor(profdao.buscarPorId(rs.getInt("id_professor")));
+				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setDataProva(Date.valueOf(rs.getString("data_prova")));
+				
+			}
+						
+			ps.close();
+			rs.close();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return aux;
+	}
 
 	@Override
 	public SegundaChamada editar(SegundaChamada segundaChamada) {

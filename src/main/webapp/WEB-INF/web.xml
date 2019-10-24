@@ -337,6 +337,22 @@
   	<servlet-name>BuscarDisciplinaPorProfessor</servlet-name>
   	<url-pattern>/BuscarDisciplinaPorProfessor</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>BuscarAlunoPorMatricula</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.BuscarAlunoPorMatriculaController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>BuscarAlunoPorMatricula</servlet-name>
+  	<url-pattern>/BuscarAlunoPorMatricula</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>VisualizarSegundaChamada</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.VisualizarSegundaChamadaController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>VisualizarSegundaChamada</servlet-name>
+  	<url-pattern>/VisualizarSegundaChamada</url-pattern>
+  </servlet-mapping>
   <filter>
   	<filter-name>setCharacterEncodingFilter</filter-name>
   	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>

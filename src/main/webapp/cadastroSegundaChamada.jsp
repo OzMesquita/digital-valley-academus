@@ -81,25 +81,56 @@
 						
 						
 						<form action="#" method="post">
-							<div class="form-group">
-								<label for="alunoInput">Aluno</label>
-								<input type="text" id="alunoInput" name="nomeAluno" class="form-control" value="<%= aluno.getNome() %>" readonly>
-							</div>
+						
+							<!-- Testa o nível de permissão -->
 							
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="matriculaInput">Matricula</label>
-										<input type="text" id="matriculaInput" name="matricula" class="form-control" value="<%= aluno.getMatricula() %>" readonly>
+							<%
+							if(usuario.getNivel() == NivelAcademus.ALUNO){
+							%>
+								<div class="form-group">
+									<label for="alunoInput">Aluno</label>
+									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" value="<%= aluno.getNome() %>" readonly>
+								</div>
+								
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="matriculaInput">Matricula</label>
+											<input type="text" id="matriculaInput" name="matricula" class="form-control" value="<%= aluno.getMatricula() %>" readonly>
+										</div>
+									</div>
+									<div class="col-md-9">
+										<div class="form-group">
+											<label for="cursoInput">Curso</label>
+											<input type="text" id="cursoInput" name="curso" class="form-control" value="<%= aluno.getCurso().getNome() %>" readonly>
+										</div>
 									</div>
 								</div>
-								<div class="col-md-9">
-									<div class="form-group">
-										<label for="cursoInput">Curso</label>
-										<input type="text" id="cursoInput" name="curso" class="form-control" value="<%= aluno.getCurso().getNome() %>" readonly>
+							<%
+							} else {
+							%>
+								<div class="form-group">
+									<label for="alunoInput">Aluno</label>
+									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" disabled>
+								</div>
+								
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="matriculaInput">Matricula</label>
+											<input type="text" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula">
+										</div>
+									</div>
+									<div class="col-md-9">
+										<div class="form-group">
+											<label for="cursoInput">Curso</label>
+											<input type="text" id="cursoInput" name="curso" class="form-control" disabled>
+										</div>
 									</div>
 								</div>
-							</div>
+							<%
+							}
+							%>
 							
 							<div class="form-group">
 								<label for="professorInput">Professor</label>
@@ -114,7 +145,7 @@
 									%>
 								
 								</select>
-								<!-- <input type="text" id="professorInput" name="professor" class="form-control" placeholder="Digite o nome do professor"> -->
+								
 							</div>
 							
 							<div class="row">
@@ -178,9 +209,11 @@
 	
 		var modificado = 0;
 		$(document).ready(function(){
+			
 			$('input').change(function(){
 				modificado = 1;
 			});
+			
 			$('select').change(function(){
 				modificado = 1;
 			});
@@ -203,6 +236,16 @@
 				placeholder: 'Selecione um professor',
 				allowClear: true,
 				minimumInputLength: 2
+			});
+			
+			$('#matriculaInput').blur(function () {
+				
+				$.get('/Academus/BuscarAlunoPorMatricula?matricula='+$("#matriculaInput").val(), function(data){
+					
+					$("#alunoInput").val(data.nome);
+					$("#cursoInput").val(data.curso);
+				});
+				
 			});
 		});
 		

@@ -31,7 +31,7 @@
 			<td><%=sc.getAluno().getNome()%></td>
 			<td><%=sc.getDisciplina().getNome()%></td>
 			<td>
-				<a href="#" class="btn btn-primary btn-sm">Visualizar</a>
+				<a href="VisualizarSegundaChamada?id=<%=sc.getIdSegundaChamada()%>" class="btn btn-primary btn-sm">Visualizar</a>
 			</td>
 		</tr>
 		
