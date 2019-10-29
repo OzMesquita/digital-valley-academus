@@ -48,25 +48,25 @@
 						<div class="col-md-3 d-inline">
 							
 							<a href="Inicio" class="card">
-								<div class="card-body">
-									<p class="card-text text-center">Proveito de Disciplina</p>
-									<img alt="Ícone de aproveitamento de disciplina" src="resources/images/logoaproveitamento.png" width="100%">
+								<div class="card-body text-center">
+									<strong class="card-text">Aproveitamento de Disciplina</strong>
+									<img alt="Ícone de aproveitamento de disciplina" src="resources/images/logoaproveitamento.png" width="50%">
+								</div>
+							</a>
+						</div>
+						<div class="col-md-3 d-inline">
+							<a href="HistoricoSegundaChamada" class="card">
+								<div class="card-body text-center">
+									<strong class="card-text text-center">Segunda Chamada</strong>
+									<img alt="Ícone de segunda chamada" src="resources/images/logosegundachamada.png" width="50%">
 								</div>
 							</a>
 						</div>
 						<div class="col-md-3 d-inline">
 							<a href="#" class="card">
-								<div class="card-body">
-									<p class="card-text text-center">Segunda Chamada</p>
-									<img alt="Ícone de segunda chamada" src="resources/images/logosegundachamada.png" width="100%">
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 d-inline">
-							<a href="#" class="card">
-								<div class="card-body">
-									<p class="card-text text-center">Recorreção de Prova</p>
-									<img alt="Ícone de recorreção de prova" src="resources/images/logorecorrecao.png" width="100%">
+								<div class="card-body text-center">
+									<strong class="card-text text-center">Recorreção de Prova</strong>
+									<img alt="Ícone de recorreção de prova" src="resources/images/logorecorrecao.png" width="50%">
 								</div>
 							</a>
 						</div>
