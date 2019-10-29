@@ -16,7 +16,7 @@
            	<li class="nav-item">
            		<a class="nav-link" href="Sair">Guardião</a>
            	</li>     	
-           	
+         
            	<%if(((PerfilAcademus) session.getAttribute("userAcademus")).getIsAdmin()){%>
            	
            	<li class="nav-item dropdown">
@@ -39,7 +39,8 @@
            	<li class="nav-item">
            		<a class="nav-link" href="GerenciarPerfis"> Gerenciar Perfis</a>
            	</li>
-           	<%}%>
+           	<%}%> 
+           
            	<li class="nav-item dropdown ml-auto">
            		<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%=((PerfilAcademus) session.getAttribute("userAcademus")).getNome()%></a>
 		        <div class="dropdown-menu" aria-labelledby="userDropdown">

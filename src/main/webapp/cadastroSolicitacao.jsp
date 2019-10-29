@@ -15,8 +15,8 @@
 	PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("userAcademus");
 
 	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
-	Aluno a = (Aluno) usuario;
-	List<MatrizCurricular> matrizes = daoMC.buscarAtivosPorCurso(a.getCurso().getIdCurso());
+	//Aluno a = (Aluno) usuario;
+	List<MatrizCurricular> matrizes = daoMC.buscarAtivosPorCurso(usuario.getCurso().getIdCurso());
 %>
 
 <!DOCTYPE html>
