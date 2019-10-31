@@ -33,7 +33,7 @@
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="recorrecao">
 				      <a class="dropdown-item" href="#">Cadastrar</a>
-				      <a class="dropdown-item" href="HistoricoRecorrecaoDeProva">Ver Histórico</a>
+				      <a class="dropdown-item" href="#">Ver Histórico</a>
 				    </div>
 				</div>
 				<%
@@ -63,7 +63,7 @@
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="recorrecao">
 				      <a class="dropdown-item" href="#">Cadastrar</a>
-				      <a class="dropdown-item" href="HistoricoRecorrecaoDeProva">Ver Histórico</a>
+				      <a class="dropdown-item" href="#">Ver Histórico</a>
 				    </div>
 				</div>
 				
@@ -94,7 +94,7 @@
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="recorrecao">
 				      <a class="dropdown-item" href="#">Cadastrar</a>
-				      <a class="dropdown-item" href="HistoricoRecorrecaoDeProva">Ver Histórico</a>
+				      <a class="dropdown-item" href="#">Ver Histórico</a>
 				    </div>
 				</div> 
 				<%
@@ -124,7 +124,7 @@
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="recorrecao">
 				      <a class="dropdown-item" href="#">Cadastrar</a>
-				      <a class="dropdown-item" href="HistoricoRecorrecaoDeProva">Ver Histórico</a>
+				      <a class="dropdown-item" href="#">Ver Histórico</a>
 				    </div>
 				</div>
 				<%
@@ -154,7 +154,7 @@
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="recorrecao">
 				      <a class="dropdown-item" href="#">Cadastrar</a>
-				      <a class="dropdown-item" href="HistoricoRecorrecaoDeProva">Ver Histórico</a>
+				      <a class="dropdown-item" href="#">Ver Histórico</a>
 				    </div>
 				</div>
 				<%
