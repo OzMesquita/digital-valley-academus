@@ -32,7 +32,7 @@
 				      Recorreção de prova
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="recorrecao">
-				      <a class="dropdown-item" href="#">Cadastrar</a>
+				      <a class="dropdown-item" href="CadastroRecorrecaoDeProva">Cadastrar</a>
 				      <a class="dropdown-item" href="#">Ver Histórico</a>
 				    </div>
 				</div>
@@ -62,7 +62,7 @@
 				      Recorreção de prova
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="recorrecao">
-				      <a class="dropdown-item" href="#">Cadastrar</a>
+				      <a class="dropdown-item" href="CadastroRecorrecaoDeProva">Cadastrar</a>
 				      <a class="dropdown-item" href="#">Ver Histórico</a>
 				    </div>
 				</div>
@@ -93,7 +93,7 @@
 				      Recorreção de prova
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="recorrecao">
-				      <a class="dropdown-item" href="#">Cadastrar</a>
+				      <a class="dropdown-item" href="CadastroRecorrecaoDeProva">Cadastrar</a>
 				      <a class="dropdown-item" href="#">Ver Histórico</a>
 				    </div>
 				</div> 
@@ -123,7 +123,7 @@
 				      Recorreção de prova
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="recorrecao">
-				      <a class="dropdown-item" href="#">Cadastrar</a>
+				      <a class="dropdown-item" href="CadastroRecorrecaoDeProva">Cadastrar</a>
 				      <a class="dropdown-item" href="#">Ver Histórico</a>
 				    </div>
 				</div>

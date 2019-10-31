@@ -314,6 +314,14 @@
   	<url-pattern>/HistoricoSegundaChamada</url-pattern>
   </servlet-mapping>
   <servlet>
+  	<servlet-name>CadastroRecorrecaoDeProva</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.CadastroRecorrecaoDeProvaController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CadastroRecorrecaoDeProva</servlet-name>
+  	<url-pattern>/CadastroRecorrecaoDeProva</url-pattern>
+  </servlet-mapping>
+  <servlet>
   	<servlet-name>AutoCompleteProf</servlet-name>
   	<servlet-class>br.ufc.russas.n2s.academus.controller.AutoCompleteProfController</servlet-class>
   </servlet>
