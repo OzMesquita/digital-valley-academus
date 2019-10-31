@@ -30,4 +30,6 @@ public interface DAOFactory {
 
 	public SegundaChamadaDAO criarSegundaChamadaDAO();
 	
+	public RecorrecaoDeProvaDAO criarRecorrecaoDeProvaDAO();
+	
 }

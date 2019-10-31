@@ -72,4 +72,10 @@ public class DAOFactoryJDBC implements DAOFactory{
 		return new JDBCSegundaChamada();
 	}
 
+	@Override
+	public RecorrecaoDeProvaDAO criarRecorrecaoDeProvaDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
