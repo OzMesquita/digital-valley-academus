@@ -63,7 +63,7 @@
 							</a>
 						</div>
 						<div class="col-md-3 d-inline">
-							<a href="#" class="card">
+							<a href="HistoricoRecorrecaoDeProva" class="card">
 								<div class="card-body text-center">
 									<strong class="card-text text-center">Recorreção de Prova</strong>
 									<img alt="Ícone de recorreção de prova" src="resources/images/logorecorrecao.png" width="50%">

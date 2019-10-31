@@ -313,7 +313,14 @@
   	<servlet-name>HistoricoSegundaChamada</servlet-name>
   	<url-pattern>/HistoricoSegundaChamada</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+  	<servlet-name>HistoricoRecorrecaoDeProva</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.HistoricoRecorrecaoDeProvaController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>HistoricoRecorrecaoDeProva</servlet-name>
+  	<url-pattern>/HistoricoRecorrecaoDeProva</url-pattern>
+  </servlet-mapping>
   <servlet>
   	<servlet-name>CadastroRecorrecaoDeProva</servlet-name>
   	<servlet-class>br.ufc.russas.n2s.academus.controller.CadastroRecorrecaoDeProvaController</servlet-class>

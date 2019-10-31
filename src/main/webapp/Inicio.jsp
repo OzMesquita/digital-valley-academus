@@ -33,10 +33,11 @@
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
-						<li class="breadcrumb-item active" aria-current="page">Início</li>
+						<li class="breadcrumb-item active" aria-current="page">Histórico de Solicitações de Aproveitamento de Disciplinas</li>
 					</ol>
 					</nav>
 					
+					<h1>Histórico de Solicitações de Aproveitamento de Disciplinas</h1>
 					
 					<c:import url="jsp/elements/listagemSolicitacao.jsp" charEncoding="UTF-8"></c:import>
 				</div>

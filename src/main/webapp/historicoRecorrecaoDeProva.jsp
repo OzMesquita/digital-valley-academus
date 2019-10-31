@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Histórico de Solicitações de Segunda Chamada</title>
+		<title>Histórico de Solicitações de Recorreção de Prova</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 		
@@ -31,13 +31,13 @@
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
-						<li class="breadcrumb-item active" aria-current="page">Histórico de Solicitações de Segunda Chamada</li>
+						<li class="breadcrumb-item active" aria-current="page">Histórico de Solicitações de Recorreção de Prova</li>
 					</ol>
 					</nav>
 					
-					<h1>Histórico de Solicitações de Segunda Chamada</h1>
+					<h1>Histórico de Solicitações de Recorreção de Prova</h1>
 					
-					<c:import url="jsp/elements/listagemSolicitacaoSegundaChamada.jsp" charEncoding="UTF-8"></c:import>
+					<c:import url="jsp/elements/listagemRecorrecaoDeProva.jsp" charEncoding="UTF-8"></c:import>
 				</div>
 			</div>
 		</div>
