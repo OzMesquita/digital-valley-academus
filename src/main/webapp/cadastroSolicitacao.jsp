@@ -170,7 +170,7 @@
 										</div>
 										<div class="modal-footer">
 											<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
-											<a href="Inicio"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
+											<a href="MenuInicial"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
 										</div>
 									</div>
 								</div>
@@ -212,7 +212,7 @@
 		            $("#Voltar").modal();
 		        });
 			} else{
-				window.location.href = "Inicio";
+				window.location.href = "MenuInicial";
 			}
 		}
 		var componentes = [];

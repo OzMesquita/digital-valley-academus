@@ -91,7 +91,7 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="matriculaInput">Matricula</label>
-											<input type="text" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula">
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula">
 										</div>
 									</div>
 									<div class="col-md-9">
@@ -188,7 +188,7 @@
 										</div>
 										<div class="modal-footer">
 											<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
-											<a href="Inicio"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
+											<a href="MenuInicial"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
 										</div>
 									</div>
 								</div>
@@ -252,7 +252,7 @@
 		            $("#Voltar").modal();
 		        });
 			} else{
-				window.location.href = "Inicio";
+				window.location.href = "MenuInicial";
 			}
 		}
 
