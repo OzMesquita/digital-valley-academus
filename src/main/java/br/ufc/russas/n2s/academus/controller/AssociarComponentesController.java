@@ -79,7 +79,7 @@ public class AssociarComponentesController extends HttpServlet {
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("associarComponentes.jsp");
 				dispatcher.forward(request, response);
 			}
-		} else { // Se entrou aqui, é porque vai associar uma
+		} else { // Se entrou aqui, é porque vai associar um componente
 			try { 
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("associarComponentes.jsp");
