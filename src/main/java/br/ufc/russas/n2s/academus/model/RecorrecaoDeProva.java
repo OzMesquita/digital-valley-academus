@@ -13,6 +13,7 @@ public class RecorrecaoDeProva {
 	private Time horarioRecebimento;
 	private String justificativa;
 	private int idRecorrecao;
+	private StatusRecorrecao status;
 	
 	
 	public RecorrecaoDeProva() {
@@ -104,5 +105,17 @@ public class RecorrecaoDeProva {
 
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
+	}
+
+
+
+	public StatusRecorrecao getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(StatusRecorrecao status) {
+		this.status = status;
 	}
 }

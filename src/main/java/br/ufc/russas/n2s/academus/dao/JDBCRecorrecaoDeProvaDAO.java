@@ -13,6 +13,7 @@ import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Professor;
 import br.ufc.russas.n2s.academus.model.RecorrecaoDeProva;
+import br.ufc.russas.n2s.academus.model.StatusRecorrecao;
 
 public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 	
@@ -78,6 +79,7 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 				aux.setHorarioRecebimento(Time.valueOf(rs.getString("hora_recebimento")));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
+				aux.setStatus(StatusRecorrecao.getStatus(rs.getInt("status")));
 				
 				listaRecorrecaoDeProva.add(aux);
 			}
@@ -123,6 +125,7 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 				aux.setHorarioRecebimento(Time.valueOf(rs.getString("hora_recebimento")));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
+				aux.setStatus(StatusRecorrecao.getStatus(rs.getInt("status")));
 				
 				listaRecorrecaoDeProva.add(aux);
 			}
@@ -166,6 +169,7 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 				aux.setHorarioRecebimento(Time.valueOf(rs.getString("hora_recebimento")));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
+				aux.setStatus(StatusRecorrecao.getStatus(rs.getInt("status")));
 				
 				listaRecorrecaoDeProva.add(aux);
 			}
@@ -179,7 +183,7 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 
 	@Override
 	public List<RecorrecaoDeProva> listarCoordenador(Professor professor, int limitInf, int limitSup) {
-		String sql = "select * from academus.recorrecao_de_prova as rp, academus.perfil_academus as p  WHERE rp.id_professor= ? AND rp.id_aluno = p.id_perfil_academus AND p.id_curso = ? order by id_recorrecao_de_prova offset ? limit ?; ";
+		String sql = "select * from academus.recorrecao_de_prova as rp, academus.perfil_academus as p  WHERE rp.id_aluno = p.id_perfil_academus AND p.id_curso = ? order by id_recorrecao_de_prova offset ? limit ?; ";
 		List<RecorrecaoDeProva> listaRecorrecaoDeProva = new ArrayList<RecorrecaoDeProva>();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -188,8 +192,101 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 		
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, professor.getId());
-			ps.setInt(2, professor.getCurso().getIdCurso());
+			ps.setInt(1, professor.getCurso().getIdCurso());
+			ps.setInt(2, limitInf);
+			ps.setInt(3, limitSup);
+			
+			ResultSet rs = ps.executeQuery();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ProfessorDAO profdao = df.criarProfessorDAO();
+			DisciplinaDAO discdao = df.criarDisciplinaDAO();
+			
+			while(rs.next()) {
+				RecorrecaoDeProva aux = new RecorrecaoDeProva();
+				
+				aux.setIdRecorrecao(rs.getInt("id_recorrecao_de_prova"));
+				aux.setAluno(aludao.buscarPorId(rs.getInt("id_aluno")));
+				aux.setProfessor(profdao.buscarPorId(rs.getInt("id_professor")));
+				aux.setDataProva(Date.valueOf(rs.getString("data_prova")));
+				aux.setDataRecebimento(Date.valueOf(rs.getString("data_recebimento")));
+				aux.setHorarioDaProva(Time.valueOf(rs.getString("hora_prova")));
+				aux.setHorarioRecebimento(Time.valueOf(rs.getString("hora_recebimento")));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
+				aux.setStatus(StatusRecorrecao.getStatus(rs.getInt("status")));
+				
+				listaRecorrecaoDeProva.add(aux);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		
+		return listaRecorrecaoDeProva;
+	}
+	
+	@Override
+	public List<RecorrecaoDeProva> listarPorStatus(StatusRecorrecao status, int limitInf, int limitSup) {
+		String sql = "SELECT * FROM academus.recorrecao_de_prova WHERE status = ? ORDER BY id_recorrecao_de_prova offset ? limit ?;";
+		List<RecorrecaoDeProva> listaRecorrecaoDeProva = new ArrayList<RecorrecaoDeProva>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, StatusRecorrecao.getCodigo(status));
+			ps.setInt(2, limitInf);
+			ps.setInt(3, limitSup);
+			ResultSet rs = ps.executeQuery();
+			
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ProfessorDAO profdao = df.criarProfessorDAO();
+			DisciplinaDAO discdao = df.criarDisciplinaDAO();
+			
+			while(rs.next()) {
+				RecorrecaoDeProva aux = new RecorrecaoDeProva();
+				
+				aux.setIdRecorrecao(rs.getInt("id_recorrecao_de_prova"));
+				aux.setAluno(aludao.buscarPorId(rs.getInt("id_aluno")));
+				aux.setProfessor(profdao.buscarPorId(rs.getInt("id_professor")));
+				aux.setDataProva(Date.valueOf(rs.getString("data_prova")));
+				aux.setDataRecebimento(Date.valueOf(rs.getString("data_recebimento")));
+				aux.setHorarioDaProva(Time.valueOf(rs.getString("hora_prova")));
+				aux.setHorarioRecebimento(Time.valueOf(rs.getString("hora_recebimento")));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
+				aux.setStatus(StatusRecorrecao.getStatus(rs.getInt("status")));
+				
+				listaRecorrecaoDeProva.add(aux);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return listaRecorrecaoDeProva;
+	}
+	
+	@Override
+	public List<RecorrecaoDeProva> listarPorStatus(Aluno aluno, StatusRecorrecao status, int limitInf, int limitSup) {
+		String sql = "select * from academus.recorrecao_de_prova WHERE id_aluno= ? AND status = ? order by id_recorrecao_de_prova offset ? limit ?;";
+		List<RecorrecaoDeProva> listaRecorrecaoDeProva = new ArrayList<RecorrecaoDeProva>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, aluno.getId());
+			ps.setInt(2, StatusRecorrecao.getCodigo(status));
 			ps.setInt(3, limitInf);
 			ps.setInt(4, limitSup);
 			
@@ -212,16 +309,106 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 				aux.setHorarioRecebimento(Time.valueOf(rs.getString("hora_recebimento")));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
+				aux.setStatus(StatusRecorrecao.getStatus(rs.getInt("status")));
 				
 				listaRecorrecaoDeProva.add(aux);
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			ConnectionPool.releaseConnection(conn);
 		}
 		
+		return listaRecorrecaoDeProva;
+	}
+	
+	@Override
+	public List<RecorrecaoDeProva> listarPorStatus(Professor professor, StatusRecorrecao status, int limitInf,
+			int limitSup) {
+		String sql = "select * from academus.recorrecao_de_prova WHERE id_professor= ? AND status = ? order by id_recorrecao_de_prova offset ? limit ?;";
+		List<RecorrecaoDeProva> listaRecorrecaoDeProva = new ArrayList<RecorrecaoDeProva>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, professor.getId());
+			ps.setInt(2, StatusRecorrecao.getCodigo(status));
+			ps.setInt(3, limitInf);
+			ps.setInt(4, limitSup);
+			
+			ResultSet rs = ps.executeQuery();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ProfessorDAO profdao = df.criarProfessorDAO();
+			DisciplinaDAO discdao = df.criarDisciplinaDAO();
+			
+			while(rs.next()) {
+				RecorrecaoDeProva aux = new RecorrecaoDeProva();
+				
+				aux.setIdRecorrecao(rs.getInt("id_recorrecao_de_prova"));
+				aux.setAluno(aludao.buscarPorId(rs.getInt("id_aluno")));
+				aux.setProfessor(profdao.buscarPorId(rs.getInt("id_professor")));
+				aux.setDataProva(Date.valueOf(rs.getString("data_prova")));
+				aux.setDataRecebimento(Date.valueOf(rs.getString("data_recebimento")));
+				aux.setHorarioDaProva(Time.valueOf(rs.getString("hora_prova")));
+				aux.setHorarioRecebimento(Time.valueOf(rs.getString("hora_recebimento")));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
+				aux.setStatus(StatusRecorrecao.getStatus(rs.getInt("status")));
+				
+				listaRecorrecaoDeProva.add(aux);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return listaRecorrecaoDeProva;
+	}
+	
+	@Override
+	public List<RecorrecaoDeProva> listarPorStatusCoordenador(Professor coordenador, StatusRecorrecao status, int limitInf,
+			int limitSup) {
+		String sql = "SELECT * FROM academus.recorrecao_de_prova AS rp, academus.perfil_academus AS pa WHERE rp.id_aluno = pa.id_perfil_academus AND pa.id_curso = ? AND rp.status = ? ORDER BY rp.id_recorrecao_de_prova OFFSET ? LIMIT ?;";
+		List<RecorrecaoDeProva> listaRecorrecaoDeProva = new ArrayList<RecorrecaoDeProva>();
+		
+		Connection conn = ConnectionPool.getConnection();
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, coordenador.getCurso().getIdCurso());
+			ps.setInt(2, StatusRecorrecao.getCodigo(status));
+			ps.setInt(3, limitInf);
+			ps.setInt(4, limitSup);
+			
+			ResultSet rs = ps.executeQuery();
+			DAOFactoryJDBC df = new DAOFactoryJDBC();
+			
+			AlunoDAO aludao = df.criarAlunoDAO();
+			ProfessorDAO profdao = df.criarProfessorDAO();
+			DisciplinaDAO discdao = df.criarDisciplinaDAO();
+			
+			while(rs.next()) {
+				RecorrecaoDeProva aux = new RecorrecaoDeProva();
+				
+				aux.setIdRecorrecao(rs.getInt("id_recorrecao_de_prova"));
+				aux.setAluno(aludao.buscarPorId(rs.getInt("id_aluno")));
+				aux.setProfessor(profdao.buscarPorId(rs.getInt("id_professor")));
+				aux.setDataProva(Date.valueOf(rs.getString("data_prova")));
+				aux.setDataRecebimento(Date.valueOf(rs.getString("data_recebimento")));
+				aux.setHorarioDaProva(Time.valueOf(rs.getString("hora_prova")));
+				aux.setHorarioRecebimento(Time.valueOf(rs.getString("hora_recebimento")));
+				aux.setJustificativa(rs.getString("justificativa"));
+				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
+				aux.setStatus(StatusRecorrecao.getStatus(rs.getInt("status")));
+				
+				listaRecorrecaoDeProva.add(aux);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return listaRecorrecaoDeProva;
 	}
@@ -263,8 +450,6 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 		}finally {
 			ConnectionPool.releaseConnection(conn);
 		}
-		
-		
 		
 		return aux;
 	}
@@ -318,26 +503,227 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 
 	@Override
 	public int numSolicitacoes(int pagina) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "WITH cte AS (select * from academus.recorrecao_de_prova) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
 	}
 
 	@Override
 	public int numSolicitacoes(int pagina, Aluno aluno) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "WITH cte AS (select * from academus.recorrecao_de_prova WHERE id_aluno= ?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, aluno.getId());
+			ps.setInt(2, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
 	}
 
 	@Override
 	public int numSolicitacoes(int pagina, Professor professor) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "WITH cte AS (select * from academus.recorrecao_de_prova WHERE id_professor= ?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, professor.getId());
+			ps.setInt(2, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
 	}
 
 	@Override
-	public int numSolicitacoesCoordenador(int pagina, Professor professor) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int numSolicitacoesCoordenador(int pagina, Professor coordenador) {
+		String sql = "WITH cte AS (select * from academus.recorrecao_de_prova as rp, academus.perfil_academus as p  WHERE rp.id_aluno = p.id_perfil_academus AND p.id_curso = ?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, coordenador.getId());
+			ps.setInt(2, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	@Override
+	public int numSolicitacoesPorStatus(int pagina, StatusRecorrecao status) {
+		String sql = "WITH cte AS (SELECT * FROM academus.recorrecao_de_prova WHERE status = ?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, StatusRecorrecao.getCodigo(status));
+			ps.setInt(2, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	@Override
+	public int numSolicitacoesPorStatus(int pagina, Aluno aluno, StatusRecorrecao status) {
+		String sql = "WITH cte AS (select * from academus.recorrecao_de_prova WHERE id_aluno= ? AND status = ?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, aluno.getId());
+			ps.setInt(2, StatusRecorrecao.getCodigo(status));
+			ps.setInt(3, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	@Override
+	public int numSolicitacoesPorStatus(int pagina, Professor professor, StatusRecorrecao status) {
+		String sql = "WITH cte AS (select * from academus.recorrecao_de_prova WHERE id_professor= ? AND status = ?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, professor.getId());
+			ps.setInt(2, StatusRecorrecao.getCodigo(status));
+			ps.setInt(3, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
+	}
+	
+	@Override
+	public int numSolicitacoesCoordenadorPorStatus(int pagina, Professor coordenador, StatusRecorrecao status) {
+		String sql = "WITH cte AS (SELECT * FROM academus.recorrecao_de_prova AS rp, academus.perfil_academus AS pa WHERE rp.id_aluno = pa.id_perfil_academus AND pa.id_curso = ? AND rp.status = ?) " + 
+				"SELECT count(*) FROM ( TABLE cte OFFSET ?) AS foo;";
+		int resultSql = 0;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, coordenador.getId());
+			ps.setInt(2, pagina*10);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				resultSql = rs.getInt(1);
+			
+			rs.close();
+			ps.close();
+
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return resultSql;
 	}
 
 }

@@ -36,7 +36,6 @@ public class InicioController extends HttpServlet {
 			HttpSession session = request.getSession();
 			PerfilAcademus per = (PerfilAcademus) session.getAttribute("userAcademus");
 
-						
 			SolicitacaoDAO sodao = new DAOFactoryJDBC().criarSolicitacaoDAO();
 			List<Solicitacao> listaSol = new ArrayList<Solicitacao>();
 			int numSolicitacoes = 0;
@@ -49,8 +48,7 @@ public class InicioController extends HttpServlet {
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listar(0, qtdRegPorPag);
 						numSolicitacoes = sodao.numSolicitacoes(0);
-					}
-					else{
+					} else {
 						int pag = Integer.parseInt(request.getParameter("pagina"));
 						listaSol = sodao.listar(pag*qtdRegPorPag, qtdRegPorPag);
 						numSolicitacoes = sodao.numSolicitacoes(pag);
@@ -61,8 +59,7 @@ public class InicioController extends HttpServlet {
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarSubmetida(0, qtdRegPorPag);
 						numSolicitacoes = sodao.numSolicitacoesSubmetidas(0);
-					}
-					else{
+					} else {
 						int pag = Integer.parseInt(request.getParameter("pagina"));
 						listaSol = sodao.listarSubmetida(pag*qtdRegPorPag, qtdRegPorPag);
 						numSolicitacoes = sodao.numSolicitacoesSubmetidas(pag);
@@ -73,8 +70,7 @@ public class InicioController extends HttpServlet {
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarAnalizado(0, qtdRegPorPag);
 						numSolicitacoes = sodao.numSolicitacoesAnalizadas(0);
-					}
-					else{
+					} else {
 						int pag = Integer.parseInt(request.getParameter("pagina"));
 						listaSol = sodao.listarAnalizado(pag*qtdRegPorPag, qtdRegPorPag);
 						numSolicitacoes = sodao.numSolicitacoesAnalizadas(pag);						
