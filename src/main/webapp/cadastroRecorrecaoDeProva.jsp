@@ -91,7 +91,7 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="matriculaInput">Matricula</label>
-											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula">
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a sua Matrícula">
 										</div>
 									</div>
 									<div class="col-md-9">
@@ -122,7 +122,7 @@
 									<div class="form-group">
 										<label for="discplinaInput">Disciplina</label>
 										<select id="disciplinaInput" name="disciplina" class="form-control">
-											<option>Selecione a disciplina pelo seu nome ou código</option>
+											<option>Selecione a disciplina</option>
 										</select>
 									</div>
 								</div>
@@ -138,6 +138,7 @@
 									<div class="form-group">
 										<label for="horarioDaProvaInput">Horário da Prova</label>
 										<input type="time" id="horarioDaProvaInput" name="horarioDaProva" class="form-control">
+
 									</div>
 								</div>
 								<div class=col-md-4">
@@ -150,6 +151,7 @@
 									<div class="form-group">
 										<label for="horarioRecebimentoInput">Horário do recebimento</label>
 										<input type="time" id="horarioRecebimentoInput" name="horarioRecebimento" class="form-control">
+										
 									</div>
 								</div>
 							</div>
@@ -161,7 +163,7 @@
 									</div>
 								</div>
 							</div>
-							
+							<br>
 							<div class="form-group">
 								<label for="justificativaInput">Justificativa</label>
 								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação"></textarea>
@@ -255,6 +257,26 @@
 				window.location.href = "MenuInicial";
 			}
 		}
+		var solicitacoes = [];
+		var tam = 0;
+		
+		/* <-----------AJEITAR DEPOISS------------>
+		
+		
+		
+		function verificaSolicitacao (obj){
+			var data = new Date;
+			if(obj.matricula == ""){
+				alert("Por favor, preencha a matrícula");
+				return false
+			}else if(obj.justificativa == ""){
+				alert("Por favor, preencha a justificativa");
+			}else if(obj.dataDaProva > obj.dataRecebimento){
+				alert("A data de recebimento da prova não pode ser antes da data do recebimento. ");
+			}
+			solicitacoes[tam] = obj;
+			return true;			
+		}*/
 
 		
 	</script>

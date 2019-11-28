@@ -369,6 +369,14 @@
   	<servlet-name>VisualizarSegundaChamada</servlet-name>
   	<url-pattern>/VisualizarSegundaChamada</url-pattern>
   </servlet-mapping>
+   <servlet>
+  	<servlet-name>VisualizarRecorrecaoDeProva</servlet-name>
+  	<servlet-class>br.ufc.russas.n2s.academus.controller.VisualizarRecorrecaoDeProvaController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>VisualizarRecorrecaoDeProva</servlet-name>
+  	<url-pattern>/VisualizarRecorrecaoDeProva</url-pattern>
+  </servlet-mapping>
   <filter>
   	<filter-name>setCharacterEncodingFilter</filter-name>
   	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>

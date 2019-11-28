@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Início</title>
+		<title>Histórico de Solicitações de Aproveitamento de Disciplina</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 		

@@ -22,7 +22,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Cadastro de Solicitação</title>
+		<title>Cadastro de Solicitação de Aproveitamento</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 		
@@ -47,12 +47,12 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
 						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Cadastro de Solicitação</li>
+						<li class="breadcrumb-item active" aria-current="page">Cadastro de Solicitação de Aproveitamento</li>
 					</ol>
 					</nav>
 					<br>
 					<div class="form-group">
-						<h1>Cadastrar Solicitação</h1>
+						<h1>Cadastrar Solicitação de Aproveitamento</h1>
 						<br>
 						
 						
@@ -319,7 +319,6 @@
 				alert("Campo Carga Horária deve ser preenchido");
 				return false;
 			}else if((Number(obj.carga)% 16 != 0 || Number(obj.carga)== 0 )){
-				
 				alert("Digite um valor de carga horária válido, ex: 16, 32, 48");
 				return false;
 			}else if(!(obj.nota >= 0 || obj.nota <= 10)){
