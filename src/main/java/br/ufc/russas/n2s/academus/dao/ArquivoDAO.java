@@ -7,6 +7,10 @@ import br.ufc.russas.n2s.academus.model.TipoArquivo;
 public interface ArquivoDAO {
 	
 	public Arquivo cadastrarArquivo(Arquivo arq, int dis);
+	
+	public Arquivo cadastrarArquivo(Arquivo arq);
+	
+	public int idUltimoArquivo();
 		
 	public Arquivo buscarPorDisciplinaCursada(DisciplinaCursada dis, TipoArquivo ta);
 		

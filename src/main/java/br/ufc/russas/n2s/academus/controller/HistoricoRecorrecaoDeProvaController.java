@@ -17,7 +17,6 @@ import br.ufc.russas.n2s.academus.model.NivelAcademus;
 import br.ufc.russas.n2s.academus.model.PerfilAcademus;
 import br.ufc.russas.n2s.academus.model.Professor;
 import br.ufc.russas.n2s.academus.model.RecorrecaoDeProva;
-import br.ufc.russas.n2s.academus.model.SegundaChamada;
 import br.ufc.russas.n2s.academus.model.StatusRecorrecao;
 
 public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
@@ -27,6 +26,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 	public HistoricoRecorrecaoDeProvaController() {
 		super();
 	}
+	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -41,6 +41,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 			PerfilAcademus perfilAcademus = (PerfilAcademus) session.getAttribute("userAcademus");
 			
 			RecorrecaoDeProvaDAO rpdao = new DAOFactoryJDBC().criarRecorrecaoDeProvaDAO();
+			
 			List<RecorrecaoDeProva> listaRP = new ArrayList<RecorrecaoDeProva>();
 			int numSolicitacoes = 0;
 			String tipoSolicitacao = request.getParameter("tipoSolicitacao");
@@ -61,7 +62,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 						}
 						
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				} else if(tipoSolicitacao == "solicitado") {
@@ -78,7 +79,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 						}
 						
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				} else if(tipoSolicitacao == "finalizado") {
@@ -94,7 +95,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 							numSolicitacoes = rpdao.numSolicitacoesPorStatus(pag, StatusRecorrecao.FINALIZADO);
 						}
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				}
@@ -115,7 +116,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 						}
 						
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				} else if(tipoSolicitacao == "solicitado") {
@@ -148,7 +149,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 							numSolicitacoes = rpdao.numSolicitacoesPorStatus(pag, (Aluno) perfilAcademus, StatusRecorrecao.FINALIZADO);
 						}
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				}
@@ -169,7 +170,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 						}
 						
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				} else if(tipoSolicitacao == "solicitado") {
@@ -186,7 +187,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 						}
 						
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				} else if(tipoSolicitacao == "finalizado") {
@@ -203,7 +204,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 						}
 						
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				}
@@ -224,7 +225,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 						}
 						
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				} else if(tipoSolicitacao == "solicitado") {
@@ -241,7 +242,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 						}
 						
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				} else if(tipoSolicitacao == "finalizado") {
@@ -257,7 +258,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 							numSolicitacoes = rpdao.numSolicitacoesPorStatus(pag, (Professor) perfilAcademus, StatusRecorrecao.FINALIZADO);
 						}
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				}
@@ -277,7 +278,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 						}
 						
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				} else if(tipoSolicitacao == "solicitado") {
@@ -294,7 +295,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 						}
 						
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				} else if(tipoSolicitacao == "finalizado") {
@@ -311,7 +312,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 						}
 						
 					} catch (NullPointerException e) {
-						
+						e.printStackTrace();
 					}
 					
 				}

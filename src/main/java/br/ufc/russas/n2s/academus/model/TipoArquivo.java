@@ -3,7 +3,8 @@ package br.ufc.russas.n2s.academus.model;
 public enum TipoArquivo {
 	INDEFINIDO(0, "INDEFINIDO"),
 	EMENTA(1, "EMENTA"),
-	HISTORICO(2, "HISTÓRICO");
+	HISTORICO(2, "HISTÓRICO"),
+	RECORRECAO(3, "RECORREÇÂO");
 	
 	private final int id;
 	private final String descricao;
@@ -32,6 +33,10 @@ public enum TipoArquivo {
 		
 		if(id == 2){
 			return TipoArquivo.HISTORICO;
+		}
+		
+		if(id == 3){
+			return TipoArquivo.RECORRECAO;
 		}
 		
 		throw new IllegalArgumentException();

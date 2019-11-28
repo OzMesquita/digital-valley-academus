@@ -74,8 +74,7 @@ public class DAOFactoryJDBC implements DAOFactory{
 
 	@Override
 	public RecorrecaoDeProvaDAO criarRecorrecaoDeProvaDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return new JDBCRecorrecaoDeProvaDAO();
 	}
 
 }

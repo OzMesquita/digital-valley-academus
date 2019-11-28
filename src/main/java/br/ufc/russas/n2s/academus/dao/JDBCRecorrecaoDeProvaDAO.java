@@ -21,7 +21,16 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 
 	@Override
 	public RecorrecaoDeProva cadastro(RecorrecaoDeProva recorrecaoDeProva) {
-		String sql = "insert into academus.recorrecao_de_prova(id_aluno, id_professor, data_prova, data_recebimento, hora_prova, hora_recebimento, justificativa, id_disciplina) VALUES (?,?,?,?,?,?,?,?)";
+		
+		String sql;
+		
+		if(recorrecaoDeProva.getArquivo() != null) {
+			sql = "insert into academus.recorrecao_de_prova(id_aluno, id_professor, data_prova, data_recebimento, hora_prova, hora_recebimento, justificativa, id_disciplina, status, id_arquivo) VALUES (?,?,?,?,?,?,?,?,?)";
+		} else {
+			sql = "insert into academus.recorrecao_de_prova(id_aluno, id_professor, data_prova, data_recebimento, hora_prova, hora_recebimento, justificativa, id_disciplina, status) VALUES (?,?,?,?,?,?,?,?)";
+		}
+		
+		
 		
 		Connection conn = ConnectionPool.getConnection();
 		try {
@@ -35,7 +44,13 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 			insert.setTime(6, recorrecaoDeProva.getHorarioRecebimento());
 			insert.setString(7, recorrecaoDeProva.getJustificativa());
 			insert.setString(8, recorrecaoDeProva.getDisciplina().getId());
+			insert.setInt(9, StatusRecorrecao.getCodigo(recorrecaoDeProva.getStatus()));
 			
+			if(recorrecaoDeProva.getArquivo() != null) {
+				insert.setInt(9, recorrecaoDeProva.getArquivo().getIdArquivo());
+			}
+			
+			insert.execute();
 			insert.close();
 
 		} catch (Exception e) {
@@ -54,7 +69,6 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 		List<RecorrecaoDeProva> listaRecorrecaoDeProva = new ArrayList<RecorrecaoDeProva>();
 		
 		Connection conn = ConnectionPool.getConnection();
-		
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, limitInf);
@@ -89,7 +103,6 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 		}finally {
 			ConnectionPool.releaseConnection(conn);
 		}
-		
 		return listaRecorrecaoDeProva;
 	}
 

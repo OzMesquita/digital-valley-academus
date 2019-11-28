@@ -18,8 +18,8 @@
 	<div class="dropdown-menu dropdown-menu-left">
 		
 		<a class="dropdown-item" href="HistoricoRecorrecaoDeProva">Todas as solicitações</a>
-		<a class="dropdown-item" href="HistoricoRecorrecaoDeProva?solicitacao=submetido">Solicitações submetidas</a>
-		<a class="dropdown-item" href="HistoricoRecorrecaoDeProva?solicitacao=finalizado">Solicitações finalizadas</a>
+		<a class="dropdown-item" href="HistoricoRecorrecaoDeProva?tipoSolicitacao=submetido">Solicitações submetidas</a>
+		<a class="dropdown-item" href="HistoricoRecorrecaoDeProva?tipoSolicitacao=finalizado">Solicitações finalizadas</a>
 		
 	</div>
 </div>
@@ -43,7 +43,6 @@
 		
 		if(listaRP != null){
 			for (RecorrecaoDeProva rp : listaRP) {
-				
 		%>
 		<tr>
 			<td><%=rp.getIdRecorrecao()%></td>
@@ -57,6 +56,12 @@
 		
 		<%
 			}
+		} else {
+			%>
+			<tr>
+				<td><p>Nenhuma solicitação encontrada</p></td>
+			</tr>
+			<%
 		}
 		%>
 	</table>

@@ -80,7 +80,7 @@
 						<% } %>
 						
 						
-						<form action="#" method="post">
+						<form action="CadastroRecorrecaoDeProva" method="post" enctype="multipart/form-data">
 
 								<div class="form-group">
 									<label for="alunoInput">Aluno</label>
@@ -148,19 +148,19 @@
 								</div>
 								<div class="col-md-2">
 									<div class="form-group">
-										<label for="horarioDoRecebimentoInput">Horário do recebimento</label>
+										<label for="horarioRecebimentoInput">Horário do recebimento</label>
 										<input type="time" id="horarioRecebimentoInput" name="horarioRecebimento" class="form-control">
 									</div>
 								</div>
 							</div>
-							<div class="row">
+							<!-- <div class="row">
 								<div class="col-lg-6">
 									<div class="custom-file">
-									 	<input type="file" class="custom-file-input" id="customFileLang" lang="pt">
+									 	<input type="file" class="custom-file-input" id="customFileLang" name="anexo" lang="pt">
 									 	<label class="custom-file-label" for="customFile">Anexe aqui a prova</label>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							
 							<div class="form-group">
 								<label for="justificativaInput">Justificativa</label>

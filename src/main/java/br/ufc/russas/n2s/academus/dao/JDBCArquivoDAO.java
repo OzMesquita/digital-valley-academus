@@ -33,7 +33,60 @@ public class JDBCArquivoDAO implements ArquivoDAO{
 			ConnectionPool.releaseConnection(conn);
 		}
 		
+		arq.setIdArquivo(idUltimoArquivo());
+		
 		return arq;
+	}
+	
+	@Override
+	public Arquivo cadastrarArquivo(Arquivo arq) {
+		String sql = "INSERT INTO academus.arquivo(caminho, nome, tipo) VALUES (?, ?, ?);";
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			
+			PreparedStatement insert = conn.prepareStatement(sql);
+			insert.setString(1, arq.getCaminho());
+			insert.setString(2, arq.getNome());
+			insert.setInt(3, TipoArquivo.getId(arq.getTipo()));
+			
+			insert.execute();
+			insert.close();
+			
+		} catch(SQLException e) {	
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		arq.setIdArquivo(idUltimoArquivo());
+		
+		return arq;
+	}
+	
+	@Override
+	public int idUltimoArquivo() {
+		String sql =  "select id_arquivo from academus.arquivo order by id_arquivo desc LIMIT 1";
+		int i = -1;
+		
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);;
+			ResultSet rs = ps.executeQuery();
+ 
+			
+			if(rs.next()){
+				i =  rs.getInt("id_arquivo");
+			}
+			
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			ConnectionPool.releaseConnection(conn);
+		}
+		return i;
 	}
 	
 	public Arquivo buscarPorDisciplinaCursada(DisciplinaCursada dis, TipoArquivo ta){

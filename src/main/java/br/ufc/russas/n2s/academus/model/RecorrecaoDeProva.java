@@ -14,7 +14,7 @@ public class RecorrecaoDeProva {
 	private String justificativa;
 	private int idRecorrecao;
 	private StatusRecorrecao status;
-	
+	private Arquivo arquivo;
 	
 	public RecorrecaoDeProva() {
 		
@@ -117,5 +117,17 @@ public class RecorrecaoDeProva {
 
 	public void setStatus(StatusRecorrecao status) {
 		this.status = status;
+	}
+
+
+
+	public Arquivo getArquivo() {
+		return arquivo;
+	}
+
+
+
+	public void setArquivo(Arquivo arquivo) {
+		this.arquivo = arquivo;
 	}
 }
