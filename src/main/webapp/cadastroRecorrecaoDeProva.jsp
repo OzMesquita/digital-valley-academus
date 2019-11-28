@@ -155,7 +155,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="row">
+							<!-- <div class="row">
 								<div class="col-lg-6">
 									<div class="custom-file">
 									 	<input type="file" class="custom-file-input" id="customFileLang" name="anexo" lang="pt">
@@ -163,7 +163,7 @@
 									</div>
 								</div>
 							</div>
-							<br>
+							<br> -->
 							<div class="form-group">
 								<label for="justificativaInput">Justificativa</label>
 								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação"></textarea>
