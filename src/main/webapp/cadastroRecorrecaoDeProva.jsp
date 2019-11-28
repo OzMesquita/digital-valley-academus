@@ -153,14 +153,14 @@
 									</div>
 								</div>
 							</div>
-							<!-- <div class="row">
+							<div class="row">
 								<div class="col-lg-6">
 									<div class="custom-file">
 									 	<input type="file" class="custom-file-input" id="customFileLang" name="anexo" lang="pt">
 									 	<label class="custom-file-label" for="customFile">Anexe aqui a prova</label>
 									</div>
 								</div>
-							</div> -->
+							</div>
 							
 							<div class="form-group">
 								<label for="justificativaInput">Justificativa</label>
