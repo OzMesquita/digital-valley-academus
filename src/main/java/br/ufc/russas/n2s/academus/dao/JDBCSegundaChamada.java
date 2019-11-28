@@ -53,7 +53,7 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 		Connection conn = ConnectionPool.getConnection();
 		
 		try {
-			
+
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, limitInf);
 			ps.setInt(2, limitSup);
@@ -68,7 +68,7 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 			
 			while(rs.next()){
 				
-				SegundaChamada aux = new SegundaChamada();
+				SegundaChamada aux = new SegundaChamada();	
 				
 				aux.setIdSegundaChamada(rs.getInt("id_segunda_chamada"));
 				aux.setAluno(aludao.buscarPorId(rs.getInt("id_aluno")));
