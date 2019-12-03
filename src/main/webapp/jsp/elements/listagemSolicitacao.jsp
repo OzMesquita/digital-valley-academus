@@ -48,7 +48,7 @@
 			 - Finalizadas: Todas as solicitações do curso que estejam finalizadas
 		-->
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
-		<a class="dropdown-item" href="Inicio?solicitacao=analizado">Solicitações para analizar</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=analizado">Solicitações para analisar</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
 		
 		<% } else if (usuario.getNivel() == NivelAcademus.PROFESSOR) {
@@ -62,7 +62,7 @@
 		-->
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=submetido">Solicitações solicitadas</a>
-		<a class="dropdown-item" href="Inicio?solicitacao=analizado">Solicitações para analizar</a>
+		<a class="dropdown-item" href="Inicio?solicitacao=analizado">Solicitações para analisar</a>
 		<a class="dropdown-item" href="Inicio?solicitacao=finalizado">Solicitações finalizadas</a>
 		<% } else { %>
 		<a class="dropdown-item" href="Inicio">Todas as solicitações</a>
