@@ -1,0 +1,12 @@
+ANEXO_DIR=/usr/n2s/academus/anexo
+TEMP_DIR=/user/n2s/academus/temp
+DATABASE_CONF_DIR=/usr/n2s/bd.txt
+EMAIL_CONF_DIR=/usr/n2s/academus/email.txt
+APP_URL=/Academus
+PRE_URL=192.169.1.2:8080
+APP_IMG_URL=/Academus/resources/images
+APP_CSS_URL=/Academus/resources/css
+NUMBER_OF_ROWS_PER_PAGE=20
+SESSION_MSG=msg
+GUARDIAO_APP=/guardiao
+LOGO_UFC=/usr/n2s/img/logo/ufc.png
