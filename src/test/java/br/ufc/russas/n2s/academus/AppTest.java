@@ -36,8 +36,8 @@ public class AppTest
         assertTrue( true );
     }
 
-	private void assertTrue(boolean b) {
+	//private void assertTrue(boolean b) {
 		// TODO Auto-generated method stub
 		
-	}
+	//}
 }
