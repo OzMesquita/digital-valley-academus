@@ -84,20 +84,20 @@
 
 								<div class="form-group">
 									<label for="alunoInput">Aluno</label>
-									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" disabled>
+									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" value="<%= aluno.getNome() %>" readonly>
 								</div>
 								
 								<div class="row">
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="matriculaInput">Matricula</label>
-											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a sua Matrícula">
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" value="<%=aluno.getMatricula() %>" readonly>
 										</div>
 									</div>
 									<div class="col-md-9">
 										<div class="form-group">
 											<label for="cursoInput">Curso</label>
-											<input type="text" id="cursoInput" name="curso" class="form-control" disabled>
+											<input type="text" id="cursoInput" name="curso" class="form-control" value="<%= aluno.getCurso().getNome() %>" readonly>
 										</div>
 									</div>
 								</div>
