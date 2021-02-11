@@ -1,5 +1,7 @@
 <%@page import="br.ufc.russas.n2s.academus.model.Professor"%>
 <%@page import="br.ufc.russas.n2s.academus.dao.JDBCProfessorDAO"%>
+<%@page import="br.ufc.russas.n2s.academus.model.Disciplina"%>
+<%@page import="br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO"%>
 <%@page import="br.ufc.russas.n2s.academus.dao.JDBCAlunoDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.AlunoDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Aluno"%>
@@ -17,6 +19,8 @@
 	List<Professor> professores = professorDao.listar();
 	JDBCAlunoDAO alunoDAO = new JDBCAlunoDAO();
 	Aluno aluno = alunoDAO.buscarPorId(usuario.getId());
+	JDBCDisciplinaDAO disciplinaDao = new JDBCDisciplinaDAO();
+	List<Disciplina> disciplinas = disciplinaDao.listar();
 %>
 
 <!DOCTYPE html>
@@ -89,29 +93,29 @@
 							%>
 								<div class="form-group">
 									<label for="alunoInput">Aluno</label>
-									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" value="<%= aluno.getNome() %>" disabled readonly>
+									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" value="<%= aluno.getNome() %>" readonly>
 								</div>
 								
 								<div class="row">
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="matriculaInput">Matricula</label>
-											<input type="text" id="matriculaInput" name="matricula" class="form-control" value="<%= aluno.getMatricula() %>" readonly disabled>
+											<input type="text" id="matriculaInput" name="matricula" class="form-control" value="<%= aluno.getMatricula() %>" readonly>
 										</div>
 									</div>
 									<div class="col-md-9">
 										<div class="form-group">
 											<label for="cursoInput">Curso</label>
-											<input type="text" id="cursoInput" name="curso" class="form-control" value="<%= aluno.getCurso().getNome() %>" readonly disabled>
+											<input type="text" id="cursoInput" name="curso" class="form-control" value="<%= aluno.getCurso().getNome() %>" readonly>
 										</div>
 									</div>
 								</div>
 							<%
-							} else {
+							} else if(usuario.getNivel() == NivelAcademus.SECRETARIO || usuario.getNivel() == NivelAcademus.PROFESSOR){ //Mudar quando for atulizar coordenador
 							%>
 								<div class="form-group">
 									<label for="alunoInput">Aluno</label>
-									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" placeholder="Digite o nome do aluno">
+									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" placeholder="Digite o Nome do Aluno">
 								</div>
 								
 								<div class="row">
@@ -124,7 +128,30 @@
 									<div class="col-md-9">
 										<div class="form-group">
 											<label for="cursoInput">Curso</label>
-											<input type="text" id="cursoInput" name="curso" class="form-control" placeholder="Digite o curso">
+											<input type="text" id="cursoInput" name="curso" class="form-control" placeholder="Digite o Curso do Aluno">
+										</div>
+									</div>
+								</div>
+							<%
+							}
+							else {
+							%>
+								<div class="form-group">
+									<label for="alunoInput">Aluno</label>
+									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" disabled>
+								</div>
+								
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="matriculaInput">Matricula</label>
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula">
+										</div>
+									</div>
+									<div class="col-md-9">
+										<div class="form-group">
+											<label for="cursoInput">Curso</label>
+											<input type="text" id="cursoInput" name="curso" class="form-control" disabled>
 										</div>
 									</div>
 								</div>
@@ -152,8 +179,15 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="discplinaInput">Lista Disciplinas</label>
-										<select id="disciplinaInput" name="disciplina" class="form-control" disabled>
-											<option>Selecione a disciplina pelo seu nome ou código</option>
+										<select id="disciplinaInput" name="disciplina" class="form-control">
+											<option></option>
+									<%
+										for(Disciplina d: disciplinas){
+									%>
+											<option value="<%=d.getId() %>"> <%= d.getNome() %></option> 
+									<%
+										}
+									%>
 										</select>
 									</div>
 								</div>
