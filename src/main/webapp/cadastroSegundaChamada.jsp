@@ -122,7 +122,7 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="matriculaInput">Matricula</label>
-											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula">
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula do Aluno">
 										</div>
 									</div>
 									<div class="col-md-9">
