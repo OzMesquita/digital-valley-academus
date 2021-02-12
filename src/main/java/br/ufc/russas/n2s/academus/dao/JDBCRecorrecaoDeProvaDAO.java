@@ -23,12 +23,12 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 	public RecorrecaoDeProva cadastro(RecorrecaoDeProva recorrecaoDeProva) {
 		
 		String sql;
-		
-		if(recorrecaoDeProva.getArquivo() != null) {
+		sql = "insert into academus.recorrecao_de_prova(id_aluno, id_professor, data_prova, data_recebimento, hora_prova, hora_recebimento, justificativa, id_disciplina, status) VALUES (?,?,?,?,?,?,?,?,?)";
+		/*if(recorrecaoDeProva.getArquivo() != null) {
 			sql = "insert into academus.recorrecao_de_prova(id_aluno, id_professor, data_prova, data_recebimento, hora_prova, hora_recebimento, justificativa, id_disciplina, status, id_arquivo) VALUES (?,?,?,?,?,?,?,?,?)";
 		} else {
 			sql = "insert into academus.recorrecao_de_prova(id_aluno, id_professor, data_prova, data_recebimento, hora_prova, hora_recebimento, justificativa, id_disciplina, status) VALUES (?,?,?,?,?,?,?,?)";
-		}
+		}*/
 		
 		
 		
@@ -45,10 +45,10 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 			insert.setString(7, recorrecaoDeProva.getJustificativa());
 			insert.setString(8, recorrecaoDeProva.getDisciplina().getId());
 			insert.setInt(9, StatusRecorrecao.getCodigo(recorrecaoDeProva.getStatus()));
-			
-			if(recorrecaoDeProva.getArquivo() != null) {
-				insert.setInt(9, recorrecaoDeProva.getArquivo().getIdArquivo());
-			}
+			//insert.setInt(10,);
+			/*if(recorrecaoDeProva.getArquivo() != null) {
+				insert.setInt(10, recorrecaoDeProva.getArquivo().getIdArquivo());
+			}*/
 			
 			insert.execute();
 			insert.close();
