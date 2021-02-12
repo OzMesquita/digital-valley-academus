@@ -7,6 +7,8 @@
 <%@ page import="util.Constantes" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.NivelAcademus" %>
 <%@ page import="java.util.*"%>
+<%@page import="br.ufc.russas.n2s.academus.model.Disciplina"%>
+<%@page import="br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -17,12 +19,14 @@
 	List<Professor> professores = professorDao.listar();
 	JDBCAlunoDAO alunoDAO = new JDBCAlunoDAO();
 	Aluno aluno = alunoDAO.buscarPorId(usuario.getId());
+	JDBCDisciplinaDAO disciplinaDao = new JDBCDisciplinaDAO();
+	List<Disciplina> disciplinas = disciplinaDao.listar();
 %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Cadastro de Solicitação de Segunda Chamada</title>
+		<title>Cadastro de Solicitação de Recorreção de Prova</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 		
@@ -120,9 +124,16 @@
 								</div>
 								<div class="col-md-7">
 									<div class="form-group">
-										<label for="discplinaInput">Disciplina</label>
+										<label for="discplinaInput">Lista Disciplinas</label>
 										<select id="disciplinaInput" name="disciplina" class="form-control">
-											<option>Selecione a disciplina</option>
+											<option></option>
+									<%
+										for(Disciplina d: disciplinas){
+									%>
+											<option value="<%=d.getId() %>"> <%= d.getNome() %></option> 
+									<%
+										}
+									%>
 										</select>
 									</div>
 								</div>
@@ -143,7 +154,7 @@
 								</div>
 								<div class=col-md-4">
 									<div class="form-group">
-										<label for="dataRecebimentoInput">Data que recebeu o resultado</label>
+										<label for="dataRecebimentoInput">Data do resultado da Prova</label>
 										<input type="date" id="dataRecebimentoInput" name="dataRecebimento" class="form-control">
 									</div>
 								</div>
