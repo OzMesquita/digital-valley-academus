@@ -3,6 +3,21 @@
 <%@page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
 <%@ page import="java.util.*"%>
 
+
+<!-- Essa pagina filtra e faz a listagem de todas as solicitacoes de Recorreção de Provas -->
+<div class="dropdown">
+	<button type="button" class="btn dropdown-toggle btn-sm btn-icon filtro_tela" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<i class="material-icons">filter_list</i>
+		Filtrar
+	</button>
+	<div class="dropdown-menu dropdown-menu-left">
+		
+		<a class="dropdown-item" href="HistoricoSegundaChamada">Todas as solicitações</a>
+		<a class="dropdown-item" href="HistoricoSegundaChamada?tipoSolicitacao=submetido">Solicitações submetidas</a>
+		<a class="dropdown-item" href="HistoricoSegundaChamada?tipoSolicitacao=finalizado">Solicitações finalizadas</a>
+		
+	</div>
+</div>
 <div class="table-responsive">
 	<table class="table">
 		<thead>
