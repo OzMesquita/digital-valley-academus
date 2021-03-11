@@ -429,7 +429,7 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 	@Override
 	public RecorrecaoDeProva buscarPorId(int idRecorrecaoDeProva) {
 		Connection conn = ConnectionPool.getConnection();
-		String sql = "select * from academus.recorrecao_de_prova as rp where rp.id_segunda_chamada = ?;";
+		String sql = "select * from academus.recorrecao_de_prova as rp where rp.id_recorrecao_de_prova = ?;";
 		RecorrecaoDeProva aux = new RecorrecaoDeProva();
 		
 		try {
