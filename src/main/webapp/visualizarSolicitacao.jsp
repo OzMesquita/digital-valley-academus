@@ -56,7 +56,7 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
 						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Visualizar Solicitacao</li>
+						<li class="breadcrumb-item active" aria-current="page">Visualizar Solicitação</li>
 					</ol>
 					</nav>
 					
