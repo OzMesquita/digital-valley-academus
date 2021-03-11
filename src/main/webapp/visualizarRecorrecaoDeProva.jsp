@@ -15,6 +15,8 @@
  <%
  	
  	RecorrecaoDeProva rdp = (RecorrecaoDeProva) session.getAttribute("recorrecaoDeProva");
+ //	rdp.getAluno().getNome();
+ 	
  	
  	DAOFactory df = new DAOFactoryJDBC();
  	List<Professor> professores = new ArrayList<Professor>();
@@ -31,7 +33,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Visualizando Segunda Chamada</title>
+		<title>Visualizando Recorreção de Prova</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 			
@@ -56,11 +58,11 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
 						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Visualizar Recorreção de prova</li>
+						<li class="breadcrumb-item active" aria-current="page">Visualizar Recorreção de Prova</li>
 					</ol>
 					</nav>
 					
-					<h1>Visualizar Recorreção de prova</h1>
+					<h1>Visualizar Recorreção de Prova</h1>
 					
 					<br>
 					<!-- Caso a mensagem bem sucedido vem para essa tela com uma mensagem de sucesso -->
@@ -84,7 +86,8 @@
 						<% } %>
 						
 					<%
-					if (rdp != null){
+					if(rdp!=null ){
+
 					%>
 						
 					<form action="#" method="post">
@@ -187,7 +190,7 @@
 							
 							<div class="modal-footer">
 								<div id="botoes" class="controls">
-									<a href="HistoricoSegundaChamada" class="btn btn-primary btn-sm">Voltar</a>
+									<a href="VisualizarRecorreçãoDeProva" class="btn btn-primary btn-sm">Voltar</a>
 									<!-- <button type="submit" class="btn btn-primary btn-sm">Confirmar</button> -->
 								</div>
 							</div>
