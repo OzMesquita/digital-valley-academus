@@ -14,10 +14,13 @@
 <%
 	PerfilAcademus perfil = new PerfilAcademus();
 	PerfilAcademusDAO dao = new JDBCPerfilAcademusDAO();
+	Curso curso =new Curso();
+	CursoDAO cursodao = new JDBCCursoDAO();
 	
 	boolean deuCerto = true;
 	
 	try{
+		//perfil.setCurso((Curso) request.getAttribute("id"));
 		
 		perfil = dao.buscarPorId(Integer.parseInt(request.getParameter("id")));
 		
@@ -151,20 +154,13 @@
 							<label for="cursoInput">  Curso*</label>
 							<select name="curso" id="cursoInput" class="form-control">
 								<%
-									CursoDAO cursodao = new JDBCCursoDAO();
-									for (Curso c : cursodao.listar()){
-										if(c.equals(perfil.getCurso())) {
-											%>
-												<option value="<%= c.getIdCurso() %>" selected><%= c.getNome() %></option>
-											<%
-										} else {
-											%>
-												<option value="<%= c.getIdCurso() %>"><%= c.getNome() %></option>
-										<%
+										for(Curso c : cursodao.listar()){
+									%>
+											<option value="<%=c.getIdCurso() %>"> <%= c.getNome() %></option> 
+									<%
 										}
-										
-									}
-								%>
+									%>
+								
 							</select>
 							 <div class="invalid-feedback">
 	                            
