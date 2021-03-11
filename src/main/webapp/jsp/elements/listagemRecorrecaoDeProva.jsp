@@ -50,7 +50,7 @@
 			<td><%=rp.getAluno().getNome()%></td>
 			<td><%=rp.getDisciplina().getNome()%></td>
 			<td>
-				<a href="VisualizarSegundaChamada?id=<%=rp.getIdRecorrecao()%>" class="btn btn-primary btn-sm">Visualizar</a>
+				<a href="VisualizarRecorrecaoDeProva?id=<%=rp.getIdRecorrecao() %>" class="btn btn-primary btn-sm">Visualizar</a>
 			</td>
 		</tr>
 		
