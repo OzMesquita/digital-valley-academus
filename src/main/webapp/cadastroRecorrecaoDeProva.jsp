@@ -85,7 +85,112 @@
 						
 						
 						<form action="CadastroRecorrecaoDeProva" method="post" enctype="multipart/form-data">
+								<%
+								if(usuario.getNivel()==NivelAcademus.SECRETARIO || usuario.getNivel()==NivelAcademus.COORDENADOR){
+								%>
+									<div class="form-group">
+										<label for="alunoInput">Aluno</label>
+										<input type="text" id="alunoInput" name="nomeAluno" class="form-control" value="<%= aluno.getNome() %>" >
+									</div>
+								
+									<div class="row">
+										<div class="col-md-3">
+										<div class="form-group">
+											<label for="matriculaInput">Matricula</label>
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" value="<%=aluno.getMatricula() %>" >
+										</div>
+									</div>
+									<div class="col-md-9">
+										<div class="form-group">
+											<label for="cursoInput">Curso</label>
+											<input type="text" id="cursoInput" name="curso" class="form-control" value="<%= aluno.getCurso().getNome() %>" >
+										</div>
+									</div>
+								</div>
+								<div class="row">
+								<div class="col-md-7">
+									<div class="form-group" >
+										<label for="professorInput">Professor</label>
+										<select id="professorInput" name="professor" class="form-control">
+										<option></option>
+											<%
+												for(Professor p: professores){
+											%>
+													<option value="<%=p.getId() %>"> <%= p.getNome() %></option> 
+											<%
+												}
+											%>
+										
+										</select>
+									</div>
+								</div>
+								<div class="col-md-7">
+									<div class="form-group">
+										<label for="discplinaInput">Lista Disciplinas</label>
+										<select id="disciplinaInput" name="disciplina" class="form-control">
+											<option></option>
+									<%
+										for(Disciplina d: disciplinas){
+									%>
+											<option value="<%=d.getId() %>"> <%= d.getNome() %></option> 
+									<%
+										}
+									%>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="dataDaProvaInput">Data da Prova realizada</label>
+										<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control">
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="horarioDaProvaInput">Horário da Prova</label>
+										<input type="time" id="horarioDaProvaInput" name="horarioDaProva" class="form-control">
 
+									</div>
+								</div>
+								<div class=col-md-4">
+									<div class="form-group">
+										<label for="dataRecebimentoInput">Data do resultado da Prova</label>
+										<input type="date" id="dataRecebimentoInput" name="dataRecebimento" class="form-control">
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="horarioRecebimentoInput">Horário do recebimento</label>
+										<input type="time" id="horarioRecebimentoInput" name="horarioRecebimento" class="form-control">
+										
+									</div>
+								</div>
+							</div>
+							<!-- <div class="row">
+								<div class="col-lg-6">
+									<div class="custom-file">
+									 	<input type="file" class="custom-file-input" id="customFileLang" name="anexo" lang="pt">
+									 	<label class="custom-file-label" for="customFile">Anexe aqui a prova</label>
+									</div>
+								</div>
+							</div>
+							<br> -->
+							<div class="form-group">
+								<label for="justificativaInput">Justificativa</label>
+								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação"></textarea>
+							</div>
+							
+							<div class="modal-footer">
+								<div id="botoes" class="controls">
+									<button type="button" class="btn btn-primary btn-sm" onclick="funcao()">Cancelar</button>
+									<button type="submit" class="btn btn-primary btn-sm">Confirmar</button>
+								</div>
+							</div>
+								<% 
+								}else{
+								%>
 								<div class="form-group">
 									<label for="alunoInput">Aluno</label>
 									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" value="<%= aluno.getNome() %>" readonly>
@@ -206,6 +311,7 @@
 									</div>
 								</div>
 							</div>
+							<%} %>
 							<!-- Fim de Modal -->
 						</form>
 					</div>	                
