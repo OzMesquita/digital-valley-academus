@@ -53,7 +53,7 @@
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
-						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>
+						<li class="breadcrumb-item"><a href="MenuInicial">Início</a></li>
 						<li class="breadcrumb-item active" aria-current="page">Solicitação de Recorreção de prova</li>
 					</ol>
 					</nav>
@@ -85,112 +85,116 @@
 						
 						
 						<form action="CadastroRecorrecaoDeProva" method="post" enctype="multipart/form-data">
-								<%
-								if(usuario.getNivel()==NivelAcademus.SECRETARIO || usuario.getNivel()==NivelAcademus.COORDENADOR){
-								%>
-									<div class="form-group">
-										<label for="alunoInput">Aluno</label>
-										<input type="text" id="alunoInput" name="nomeAluno" class="form-control" value="<%= aluno.getNome() %>" >
-									</div>
+							<%
+							if(usuario.getNivel()==NivelAcademus.SECRETARIO || usuario.getNivel()==NivelAcademus.COORDENADOR){
+							%>
+								<div class="form-group">
+									<label for="alunoInput">Aluno</label>
+									<input type="text" id="alunoInput" name="nomeAluno" class="form-control">
+								</div>
 								
-									<div class="row">
-										<div class="col-md-3">
+								<div class="row">
+									<div class="col-md-3">
 										<div class="form-group">
 											<label for="matriculaInput">Matricula</label>
-											<input type="number" id="matriculaInput" name="matricula" class="form-control" value="<%=aluno.getMatricula() %>" >
+											<input type="number" id="matriculaInput" name="matricula" class="form-control">
 										</div>
 									</div>
 									<div class="col-md-9">
 										<div class="form-group">
 											<label for="cursoInput">Curso</label>
-											<input type="text" id="cursoInput" name="curso" class="form-control" value="<%= aluno.getCurso().getNome() %>" >
+											<input type="text" id="cursoInput" name="curso" class="form-control">
 										</div>
 									</div>
 								</div>
 								<div class="row">
-								<div class="col-md-7">
-									<div class="form-group" >
-										<label for="professorInput">Professor</label>
-										<select id="professorInput" name="professor" class="form-control">
-										<option></option>
-											<%
-												for(Professor p: professores){
-											%>
+									<div class="col-md-7">
+										<div class="form-group" >
+											<label for="professorInput">Professor</label>
+											<select id="professorInput" name="professor" class="form-control">
+												<option></option>
+												<%
+													for(Professor p: professores){
+												%>
 													<option value="<%=p.getId() %>"> <%= p.getNome() %></option> 
+												<%
+													}
+												%>
+										
+											</select>
+										</div>
+									</div>
+									
+									<div class="col-md-7">
+										<div class="form-group">
+											<label for="discplinaInput">Lista Disciplinas</label>
+											<select id="disciplinaInput" name="disciplina" class="form-control">
+												<option></option>
+											<%
+												for(Disciplina d: disciplinas){
+											%>
+												<option value="<%=d.getId() %>"> <%= d.getNome() %></option> 
 											<%
 												}
 											%>
-										
-										</select>
+											</select>
+										</div>
 									</div>
 								</div>
-								<div class="col-md-7">
-									<div class="form-group">
-										<label for="discplinaInput">Lista Disciplinas</label>
-										<select id="disciplinaInput" name="disciplina" class="form-control">
-											<option></option>
-									<%
-										for(Disciplina d: disciplinas){
-									%>
-											<option value="<%=d.getId() %>"> <%= d.getNome() %></option> 
-									<%
-										}
-									%>
-										</select>
+								
+								<div class="row">
+									<div class="col-md-2">
+										<div class="form-group">
+											<label for="dataDaProvaInput">Data da Prova realizada</label>
+											<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label for="horarioDaProvaInput">Horário da Prova</label>
+											<input type="time" id="horarioDaProvaInput" name="horarioDaProva" class="form-control">
+	
+										</div>
+									</div>
+									<div class=col-md-4">
+										<div class="form-group">
+											<label for="dataRecebimentoInput">Data do resultado da Prova</label>
+											<input type="date" id="dataRecebimentoInput" name="dataRecebimento" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label for="horarioRecebimentoInput">Horário do recebimento</label>
+											<input type="time" id="horarioRecebimentoInput" name="horarioRecebimento" class="form-control">
+											
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-2">
-									<div class="form-group">
-										<label for="dataDaProvaInput">Data da Prova realizada</label>
-										<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control">
+								
+								<!-- <div class="row">
+									<div class="col-lg-6">
+										<div class="custom-file">
+										 	<input type="file" class="custom-file-input" id="customFileLang" name="anexo" lang="pt">
+										 	<label class="custom-file-label" for="customFile">Anexe aqui a prova</label>
+										</div>
 									</div>
 								</div>
-								<div class="col-md-2">
-									<div class="form-group">
-										<label for="horarioDaProvaInput">Horário da Prova</label>
-										<input type="time" id="horarioDaProvaInput" name="horarioDaProva" class="form-control">
-
+								<br> -->
+								
+								<div class="form-group">
+									<label for="justificativaInput">Justificativa</label>
+									<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação"></textarea>
+								</div>
+								
+								<div class="modal-footer">
+									<div id="botoes" class="controls">
+										<button type="button" class="btn btn-primary btn-sm" onclick="funcao()">Cancelar</button>
+										<button type="submit" class="btn btn-primary btn-sm">Confirmar</button>
 									</div>
 								</div>
-								<div class=col-md-4">
-									<div class="form-group">
-										<label for="dataRecebimentoInput">Data do resultado da Prova</label>
-										<input type="date" id="dataRecebimentoInput" name="dataRecebimento" class="form-control">
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="form-group">
-										<label for="horarioRecebimentoInput">Horário do recebimento</label>
-										<input type="time" id="horarioRecebimentoInput" name="horarioRecebimento" class="form-control">
-										
-									</div>
-								</div>
-							</div>
-							<!-- <div class="row">
-								<div class="col-lg-6">
-									<div class="custom-file">
-									 	<input type="file" class="custom-file-input" id="customFileLang" name="anexo" lang="pt">
-									 	<label class="custom-file-label" for="customFile">Anexe aqui a prova</label>
-									</div>
-								</div>
-							</div>
-							<br> -->
-							<div class="form-group">
-								<label for="justificativaInput">Justificativa</label>
-								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação"></textarea>
-							</div>
-							
-							<div class="modal-footer">
-								<div id="botoes" class="controls">
-									<button type="button" class="btn btn-primary btn-sm" onclick="funcao()">Cancelar</button>
-									<button type="submit" class="btn btn-primary btn-sm">Confirmar</button>
-								</div>
-							</div>
-								<% 
-								}else{
-								%>
+							<% 
+							}else{
+							%>
 								<div class="form-group">
 									<label for="alunoInput">Aluno</label>
 									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" value="<%= aluno.getNome() %>" readonly>
@@ -210,109 +214,114 @@
 										</div>
 									</div>
 								</div>
-							<div class="row">
-								<div class="col-md-7">
-									<div class="form-group" >
-										<label for="professorInput">Professor</label>
-										<select id="professorInput" name="professor" class="form-control">
-										<option></option>
-											<%
-												for(Professor p: professores){
-											%>
-													<option value="<%=p.getId() %>"> <%= p.getNome() %></option> 
-											<%
-												}
-											%>
-										
-										</select>
-									</div>
-								</div>
-								<div class="col-md-7">
-									<div class="form-group">
-										<label for="discplinaInput">Lista Disciplinas</label>
-										<select id="disciplinaInput" name="disciplina" class="form-control">
+								
+								<div class="row">
+									<div class="col-md-7">
+										<div class="form-group" >
+											<label for="professorInput">Professor</label>
+											<select id="professorInput" name="professor" class="form-control">
 											<option></option>
-									<%
-										for(Disciplina d: disciplinas){
-									%>
-											<option value="<%=d.getId() %>"> <%= d.getNome() %></option> 
-									<%
-										}
-									%>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-2">
-									<div class="form-group">
-										<label for="dataDaProvaInput">Data da Prova realizada</label>
-										<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control">
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="form-group">
-										<label for="horarioDaProvaInput">Horário da Prova</label>
-										<input type="time" id="horarioDaProvaInput" name="horarioDaProva" class="form-control">
-
-									</div>
-								</div>
-								<div class=col-md-4">
-									<div class="form-group">
-										<label for="dataRecebimentoInput">Data do resultado da Prova</label>
-										<input type="date" id="dataRecebimentoInput" name="dataRecebimento" class="form-control">
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="form-group">
-										<label for="horarioRecebimentoInput">Horário do recebimento</label>
-										<input type="time" id="horarioRecebimentoInput" name="horarioRecebimento" class="form-control">
-										
-									</div>
-								</div>
-							</div>
-							<!-- <div class="row">
-								<div class="col-lg-6">
-									<div class="custom-file">
-									 	<input type="file" class="custom-file-input" id="customFileLang" name="anexo" lang="pt">
-									 	<label class="custom-file-label" for="customFile">Anexe aqui a prova</label>
-									</div>
-								</div>
-							</div>
-							<br> -->
-							<div class="form-group">
-								<label for="justificativaInput">Justificativa</label>
-								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação"></textarea>
-							</div>
-							
-							<div class="modal-footer">
-								<div id="botoes" class="controls">
-									<button type="button" class="btn btn-primary btn-sm" onclick="funcao()">Cancelar</button>
-									<button type="submit" class="btn btn-primary btn-sm">Confirmar</button>
-								</div>
-							</div>
-							<!-- Modal -->
-							<div class="modal fade" id="Voltar" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="modalLabel">Cancelar</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
+												<%
+													for(Professor p: professores){
+												%>
+														<option value="<%=p.getId() %>"> <%= p.getNome() %></option> 
+												<%
+													}
+												%>
+											
+											</select>
 										</div>
-										<div class="modal-body">
-											<h2>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h2>
-										</div>
-										<div class="modal-footer">
-											<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
-											<a href="MenuInicial"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
+									</div>
+									<div class="col-md-7">
+										<div class="form-group">
+											<label for="discplinaInput">Lista Disciplinas</label>
+											<select id="disciplinaInput" name="disciplina" class="form-control">
+												<option></option>
+										<%
+											for(Disciplina d: disciplinas){
+										%>
+												<option value="<%=d.getId() %>"> <%= d.getNome() %></option> 
+										<%
+											}
+										%>
+											</select>
 										</div>
 									</div>
 								</div>
-							</div>
-							<%} %>
-							<!-- Fim de Modal -->
+								
+								<div class="row">
+									<div class="col-md-2">
+										<div class="form-group">
+											<label for="dataDaProvaInput">Data da Prova realizada</label>
+											<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label for="horarioDaProvaInput">Horário da Prova</label>
+											<input type="time" id="horarioDaProvaInput" name="horarioDaProva" class="form-control">
+	
+										</div>
+									</div>
+									<div class=col-md-4">
+										<div class="form-group">
+											<label for="dataRecebimentoInput">Data do resultado da Prova</label>
+											<input type="date" id="dataRecebimentoInput" name="dataRecebimento" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label for="horarioRecebimentoInput">Horário do recebimento</label>
+											<input type="time" id="horarioRecebimentoInput" name="horarioRecebimento" class="form-control">
+											
+										</div>
+									</div>
+								</div>
+								
+								<!-- <div class="row">
+									<div class="col-lg-6">
+										<div class="custom-file">
+										 	<input type="file" class="custom-file-input" id="customFileLang" name="anexo" lang="pt">
+										 	<label class="custom-file-label" for="customFile">Anexe aqui a prova</label>
+										</div>
+									</div>
+								</div>
+								<br> -->
+								
+								<div class="form-group">
+									<label for="justificativaInput">Justificativa</label>
+									<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação"></textarea>
+								</div>
+								
+								<div class="modal-footer">
+									<div id="botoes" class="controls">
+										<button type="button" class="btn btn-primary btn-sm" onclick="funcao()">Cancelar</button>
+										<button type="submit" class="btn btn-primary btn-sm">Confirmar</button>
+									</div>
+								</div>
+								
+								<!-- Modal -->
+								<div class="modal fade" id="Voltar" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="modalLabel">Cancelar</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<h2>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h2>
+											</div>
+											<div class="modal-footer">
+												<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
+												<a href="MenuInicial"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
+											</div>
+										</div>
+									</div>
+								</div>
+							<%} %> <!-- Fim do else -->>
+								<!-- Fim de Modal -->
 						</form>
 					</div>	                
 				</div>
