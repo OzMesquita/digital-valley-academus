@@ -1,4 +1,5 @@
 <%@ page import="br.ufc.russas.n2s.academus.dao.AlunoDAO"%>
+<%@ page import="br.ufc.russas.n2s.academus.dao.JDBCAlunoDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.JDBCMatrizCurricularDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.MatrizCurricularDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.MatrizCurricular"%>
@@ -15,8 +16,10 @@
 	PerfilAcademus usuario = (PerfilAcademus) request.getSession().getAttribute("userAcademus");
 
 	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
-	//Aluno a = (Aluno) usuario;
 	List<MatrizCurricular> matrizes = daoMC.buscarAtivosPorCurso(usuario.getCurso().getIdCurso());
+	AlunoDAO alunodao= new JDBCAlunoDAO();
+	List<Aluno> alunos = alunodao.listar();
+	
 %>
 
 <!DOCTYPE html>
@@ -76,8 +79,128 @@
 							</div>
 						<% } %>
 						
-						
-						<form action="CadastrarSolicitacao" method="post">
+						<% if (usuario.getNivel() == NivelAcademus.ALUNO){
+						%>
+								<form action="CadastrarSolicitacao" method="post">
+							<div class="form-group">
+								<label for="matrizInput">Matriz</label>
+								<select id="matrizInput" class="form-control" onchange="listarComponentes()" required>
+									<option value="" selected="selected" disabled="disabled">Selecione a matriz para a solicitação</option>
+									<%for(MatrizCurricular matriz : matrizes){%>
+										<option id="matrizOption-<%=matriz.getIdMatriz()%>" value="<%=matriz.getInfoComponentes()%>"><%=matriz.getNome()%></option>
+									<%}%>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="componenteInput">Disciplina Alvo</label>
+								<select id="componenteInput" name="componenteInput"  class="form-control" required>
+									<option value="" selected="selected" disabled="disabled">Selecione a disciplina para a solicitação</option>
+								</select>
+							</div>
+							
+							<div class="card">
+					           <div class="card-header">
+					           <label for="listaDisciplinasAproveitadas" class="card-title text-uppercase font-weight-bold">Disciplinas Aproveitadas</label>
+					           </div>
+					           <div class="card-body">
+						           <table class="table" id="listaDisciplinasAproveitadas">
+								        <thead> 
+								           	<tr>
+								           		<th scope="col">Nome</th>
+								           		<th scope="col">Carga Horária</th>
+								           		<th scope="col">Nota</th>
+								           		<th scope="col">Ano/Semestre</th>
+								           		<th scope="col">Instituição</th>
+								           		<th scope="col" colspan="1"></th>
+								           	</tr>
+								        <thead>
+						           </table>
+					           </div>
+					        </div>   
+							<br>
+							<div class="form-row">
+								<div class="form-group col-md-4">
+									<label for="disciplinaAproveitada">Nome da Disciplina Aproveitada</label>
+									<input type="text" id="disciplinaAproveitada" pattern="[a-zA-Z\sÇçÁáÀàÉéÍíÓóÚúÃãõÕêÊâÂôÔ]+$" style='text-transform:uppercase' class="form-control">
+								</div>
+								&nbsp;&nbsp;
+								<div class="form-group col-md-1">
+									<label for="cargaHoraria">Carga Horária</label>
+									<input type="number" min="16" step="16" id="cargaHoraria"  class="form-control">
+								</div>
+								&nbsp;&nbsp;
+								<div class="form-group col-md-1">
+									<label for="nota">Nota</label>
+									<input type="number" min="5" step="0.01" max="10" id="nota" class="form-control">
+								</div>
+								&nbsp;&nbsp;
+								<div class="form-group col-md-1">
+									<label for="ano">Ano</label>
+									<input type="number" min="1900" id="ano" class="form-control">
+								</div>
+								&nbsp;&nbsp;
+								<div class="form-group col-md-1">
+									<label for="semestre">Semestre</label>
+									<input type="number" min="1" max="2" id="semestre" class="form-control">
+								</div>
+								<div class="form-group col-md-3">
+									<label for="instituicao">Instituição</label>
+									<input type="text" id="instituicao"  pattern="[a-zA-Z\sÇçÁáÀàÉéÍíÓóÚúÃãõÕêÊâÂôÔ]+$" style='text-transform:uppercase' class="form-control">
+								</div>
+							</div>
+							<div class="row justify-content-end">
+								<div class="form-group col-md-2 text-left p-md-0">
+									<input type="button" class="btn btn-secondary btn-sm" onclick="adicionarDisciplinaAproveitada()" value="Adicionar">
+								</div>
+							</div>
+							<div class="modal-footer">
+								<div id="botoes" class="controls">
+									<button type="button" class="btn btn-primary btn-sm" onclick="funcao()">Cancelar</button>
+									<button type="submit" class="btn btn-primary btn-sm" >Confirmar</button>
+								</div>
+							</div>
+							<!-- Modal -->
+							<div class="modal fade" id="Voltar" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="modalLabel">Cancelar</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<h2>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h2>
+										</div>
+										<div class="modal-footer">
+											<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
+											<a href="MenuInicial"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Fim de Modal -->
+						</form>
+						<%
+						}else{
+						%>
+						<div class="form-group">
+							
+								<div class="form-group">
+							
+							<label for="alunoInput">Aluno</label>
+										<select id="alunoInput" name="aluno" class="form-control">
+											<option></option>
+									<%
+										for(Aluno aluno: alunos){
+									%>		
+											<option value="<%=aluno.getId()  %>"> <%= aluno.getNome() %></option> 
+									<%
+										}
+									%>
+										</select>
+							
+							</div>
 							<div class="form-group">
 								<label for="matrizInput">Matriz</label>
 								<select id="matrizInput" class="form-control" onchange="listarComponentes()" required>
@@ -177,6 +300,13 @@
 							</div>
 							<!-- Fim de Modal -->
 						</form>
+						
+						
+						<% 
+						}
+						%>
+						
+					
 					</div>	                
 				</div>
 			</div>
@@ -189,9 +319,10 @@
 			<script type="text/javascript">
       				alert("Cadastro não realizado!\nRequer pelo menos uma disciplina cursada");
     		</script>
-		<%
+		<% 
 			}
-		}%>
+		 } %>	
+	
 		<c:import url="jsp/elements/footer.jsp" charEncoding="UTF-8"></c:import>
 	</body>
 	<script>
