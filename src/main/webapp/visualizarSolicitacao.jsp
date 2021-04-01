@@ -267,7 +267,8 @@
 							<% } else if(per.getNivel() == NivelAcademus.COORDENADOR && solicitacao.getStatus() == Status.ANALISANDO){ %>
 								<c:import url="jsp/elements/botoesVisualizarCoordenador.jsp" charEncoding="UTF-8"></c:import>
 								
-							<% } %>
+							<% }else if(per.getNivel() == NivelAcademus.SECRETARIO && solicitacao.getStatus() == Status.ANALISANDO) %>
+							
 							</div>
 					</div>
 					<%
