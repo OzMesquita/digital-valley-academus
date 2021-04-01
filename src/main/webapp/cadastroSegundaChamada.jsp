@@ -49,7 +49,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<c:import url="jsp/elements/menu-lateral-esquerdo.jsp" charEncoding="UTF-8"></c:import>
-				<div class="col-md-10">
+				<div class="col-md-10" style="padding-bottom: 200px;">
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
