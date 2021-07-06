@@ -10,14 +10,22 @@ public class SegundaChamada {
 	private Disciplina disciplina;
 	private Date dataProva;
 	private String justificativa;
-	
+	private StatusSegundaChamada status;
 	public SegundaChamada() {
 		
 	}
 	
 	
 	
+	public StatusSegundaChamada getStatus() {
+		return status;
+	}
 
+
+
+	public void setStatus(StatusSegundaChamada status) {
+		this.status = status;
+	}
 	public int getIdSegundaChamada() {
 		return idSegundaChamada;
 	}
