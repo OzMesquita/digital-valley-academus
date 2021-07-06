@@ -1,5 +1,5 @@
 <!--Footer (Rodapé)-->
-<footer class="page-footer text-center font-small mt-4 wow fadeIn" style="background: #343a40!important; color:white; width:100%; bottom: 0; position: fixed;">
+<footer class="page-footer text-center font-small mt-4 wow fadeIn" style="background: #343a40!important; color:white; width:100%; bottom: 0; position: relative;">
 
     <hr class="my-4">
 
