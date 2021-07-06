@@ -251,6 +251,7 @@
 							<%if(per.getNivel() == NivelAcademus.ALUNO && solicitacao.getStatus() == Status.SOLICITADO){%>
 						    	<div class="modal-footer">
 									<form method="POST" action="GerarPDF" id="pdf<%=(String)request.getAttribute("id")%>">
+										<input name="tipo" value="solicitacao">
 										<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("id")%>" 
 											style="height: 30px;" type="submit" name="id" value="<%=(String)request.getAttribute("id")%>"> Gerar PDF
 										</button>
