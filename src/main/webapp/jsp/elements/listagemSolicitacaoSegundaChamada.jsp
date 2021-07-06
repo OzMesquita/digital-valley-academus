@@ -5,6 +5,7 @@
 
 
 <!-- Essa pagina filtra e faz a listagem de todas as solicitacoes de Recorreção de Provas -->
+<%PerfilAcademus usuario = (PerfilAcademus)session.getAttribute("userAcademus"); %>
 <div class="dropdown">
 	<button type="button" class="btn dropdown-toggle btn-sm btn-icon filtro_tela" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		<i class="material-icons">filter_list</i>
@@ -50,11 +51,22 @@
 			</td>
 		</tr>
 		
-		<%
-			}
+		
+		
+			<% if(usuario.getNivel() == NivelAcademus.PROFESSOR && sc.getStatus()==null){ %>
+		<td>
+		<form method="POST" action="RegistrarEntrega" id="res<%=sc.getIdSegundaChamada()%>">
+			<button class="btn btn-primary btn-sm" form="res<%=sc.getIdSegundaChamada()%>" class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="registro" value="<%=sc.getIdSegundaChamada() %>" >
+			Registrar Entrega
+			</button>
+		</form>
+		</td>
+		<%} %>
+		<% }
 			
 		}
 		%>
+		
 	</table>
 </div>
 
