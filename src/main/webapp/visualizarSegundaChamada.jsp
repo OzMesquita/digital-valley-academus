@@ -15,7 +15,8 @@
  <%
  	
  	SegundaChamada sc = (SegundaChamada) session.getAttribute("segundaChamada");
- 	
+ 	String idSegundaChamada =Integer.toString( sc.getIdSegundaChamada());
+ 	System.out.println(idSegundaChamada);
  	DAOFactory df = new DAOFactoryJDBC();
  	List<Professor> professores = new ArrayList<Professor>();
  
@@ -163,6 +164,14 @@
 								</div>
 							</div>
 							
+					</form>
+					<% request.setAttribute("idSegundaChamada", idSegundaChamada);%>
+					<% System.out.println("id:"+(String)request.getAttribute("idSegundaChamada")); %>
+					<form method="POST" action="GerarPDF" id="pdf<%=(String)request.getAttribute("idSegundaChamada")%>">
+						<input name="tipo" value="segundaChamada">
+						<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("idSegundaChamada")%>" 
+							style="height: 30px;" type="submit" name="id" value="<%=(String)request.getAttribute("idSegundaChamada")%>"> Gerar PDF
+						</button>
 					</form>
 					<%
 					} else {
