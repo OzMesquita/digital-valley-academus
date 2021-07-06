@@ -16,7 +16,9 @@
  	
  	RecorrecaoDeProva rdp = (RecorrecaoDeProva) session.getAttribute("recorrecaoDeProva");
  //	rdp.getAluno().getNome();
+ 
  	
+ 	String idRecorrecao=Integer.toString(rdp.getIdRecorrecao());	
  	
  	DAOFactory df = new DAOFactoryJDBC();
  	List<Professor> professores = new ArrayList<Professor>();
@@ -195,6 +197,13 @@
 								</div>
 							</div>
 							
+					</form>
+					<% request.setAttribute("idRecorrecao", idRecorrecao);%>
+					<form method="POST" action="GerarPDF" id="pdf<%=(String)(request.getAttribute("idRecorrecao"))%>">
+						<input name="tipo" value="recorrecao">
+						<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("idRecorrecao")%>" 
+							style="height: 30px;" type="submit" name="idRecorrecao" value="<%=(String)request.getAttribute("idRecorrecao")%>"> Gerar PDF
+						</button>
 					</form>
 					<%
 					} else {
