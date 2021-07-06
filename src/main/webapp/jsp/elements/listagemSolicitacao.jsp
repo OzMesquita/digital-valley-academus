@@ -107,7 +107,7 @@
 				</button>
 			</form>
 			</td>
-			<% if(usuario.getNivel() == NivelAcademus.COORDENADOR && soli.getStatus() == Status.SOLICITADO){ %>
+			<% if(usuario.getNivel() == NivelAcademus.SECRETARIO && soli.getStatus() == Status.SOLICITADO){ %>
 			<td>
 			<form method="POST" action="RegistrarEntrega" id="res<%=soli.getIdSolicitacao()%>">
 				<button class="btn btn-primary btn-sm" form="res<%=soli.getIdSolicitacao()%>" class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="registro" value="<%=soli.getIdSolicitacao() %>" >
