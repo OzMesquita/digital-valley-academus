@@ -248,36 +248,30 @@
 										</div>
 									</div>
 								</div>
-								
-								<div class="row">
-									<div class="col-md-2">
-										<div class="form-group">
-											<label for="dataDaProvaInput">Data da Prova realizada</label>
-											<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control">
-										</div>
+								<!-- Datas e horários das provas -->
+								<div class="form-row">
+									<div class="form-group col-sm">
+										<label for="dataDaProvaInput">Data da Prova Realizada</label>
+										<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control">
 									</div>
-									<div class="col-md-2">
-										<div class="form-group">
-											<label for="horarioDaProvaInput">Horário da Prova</label>
-											<input type="time" id="horarioDaProvaInput" name="horarioDaProva" class="form-control">
-	
-										</div>
+		
+									<div class="form-group col-sm">
+										<label for="horarioDaProvaInput">Horário da Prova</label>
+										<input type="time" id="horarioDaProvaInput"name="horarioDaProva" class="form-control">
 									</div>
-									<div class=col-md-4">
-										<div class="form-group">
-											<label for="dataRecebimentoInput">Data do resultado da Prova</label>
-											<input type="date" id="dataRecebimentoInput" name="dataRecebimento" class="form-control">
-										</div>
+									<div class="w-100"></div> <!-- Serve para quebrar a coluna -->
+									<div class="form-group col-sm">
+										<label for="dataDeRecebimentoInput">Data de Recebimento</label>
+										<input type="date" id="dataDeRecebimentoInput" name="dataRecebimento" class="form-control">
 									</div>
-									<div class="col-md-2">
-										<div class="form-group">
-											<label for="horarioRecebimentoInput">Horário do recebimento</label>
-											<input type="time" id="horarioRecebimentoInput" name="horarioRecebimento" class="form-control">
-											
-										</div>
+		
+									<div class="form-group col-sm">
+										<label for="horarioRecebimentoInput">Horário de Resultado da Prova</label>
+										<input type="time" id="horarioRecebimentoInput"name="horarioRecebimento" class="form-control">
 									</div>
 								</div>
 								
+								<!-- Anexar PROVA realizada -->
 								<!-- <div class="row">
 									<div class="col-lg-6">
 										<div class="custom-file">
@@ -311,16 +305,16 @@
 												</button>
 											</div>
 											<div class="modal-body">
-												<h2>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h2>
+												<h5>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h5>
 											</div>
 											<div class="modal-footer">
-												<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
+												<button type="button" id="modal-nao" autofocus class="btn btn-secondary btn-sm active" data-dismiss="modal" >Não</button>
 												<a href="MenuInicial"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
 											</div>
 										</div>
 									</div>
 								</div>
-							<%} %> <!-- Fim do else -->>
+							<%} %> <!-- Fim do else -->
 								<!-- Fim de Modal -->
 						</form>
 					</div>	                

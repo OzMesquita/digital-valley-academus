@@ -221,10 +221,10 @@
 											</button>
 										</div>
 										<div class="modal-body">
-											<h2>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h2>
+											<h5>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h5>
 										</div>
 										<div class="modal-footer">
-											<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
+											<button type="button" id="modal-nao" autofocus class="btn btn-secondary btn-sm active" data-dismiss="modal" >Não</button>
 											<a href="MenuInicial"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
 										</div>
 									</div>
