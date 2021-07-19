@@ -79,7 +79,10 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 		Connection conn = ConnectionPool.getConnection();
 		try {
 			PreparedStatement ps = conn.prepareStatement(SQL);
-			ps.setInt(1, NivelAcademus.getCodigo(NivelAcademus.PROFESSOR));
+			int nivel= NivelAcademus.getCodigo(NivelAcademus.PROFESSOR);
+			//
+			ps.setInt(1, nivel);
+			//ps.setInt(2, NivelAcademus.getCodigo(NivelAcademus.COORDENADOR));
 			ResultSet rs = ps.executeQuery();
 			
 			CursoDAO cdao = new DAOFactoryJDBC().criarCursoDAO();
