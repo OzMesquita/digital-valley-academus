@@ -237,36 +237,38 @@
 						           </div>
 						        </div>   
 								<br>
+								<!-- Disciplinas Aproveitadas -->
 								<div class="form-row">
-									<div class="form-group col-md-4">
+									<div class="form-group col-sm-4">
 										<label for="disciplinaAproveitada">Nome da Disciplina Aproveitada</label>
 										<input type="text" id="disciplinaAproveitada" pattern="[a-zA-Z\sÇçÁáÀàÉéÍíÓóÚúÃãõÕêÊâÂôÔ]+$" style='text-transform:uppercase' class="form-control">
 									</div>
 									&nbsp;&nbsp;
-									<div class="form-group col-md-1">
+									<div class="form-group col-sm">
 										<label for="cargaHoraria">Carga Horária</label>
 										<input type="number" min="16" step="16" id="cargaHoraria"  class="form-control">
 									</div>
 									&nbsp;&nbsp;
-									<div class="form-group col-md-1">
+									<div class="form-group col-sm">
 										<label for="nota">Nota</label>
 										<input type="number" min="5" step="0.01" max="10" id="nota" class="form-control">
 									</div>
 									&nbsp;&nbsp;
-									<div class="form-group col-md-1">
+									<div class="form-group col-sm">
 										<label for="ano">Ano</label>
 										<input type="number" min="1900" id="ano" class="form-control">
 									</div>
 									&nbsp;&nbsp;
-									<div class="form-group col-md-1">
+									<div class="form-group col-sm">
 										<label for="semestre">Semestre</label>
 										<input type="number" min="1" max="2" id="semestre" class="form-control">
 									</div>
-									<div class="form-group col-md-3">
+									<div class="form-group col-sm">
 										<label for="instituicao">Instituição</label>
 										<input type="text" id="instituicao"  pattern="[a-zA-Z\sÇçÁáÀàÉéÍíÓóÚúÃãõÕêÊâÂôÔ]+$" style='text-transform:uppercase' class="form-control">
 									</div>
 								</div>
+								<!-- Final de disciplinas aproveitadas -->
 								<div class="row justify-content-end">
 									<div class="form-group col-md-2 text-left p-md-0">
 										<input type="button" class="btn btn-primary btn-sm" onclick="adicionarDisciplinaAproveitada()" value="Adicionar">
