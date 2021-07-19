@@ -12,7 +12,7 @@ public class SegundaChamada {
 	private String justificativa;
 	private StatusSegundaChamada status;
 	public SegundaChamada() {
-		
+		this.setStatus(StatusSegundaChamada.SOLICITADO);
 	}
 	
 	
