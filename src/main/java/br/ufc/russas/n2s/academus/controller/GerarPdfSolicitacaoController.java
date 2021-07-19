@@ -329,15 +329,15 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 				frase.setFont(bold);
 				frase.add("Nome do Solicitante: ");
 				frase.setFont(normal);
-				frase.add(recorrecao.getAluno().getNome());
+				frase.add(recorrecao.getAluno().getNome()+"\n");
 				frase.setFont(bold);
-				frase.add("     Disciplina: ");
+				frase.add("Matrícula: ");
 				frase.setFont(normal);
-				frase.add(recorrecao.getDisciplina()+"\n");
+				frase.add(recorrecao.getAluno().getMatricula()+"\n");
 				frase.setFont(bold);
-				frase.add("Justificativa:");
+				frase.add("Curso:");
 				frase.setFont(normal);
-				frase.add(recorrecao.getJustificativa()+"\n");
+				frase.add(recorrecao.getAluno().getCurso().getNome()+"\n");
 				identificador.add(frase);
 				
 				
@@ -350,27 +350,58 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 				frase.add(professor.getNome()+"\n\n");
 				identificador.add(frase);
 				
+				documento.add(identificador);
+				identificador.clear();
+				frase.clear();
+				frase.setFont(tituloIndentificacao);
+				frase.add("II. IDENTIFICAÇÃO DA SEGUNDA CHAMADA: \n\n");
+				identificador.add(frase);
+				frase.clear();
+				frase.setFont(bold);
+				frase.add("O aluno acima especificado vem requerer a recorreção de prova da seguinte disciplina : \n\n");
+				identificador.setAlignment(Paragraph.ALIGN_JUSTIFIED_ALL);
+				identificador.add(frase);
+				frase.clear();
+				frase.setFont(bold);
+				frase.add("     Disciplina: ");
+				frase.setFont(normal);
+				frase.add(recorrecao.getDisciplina().getNome()+"\n");
+				frase.setFont(bold);
+				frase.add("     Professor(a): ");
+				frase.setFont(normal);
+				frase.add(recorrecao.getProfessor().getNome()+"\n");
+				
+				frase.setFont(bold);
+				frase.add("     Data da Prova: ");
+				frase.setFont(normal);
+				frase.add(recorrecao.getDataProva()+"\n");
+				
+				frase.setFont(bold);
+				frase.add("     Horário da Prova: ");
+				frase.setFont(normal);
+				frase.add(recorrecao.getHorarioDaProva()+"\n");
+				
+				frase.setFont(bold);
+				frase.add("     Data Recebimento da Prova: ");
+				frase.setFont(normal);
+				frase.add(recorrecao.getDataRecebimento()+"\n");
+				
+				frase.setFont(bold);
+				frase.add("     Horário Recebimento da Prova: ");
+				frase.setFont(normal);
+				frase.add(recorrecao.getHorarioRecebimento()+"\n");
+				frase.setFont(bold);
+				frase.add("     Justificativa:");
+				frase.setFont(normal);
+				frase.add(recorrecao.getJustificativa()+"\n");
+				
+				identificador.add(frase);
 				identificador.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 				documento.add(identificador);
 				
 				
 				
-				PdfPTable table = new PdfPTable(3);
-				PdfPCell celula1 = new PdfPCell(new Paragraph("Disciplina/carga",bold));
-				celula1.setHorizontalAlignment(Element.ALIGN_CENTER);
-				PdfPCell celula2 = new PdfPCell(new Paragraph("Ano/semestre",bold));
-				celula2.setHorizontalAlignment(Element.ALIGN_CENTER);
-				PdfPCell celula3 = new PdfPCell(new Paragraph("Instituição",bold));
-				celula3.setHorizontalAlignment(Element.ALIGN_CENTER);
 				
-				table.setWidths(new int[] {300,300,300});
-				table.addCell(celula1);
-				table.addCell(celula2);
-				table.addCell(celula3);
-				
-				
-				
-				documento.add(table);
 				
 				identificador.clear();
 				int numDia = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
@@ -459,14 +490,14 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 				coord.setFont(tituloIndentificacao);
 				coord.setAlignment(Paragraph.ALIGN_CENTER);
 				coord.add("COORDENAÇÃO DO CURSO DE "+chamada.getAluno().getCurso().getNome()+"\n");
-				coord.add("REQUERIMENTO PARA RECORREÇÃO DE PROVA\n\n");
+				coord.add("REQUERIMENTO PARA SEGUNDA CHAMADA\n\n");
 				documento.add(coord);
 				
 				//Conteudo Atenção
 				coord.clear();
 				coord.setFont(normal);
 				coord.setAlignment(Paragraph.ALIGN_JUSTIFIED);
-				coord.add("ATENÇÃO: Para continuar com o processo de solicitação, encaminha-se à secretária do seu curso, com os documentos necessários(Requerimento da solicitação que pode ser gerado abaixo, Ementa e Histórico.\n\n");
+			
 				documento.add(coord);
 				
 				//Conteudo Identificador
@@ -487,26 +518,23 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 				frase.setFont(bold);
 				frase.add("Status da Solicitação: ");
 				frase.setFont(normal);
-				frase.add(chamada.getDataProva()+"\n");
+				frase.add(chamada.getStatus()+"\n");
 				identificador.add(frase);
 				
 				frase.clear();
 				frase.setFont(bold);
 				frase.add("Nome do Solicitante: ");
 				frase.setFont(normal);
-				frase.add(chamada.getAluno().getNome());
+				frase.add(chamada.getAluno().getNome()+"\n");
 				frase.setFont(bold);
-				frase.add("     Disciplina: ");
+				frase.add("Matrícula: ");
 				frase.setFont(normal);
-				frase.add(chamada.getDisciplina()+"\n");
+				frase.add(chamada.getAluno().getMatricula()+"\n");
 				frase.setFont(bold);
-				frase.add("Justificativa:");
+				frase.add("Curso: ");
 				frase.setFont(normal);
-				frase.add(chamada.getJustificativa()+"\n");
-				identificador.add(frase);
+				frase.add(chamada.getAluno().getCurso().getNome()+"\n");
 				
-				
-				frase.clear();
 				ProfessorDAO prodao = new DAOFactoryJDBC().criarProfessorDAO();
 				Professor professor = prodao.isCoordenador(chamada.getAluno().getCurso().getIdCurso());
 				frase.setFont(bold);
@@ -514,28 +542,44 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 				frase.setFont(normal);
 				frase.add(professor.getNome()+"\n\n");
 				identificador.add(frase);
+				documento.add(identificador);
+				identificador.clear();
+				frase.clear();
+				frase.setFont(tituloIndentificacao);
+				frase.add("II. IDENTIFICAÇÃO DA SEGUNDA CHAMADA: \n\n");
+				identificador.add(frase);
+				frase.clear();
+				frase.setFont(bold);
+				frase.add("O aluno acima especificado vem requerer a segunda chamda da seguinte disciplina : \n\n");
+				identificador.setAlignment(Paragraph.ALIGN_JUSTIFIED_ALL);
+				identificador.add(frase);
+				frase.clear();
+				frase.setFont(bold);
+				frase.add("     Disciplina: ");
+				frase.setFont(normal);
+				frase.add(chamada.getDisciplina().getNome()+"\n");
+				frase.setFont(bold);
+				frase.add("     Professor(a): ");
+				frase.setFont(normal);
+				frase.add(chamada.getProfessor().getNome()+"\n");
+				
+				frase.setFont(bold);
+				frase.add("     Data da Prova: ");
+				frase.setFont(normal);
+				frase.add(chamada.getDataProva()+"\n");
+				frase.setFont(bold);
+				frase.add("     Justificativa:");
+				frase.setFont(normal);
+				frase.add(chamada.getJustificativa()+"\n");
+				
+				
 				
 				identificador.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+				identificador.add(frase);
 				documento.add(identificador);
 				
 				
 				
-				PdfPTable table = new PdfPTable(3);
-				PdfPCell celula1 = new PdfPCell(new Paragraph("Disciplina/carga",bold));
-				celula1.setHorizontalAlignment(Element.ALIGN_CENTER);
-				PdfPCell celula2 = new PdfPCell(new Paragraph("Ano/semestre",bold));
-				celula2.setHorizontalAlignment(Element.ALIGN_CENTER);
-				PdfPCell celula3 = new PdfPCell(new Paragraph("Instituição",bold));
-				celula3.setHorizontalAlignment(Element.ALIGN_CENTER);
-				
-				table.setWidths(new int[] {300,300,300});
-				table.addCell(celula1);
-				table.addCell(celula2);
-				table.addCell(celula3);
-				
-				
-				
-				documento.add(table);
 				
 				identificador.clear();
 				int numDia = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
