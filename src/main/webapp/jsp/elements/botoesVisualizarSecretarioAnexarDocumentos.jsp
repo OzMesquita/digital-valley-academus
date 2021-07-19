@@ -62,9 +62,11 @@
 										class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("id") %>" > Confirmar
 									</button>
 									</td>
+									
 										
 									
 							</div>
+							
 							</form>
 						</div>
 						</div>
