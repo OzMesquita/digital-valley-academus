@@ -40,10 +40,10 @@ public class InicioController extends HttpServlet {
 			List<Solicitacao> listaSol = new ArrayList<Solicitacao>();
 			int numSolicitacoes = 0;
 			
-			String tipoSolicitacao = request.getParameter("solicitacao");
+			String statusSolicitacao = request.getParameter("solicitacao");
 			
 			if (per.getIsAdmin()) {
-				if (tipoSolicitacao == null) {
+				if (statusSolicitacao == null) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listar(0, qtdRegPorPag);
@@ -54,7 +54,7 @@ public class InicioController extends HttpServlet {
 						numSolicitacoes = sodao.numSolicitacoes(pag);
 					}
 					
-				} else if (tipoSolicitacao.equals("submetido")) {
+				} else if (statusSolicitacao.equals("submetido")) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarSubmetida(0, qtdRegPorPag);
@@ -65,7 +65,7 @@ public class InicioController extends HttpServlet {
 						numSolicitacoes = sodao.numSolicitacoesSubmetidas(pag);
 					}
 					
-				} else if(tipoSolicitacao.equals("analizado")) {
+				} else if(statusSolicitacao.equals("analizado")) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarAnalizado(0, qtdRegPorPag);
@@ -76,7 +76,7 @@ public class InicioController extends HttpServlet {
 						numSolicitacoes = sodao.numSolicitacoesAnalizadas(pag);						
 					}
 					
-				} else if(tipoSolicitacao.equals("finalizado")) {
+				} else if(statusSolicitacao.equals("finalizado")) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarFinalizado(0, qtdRegPorPag);
@@ -103,7 +103,7 @@ public class InicioController extends HttpServlet {
 				}
 			} else if( per.getNivel() == NivelAcademus.ALUNO) {
 				
-				if (tipoSolicitacao == null) {
+				if (statusSolicitacao == null) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listar((Aluno)per, 0 , qtdRegPorPag);
@@ -115,7 +115,7 @@ public class InicioController extends HttpServlet {
 						numSolicitacoes = sodao.numSolicitacoes(pag, (Aluno)per);
 					}
 					
-				} else if (tipoSolicitacao.equals("submetido")) {
+				} else if (statusSolicitacao.equals("submetido")) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarSubmetida((Aluno)per, 0, qtdRegPorPag);
@@ -128,7 +128,7 @@ public class InicioController extends HttpServlet {
 					}
 					
 					
-				} else if (tipoSolicitacao.equals("andamento")) {
+				} else if (statusSolicitacao.equals("andamento")) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarAndamento((Aluno)per, 0, qtdRegPorPag);
@@ -141,7 +141,7 @@ public class InicioController extends HttpServlet {
 					}
 										
 					
-				} else if(tipoSolicitacao.equals("finalizado")) {
+				} else if(statusSolicitacao.equals("finalizado")) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarFinalizado((Aluno)per, 0, qtdRegPorPag);
@@ -167,7 +167,7 @@ public class InicioController extends HttpServlet {
 				}
 				
 			} else if( per.getNivel() == NivelAcademus.SECRETARIO) {
-				if (tipoSolicitacao == null) {
+				if (statusSolicitacao == null) {
 
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listar(0, qtdRegPorPag);
@@ -179,7 +179,7 @@ public class InicioController extends HttpServlet {
 						numSolicitacoes = sodao.numSolicitacoes(pag);
 					}
 					
-				} else if (tipoSolicitacao.equals("submetido")) {
+				} else if (statusSolicitacao.equals("submetido")) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarSubmetida(0, qtdRegPorPag);
@@ -191,7 +191,7 @@ public class InicioController extends HttpServlet {
 						numSolicitacoes = sodao.numSolicitacoesSubmetidas(pag);
 					}
 					
-				} else if(tipoSolicitacao.equals("finalizado")) {
+				} else if(statusSolicitacao.equals("finalizado")) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarFinalizado(0, qtdRegPorPag);
@@ -217,9 +217,10 @@ public class InicioController extends HttpServlet {
 					
 				}
 			} else if(per.getNivel() == NivelAcademus.COORDENADOR) {
-				if (tipoSolicitacao == null) {
-					
+				if (statusSolicitacao == null) {
+					System.out.println("nulo");
 					if(request.getParameter("pagina") == null){
+						System.out.println("nulo2");
 						listaSol = sodao.listar((Professor)per, 0, qtdRegPorPag);
 						numSolicitacoes = sodao.numSolicitacoes(0, (Professor)per);
 					}
@@ -229,7 +230,7 @@ public class InicioController extends HttpServlet {
 						numSolicitacoes = sodao.numSolicitacoes(pag, (Professor)per);
 					}
 
-				} else if (tipoSolicitacao.equals("analizado")) {
+				} else if (statusSolicitacao.equals("analizado")) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarAnalizado((Professor)per, 0, qtdRegPorPag);
@@ -241,7 +242,7 @@ public class InicioController extends HttpServlet {
 						numSolicitacoes = sodao.numSolicitacoesAnalizadas(pag, (Professor)per);
 					}
 
-				} else if (tipoSolicitacao.equals("andamento")) {
+				} else if (statusSolicitacao.equals("andamento")) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarAndamento((Professor)per, 0, qtdRegPorPag);
@@ -253,7 +254,7 @@ public class InicioController extends HttpServlet {
 						numSolicitacoes = sodao.numSolicitacoesAndamento(pag, (Professor)per);
 					}
 					
-				} else if(tipoSolicitacao.equals("finalizado")) {
+				} else if(statusSolicitacao.equals("finalizado")) {
 					
 					if(request.getParameter("pagina") == null){
 						listaSol = sodao.listarFinalizado((Professor)per, 0, qtdRegPorPag);
