@@ -3,7 +3,8 @@ package br.ufc.russas.n2s.academus.model;
 public enum StatusSegundaChamada {
 
 	SOLICITADO(1, "SOLICITADO"),
-	FINALIZADO(2, "FINALIZADO");
+	DEFERIDO(2, "DEFERIDO"),
+	INDEFERIDO(3,"INDEFERIDO");
 	
 	private final int codigo;
 	private final String descricao;
@@ -22,11 +23,15 @@ public enum StatusSegundaChamada {
 	}
 	
 	public static StatusSegundaChamada getStatus(int codigo) throws IllegalArgumentException{
+		System.out.println(codigo);
 		if(codigo == 1){
 			return StatusSegundaChamada.SOLICITADO;
 		}
 		if(codigo == 2){
-			return StatusSegundaChamada.FINALIZADO;
+			return StatusSegundaChamada.DEFERIDO;
+		}
+		if(codigo==3) {
+			return StatusSegundaChamada.INDEFERIDO;
 		}
 		
 		throw new IllegalArgumentException();
