@@ -1,4 +1,5 @@
 <%@page import="br.ufc.russas.n2s.academus.model.SegundaChamada"%>
+<%@page import="br.ufc.russas.n2s.academus.model.StatusSegundaChamada" %>
 <%@page import="br.ufc.russas.n2s.academus.model.NivelAcademus"%>
 <%@page import="br.ufc.russas.n2s.academus.model.PerfilAcademus"%>
 <%@ page import="java.util.*"%>
@@ -43,7 +44,7 @@
 		%>
 		<tr>
 			<td><%=sc.getIdSegundaChamada()%></td>
-			<td>SOLICITADA</td>
+			<td><%=sc.getStatus() %></td>
 			<td><%=sc.getAluno().getNome()%></td>
 			<td><%=sc.getDisciplina().getNome()%></td>
 			<td>
@@ -53,15 +54,7 @@
 		
 		
 		
-			<% if(usuario.getNivel() == NivelAcademus.PROFESSOR && sc.getStatus()==null){ %>
-		<td>
-		<form method="POST" action="RegistrarEntrega" id="res<%=sc.getIdSegundaChamada()%>">
-			<button class="btn btn-primary btn-sm" form="res<%=sc.getIdSegundaChamada()%>" class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="registro" value="<%=sc.getIdSegundaChamada() %>" >
-			Registrar Entrega
-			</button>
-		</form>
-		</td>
-		<%} %>
+			
 		<% }
 			
 		}
