@@ -12,6 +12,7 @@ import java.util.List;
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Professor;
+import br.ufc.russas.n2s.academus.model.Funcionario;
 import br.ufc.russas.n2s.academus.model.RecorrecaoDeProva;
 import br.ufc.russas.n2s.academus.model.StatusRecorrecao;
 
@@ -195,7 +196,7 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 	}
 
 	@Override
-	public List<RecorrecaoDeProva> listarCoordenador(Professor professor, int limitInf, int limitSup) {
+	public List<RecorrecaoDeProva> listar(Funcionario professor, int limitInf, int limitSup) {
 		String sql = "select * from academus.recorrecao_de_prova as rp, academus.perfil_academus as p  WHERE rp.id_aluno = p.id_perfil_academus AND p.id_curso = ? order by id_recorrecao_de_prova offset ? limit ?; ";
 		List<RecorrecaoDeProva> listaRecorrecaoDeProva = new ArrayList<RecorrecaoDeProva>();
 		
