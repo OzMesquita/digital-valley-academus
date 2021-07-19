@@ -16,11 +16,14 @@
 
 <%
 	
-	Aluno aluno = (Aluno) request.getSession().getAttribute("userAcademus");
-
+	//Aluno aluno = (Aluno) request.getSession().getAttribute("userAcademus");
+	PerfilAcademus perfil =(PerfilAcademus) request.getSession().getAttribute("userAcademus");
 	MatrizCurricularDAO daoMC = new JDBCMatrizCurricularDAO();
-	List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(aluno.getCurso().getIdCurso());	
+	List<MatrizCurricular> matrizes = daoMC.buscarPorCurso(perfil.getCurso().getIdCurso());	
+	if (perfil.getNivel()==NivelAcademus.ALUNO){
 	
+		
+	}
 	Solicitacao solicitacao = new Solicitacao();
 	SolicitacaoDAO daoS = new DAOFactoryJDBC().criarSolicitacaoDAO();
 	MatrizCurricular matrizSol = new MatrizCurricular();
