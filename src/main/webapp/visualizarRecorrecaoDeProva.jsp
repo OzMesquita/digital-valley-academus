@@ -200,7 +200,7 @@
 					</form>
 					<% request.setAttribute("idRecorrecao", idRecorrecao);%>
 					<form method="POST" action="GerarPDF" id="pdf<%=(String)(request.getAttribute("idRecorrecao"))%>">
-						<input name="tipo" value="recorrecao">
+						<input type="hidden" name="tipo" value="recorrecao">
 						<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("idRecorrecao")%>" 
 							style="height: 30px;" type="submit" name="idRecorrecao" value="<%=(String)request.getAttribute("idRecorrecao")%>"> Gerar PDF
 						</button>
