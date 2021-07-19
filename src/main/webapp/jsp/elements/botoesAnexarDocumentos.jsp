@@ -15,8 +15,8 @@
 <html lang="pt-br">
 	<body>
 		
-		<input type="button" class="btn btn-secondary btn-sm" value="Ementa" data-toggle="modal" data-target="#anexarEmenta">
-		<input type="button" class="btn btn-secondary btn-sm" value="Historico" data-toggle="modal" data-target="#anexarHistorico">
+		<input type="button" class="btn btn-primary btn-sm" value="Ementa" data-toggle="modal" data-target="#anexarEmenta">
+		<input type="button" class="btn btn-primary btn-sm" value="Historico" data-toggle="modal" data-target="#anexarHistorico">
 					
 					<!-- Modal -->
 					<div class="modal fade" id="anexarEmenta" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
