@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Professor;
+import br.ufc.russas.n2s.academus.model.Funcionario;
 import br.ufc.russas.n2s.academus.model.RecorrecaoDeProva;
 import br.ufc.russas.n2s.academus.model.StatusRecorrecao;
 
@@ -18,7 +19,7 @@ public interface RecorrecaoDeProvaDAO {
 		
 		public List<RecorrecaoDeProva> listar(Professor professor, int limitInf, int limitSup);
 		
-		public List<RecorrecaoDeProva> listarCoordenador(Professor professor, int limitInf, int limitSup);
+		public List<RecorrecaoDeProva> listar(Funcionario professor, int limitInf, int limitSup);
 		
 		public List<RecorrecaoDeProva> listarPorStatus(StatusRecorrecao status, int limitInf, int limitSup);
 		
