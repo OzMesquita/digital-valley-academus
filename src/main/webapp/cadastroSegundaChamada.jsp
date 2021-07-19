@@ -111,7 +111,7 @@
 									</div>
 								</div>
 							<%
-							} else if(usuario.getNivel() == NivelAcademus.SECRETARIO || usuario.getNivel() == NivelAcademus.PROFESSOR){ //Mudar quando for atulizar coordenador
+							} else if(usuario.getNivel() == NivelAcademus.SECRETARIO || usuario.getNivel() == NivelAcademus.COORDENADOR){ //Mudar quando for atulizar coordenador
 							%>
 								<div class="form-group">
 									<label for="alunoInput">Aluno</label>
