@@ -166,6 +166,9 @@
 									<%
 										for(Professor p: professores){
 									%>
+											<% System.out.println(p.getId()); 
+												System.out.println(p.getNome());
+										%>
 											<option value="<%=p.getId() %>"> <%= p.getNome() %></option> 
 									<%
 										}
