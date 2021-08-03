@@ -6,7 +6,8 @@
 
 <%
 	PerfilAcademus usuario = (PerfilAcademus)session.getAttribute("userAcademus");
-	String statusSoli = (request.getParameter("solicitacao") != null) ? request.getParameter("solicitacao") : "null";
+	String statusSoli = (request.getParameter("solicitacao")!=null) ? request.getParameter("solicitacao") : null;
+	
 %>
 
 <!-- Essa pagina filtra e faz a listagem de todas as solicitacoes de Recorreção de Provas -->
@@ -43,7 +44,9 @@
 		int numSolicitacoes = (Integer) session.getAttribute("numSolicitacoes");
 		
 		if(listaRP != null){
+			
 			for (RecorrecaoDeProva rp : listaRP) {
+				
 		%>
 		<tr>
 			<td><%=rp.getIdRecorrecao()%></td>
