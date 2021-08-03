@@ -218,9 +218,9 @@ public class InicioController extends HttpServlet {
 				}
 			} else if(per.getNivel() == NivelAcademus.COORDENADOR) {
 				if (statusSolicitacao == null) {
-					System.out.println("nulo");
+					
 					if(request.getParameter("pagina") == null){
-						System.out.println("nulo2");
+						
 						listaSol = sodao.listar((Professor)per, 0, qtdRegPorPag);
 						numSolicitacoes = sodao.numSolicitacoes(0, (Professor)per);
 					}
