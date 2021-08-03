@@ -13,6 +13,7 @@ import java.sql.Time;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -46,6 +47,7 @@ import util.Constantes;
 public class CadastroRecorrecaoDeProvaController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private final static Logger LOGGER = Logger.getLogger(GerenciarAnexosController.class.getCanonicalName());
 	
 	public CadastroRecorrecaoDeProvaController() {
 		super();
@@ -81,7 +83,9 @@ public class CadastroRecorrecaoDeProvaController extends HttpServlet {
 			String justificativa = request.getParameter("justificativa");
 			String dataRecebimento = request.getParameter("dataRecebimento");
 			String horarioRecebimento = request.getParameter("horarioRecebimento");
+			//int tipoArquivo = Integer.parseInt(request.getParameter("tipo_arquivo"));
 			
+
 			RecorrecaoDeProva recorrecao =	new RecorrecaoDeProva();
 			
 			Aluno aluno = alunodao.buscarPorMatricula(matricula);
@@ -99,7 +103,7 @@ public class CadastroRecorrecaoDeProvaController extends HttpServlet {
 			recorrecao.setStatus(StatusRecorrecao.SOLICITADO);
 			
 			//Manipula o anexo
-			/*if(request.getPart("anexo") != null) {
+			if(request.getPart("anexo") != null) {
 				System.out.println("entrou");
 				String caminhoRelativo = File.separator+matricula+File.separator+dataDaProva+File.separator+idDisciplina;
 				String caminho = Constantes.getAnexoDir()+caminhoRelativo;
@@ -137,12 +141,23 @@ public class CadastroRecorrecaoDeProvaController extends HttpServlet {
 			        arq.setTipo(TipoArquivo.getTipoArquivo(3));
 			        arq.setNome(nome);
 			        arq = arqdao.cadastrarArquivo(arq);
+			        recorrecao.setIdArquivo(arq.getIdArquivo());
 			        System.out.println("Cadastrou o arquivo");
+			        System.out.println(arq.getIdArquivo());
+			        rpdao.cadastro(recorrecao);
+					System.out.println("cadatars");
+					request.setAttribute("success", "Solicitação de correção de prova cadastrada com sucesso.");
+					javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroRecorrecaoDeProva.jsp");
+					dispatcher.forward(request, response);
 					
 			    } catch (FileNotFoundException fne) {
 			        fne.getMessage();
 			        System.out.println("Errooou");
 			        System.out.println(fne.getMessage());
+			        
+					request.setAttribute("erro", "O servidor não conseguiu cadastrar a solicitação.");
+					javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroRecorrecaoDeProva.jsp");
+					dispatcher.forward(request, response);
 			       
 			     
 			
@@ -163,23 +178,25 @@ public class CadastroRecorrecaoDeProvaController extends HttpServlet {
 			        }
 			    }
 			    System.out.println("Setar arquivo");
-			    recorrecao.setArquivo(arq);
-			}*/
+			    recorrecao.setIdArquivo(arq.getIdArquivo());
+			}
 		    //Fim manipulação do anexo	    
 		    
-			try {
+			/*try {
 				rpdao.cadastro(recorrecao);
-				
+				System.out.println("cadatars");
 				request.setAttribute("success", "Solicitação de correção de prova cadastrada com sucesso.");
-				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroRecorrecaoDeProva.jsp");
+				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("/src/main/webapp/cadastroRecorrecaoDeProva.jsp");
 				dispatcher.forward(request, response);
+				
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 				request.setAttribute("erro", "O servidor não conseguiu cadastrar a solicitação.");
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroRecorrecaoDeProva.jsp");
 				dispatcher.forward(request, response);
-			}
+				
+			}*/
 			
 		} else {
 		
