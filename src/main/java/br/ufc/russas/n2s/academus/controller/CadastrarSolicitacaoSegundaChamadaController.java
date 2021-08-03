@@ -13,6 +13,7 @@ import br.ufc.russas.n2s.academus.dao.DisciplinaDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCAlunoDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO;
 import br.ufc.russas.n2s.academus.dao.JDBCProfessorDAO;
+import br.ufc.russas.n2s.academus.dao.*;
 import br.ufc.russas.n2s.academus.dao.JDBCSegundaChamada;
 import br.ufc.russas.n2s.academus.dao.ProfessorDAO;
 import br.ufc.russas.n2s.academus.dao.SegundaChamadaDAO;
@@ -34,6 +35,7 @@ public class CadastrarSolicitacaoSegundaChamadaController extends HttpServlet {
 	SegundaChamadaDAO scdao = new JDBCSegundaChamada();
 	AlunoDAO alunodao = new JDBCAlunoDAO();
 	ProfessorDAO professordao = new JDBCProfessorDAO();
+	//CoordenadorDAO coordao=nem JDBCCoordenadorDAO();
 	DisciplinaDAO discdao = new JDBCDisciplinaDAO();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,14 +54,16 @@ public class CadastrarSolicitacaoSegundaChamadaController extends HttpServlet {
 			String matricula = request.getParameter("matricula");
 			String idDisciplina= request.getParameter("disciplina");
 			String dataDaProva= request.getParameter("dataDaProva");
-			System.out.println(dataDaProva);
-			System.out.println(Date.valueOf(dataDaProva));
+			System.out.println(idProfessor);
+			//System.out.println(Date.valueOf(dataDaProva));
 			String justificativa= request.getParameter("justificativa");
 			
 			SegundaChamada segundaChamada =	new SegundaChamada();
 			
 			Aluno aluno = alunodao.buscarPorMatricula(matricula);
 			Professor professor = professordao.buscarPorId(idProfessor);
+			//Coordenador prof =coordao.buscarPorId(idProfessor);
+			System.out.println(professor.getNome());
 			Disciplina disc = discdao.buscarPorId(idDisciplina);
 			
 			segundaChamada.setAluno(aluno);
