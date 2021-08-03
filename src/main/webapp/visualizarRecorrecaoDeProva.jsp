@@ -5,6 +5,7 @@
 <%@ page import="br.ufc.russas.n2s.academus.model.DisciplinaCursada" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.ProfessorDAO" %>
+<%@ page import="br.ufc.russas.n2s.academus.dao.ArquivoDAO" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.Professor" %>
 
 <%@ page import="java.util.*"%>
@@ -16,11 +17,12 @@
  	
  	RecorrecaoDeProva rdp = (RecorrecaoDeProva) session.getAttribute("recorrecaoDeProva");
  //	rdp.getAluno().getNome();
- 
+ 	
  	
  	String idRecorrecao=Integer.toString(rdp.getIdRecorrecao());	
  	
  	DAOFactory df = new DAOFactoryJDBC();
+ 	ArquivoDAO arqdao =df.criarArquivoDAO();
  	List<Professor> professores = new ArrayList<Professor>();
  
  	try {
@@ -138,7 +140,7 @@
 								</select>
 								
 							</div>
-							<div class="col-md-7">
+							<div >
 									<div class="form-group">
 										<label for="discplinaInput">Disciplina</label>
 										<select id="disciplinaInput" name="disciplina" class="form-control" disabled>
@@ -176,14 +178,15 @@
 								</div>
 							</div>
 							
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="custom-file">
-									 	<input type="file" class="custom-file-input" id="customFileLang" lang="pt" readonly value="">
-								<!--Arrumar depois --> <label class="custom-file-label" for="customFile">Anexe aqui a prova</label>
-									</div>
-								</div>
+							
+									
+							<div class="form-group">
+								<label  for="anexo">Prova Anexada</label>
+							 	<input type="text" class="form-control" id="anexo" name="anexo"  value="<%= arqdao.buscarPorId(rdp.getIdArquivo()).getNome() %>" readonly>
+										 	
+										
 							</div>
+								
 							
 							<div class="form-group">
 								<label for="justificativaInput">Justificativa</label>
@@ -192,7 +195,7 @@
 							
 							<div class="modal-footer">
 								<div id="botoes" class="controls">
-									<a href="VisualizarRecorreçãoDeProva" class="btn btn-primary btn-sm">Voltar</a>
+									<a href="HistoricoRecorrecaoDeProva" class="btn btn-primary btn-sm">Voltar</a>
 									<!-- <button type="submit" class="btn btn-primary btn-sm">Confirmar</button> -->
 								</div>
 							</div>
