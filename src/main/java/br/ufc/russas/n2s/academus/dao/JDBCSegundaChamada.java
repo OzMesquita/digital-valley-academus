@@ -26,7 +26,6 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 		try{
 			
 			PreparedStatement insert = conn.prepareStatement(sql);			
-			System.out.println(segChamada.getIdSegundaChamada());
 			insert.setInt(1, segChamada.getAluno().getId());
 			insert.setInt(2, segChamada.getProfessor().getId());
 			insert.setString(3, segChamada.getDisciplina().getId());
@@ -71,7 +70,6 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 			while(rs.next()){
 				
 				SegundaChamada aux = new SegundaChamada();	
-				
 				aux.setIdSegundaChamada(rs.getInt("id_segunda_chamada"));
 				aux.setAluno(aludao.buscarPorId(rs.getInt("id_aluno")));
 				aux.setProfessor(profdao.buscarPorId(rs.getInt("id_professor")));
@@ -113,7 +111,6 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 			
 			while(rs.next()) {
 				SegundaChamada aux = new SegundaChamada();
-				System.out.println(rs.getInt("id_segunda_chamada"));
 				aux.setIdSegundaChamada(rs.getInt("id_segunda_chamada"));
 				aux.setAluno(aludao.buscarPorId(rs.getInt("id_aluno")));
 				aux.setProfessor(profdao.buscarPorId(rs.getInt("id_professor")));
@@ -137,9 +134,9 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 
 	@Override
 	public List<SegundaChamada> listar(Professor professor, int limitInf, int limitSup) {
-		String sql = "select * from academus.segunda_chamada WHERE id_professor= ? order by id_segunda_chamada offset ? limit ?; ";
+		String sql = "select * from academus.segunda_chamada WHERE id_professor= ?  order by id_segunda_chamada offset ? limit ?; ";
 		List<SegundaChamada> listaSegundaChamada = new ArrayList<SegundaChamada>();
-		System.out.println("solicita1");
+		
 		Connection conn = ConnectionPool.getConnection();
 		
 		try {
@@ -182,13 +179,12 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 	public List<SegundaChamada> listarCoordenador(Professor professor, int limitInf, int limitSup) {
 		String sql = "select * from academus.segunda_chamada as sc, academus.perfil_academus as p  WHERE sc.id_professor= ? AND sc.id_aluno = p.id_perfil_academus AND p.id_curso = ? order by id_segunda_chamada offset ? limit ?; ";
 		List<SegundaChamada> listaSegundaChamada = new ArrayList<SegundaChamada>();
-		System.out.println("coord");
-		System.out.println(listaSegundaChamada);
+		
 		Connection conn = ConnectionPool.getConnection();
 		
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
-			System.out.println(limitSup);
+			
 			ps.setInt(1, professor.getId());
 			ps.setInt(2, professor.getCurso().getIdCurso());
 			ps.setInt(3, limitInf);
@@ -200,7 +196,7 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 			AlunoDAO aludao = df.criarAlunoDAO();
 			DisciplinaDAO discdao = df.criarDisciplinaDAO();
 			ProfessorDAO profdao = df.criarProfessorDAO();
-			System.out.println(rs.next());
+			
 			while(rs.next()) {
 				SegundaChamada aux = new SegundaChamada();
 				
@@ -211,11 +207,11 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setDataProva(Date.valueOf(rs.getString("data_prova")));
 				aux.setStatus(StatusSegundaChamada.getStatus(rs.getInt("status")));
-				System.out.println(rs.getInt("id_segunda_chamada"));
+				
 				
 				
 				listaSegundaChamada.add(aux);
-				System.out.println(listaSegundaChamada);
+				
 			}
 			
 		} catch (Exception e) {
