@@ -171,15 +171,11 @@
 									</div>
 								</div>
 								
-								<!-- <div class="row">
-									<div class="col-lg-6">
-										<div class="custom-file">
-										 	<input type="file" class="custom-file-input" id="customFileLang" name="anexo" lang="pt">
-										 	<label class="custom-file-label" for="customFile">Anexe aqui a prova</label>
-										</div>
-									</div>
+								<div class="custom-file">
+									<input type="file" name="anexo" class="custom-file-input" id="anexoProva" accept=".pdf" >
+									<label id="labelProva" class="custom-file-label" for="anexoProva">Anexe a prova aqui</label>
 								</div>
-								<br> -->
+								<br> 
 								
 								<div class="form-group">
 									<label for="justificativaInput">Justificativa</label>
@@ -272,15 +268,13 @@
 								</div>
 								
 								<!-- Anexar PROVA realizada -->
-								<!-- <div class="row">
-									<div class="col-lg-6">
-										<div class="custom-file">
-										 	<input type="file" class="custom-file-input" id="customFileLang" name="anexo" lang="pt">
-										 	<label class="custom-file-label" for="customFile">Anexe aqui a prova</label>
-										</div>
-									</div>
+								
+															        	
+								<div class="custom-file">
+									<input type="file" name="anexo" class="custom-file-input" id="anexoProva" accept=".pdf" >
+									<label id="labelProva" class="custom-file-label" for="anexoProva">Anexe a prova aqui</label>
 								</div>
-								<br> -->
+															        
 								
 								<div class="form-group">
 									<label for="justificativaInput">Justificativa</label>
@@ -326,8 +320,14 @@
 	</body>
 	<script>
 	
+	
+
 		var modificado = 0;
 		$(document).ready(function(){
+			$("#anexoProva").change(function () {
+				//habilitaBotaoConfirmarEmenta();
+				trocaTextoInputFileProva();
+			});
 			
 			$('input').change(function(){
 				modificado = 1;
@@ -398,6 +398,11 @@
 			return true;			
 		}*/
 
-		
+		function trocaTextoInputFileProva() {
+			if($("#anexoProva").val() != ""){
+				//pega o ultimo nome do caminho do arquivo
+				$("#labelProva").text($("#anexoProva").val().split("\\").pop());
+			}
+		}
 	</script>
 </html>
