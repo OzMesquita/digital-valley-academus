@@ -73,16 +73,17 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 	public List<Professor> listar() {
 		
 		//String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE u.id_pessoa_usuario = p.id_pessoa_prof AND u.id_pessoa_usuario = s.id_pessoa_usuario ORDER BY id_pessoa_prof;";
-		String SQL = "SELECT * FROM academus.perfil_academus AS p, academus.funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.id_nivel=? ORDER BY f.id_perfil_academus;";
+		String SQL = "SELECT * FROM academus.perfil_academus AS p, academus.funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND (p.id_nivel=? or p.id_nivel=?)  ORDER BY f.id_perfil_academus;";
 		List<Professor> professores = new ArrayList<Professor>();
 		
 		Connection conn = ConnectionPool.getConnection();
 		try {
 			PreparedStatement ps = conn.prepareStatement(SQL);
 			int nivel= NivelAcademus.getCodigo(NivelAcademus.PROFESSOR);
+			int nivel2=NivelAcademus.getCodigo(NivelAcademus.COORDENADOR);
 			//
 			ps.setInt(1, nivel);
-			//ps.setInt(2, NivelAcademus.getCodigo(NivelAcademus.COORDENADOR));
+			ps.setInt(2, nivel2);
 			ResultSet rs = ps.executeQuery();
 			
 			CursoDAO cdao = new DAOFactoryJDBC().criarCursoDAO();
@@ -175,7 +176,7 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 	@Override
 	public Professor buscarPorId(int id) {
 		//String SQL = "SELECT * FROM professor AS p, pessoa_usuario AS u, servidor AS s WHERE p.id_pessoa_prof=? AND u.id_pessoa_usuario = p.id_pessoa_prof AND p.id_pessoa_prof = s.id_pessoa_usuario";
-		String SQL = "SELECT * FROM academus.perfil_academus AS p, academus.funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.id_perfil_academus = ? AND p.id_nivel=?;";
+		String SQL = "SELECT * FROM academus.perfil_academus AS p, academus.funcionario AS f WHERE f.id_perfil_academus = p.id_perfil_academus AND p.id_perfil_academus = ? AND (p.id_nivel=? or p.id_nivel=?);";
 		Professor professor = new Professor();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -183,6 +184,7 @@ public class JDBCProfessorDAO implements ProfessorDAO{
 			PreparedStatement ps = conn.prepareStatement(SQL);
 			ps.setInt(1, id);
 			ps.setInt(2, NivelAcademus.PROFESSOR.ordinal());
+			ps.setInt(3, NivelAcademus.COORDENADOR.ordinal());
 			
 			ResultSet rs = ps.executeQuery();
 			
