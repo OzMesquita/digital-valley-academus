@@ -19,7 +19,7 @@ public interface RecorrecaoDeProvaDAO {
 		
 		public List<RecorrecaoDeProva> listar(Professor professor, int limitInf, int limitSup);
 		
-		public List<RecorrecaoDeProva> listar(Funcionario professor, int limitInf, int limitSup);
+		public List<RecorrecaoDeProva> listarCoordenador(Professor professor, int limitInf, int limitSup);
 		
 		public List<RecorrecaoDeProva> listarPorStatus(StatusRecorrecao status, int limitInf, int limitSup);
 		
@@ -44,6 +44,8 @@ public interface RecorrecaoDeProvaDAO {
 		public int numSolicitacoesPorStatus(int pagina, Aluno aluno, StatusRecorrecao status);
 		public int numSolicitacoesPorStatus(int pagina, Professor professor, StatusRecorrecao status);
 		public int numSolicitacoesCoordenadorPorStatus(int pagina, Professor coordenador, StatusRecorrecao status);
+
+		
 
 	
 
