@@ -42,6 +42,7 @@
 			for (SegundaChamada sc : listaSC) {
 				
 		%>
+			
 		<tr>
 			<td><%=sc.getIdSegundaChamada()%></td>
 			<td><%=sc.getStatus() %></td>
