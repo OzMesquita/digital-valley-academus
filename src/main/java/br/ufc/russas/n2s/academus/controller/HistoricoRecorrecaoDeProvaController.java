@@ -212,7 +212,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 			} else if (perfilAcademus.getNivel() == NivelAcademus.COORDENADOR) {
 				
 				if(tipoSolicitacao == null) {
-					
+					System.out.println("listarHCoor");
 					try {
 
 						if(request.getParameter("pagina") == null) {
@@ -229,7 +229,7 @@ public class HistoricoRecorrecaoDeProvaController extends HttpServlet {
 					}
 					
 				} else if(tipoSolicitacao == "solicitado") {
-					
+					System.out.println("lista");
 					try {
 
 						if(request.getParameter("pagina") == null) {
