@@ -87,8 +87,9 @@ public class HistoricoSegundaChamadaController extends HttpServlet{
 			} else if (perfilAcademus.getNivel() == NivelAcademus.COORDENADOR) {
 				if(request.getParameter("pagina") == null) {
 					
-					listaSC = scdao.listarCoordenador((Professor) perfilAcademus, 0, qtdRegPorPag);
+					listaSC = scdao.listar((Professor) perfilAcademus, 0, qtdRegPorPag);
 					numSolicitacoes = scdao.numSolicitacoes(0);
+					
 					
 				} else {
 					
