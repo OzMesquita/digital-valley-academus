@@ -36,6 +36,7 @@ import br.ufc.russas.n2s.academus.dao.SegundaChamadaDAO;
 import br.ufc.russas.n2s.academus.model.DisciplinaCursada;
 import br.ufc.russas.n2s.academus.model.Professor;
 import br.ufc.russas.n2s.academus.model.Solicitacao;
+import br.ufc.russas.n2s.academus.model.StatusRecorrecao;
 import br.ufc.russas.n2s.academus.model.RecorrecaoDeProva;
 import br.ufc.russas.n2s.academus.model.SegundaChamada;
 import util.Constantes;
@@ -322,7 +323,7 @@ public class GerarPdfSolicitacaoController extends HttpServlet{
 				frase.setFont(bold);
 				frase.add("Status da Solicitação: ");
 				frase.setFont(normal);
-				frase.add(recorrecao.getStatus()+"\n");
+				frase.add(StatusRecorrecao.getDescricao(recorrecao.getStatus())+"\n");
 				identificador.add(frase);
 				
 				frase.clear();
