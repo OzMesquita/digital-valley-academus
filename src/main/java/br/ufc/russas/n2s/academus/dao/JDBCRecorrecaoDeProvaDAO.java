@@ -462,6 +462,7 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
 				aux.setIdArquivo(arqdao.buscarPorId(rs.getInt("id_arquivo")).getIdArquivo());
+				aux.setStatus(StatusRecorrecao.SOLICITADO);
 			
 				
 			}
