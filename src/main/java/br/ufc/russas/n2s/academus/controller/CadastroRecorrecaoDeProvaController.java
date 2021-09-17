@@ -10,6 +10,8 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.logging.Level;
@@ -65,7 +67,6 @@ public class CadastroRecorrecaoDeProvaController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
 		if(request.getParameter("professor") != null &&
 		   request.getParameter("matricula") != null &&
 		   request.getParameter("disciplina") != null &&
@@ -74,6 +75,8 @@ public class CadastroRecorrecaoDeProvaController extends HttpServlet {
 		   request.getParameter("horarioDaProva") != null &&
 		   request.getParameter("dataRecebimento") != null &&
 		   request.getParameter("horarioRecebimento") != null ) {
+			System.out.println("nulo errado");
+			LocalDate dataAtual = LocalDate.now();
 			
 			int idProfessor = Integer.parseInt(request.getParameter("professor"));
 			String matricula = request.getParameter("matricula");
@@ -85,124 +88,137 @@ public class CadastroRecorrecaoDeProvaController extends HttpServlet {
 			String horarioRecebimento = request.getParameter("horarioRecebimento");
 			//int tipoArquivo = Integer.parseInt(request.getParameter("tipo_arquivo"));
 			
-
-			RecorrecaoDeProva recorrecao =	new RecorrecaoDeProva();
 			
-			Aluno aluno = alunodao.buscarPorMatricula(matricula);
-			Professor professor = professordao.buscarPorId(idProfessor);
-			Disciplina disc = discdao.buscarPorId(idDisciplina);
-			
-			recorrecao.setAluno(aluno);
-			recorrecao.setDisciplina(disc);
-			recorrecao.setProfessor(professor);
-			recorrecao.setDataProva(Date.valueOf(dataDaProva));
-			recorrecao.setHorarioDaProva(Time.valueOf(horarioDaProva+":00"));
-			recorrecao.setJustificativa(justificativa);
-			recorrecao.setDataRecebimento(Date.valueOf(dataRecebimento));
-			recorrecao.setHorarioRecebimento(Time.valueOf(horarioRecebimento+":00"));
-			recorrecao.setStatus(StatusRecorrecao.SOLICITADO);
-			
-			//Manipula o anexo
-			if(request.getPart("anexo") != null) {
-				System.out.println("entrou");
-				String caminhoRelativo = File.separator+matricula+File.separator+dataDaProva+File.separator+idDisciplina;
-				String caminho = Constantes.getAnexoDir()+caminhoRelativo;
-				
-				File dir = new File(caminho+File.separator);
-				
-				if(!dir.isDirectory()) dir.mkdirs();
-				
-				if(!Files.isWritable(dir.toPath())) System.out.println("Não é possivel escrever um arquivo");
-				
-				Part part = request.getPart("anexo");
-				String nome = "recorrecao-"+matricula+"-"+dataDaProva+"-"+idDisciplina+".pdf";
-				System.out.println(nome);
-				
-				OutputStream out = null;
-			    InputStream filecontent = null;
-			    final PrintWriter writer = response.getWriter();
-			    
-			    Arquivo arq = new Arquivo();
-			
-			    try {
-			        File file = new File(dir.getAbsolutePath() + File.separator + nome);
-			    	out = new FileOutputStream(file);
-			        filecontent = part.getInputStream();
-			
-			        int read = 0;
-			        final byte[] bytes = new byte[1024];
-			
-			        while ((read = filecontent.read(bytes)) != -1) {
-			            out.write(bytes, 0, read);
-			        }
-			        //LOGGER.log(Level.INFO, "File{0}being uploaded to {1}", new Object[]{nome, caminho});
+				Period periodo = Period.between(LocalDate.parse(dataRecebimento),dataAtual );
+				System.out.println(periodo.getDays());
+				if(periodo.getDays()>0 && periodo.getDays()<=3) {
+					System.out.println("if periodo");
+					RecorrecaoDeProva recorrecao =	new RecorrecaoDeProva();
 					
-			        arq.setCaminho(caminhoRelativo + File.separator + nome);
-			        arq.setTipo(TipoArquivo.getTipoArquivo(3));
-			        arq.setNome(nome);
-			        arq = arqdao.cadastrarArquivo(arq);
-			        recorrecao.setIdArquivo(arq.getIdArquivo());
-			        System.out.println("Cadastrou o arquivo");
-			        System.out.println(arq.getIdArquivo());
-			        rpdao.cadastro(recorrecao);
-					System.out.println("cadatars");
-					request.setAttribute("success", "Solicitação de correção de prova cadastrada com sucesso.");
-					javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroRecorrecaoDeProva.jsp");
-					dispatcher.forward(request, response);
+					Aluno aluno = alunodao.buscarPorMatricula(matricula);
+					Professor professor = professordao.buscarPorId(idProfessor);
+					Disciplina disc = discdao.buscarPorId(idDisciplina);
 					
-			    } catch (FileNotFoundException fne) {
-			        fne.getMessage();
-			        System.out.println("Errooou");
-			        System.out.println(fne.getMessage());
-			        
-					request.setAttribute("erro", "O servidor não conseguiu cadastrar a solicitação.");
-					javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroRecorrecaoDeProva.jsp");
-					dispatcher.forward(request, response);
-			       
-			     
+					recorrecao.setAluno(aluno);
+					recorrecao.setDisciplina(disc);
+					recorrecao.setProfessor(professor);
+					recorrecao.setDataProva(Date.valueOf(dataDaProva));
+					recorrecao.setHorarioDaProva(Time.valueOf(horarioDaProva+":00"));
+					recorrecao.setJustificativa(justificativa);
+					recorrecao.setDataRecebimento(Date.valueOf(dataRecebimento));
+					recorrecao.setHorarioRecebimento(Time.valueOf(horarioRecebimento+":00"));
+					recorrecao.setStatus(StatusRecorrecao.SOLICITADO);
+					
+					//Manipula o anexo
+					if(request.getPart("anexo") != null) {
+						System.out.println("entrou");
+						String caminhoRelativo = File.separator+matricula+File.separator+dataDaProva+File.separator+idDisciplina;
+						String caminho = Constantes.getAnexoDir()+caminhoRelativo;
+						
+						File dir = new File(caminho+File.separator);
+						
+						if(!dir.isDirectory()) dir.mkdirs();
+						
+						if(!Files.isWritable(dir.toPath())) System.out.println("Não é possivel escrever um arquivo");
+						
+						Part part = request.getPart("anexo");
+						String nome = "recorrecao-"+matricula+"-"+dataDaProva+"-"+idDisciplina+".pdf";
+						System.out.println(nome);
+						
+						OutputStream out = null;
+					    InputStream filecontent = null;
+					    final PrintWriter writer = response.getWriter();
+					    
+					    Arquivo arq = new Arquivo();
+					
+					    try {
+					        File file = new File(dir.getAbsolutePath() + File.separator + nome);
+					    	out = new FileOutputStream(file);
+					        filecontent = part.getInputStream();
+					
+					        int read = 0;
+					        final byte[] bytes = new byte[1024];
+					
+					        while ((read = filecontent.read(bytes)) != -1) {
+					            out.write(bytes, 0, read);
+					        }
+					        //LOGGER.log(Level.INFO, "File{0}being uploaded to {1}", new Object[]{nome, caminho});
+							
+					        arq.setCaminho(caminhoRelativo + File.separator + nome);
+					        arq.setTipo(TipoArquivo.getTipoArquivo(3));
+					        arq.setNome(nome);
+					        arq = arqdao.cadastrarArquivo(arq);
+					        recorrecao.setIdArquivo(arq.getIdArquivo());
+					        System.out.println("Cadastrou o arquivo");
+					        System.out.println(arq.getIdArquivo());
+					        rpdao.cadastro(recorrecao);
+							System.out.println("cadatars");
+							request.setAttribute("success", "Solicitação de correção de prova cadastrada com sucesso.");
+							javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroRecorrecaoDeProva.jsp");
+							dispatcher.forward(request, response);
+							
+					    } catch (FileNotFoundException fne) {
+					        fne.getMessage();
+					        System.out.println("Errooou");
+					        System.out.println(fne.getMessage());
+					        
+							request.setAttribute("erro", "O servidor não conseguiu cadastrar a solicitação.");
+							javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroRecorrecaoDeProva.jsp");
+							dispatcher.forward(request, response);
+					       
+					     
+					
+					        //LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}", new Object[]{fne.getMessage()});
+					    } finally {
+					    	
+					        if (out != null) {
+					            out.close();
+					            System.out.println("close 1");
+					        }
+					        if (filecontent != null) {
+					            filecontent.close();
+					            System.out.println("close 2");
+					        }
+					        if (writer != null) {
+					            writer.close();
+					            System.out.println("close 3");
+					        }
+					    }
+					    System.out.println("Setar arquivo");
+					    recorrecao.setIdArquivo(arq.getIdArquivo());
+					}
+				}else {
+					try {
+						System.out.println("erro periodo");
+						request.setAttribute("erro", "Periodo invalido, só pode solicitar uma recorreção num periodo de 3 dias após o recebimento");
+						javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroRecorrecaoDeProva.jsp");
+						
+						dispatcher.forward(request, response);
+					}catch(Exception e){
+						e.printStackTrace();
+						request.setAttribute("erro", "Periodo invalido");
+						javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroRecorrecaoDeProva.jsp");
+						
+						dispatcher.forward(request, response);
+					}
+				}
+				
+				
+					
+				
+				
+				
 			
-			        //LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}", new Object[]{fne.getMessage()});
-			    } finally {
-			    	
-			        if (out != null) {
-			            out.close();
-			            System.out.println("close 1");
-			        }
-			        if (filecontent != null) {
-			            filecontent.close();
-			            System.out.println("close 2");
-			        }
-			        if (writer != null) {
-			            writer.close();
-			            System.out.println("close 3");
-			        }
-			    }
-			    System.out.println("Setar arquivo");
-			    recorrecao.setIdArquivo(arq.getIdArquivo());
-			}
-		    //Fim manipulação do anexo	    
-		    
-			/*try {
-				rpdao.cadastro(recorrecao);
-				System.out.println("cadatars");
-				request.setAttribute("success", "Solicitação de correção de prova cadastrada com sucesso.");
-				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("/src/main/webapp/cadastroRecorrecaoDeProva.jsp");
-				dispatcher.forward(request, response);
-				
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-				request.setAttribute("erro", "O servidor não conseguiu cadastrar a solicitação.");
-				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroRecorrecaoDeProva.jsp");
-				dispatcher.forward(request, response);
-				
-			}*/
+			
+			
+		   
 			
 		} else {
 		
 			try {
 				//if((request.getParameter("componenteInput") != null))
 				//request.setAttribute("erro", "Preencha todos os campos.");
+				
 				
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroRecorrecaoDeProva.jsp");
 				
