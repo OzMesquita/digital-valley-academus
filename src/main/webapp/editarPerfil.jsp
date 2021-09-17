@@ -153,13 +153,26 @@
 						<div class="form-group">
 							<label for="cursoInput">  Curso*</label>
 							<select name="curso" id="cursoInput" class="form-control">
-								<%
+
+								<%		
 										for(Curso c : cursodao.listar()){
-									%>
-											<option value="<%=c.getIdCurso() %>"> <%= c.getNome() %></option> 
-									<%
+											
+											if(c.getIdCurso()== perfil.getCurso().getIdCurso()){
+											%>
+												<option value="<%= c.getIdCurso()%>" selected> <%=c.getNome() %></option>
+												
+												<%
+											}else{
+												%>
+												<option value="<%=c.getIdCurso() %>"> <%= c.getNome() %></option> 
+											<% 	
+											}
+											%>
+
+											
+										<%
 										}
-									%>
+										%>
 								
 							</select>
 							 <div class="invalid-feedback">
