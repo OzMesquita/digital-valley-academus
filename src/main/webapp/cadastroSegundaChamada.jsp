@@ -115,20 +115,23 @@
 							%>
 								<div class="form-group">
 									<label for="alunoInput">Aluno</label>
-									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" placeholder="Digite o Nome do Aluno">
+									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" placeholder="Digite o Nome do Aluno" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 								</div>
 								
 								<div class="row">
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="matriculaInput">Matricula</label>
-											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula do Aluno">
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula do Aluno" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 										</div>
 									</div>
 									<div class="col-md-9">
 										<div class="form-group">
 											<label for="cursoInput">Curso</label>
-											<input type="text" id="cursoInput" name="curso" class="form-control" placeholder="Digite o Curso do Aluno">
+											<input type="text" id="cursoInput" name="curso" class="form-control" placeholder="Digite o Curso do Aluno" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 										</div>
 									</div>
 								</div>
@@ -145,7 +148,7 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="matriculaInput">Matricula</label>
-											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula">
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula" disabled>
 										</div>
 									</div>
 									<div class="col-md-9">
@@ -161,7 +164,8 @@
 							
 							<div class="form-group">
 								<label for="professorInput">Professor</label>
-								<select id="professorInput" name="professor" class="form-control">
+								<select id="professorInput" name="professor" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 								<option></option>
 									<%
 										for(Professor p: professores){
@@ -182,7 +186,8 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="discplinaInput">Lista Disciplinas</label>
-										<select id="disciplinaInput" name="disciplina" class="form-control">
+										<select id="disciplinaInput" name="disciplina" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 											<option></option>
 									<%
 										for(Disciplina d: disciplinas){
@@ -197,14 +202,16 @@
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="dataDaProvaInput">Data da Prova</label>
-										<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control">
+										<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 									</div>
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="justificativaInput">Justificativa</label>
-								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação"></textarea>
+								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo."></textarea>
 							</div>
 							
 							<div class="modal-footer">
