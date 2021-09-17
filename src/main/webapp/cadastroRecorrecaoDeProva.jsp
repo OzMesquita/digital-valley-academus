@@ -35,6 +35,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
 		
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link type="text/css" rel="stylesheet" href="<%=Constantes.getAppCssUrl()%>/design.css" />
@@ -90,20 +91,23 @@
 							%>
 								<div class="form-group">
 									<label for="alunoInput">Aluno</label>
-									<input type="text" id="alunoInput" name="nomeAluno" class="form-control">
+									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 								</div>
 								
 								<div class="row">
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="matriculaInput">Matricula</label>
-											<input type="number" id="matriculaInput" name="matricula" class="form-control">
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 										</div>
 									</div>
 									<div class="col-md-9">
 										<div class="form-group">
 											<label for="cursoInput">Curso</label>
-											<input type="text" id="cursoInput" name="curso" class="form-control">
+											<input type="text" id="cursoInput" name="curso" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 										</div>
 									</div>
 								</div>
@@ -111,7 +115,8 @@
 									<div class="col-md-7">
 										<div class="form-group" >
 											<label for="professorInput">Professor</label>
-											<select id="professorInput" name="professor" class="form-control">
+											<select id="professorInput" name="professor" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 												<option></option>
 												<%
 													for(Professor p: professores){
@@ -128,7 +133,8 @@
 									<div class="col-md-7">
 										<div class="form-group">
 											<label for="discplinaInput">Lista Disciplinas</label>
-											<select id="disciplinaInput" name="disciplina" class="form-control">
+											<select id="disciplinaInput" name="disciplina" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 												<option></option>
 											<%
 												for(Disciplina d: disciplinas){
@@ -146,40 +152,45 @@
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="dataDaProvaInput">Data da Prova realizada</label>
-											<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control">
+											<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 										</div>
 									</div>
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="horarioDaProvaInput">Horário da Prova</label>
-											<input type="time" id="horarioDaProvaInput" name="horarioDaProva" class="form-control">
+											<input type="time" id="horarioDaProvaInput" name="horarioDaProva" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 	
 										</div>
 									</div>
 									<div class=col-md-4">
 										<div class="form-group">
 											<label for="dataRecebimentoInput">Data do resultado da Prova</label>
-											<input type="date" id="dataRecebimentoInput" name="dataRecebimento" class="form-control">
+											<input type="date" id="dataRecebimentoInput" name="dataRecebimento" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 										</div>
 									</div>
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="horarioRecebimentoInput">Horário do recebimento</label>
-											<input type="time" id="horarioRecebimentoInput" name="horarioRecebimento" class="form-control">
-											
+											<input type="time" id="horarioRecebimentoInput" name="horarioRecebimento" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo." /> <br />
 										</div>
 									</div>
 								</div>
 								
 								<div class="custom-file">
-									<input type="file" name="anexo" class="custom-file-input" id="anexoProva" accept=".pdf" >
-									<label id="labelProva" class="custom-file-label" for="anexoProva">Anexe a prova aqui</label>
+									<input type="file" name="anexo" class="custom-file-input" id="anexoProva" accept=".pdf" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+									<label id="labelProva" class="custom-file-label" for="anexoProva" >Anexe a prova aqui</label>
 								</div>
 								<br> 
 								
 								<div class="form-group">
 									<label for="justificativaInput">Justificativa</label>
-									<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação"></textarea>
+									<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo."></textarea>
 								</div>
 								
 								<div class="modal-footer">
@@ -215,7 +226,8 @@
 									<div class="col-md-7">
 										<div class="form-group" >
 											<label for="professorInput">Professor</label>
-											<select id="professorInput" name="professor" class="form-control">
+											<select id="professorInput" name="professor" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 											<option></option>
 												<%
 													for(Professor p: professores){
@@ -231,7 +243,8 @@
 									<div class="col-md-7">
 										<div class="form-group">
 											<label for="discplinaInput">Lista Disciplinas</label>
-											<select id="disciplinaInput" name="disciplina" class="form-control">
+											<select id="disciplinaInput" name="disciplina" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 												<option></option>
 										<%
 											for(Disciplina d: disciplinas){
@@ -248,22 +261,27 @@
 								<div class="form-row">
 									<div class="form-group col-sm">
 										<label for="dataDaProvaInput">Data da Prova Realizada</label>
-										<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control">
+										<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 									</div>
 		
 									<div class="form-group col-sm">
 										<label for="horarioDaProvaInput">Horário da Prova</label>
-										<input type="time" id="horarioDaProvaInput"name="horarioDaProva" class="form-control">
+										<input type="time" id="horarioDaProvaInput"name="horarioDaProva" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 									</div>
 									<div class="w-100"></div> <!-- Serve para quebrar a coluna -->
 									<div class="form-group col-sm">
 										<label for="dataDeRecebimentoInput">Data de Recebimento</label>
-										<input type="date" id="dataDeRecebimentoInput" name="dataRecebimento" class="form-control">
+										<input type="date" id="dataDeRecebimentoInput" name="dataRecebimento" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+    									<script type="text/javascript"></script>
 									</div>
 		
 									<div class="form-group col-sm">
 										<label for="horarioRecebimentoInput">Horário de Resultado da Prova</label>
-										<input type="time" id="horarioRecebimentoInput"name="horarioRecebimento" class="form-control">
+										<input type="time" id="horarioRecebimentoInput"name="horarioRecebimento" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 									</div>
 								</div>
 								
@@ -271,14 +289,16 @@
 								
 															        	
 								<div class="custom-file">
-									<input type="file" name="anexo" class="custom-file-input" id="anexoProva" accept=".pdf" >
+									<input type="file" name="anexo" class="custom-file-input" id="anexoProva" accept=".pdf"  required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 									<label id="labelProva" class="custom-file-label" for="anexoProva">Anexe a prova aqui</label>
 								</div>
 															        
 								
 								<div class="form-group">
 									<label for="justificativaInput">Justificativa</label>
-									<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação"></textarea>
+									<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo."></textarea>
 								</div>
 								
 								<div class="modal-footer">
@@ -380,23 +400,6 @@
 		var solicitacoes = [];
 		var tam = 0;
 		
-		/* <-----------AJEITAR DEPOISS------------>
-		
-		
-		
-		function verificaSolicitacao (obj){
-			var data = new Date;
-			if(obj.matricula == ""){
-				alert("Por favor, preencha a matrícula");
-				return false
-			}else if(obj.justificativa == ""){
-				alert("Por favor, preencha a justificativa");
-			}else if(obj.dataDaProva > obj.dataRecebimento){
-				alert("A data de recebimento da prova não pode ser antes da data do recebimento. ");
-			}
-			solicitacoes[tam] = obj;
-			return true;			
-		}*/
 
 		function trocaTextoInputFileProva() {
 			if($("#anexoProva").val() != ""){
