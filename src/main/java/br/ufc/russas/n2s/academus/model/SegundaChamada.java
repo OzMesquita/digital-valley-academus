@@ -1,6 +1,7 @@
 package br.ufc.russas.n2s.academus.model;
 
 import java.sql.Date;
+import java.sql.Time;
 
 
 public class SegundaChamada {
@@ -9,6 +10,7 @@ public class SegundaChamada {
 	private Professor professor;
 	private Disciplina disciplina;
 	private Date dataProva;
+	private Time horarioDaProva;
 	private String justificativa;
 	private StatusSegundaChamada status;
 	public SegundaChamada() {
@@ -16,6 +18,12 @@ public class SegundaChamada {
 	}
 	
 	
+	public Time getHorarioDaProva() {
+		return horarioDaProva;
+	}
+	public void setHorarioDaProva(Time horarioDaProva) {
+		this.horarioDaProva=horarioDaProva;
+	}
 	
 	public StatusSegundaChamada getStatus() {
 		return status;
