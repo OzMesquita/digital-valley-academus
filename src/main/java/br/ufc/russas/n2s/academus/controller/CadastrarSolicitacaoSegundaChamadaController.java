@@ -21,6 +21,7 @@ import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Disciplina;
 import br.ufc.russas.n2s.academus.model.Professor;
 import br.ufc.russas.n2s.academus.model.SegundaChamada;
+import br.ufc.russas.n2s.academus.model.Email;
 
 
 
@@ -74,6 +75,9 @@ public class CadastrarSolicitacaoSegundaChamadaController extends HttpServlet {
 			
 			try {
 				scdao.cadastro(segundaChamada);
+				Thread sendEmail = new Thread(new Email(professor, "Solicitação de Segunda Chamada", "Segunda Chamada",
+						"O aluno " + aluno.getNome() + "solicitou a segunda chamada da disciplina"+disc.getNome()));
+				sendEmail.start();
 				
 				request.setAttribute("success", "Cadastro realizado com sucesso.");
 				javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroSegundaChamada.jsp");
