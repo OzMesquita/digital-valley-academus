@@ -193,21 +193,30 @@
 								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" readonly><%=rdp.getJustificativa()%></textarea>
 							</div>
 							
-							<div class="modal-footer">
-								<div id="botoes" class="controls">
-									<a href="HistoricoRecorrecaoDeProva" class="btn btn-primary btn-sm">Voltar</a>
-									<!-- <button type="submit" class="btn btn-primary btn-sm">Confirmar</button> -->
-								</div>
-							</div>
+							
 							
 					</form>
 					<% request.setAttribute("idRecorrecao", idRecorrecao);%>
-					<form method="POST" action="GerarPDF" id="pdf<%=(String)(request.getAttribute("idRecorrecao"))%>">
-						<input type="hidden" name="tipo" value="recorrecao">
-						<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("idRecorrecao")%>" 
-							style="height: 30px;" type="submit" name="idRecorrecao" value="<%=(String)request.getAttribute("idRecorrecao")%>"> Gerar PDF
-						</button>
-					</form>
+					
+					<div class="modal-footer">
+						<div id="botoes" class="controls">
+							<a href="HistoricoRecorrecaoDeProva" class="btn btn-primary btn-sm">Voltar</a>
+								<!-- <button type="submit" class="btn btn-primary btn-sm">Confirmar</button> -->
+							
+							<form method="POST" action="GerarPDF" id="pdf<%=(String)(request.getAttribute("idRecorrecao"))%>">
+								<input type="hidden" name="tipo" value="recorrecao">
+								<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("idRecorrecao")%>" 
+									type="submit" name="idRecorrecao" value="<%=(String)request.getAttribute("idRecorrecao")%>"> Gerar PDF
+								</button>
+							</form>
+								<!-- style="height: 30px;"  -->
+						</div>
+					</div>
+					
+					
+					
+					
+					
 					<%
 					} else {
 						%>
