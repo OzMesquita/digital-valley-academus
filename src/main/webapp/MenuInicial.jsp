@@ -24,7 +24,7 @@
 	</head>
 	<body>
 		<c:import url="jsp/elements/menu-superior.jsp" charEncoding="UTF-8"></c:import>
-		<div class="container-fluid">
+		<div class="container-fluid" style="height: 800px">
 			<div class="row">
 				<c:import url="jsp/elements/menu-lateral-esquerdo.jsp" charEncoding="UTF-8"></c:import>
 				<div class="col-md-10">
