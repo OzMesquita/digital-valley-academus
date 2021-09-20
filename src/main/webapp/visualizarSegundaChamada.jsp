@@ -167,18 +167,24 @@
 					<% request.setAttribute("idSegundaChamada", idSegundaChamada);%>
 					<% System.out.println("id:"+(String)request.getAttribute("idSegundaChamada")); %>
 					
-					<form method="POST" action="GerarPDF" id="pdf<%=(String)request.getAttribute("idSegundaChamada")%>">
-						<input type="hidden" name="tipo" value="segundaChamada">
-						<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("idSegundaChamada")%>" 
-							style="height: 30px;" type="submit" name="id" value="<%=(String)request.getAttribute("idSegundaChamada")%>"> Gerar PDF
-						</button>
-						
-							<div id="botoes" class="controls">
-								<a href="HistoricoSegundaChamada" class="btn btn-primary btn-sm">Voltar</a>
-								<!-- <button type="submit" class="btn btn-primary btn-sm">Confirmar</button> -->
-							</div>
+					<div class="modal-footer">
+						<div id="botoes" class="controls">
+							<form method="POST" action="GerarPDF" id="pdf<%=(String)request.getAttribute("idSegundaChamada")%>">
+								<input type="hidden" name="tipo" value="segundaChamada">
+								<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("idSegundaChamada")%>" 
+									style="height: 30px;" type="submit" name="id" value="<%=(String)request.getAttribute("idSegundaChamada")%>"> Gerar PDF
+								</button>
 								
-					</form>
+									<div id="botoes" class="controls">
+										<a href="HistoricoSegundaChamada" class="btn btn-primary btn-sm">Voltar</a>
+										<!-- <button type="submit" class="btn btn-primary btn-sm">Confirmar</button> -->
+									</div>
+								
+							</form>
+						</div>
+					</div>
+					
+					
 					
 					<%if(per.getNivel()== NivelAcademus.PROFESSOR || per.getNivel()== NivelAcademus.SECRETARIO){ %>
 					<form method="POST" action="MudarStatus" id="form<%=(String)request.getAttribute("id")%>">
