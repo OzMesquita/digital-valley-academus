@@ -6,6 +6,8 @@
 <%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.ProfessorDAO" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.Professor" %>
+<%@ page import="br.ufc.russas.n2s.academus.model.PerfilAcademus" %>
+<%@ page import="br.ufc.russas.n2s.academus.model.NivelAcademus" %>
 
 <%@ page import="java.util.*"%>
  
@@ -13,9 +15,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  
  <%
+ 	PerfilAcademus per = (PerfilAcademus) session.getAttribute("userAcademus");
+ 
  	
  	SegundaChamada sc = (SegundaChamada) session.getAttribute("segundaChamada");
- 	
+ 	String idSegundaChamada =Integer.toString( sc.getIdSegundaChamada());
+ 	System.out.println(idSegundaChamada);
  	DAOFactory df = new DAOFactoryJDBC();
  	List<Professor> professores = new ArrayList<Professor>();
  
@@ -55,7 +60,7 @@
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
-						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>
+						<li class="breadcrumb-item"><a href="HistoricoSegundaChamada">Início</a></li>
 						<li class="breadcrumb-item active" aria-current="page">Visualizar Segunda Chamada</li>
 					</ol>
 					</nav>
@@ -156,14 +161,61 @@
 								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" readonly><%=sc.getJustificativa()%></textarea>
 							</div>
 							
-							<div class="modal-footer">
-								<div id="botoes" class="controls">
-									<a href="HistoricoSegundaChamada" class="btn btn-primary btn-sm">Voltar</a>
-									<!-- <button type="submit" class="btn btn-primary btn-sm">Confirmar</button> -->
-								</div>
-							</div>
+							
 							
 					</form>
+					<% request.setAttribute("idSegundaChamada", idSegundaChamada);%>
+					<% System.out.println("id:"+(String)request.getAttribute("idSegundaChamada")); %>
+					
+					<div class="modal-footer">
+						<div id="botoes" class="controls">
+							<form method="POST" action="GerarPDF" id="pdf<%=(String)request.getAttribute("idSegundaChamada")%>">
+								<input type="hidden" name="tipo" value="segundaChamada">
+								<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("idSegundaChamada")%>" 
+									style="height: 30px;" type="submit" name="id" value="<%=(String)request.getAttribute("idSegundaChamada")%>"> Gerar PDF
+								</button>
+								
+									<div id="botoes" class="controls">
+										<a href="HistoricoSegundaChamada" class="btn btn-primary btn-sm">Voltar</a>
+										<!-- <button type="submit" class="btn btn-primary btn-sm">Confirmar</button> -->
+									</div>
+								
+							</form>
+						</div>
+					</div>
+					
+					
+					
+					<%if(per.getNivel()== NivelAcademus.PROFESSOR || per.getNivel()== NivelAcademus.SECRETARIO){ %>
+					<form method="POST" action="MudarStatus" id="form<%=(String)request.getAttribute("id")%>">
+										<input type="hidden" id="ementaAnexada" name="ementaAnexada" value="0"/>
+										<input type="hidden" id="historicoAnexado" name="historicoAnexado" value="0"/>
+																
+									        <select type="text" name="resultado" class="form-control custom-select" id="resultado" size=1 style="max-width:20%;" required>
+									            <option value="" selected="selected" disabled="disabled">Mudar Status</option>
+									            <option value="Deferido">Deferido</option>
+									        	<option value="Indeferido">Indeferido</option>              
+									        </select>
+									        <br>
+								            
+								        	<br>
+							
+											
+								
+							<div class="modal-footer">
+									<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Cancelar</button>
+									<td>
+									<button  class="btn btn-primary btn-sm active" form="form<%=(String)request.getAttribute("idSegundaChamada")%>"
+										class="btn btn-primary btn-sm" style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("idSegundaChamada") %>" > Confirmar
+									</button>
+									</td>
+									
+										
+									
+							</div>
+							
+							</form>
+							<%} %>
 					<%
 					} else {
 						%>

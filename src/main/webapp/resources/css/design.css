@@ -2,13 +2,12 @@
     margin: 0;
     padding: 0;
 }
-html{
-    
-}
+
 body{
     font-family: arial, sans-serif;
     font-size: 12px;
     height: 100%;
+    position: relative; /*para o menu inicial foi testado relative*/
 }
 h1{
     font-size: 26px;
@@ -43,6 +42,7 @@ nav{
 }
 .container-fluid{
     height: min-content;
+    padding-bottom: 630px; /*Foi testado no menu inicial*/
 }
 
 form > label{
@@ -78,6 +78,7 @@ form > .btn{
     left: 5px;
     position: relative;
 }
+
 .filtro_tela > i{
     color: gray;
 }

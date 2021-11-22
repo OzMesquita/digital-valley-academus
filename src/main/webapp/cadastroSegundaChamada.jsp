@@ -1,5 +1,7 @@
 <%@page import="br.ufc.russas.n2s.academus.model.Professor"%>
 <%@page import="br.ufc.russas.n2s.academus.dao.JDBCProfessorDAO"%>
+<%@page import="br.ufc.russas.n2s.academus.model.Disciplina"%>
+<%@page import="br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO"%>
 <%@page import="br.ufc.russas.n2s.academus.dao.JDBCAlunoDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.dao.AlunoDAO"%>
 <%@ page import="br.ufc.russas.n2s.academus.model.Aluno"%>
@@ -17,6 +19,8 @@
 	List<Professor> professores = professorDao.listar();
 	JDBCAlunoDAO alunoDAO = new JDBCAlunoDAO();
 	Aluno aluno = alunoDAO.buscarPorId(usuario.getId());
+	JDBCDisciplinaDAO disciplinaDao = new JDBCDisciplinaDAO();
+	List<Disciplina> disciplinas = disciplinaDao.listar();
 %>
 
 <!DOCTYPE html>
@@ -45,7 +49,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<c:import url="jsp/elements/menu-lateral-esquerdo.jsp" charEncoding="UTF-8"></c:import>
-				<div class="col-md-10">
+				<div class="col-md-10" style="padding-bottom: 200px;">
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
@@ -107,7 +111,33 @@
 									</div>
 								</div>
 							<%
-							} else {
+							} else if(usuario.getNivel() == NivelAcademus.SECRETARIO || usuario.getNivel() == NivelAcademus.COORDENADOR){ //Mudar quando for atulizar coordenador
+							%>
+								<div class="form-group">
+									<label for="alunoInput">Aluno</label>
+									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" placeholder="Digite o Nome do Aluno" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+								</div>
+								
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="matriculaInput">Matricula</label>
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula do Aluno" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+										</div>
+									</div>
+									<div class="col-md-9">
+										<div class="form-group">
+											<label for="cursoInput">Curso</label>
+											<input type="text" id="cursoInput" name="curso" class="form-control" placeholder="Digite o Curso do Aluno" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+										</div>
+									</div>
+								</div>
+							<%
+							}
+							else {
 							%>
 								<div class="form-group">
 									<label for="alunoInput">Aluno</label>
@@ -118,7 +148,7 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="matriculaInput">Matricula</label>
-											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula">
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a Matrícula" disabled>
 										</div>
 									</div>
 									<div class="col-md-9">
@@ -134,11 +164,15 @@
 							
 							<div class="form-group">
 								<label for="professorInput">Professor</label>
-								<select id="professorInput" name="professor" class="form-control">
+								<select id="professorInput" name="professor" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 								<option></option>
 									<%
 										for(Professor p: professores){
 									%>
+											<% System.out.println(p.getId()); 
+												System.out.println(p.getNome());
+										%>
 											<option value="<%=p.getId() %>"> <%= p.getNome() %></option> 
 									<%
 										}
@@ -152,22 +186,32 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="discplinaInput">Lista Disciplinas</label>
-										<select id="disciplinaInput" name="disciplina" class="form-control" disabled>
-											<option>Selecione a disciplina pelo seu nome ou código</option>
+										<select id="disciplinaInput" name="disciplina" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+											<option></option>
+									<%
+										for(Disciplina d: disciplinas){
+									%>
+											<option value="<%=d.getId() %>"> <%= d.getNome() %></option> 
+									<%
+										}
+									%>
 										</select>
 									</div>
 								</div>
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="dataDaProvaInput">Data da Prova</label>
-										<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control">
+										<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 									</div>
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="justificativaInput">Justificativa</label>
-								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação"></textarea>
+								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo."></textarea>
 							</div>
 							
 							<div class="modal-footer">
@@ -187,10 +231,10 @@
 											</button>
 										</div>
 										<div class="modal-body">
-											<h2>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h2>
+											<h5>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h5>
 										</div>
 										<div class="modal-footer">
-											<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
+											<button type="button" id="modal-nao" autofocus class="btn btn-secondary btn-sm active" data-dismiss="modal" >Não</button>
 											<a href="MenuInicial"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
 										</div>
 									</div>

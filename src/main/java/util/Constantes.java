@@ -16,6 +16,8 @@ public class Constantes {
 	private static String GUARDIAO_APP;
 	private static String LOGO_UFC;
 	private static String TEMP_DIR;
+	private static String LOGO_N2S;
+	private static String LOGO_ACADEMUS;
 	
 	private Constantes(){
 		
@@ -35,6 +37,8 @@ public class Constantes {
 		GUARDIAO_APP = dotEnv.get("GUARDIAO_APP");
 		LOGO_UFC = dotEnv.get("LOGO_UFC");
 		TEMP_DIR = dotEnv.get("TEMP_DIR");
+		LOGO_N2S=dotEnv.get("LOGO_N2S");
+		LOGO_ACADEMUS=dotEnv.get("LOGO_ACADEMUS");
 	}
 	
 	public static String getAnexoDir() {
@@ -79,6 +83,14 @@ public class Constantes {
 	
 	public static String getLogoUfc() {
 		return LOGO_UFC;
+	}
+
+	public static String getLogoN2s() {
+		return LOGO_N2S;
+	}
+	
+	public static String getLogoAcademus() {
+		return LOGO_ACADEMUS;
 	}
 	
 	public static String getTempDir() {

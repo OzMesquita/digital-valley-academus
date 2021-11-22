@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Professor;
+import br.ufc.russas.n2s.academus.model.Funcionario;
 import br.ufc.russas.n2s.academus.model.RecorrecaoDeProva;
 import br.ufc.russas.n2s.academus.model.StatusRecorrecao;
 
@@ -43,6 +44,8 @@ public interface RecorrecaoDeProvaDAO {
 		public int numSolicitacoesPorStatus(int pagina, Aluno aluno, StatusRecorrecao status);
 		public int numSolicitacoesPorStatus(int pagina, Professor professor, StatusRecorrecao status);
 		public int numSolicitacoesCoordenadorPorStatus(int pagina, Professor coordenador, StatusRecorrecao status);
+
+		
 
 	
 

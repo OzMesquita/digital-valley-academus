@@ -270,6 +270,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		List<Solicitacao> solicitacoes = new ArrayList<>();
 		String sql = "SELECT * FROM academus.solicitacao WHERE status != ? AND id_curso = ? order by id_solicitacao offset ? limit ?;";
 		if(c.getNivel() == NivelAcademus.COORDENADOR) {
+			
 			Connection conn = ConnectionPool.getConnection();
 			try{
 				PreparedStatement ps = conn.prepareStatement(sql);
@@ -379,6 +380,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		String sql = "SELECT * FROM academus.solicitacao WHERE status = ? AND id_curso = ? order by id_solicitacao offset ? limit ?;";
 		
 		if(c.getNivel() == NivelAcademus.COORDENADOR) {
+			
 			Connection conn = ConnectionPool.getConnection();
 			try{
 				PreparedStatement ps = conn.prepareStatement(sql);
@@ -490,6 +492,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		String sql = "SELECT * FROM academus.solicitacao WHERE id_curso = ? AND status != ? AND status != ? order by id_solicitacao offset ? limit ?;";
 		
 		if(c.getNivel() == NivelAcademus.COORDENADOR) {
+		
 			Connection conn = ConnectionPool.getConnection();
 			try{
 				PreparedStatement ps = conn.prepareStatement(sql);
@@ -601,6 +604,7 @@ public class JDBCSolicitacaoDAO implements SolicitacaoDAO{
 		String sql = "SELECT * FROM academus.solicitacao WHERE id_curso = ? AND status = ? order by id_solicitacao offset ? limit ?;";
 		
 		if(c.getNivel() == NivelAcademus.COORDENADOR) {
+			
 			Connection conn = ConnectionPool.getConnection();
 			try{
 				PreparedStatement ps = conn.prepareStatement(sql);

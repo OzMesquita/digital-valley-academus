@@ -6,24 +6,26 @@
 
 <%
 	PerfilAcademus usuario = (PerfilAcademus)session.getAttribute("userAcademus");
-	String statusSoli = (request.getParameter("solicitacao") != null) ? request.getParameter("solicitacao") : "null";
+	String statusSoli = (request.getParameter("solicitacao")!=null) ? request.getParameter("solicitacao") : null;
+	
 %>
 
 <!-- Essa pagina filtra e faz a listagem de todas as solicitacoes de Recorreção de Provas -->
-<div class="dropdown">
-	<button type="button" class="btn dropdown-toggle btn-sm btn-icon filtro_tela" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		<i class="material-icons">filter_list</i>
-		Filtrar
-	</button>
-	<div class="dropdown-menu dropdown-menu-left">
-		
-		<a class="dropdown-item" href="HistoricoRecorrecaoDeProva">Todas as solicitações</a>
-		<a class="dropdown-item" href="HistoricoRecorrecaoDeProva?tipoSolicitacao=submetido">Solicitações submetidas</a>
-		<a class="dropdown-item" href="HistoricoRecorrecaoDeProva?tipoSolicitacao=finalizado">Solicitações finalizadas</a>
-		
+<%if(usuario.getNivel()==NivelAcademus.ALUNO || usuario.getNivel()==NivelAcademus.SECRETARIO || usuario.getNivel()==NivelAcademus.PROFESSOR || usuario.getNivel()==NivelAcademus.COORDENADOR) {%>
+	<div class="dropdown">
+		<button type="button" class="btn dropdown-toggle btn-sm btn-icon filtro_tela" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<i class="material-icons">filter_list</i>
+			Filtrar
+		</button>
+		<div class="dropdown-menu dropdown-menu-left">
+			
+			<a class="dropdown-item" href="HistoricoRecorrecaoDeProva">Todas as solicitações</a>
+			<a class="dropdown-item" href="HistoricoRecorrecaoDeProva?tipoSolicitacao=submetido">Solicitações submetidas</a>
+			<a class="dropdown-item" href="HistoricoRecorrecaoDeProva?tipoSolicitacao=finalizado">Solicitações finalizadas</a>
+			
+		</div>
 	</div>
-</div>
-
+<%} %>
 <div class="table-responsive">
 	<table class="table">
 		<thead>
@@ -42,7 +44,9 @@
 		int numSolicitacoes = (Integer) session.getAttribute("numSolicitacoes");
 		
 		if(listaRP != null){
+			
 			for (RecorrecaoDeProva rp : listaRP) {
+				
 		%>
 		<tr>
 			<td><%=rp.getIdRecorrecao()%></td>
@@ -50,7 +54,7 @@
 			<td><%=rp.getAluno().getNome()%></td>
 			<td><%=rp.getDisciplina().getNome()%></td>
 			<td>
-				<a href="VisualizarSegundaChamada?id=<%=rp.getIdRecorrecao()%>" class="btn btn-primary btn-sm">Visualizar</a>
+				<a href="VisualizarRecorrecaoDeProva?id=<%=rp.getIdRecorrecao() %>" class="btn btn-primary btn-sm">Visualizar</a>
 			</td>
 		</tr>
 		

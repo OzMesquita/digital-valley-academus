@@ -1,9 +1,12 @@
 package br.ufc.russas.n2s.academus.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 
-public class RecorrecaoDeProva {
+public class RecorrecaoDeProva implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private Aluno aluno;
 	private Professor professor;
 	private Disciplina disciplina;
@@ -14,7 +17,8 @@ public class RecorrecaoDeProva {
 	private String justificativa;
 	private int idRecorrecao;
 	private StatusRecorrecao status;
-	private Arquivo arquivo;
+	private int idArquivo;
+
 	
 	public RecorrecaoDeProva() {
 		
@@ -121,13 +125,13 @@ public class RecorrecaoDeProva {
 
 
 
-	public Arquivo getArquivo() {
-		return arquivo;
+	public int getIdArquivo() {
+		return idArquivo;
 	}
 
 
 
-	public void setArquivo(Arquivo arquivo) {
-		this.arquivo = arquivo;
+	public void setIdArquivo(int arq) {
+		this.idArquivo =arq ;
 	}
 }

@@ -56,7 +56,7 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
 						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Visualizar Solicitacao</li>
+						<li class="breadcrumb-item active" aria-current="page">Visualizar Solicitação</li>
 					</ol>
 					</nav>
 					
@@ -251,11 +251,15 @@
 							<%if(per.getNivel() == NivelAcademus.ALUNO && solicitacao.getStatus() == Status.SOLICITADO){%>
 						    	<div class="modal-footer">
 									<form method="POST" action="GerarPDF" id="pdf<%=(String)request.getAttribute("id")%>">
+										<input type="hidden" name="tipo" value="solicitacao">
 										<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("id")%>" 
 											style="height: 30px;" type="submit" name="id" value="<%=(String)request.getAttribute("id")%>"> Gerar PDF
 										</button>
 									</form>
 								</div>
+								<!-- Botao Editar -->
+	
+								
 							<% } %>
 							<div class="modal-footer">
 							<!-- Botao Cancelar -->
@@ -267,7 +271,16 @@
 							<% } else if(per.getNivel() == NivelAcademus.COORDENADOR && solicitacao.getStatus() == Status.ANALISANDO){ %>
 								<c:import url="jsp/elements/botoesVisualizarCoordenador.jsp" charEncoding="UTF-8"></c:import>
 								
-							<% } %>
+							<% }else if(per.getNivel() == NivelAcademus.SECRETARIO && solicitacao.getStatus() == Status.SOLICITADO){%>
+								<form method="POST" action="EditarSolicitacao" id="form<%=(String)request.getAttribute("id")%>">
+									<button  class="btn btn-primary btn-sm" form="form<%=(String)request.getAttribute("id")%>"
+									style="height: 30px;" type="submit" name="button" value="<%=(String)request.getAttribute("id")%>" > Editar
+									</button>
+								</form>
+							
+								<c:import url="jsp/elements/botoesVisualizarSecretarioAnexarDocumentos.jsp" charEncoding="UTF-8"></c:import>
+							<% }%>
+							
 							</div>
 					</div>
 					<%

@@ -11,7 +11,7 @@
 				%>
 				<div class="btn-group-vertical btn-group-sm" role="group">
 					<a id="aproveitamento" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				      Proveito de disciplina
+				      Aproveitamento de Disciplina
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="aproveitamento">
 				      <a class="dropdown-item" href="CadastrarSolicitacao">Cadastrar</a>
@@ -41,7 +41,7 @@
 				%>
 				<div class="btn-group-vertical btn-group-sm" role="group">
 					<a id="aproveitamento" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				      Proveito de disciplina
+				      Aproveitamento de Disciplina
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="aproveitamento">
 				      <a class="dropdown-item" href="CadastrarSolicitacao">Cadastrar</a>
@@ -72,7 +72,7 @@
 				%>
 				<div class="btn-group-vertical btn-group-sm" role="group">
 					<a id="aproveitamento" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				      Proveito de disciplina
+				      Aproveitamento de Disciplina
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="aproveitamento">
 				      <a class="dropdown-item" href="CadastrarSolicitacao">Cadastrar</a>
@@ -102,7 +102,7 @@
 				%>
 				<div class="btn-group-vertical btn-group-sm" role="group">
 					<a id="aproveitamento" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				      Proveito de disciplina
+				      Aproveitamento de Disciplina
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="aproveitamento">
 				      <a class="dropdown-item" href="CadastrarSolicitacao">Cadastrar</a>
@@ -132,7 +132,7 @@
 				%>
 				<div class="btn-group-vertical btn-group-sm" role="group">
 					<a id="aproveitamento" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				      Proveito de disciplina
+				      Aproveitamento de Disciplina
 				    </a>
 				    <div class="dropdown-menu" aria-labelledby="aproveitamento">
 				      <a class="dropdown-item" href="CadastrarSolicitacao">Cadastrar</a>

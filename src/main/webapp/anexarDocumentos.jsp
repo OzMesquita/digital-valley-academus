@@ -19,7 +19,7 @@
 	
 	boolean deuCerto = true;
 	try{
-		System.out.print((String)(request.getAttribute("id")));
+		
 		solicitacao = dao.buscarPorId(Integer.parseInt((String)(request.getAttribute("id"))));
 	} catch(Exception e){
 		deuCerto = false;

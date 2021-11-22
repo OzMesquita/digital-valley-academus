@@ -32,6 +32,8 @@
 	try{
 		
 		curso = cursodao.listar();
+		disciplinas = disciplinadao.listar();
+		
 		
 			
 	} catch(Exception e){
@@ -139,11 +141,15 @@
 							</div>
 							
 							<div class="form-group">
-								<label for="discplinaInput">Lista Disciplinas</label>
-								<select id="disciplinaInput" name="disciplina" class="form-control">
-								<option></option>
-									
-								</select>
+								
+								<label for="componentesInput">Disciplinas</label>
+									<select id="componentesInput" name="componente" class="form-control">
+										<option value="" selected="selected" disabled="disabled">Selecione a disciplina</option>
+										<%for(Disciplina disciplina : disciplinas){%>
+											<option id="disciplinaOption-<%=disciplina.getId()%>" value="<%=disciplina.getId()%>"><%=disciplina.getNome()%></option>
+										<%}%>
+									</select>
+
 							</div>
 							
 						
@@ -241,7 +247,7 @@
 			$('#disciplinaInput').select2({
 				placeholder: 'Selecione uma disciplina',
 				allowClear: true,
-				dataType: 'json',
+				//dataType: 'json',
 				minimumInputLength: 2,
 				ajax: {
 					url: function(){
@@ -291,7 +297,7 @@
 					 '</div>'+
 			 	'</li>'		
 			);
-			listaDisciplinas[numDisciplinas] = disc;
+			listaDisciplinas[numDisciplinas] = disc.txt;
 			numDisciplinas++;
 		}
 		document.getElementById("disciplinaInput").selectedIndex = -1;

@@ -5,6 +5,7 @@
 <%@ page import="br.ufc.russas.n2s.academus.model.DisciplinaCursada" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.DAOFactoryJDBC" %>
 <%@ page import="br.ufc.russas.n2s.academus.dao.ProfessorDAO" %>
+<%@ page import="br.ufc.russas.n2s.academus.dao.ArquivoDAO" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.Professor" %>
 
 <%@ page import="java.util.*"%>
@@ -15,8 +16,13 @@
  <%
  	
  	RecorrecaoDeProva rdp = (RecorrecaoDeProva) session.getAttribute("recorrecaoDeProva");
+ //	rdp.getAluno().getNome();
+ 	
+ 	
+ 	String idRecorrecao=Integer.toString(rdp.getIdRecorrecao());	
  	
  	DAOFactory df = new DAOFactoryJDBC();
+ 	ArquivoDAO arqdao =df.criarArquivoDAO();
  	List<Professor> professores = new ArrayList<Professor>();
  
  	try {
@@ -31,7 +37,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Visualizando Segunda Chamada</title>
+		<title>Visualizando Recorreção de Prova</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 			
@@ -55,12 +61,12 @@
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
-						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Visualizar Recorreção de prova</li>
+						<li class="breadcrumb-item"><a href="HistoricoRecorrecaoDeProva">Início</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Visualizar Recorreção de Prova</li>
 					</ol>
 					</nav>
 					
-					<h1>Visualizar Recorreção de prova</h1>
+					<h1>Visualizar Recorreção de Prova</h1>
 					
 					<br>
 					<!-- Caso a mensagem bem sucedido vem para essa tela com uma mensagem de sucesso -->
@@ -84,7 +90,8 @@
 						<% } %>
 						
 					<%
-					if (rdp != null){
+					if(rdp!=null ){
+
 					%>
 						
 					<form action="#" method="post">
@@ -133,7 +140,7 @@
 								</select>
 								
 							</div>
-							<div class="col-md-7">
+							<div >
 									<div class="form-group">
 										<label for="discplinaInput">Disciplina</label>
 										<select id="disciplinaInput" name="disciplina" class="form-control" disabled>
@@ -171,28 +178,45 @@
 								</div>
 							</div>
 							
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="custom-file">
-									 	<input type="file" class="custom-file-input" id="customFileLang" lang="pt" readonly value="">
-								<!--Arrumar depois --> <label class="custom-file-label" for="customFile">Anexe aqui a prova</label>
-									</div>
-								</div>
+							
+									
+							<div class="form-group">
+								<label  for="anexo">Prova Anexada</label>
+							 	<input type="text" class="form-control" id="anexo" name="anexo"  value="<%= arqdao.buscarPorId(rdp.getIdArquivo()).getNome() %>" readonly>
+										 	
+										
 							</div>
+								
 							
 							<div class="form-group">
 								<label for="justificativaInput">Justificativa</label>
 								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" readonly><%=rdp.getJustificativa()%></textarea>
 							</div>
 							
-							<div class="modal-footer">
-								<div id="botoes" class="controls">
-									<a href="HistoricoSegundaChamada" class="btn btn-primary btn-sm">Voltar</a>
-									<!-- <button type="submit" class="btn btn-primary btn-sm">Confirmar</button> -->
-								</div>
-							</div>
+							
 							
 					</form>
+					<% request.setAttribute("idRecorrecao", idRecorrecao);%>
+					
+					<div class="modal-footer">
+						<div id="botoes" class="controls">
+							<a href="HistoricoRecorrecaoDeProva" class="btn btn-primary btn-sm">Voltar</a>
+								<!-- <button type="submit" class="btn btn-primary btn-sm">Confirmar</button> -->
+							
+							<form method="POST" action="GerarPDF" id="pdf<%=(String)(request.getAttribute("idRecorrecao"))%>">
+								<input type="hidden" name="tipo" value="recorrecao">
+								<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("idRecorrecao")%>" 
+									type="submit" name="idRecorrecao" value="<%=(String)request.getAttribute("idRecorrecao")%>"> Gerar PDF
+								</button>
+							</form>
+								<!-- style="height: 30px;"  -->
+						</div>
+					</div>
+					
+					
+					
+					
+					
 					<%
 					} else {
 						%>

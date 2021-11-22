@@ -13,6 +13,8 @@ public interface ArquivoDAO {
 	public int idUltimoArquivo();
 		
 	public Arquivo buscarPorDisciplinaCursada(DisciplinaCursada dis, TipoArquivo ta);
+	
+	public Arquivo buscarPorId(int idArquivo);
 		
 	public Arquivo editar(Arquivo arquivo);
 	

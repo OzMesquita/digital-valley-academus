@@ -116,6 +116,32 @@ public class JDBCArquivoDAO implements ArquivoDAO{
 		
 		return arq;
 	}
+	public Arquivo buscarPorId(int idArquivo) {
+		String sql = "SELECT  id_arquivo ,caminho, nome, tipo FROM academus.arquivo WHERE id_arquivo = " + idArquivo + ";";
+		Arquivo arq = new Arquivo();
+		Connection conn = ConnectionPool.getConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				arq.setIdArquivo(rs.getInt("id_arquivo"));
+				arq.setCaminho(rs.getString("caminho"));
+				arq.setNome(rs.getString("nome"));
+				arq.setTipo(TipoArquivo.getTipoArquivo(rs.getInt("tipo")));
+				
+			}
+			
+			rs.close();
+			ps.close();
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.releaseConnection(conn);
+		}
+		
+		return arq;
+	}
 
 	@Override
 	public Arquivo editar(Arquivo arquivo) {

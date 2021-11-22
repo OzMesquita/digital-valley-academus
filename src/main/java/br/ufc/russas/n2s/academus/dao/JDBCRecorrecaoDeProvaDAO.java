@@ -12,9 +12,10 @@ import java.util.List;
 import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Professor;
+import br.ufc.russas.n2s.academus.model.Funcionario;
 import br.ufc.russas.n2s.academus.model.RecorrecaoDeProva;
 import br.ufc.russas.n2s.academus.model.StatusRecorrecao;
-
+import br.ufc.russas.n2s.academus.model.Arquivo;
 public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 	
 	
@@ -23,11 +24,12 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 	public RecorrecaoDeProva cadastro(RecorrecaoDeProva recorrecaoDeProva) {
 		
 		String sql;
-		
-		if(recorrecaoDeProva.getArquivo() != null) {
-			sql = "insert into academus.recorrecao_de_prova(id_aluno, id_professor, data_prova, data_recebimento, hora_prova, hora_recebimento, justificativa, id_disciplina, status, id_arquivo) VALUES (?,?,?,?,?,?,?,?,?)";
+		//sql = "insert into academus.recorrecao_de_prova(id_aluno, id_professor, data_prova, data_recebimento, hora_prova, hora_recebimento, justificativa, id_disciplina, status,id_arquivo) VALUES (?,?,?,?,?,?,?,?,?,?)";
+		if(recorrecaoDeProva.getIdArquivo() != 0) {
+			System.out.println("Arquivo salvo");
+			sql = "insert into academus.recorrecao_de_prova(id_aluno, id_professor, data_prova, data_recebimento, hora_prova, hora_recebimento, justificativa, id_disciplina, status, id_arquivo) VALUES (?,?,?,?,?,?,?,?,?,?)";
 		} else {
-			sql = "insert into academus.recorrecao_de_prova(id_aluno, id_professor, data_prova, data_recebimento, hora_prova, hora_recebimento, justificativa, id_disciplina, status) VALUES (?,?,?,?,?,?,?,?)";
+			sql = "insert into academus.recorrecao_de_prova(id_aluno, id_professor, data_prova, data_recebimento, hora_prova, hora_recebimento, justificativa, id_disciplina, status) VALUES (?,?,?,?,?,?,?,?,?)";
 		}
 		
 		
@@ -45,10 +47,12 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 			insert.setString(7, recorrecaoDeProva.getJustificativa());
 			insert.setString(8, recorrecaoDeProva.getDisciplina().getId());
 			insert.setInt(9, StatusRecorrecao.getCodigo(recorrecaoDeProva.getStatus()));
-			
-			if(recorrecaoDeProva.getArquivo() != null) {
-				insert.setInt(9, recorrecaoDeProva.getArquivo().getIdArquivo());
+			if(recorrecaoDeProva.getIdArquivo()!=0) {
+				insert.setInt(10, recorrecaoDeProva.getIdArquivo());
 			}
+			
+			//insert.setInt(10,);
+			
 			
 			insert.execute();
 			insert.close();
@@ -387,14 +391,15 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 		List<RecorrecaoDeProva> listaRecorrecaoDeProva = new ArrayList<RecorrecaoDeProva>();
 		
 		Connection conn = ConnectionPool.getConnection();
-		
+		System.out.println(coordenador.getId());
+		System.out.println(StatusRecorrecao.getCodigo(status));
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, coordenador.getCurso().getIdCurso());
 			ps.setInt(2, StatusRecorrecao.getCodigo(status));
 			ps.setInt(3, limitInf);
 			ps.setInt(4, limitSup);
-			
+			System.out.println(coordenador.getId());
 			ResultSet rs = ps.executeQuery();
 			DAOFactoryJDBC df = new DAOFactoryJDBC();
 			
@@ -417,6 +422,7 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 				aux.setStatus(StatusRecorrecao.getStatus(rs.getInt("status")));
 				
 				listaRecorrecaoDeProva.add(aux);
+				System.out.println(listaRecorrecaoDeProva.size());
 			}
 			
 		} catch (Exception e) {
@@ -429,7 +435,7 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 	@Override
 	public RecorrecaoDeProva buscarPorId(int idRecorrecaoDeProva) {
 		Connection conn = ConnectionPool.getConnection();
-		String sql = "select * from academus.recorrecao_de_prova as rp where rp.id_segunda_chamada = ?;";
+		String sql = "select * from academus.recorrecao_de_prova as rp where rp.id_recorrecao_de_prova = ?;";
 		RecorrecaoDeProva aux = new RecorrecaoDeProva();
 		
 		try {
@@ -443,6 +449,8 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 				AlunoDAO aludao = df.criarAlunoDAO();
 				ProfessorDAO profdao = df.criarProfessorDAO();
 				DisciplinaDAO discdao = df.criarDisciplinaDAO();
+				ArquivoDAO arqdao = df.criarArquivoDAO();
+				
 				
 				aux.setIdRecorrecao(rs.getInt("id_recorrecao_de_prova"));
 				aux.setAluno(aludao.buscarPorId(rs.getInt("id_aluno")));
@@ -453,6 +461,10 @@ public class JDBCRecorrecaoDeProvaDAO implements RecorrecaoDeProvaDAO {
 				aux.setHorarioRecebimento(Time.valueOf(rs.getString("hora_recebimento")));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
+				aux.setIdArquivo(arqdao.buscarPorId(rs.getInt("id_arquivo")).getIdArquivo());
+				aux.setStatus(StatusRecorrecao.SOLICITADO);
+			
+				
 			}
 			
 			ps.close();

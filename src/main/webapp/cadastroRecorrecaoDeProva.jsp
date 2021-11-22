@@ -7,6 +7,8 @@
 <%@ page import="util.Constantes" %>
 <%@ page import="br.ufc.russas.n2s.academus.model.NivelAcademus" %>
 <%@ page import="java.util.*"%>
+<%@page import="br.ufc.russas.n2s.academus.model.Disciplina"%>
+<%@page import="br.ufc.russas.n2s.academus.dao.JDBCDisciplinaDAO"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -17,12 +19,14 @@
 	List<Professor> professores = professorDao.listar();
 	JDBCAlunoDAO alunoDAO = new JDBCAlunoDAO();
 	Aluno aluno = alunoDAO.buscarPorId(usuario.getId());
+	JDBCDisciplinaDAO disciplinaDao = new JDBCDisciplinaDAO();
+	List<Disciplina> disciplinas = disciplinaDao.listar();
 %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title>Cadastro de Solicitação de Segunda Chamada</title>
+		<title>Cadastro de Solicitação de Recorreção de Prova</title>
 		<meta charset="utf-8"/>
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
 		
@@ -31,6 +35,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
 		
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link type="text/css" rel="stylesheet" href="<%=Constantes.getAppCssUrl()%>/design.css" />
@@ -45,11 +50,11 @@
 		<div class="container-fluid">
 			<div class="row">
 				<c:import url="jsp/elements/menu-lateral-esquerdo.jsp" charEncoding="UTF-8"></c:import>
-				<div class="col-md-10">
+				<div class="col-md-10" style="padding-bottom: 200px;">
 					<nav aria-label="breadcrumb" role="navigation">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Você está em:</li>
-						<li class="breadcrumb-item"><a href="Inicio">Início</a></li>
+						<li class="breadcrumb-item"><a href="MenuInicial">Início</a></li>
 						<li class="breadcrumb-item active" aria-current="page">Solicitação de Recorreção de prova</li>
 					</ol>
 					</nav>
@@ -81,121 +86,250 @@
 						
 						
 						<form action="CadastroRecorrecaoDeProva" method="post" enctype="multipart/form-data">
-
+							<%
+							if(usuario.getNivel()==NivelAcademus.SECRETARIO || usuario.getNivel()==NivelAcademus.COORDENADOR){
+							%>
 								<div class="form-group">
 									<label for="alunoInput">Aluno</label>
-									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" disabled>
+									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 								</div>
 								
 								<div class="row">
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="matriculaInput">Matricula</label>
-											<input type="number" id="matriculaInput" name="matricula" class="form-control" placeholder="Digite a sua Matrícula">
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 										</div>
 									</div>
 									<div class="col-md-9">
 										<div class="form-group">
 											<label for="cursoInput">Curso</label>
-											<input type="text" id="cursoInput" name="curso" class="form-control" disabled>
+											<input type="text" id="cursoInput" name="curso" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 										</div>
 									</div>
 								</div>
-							<div class="row">
-								<div class="col-md-7">
-									<div class="form-group" >
-										<label for="professorInput">Professor</label>
-										<select id="professorInput" name="professor" class="form-control">
-										<option></option>
-											<%
-												for(Professor p: professores){
-											%>
+								<div class="row">
+									<div class="col-md-7">
+										<div class="form-group" >
+											<label for="professorInput">Professor</label>
+											<select id="professorInput" name="professor" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+												<option></option>
+												<%
+													for(Professor p: professores){
+												%>
 													<option value="<%=p.getId() %>"> <%= p.getNome() %></option> 
+												<%
+													}
+												%>
+										
+											</select>
+										</div>
+									</div>
+									
+									<div class="col-md-7">
+										<div class="form-group">
+											<label for="discplinaInput">Lista Disciplinas</label>
+											<select id="disciplinaInput" name="disciplina" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+												<option></option>
+											<%
+												for(Disciplina d: disciplinas){
+											%>
+												<option value="<%=d.getId() %>"> <%= d.getNome() %></option> 
 											<%
 												}
 											%>
-										
-										</select>
+											</select>
+										</div>
 									</div>
 								</div>
-								<div class="col-md-7">
-									<div class="form-group">
-										<label for="discplinaInput">Disciplina</label>
-										<select id="disciplinaInput" name="disciplina" class="form-control">
-											<option>Selecione a disciplina</option>
-										</select>
+								
+								<div class="row">
+									<div class="col-md-2">
+										<div class="form-group">
+											<label for="dataDaProvaInput">Data da Prova realizada</label>
+											<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label for="horarioDaProvaInput">Horário da Prova</label>
+											<input type="time" id="horarioDaProvaInput" name="horarioDaProva" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+	
+										</div>
+									</div>
+									<div class=col-md-4">
+										<div class="form-group">
+											<label for="dataRecebimentoInput">Data do resultado da Prova</label>
+											<input type="date" id="dataRecebimentoInput" name="dataRecebimento" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label for="horarioRecebimentoInput">Horário do recebimento</label>
+											<input type="time" id="horarioRecebimentoInput" name="horarioRecebimento" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo." /> <br />
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-2">
-									<div class="form-group">
-										<label for="dataDaProvaInput">Data da Prova realizada</label>
-										<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control">
+								
+								<div class="custom-file">
+									<input type="file" name="anexo" class="custom-file-input" id="anexoProva" accept=".pdf" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+									<label id="labelProva" class="custom-file-label" for="anexoProva" >Anexe a prova aqui</label>
+								</div>
+								<br> 
+								
+								<div class="form-group">
+									<label for="justificativaInput">Justificativa</label>
+									<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo."></textarea>
+								</div>
+								
+								<div class="modal-footer">
+									<div id="botoes" class="controls">
+										<button type="button" class="btn btn-primary btn-sm" onclick="funcao()">Cancelar</button>
+										<button type="submit" class="btn btn-primary btn-sm">Confirmar</button>
 									</div>
 								</div>
-								<div class="col-md-2">
-									<div class="form-group">
+							<% 
+							}else{
+							%>
+								<div class="form-group">
+									<label for="alunoInput">Aluno</label>
+									<input type="text" id="alunoInput" name="nomeAluno" class="form-control" value="<%= aluno.getNome() %>" readonly>
+								</div>
+								
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="matriculaInput">Matricula</label>
+											<input type="number" id="matriculaInput" name="matricula" class="form-control" value="<%=aluno.getMatricula() %>" readonly>
+										</div>
+									</div>
+									<div class="col-md-9">
+										<div class="form-group">
+											<label for="cursoInput">Curso</label>
+											<input type="text" id="cursoInput" name="curso" class="form-control" value="<%= aluno.getCurso().getNome() %>" readonly>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-md-7">
+										<div class="form-group" >
+											<label for="professorInput">Professor</label>
+											<select id="professorInput" name="professor" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+											<option></option>
+												<%
+													for(Professor p: professores){
+												%>
+														<option value="<%=p.getId() %>"> <%= p.getNome() %></option> 
+												<%
+													}
+												%>
+											
+											</select>
+										</div>
+									</div>
+									<div class="col-md-7">
+										<div class="form-group">
+											<label for="discplinaInput">Lista Disciplinas</label>
+											<select id="disciplinaInput" name="disciplina" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+												<option></option>
+										<%
+											for(Disciplina d: disciplinas){
+										%>
+												<option value="<%=d.getId() %>"> <%= d.getNome() %></option> 
+										<%
+											}
+										%>
+											</select>
+										</div>
+									</div>
+								</div>
+								<!-- Datas e horários das provas -->
+								<div class="form-row">
+									<div class="form-group col-sm">
+										<label for="dataDaProvaInput">Data da Prova Realizada</label>
+										<input type="date" id="dataDaProvaInput" name="dataDaProva" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+									</div>
+		
+									<div class="form-group col-sm">
 										<label for="horarioDaProvaInput">Horário da Prova</label>
-										<input type="time" id="horarioDaProvaInput" name="horarioDaProva" class="form-control">
-
+										<input type="time" id="horarioDaProvaInput"name="horarioDaProva" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+									</div>
+									<div class="w-100"></div> <!-- Serve para quebrar a coluna -->
+									<div class="form-group col-sm">
+										<label for="dataDeRecebimentoInput">Data de Recebimento</label>
+										<input type="date" id="dataDeRecebimentoInput" name="dataRecebimento" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+    									<script type="text/javascript"></script>
+									</div>
+		
+									<div class="form-group col-sm">
+										<label for="horarioRecebimentoInput">Horário de Resultado da Prova</label>
+										<input type="time" id="horarioRecebimentoInput"name="horarioRecebimento" class="form-control" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
 									</div>
 								</div>
-								<div class=col-md-4">
-									<div class="form-group">
-										<label for="dataRecebimentoInput">Data que recebeu o resultado</label>
-										<input type="date" id="dataRecebimentoInput" name="dataRecebimento" class="form-control">
+								
+								<!-- Anexar PROVA realizada -->
+								
+															        	
+								<div class="custom-file">
+									<input type="file" name="anexo" class="custom-file-input" id="anexoProva" accept=".pdf"  required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo.">
+									<label id="labelProva" class="custom-file-label" for="anexoProva">Anexe a prova aqui</label>
+								</div>
+															        
+								
+								<div class="form-group">
+									<label for="justificativaInput">Justificativa</label>
+									<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação" required x-moz-errormessage="Ops.
+    Não esqueça de preencher este campo."></textarea>
+								</div>
+								
+								<div class="modal-footer">
+									<div id="botoes" class="controls">
+										<button type="button" class="btn btn-primary btn-sm" onclick="funcao()">Cancelar</button>
+										<button type="submit" class="btn btn-primary btn-sm">Confirmar</button>
 									</div>
 								</div>
-								<div class="col-md-2">
-									<div class="form-group">
-										<label for="horarioRecebimentoInput">Horário do recebimento</label>
-										<input type="time" id="horarioRecebimentoInput" name="horarioRecebimento" class="form-control">
-										
-									</div>
-								</div>
-							</div>
-							<!-- <div class="row">
-								<div class="col-lg-6">
-									<div class="custom-file">
-									 	<input type="file" class="custom-file-input" id="customFileLang" name="anexo" lang="pt">
-									 	<label class="custom-file-label" for="customFile">Anexe aqui a prova</label>
-									</div>
-								</div>
-							</div>
-							<br> -->
-							<div class="form-group">
-								<label for="justificativaInput">Justificativa</label>
-								<textarea id="justificativaInput" rows="4" name="justificativa" class="form-control" placeholder="Digite sua justificativa da solicitação"></textarea>
-							</div>
-							
-							<div class="modal-footer">
-								<div id="botoes" class="controls">
-									<button type="button" class="btn btn-primary btn-sm" onclick="funcao()">Cancelar</button>
-									<button type="submit" class="btn btn-primary btn-sm">Confirmar</button>
-								</div>
-							</div>
-							<!-- Modal -->
-							<div class="modal fade" id="Voltar" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="modalLabel">Cancelar</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
+								
+								<!-- Modal -->
+								<div class="modal fade" id="Voltar" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="modalLabel">Cancelar</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<h5>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h5>
+											</div>
+											<div class="modal-footer">
+												<button type="button" id="modal-nao" autofocus class="btn btn-secondary btn-sm active" data-dismiss="modal" >Não</button>
+												<a href="MenuInicial"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
+											</div>
 										</div>
-										<div class="modal-body">
-											<h2>Deseja mesmo cancelar essa operação?<br>Você irá perder os dados informados!</h2>
-										</div>
-										<div class="modal-footer">
-											<button type="button" id="modal-nao" autofocus class="btn btn-primary btn-sm active" data-dismiss="modal" >Não</button>
-											<a href="MenuInicial"><button type="button" class="btn btn-primary btn-sm active">Sim</button></a>
-										</div>
 									</div>
 								</div>
-							</div>
-							<!-- Fim de Modal -->
+							<%} %> <!-- Fim do else -->
+								<!-- Fim de Modal -->
 						</form>
 					</div>	                
 				</div>
@@ -206,8 +340,14 @@
 	</body>
 	<script>
 	
+	
+
 		var modificado = 0;
 		$(document).ready(function(){
+			$("#anexoProva").change(function () {
+				//habilitaBotaoConfirmarEmenta();
+				trocaTextoInputFileProva();
+			});
 			
 			$('input').change(function(){
 				modificado = 1;
@@ -260,24 +400,12 @@
 		var solicitacoes = [];
 		var tam = 0;
 		
-		/* <-----------AJEITAR DEPOISS------------>
-		
-		
-		
-		function verificaSolicitacao (obj){
-			var data = new Date;
-			if(obj.matricula == ""){
-				alert("Por favor, preencha a matrícula");
-				return false
-			}else if(obj.justificativa == ""){
-				alert("Por favor, preencha a justificativa");
-			}else if(obj.dataDaProva > obj.dataRecebimento){
-				alert("A data de recebimento da prova não pode ser antes da data do recebimento. ");
-			}
-			solicitacoes[tam] = obj;
-			return true;			
-		}*/
 
-		
+		function trocaTextoInputFileProva() {
+			if($("#anexoProva").val() != ""){
+				//pega o ultimo nome do caminho do arquivo
+				$("#labelProva").text($("#anexoProva").val().split("\\").pop());
+			}
+		}
 	</script>
 </html>

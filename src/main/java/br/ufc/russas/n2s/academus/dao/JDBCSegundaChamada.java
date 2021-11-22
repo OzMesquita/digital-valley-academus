@@ -12,6 +12,7 @@ import br.ufc.russas.n2s.academus.connection.ConnectionPool;
 import br.ufc.russas.n2s.academus.model.Aluno;
 import br.ufc.russas.n2s.academus.model.Professor;
 import br.ufc.russas.n2s.academus.model.SegundaChamada;
+import br.ufc.russas.n2s.academus.model.StatusSegundaChamada;
 
 
 public class JDBCSegundaChamada implements SegundaChamadaDAO {
@@ -19,18 +20,18 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 
 	@Override
 	public SegundaChamada cadastro(SegundaChamada segChamada) {
-		String sql = "insert into academus.segunda_chamada( id_aluno, id_professor, id_disciplina, data_prova, justificativa) VALUES ( ?, ?, ?, ?, ?)";
+		String sql = "insert into academus.segunda_chamada( id_aluno, id_professor, id_disciplina, data_prova, justificativa, status) VALUES ( ?, ?, ?, ?, ?, ?)";
 		
 		Connection conn = ConnectionPool.getConnection();
 		try{
 			
 			PreparedStatement insert = conn.prepareStatement(sql);			
-			
 			insert.setInt(1, segChamada.getAluno().getId());
 			insert.setInt(2, segChamada.getProfessor().getId());
 			insert.setString(3, segChamada.getDisciplina().getId());
 			insert.setDate(4, segChamada.getDataProva());
 			insert.setString(5, segChamada.getJustificativa());
+			insert.setInt(6, StatusSegundaChamada.getCodigo(segChamada.getStatus()));
 			insert.execute();
 			
 			insert.close();
@@ -69,14 +70,13 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 			while(rs.next()){
 				
 				SegundaChamada aux = new SegundaChamada();	
-				
 				aux.setIdSegundaChamada(rs.getInt("id_segunda_chamada"));
 				aux.setAluno(aludao.buscarPorId(rs.getInt("id_aluno")));
 				aux.setProfessor(profdao.buscarPorId(rs.getInt("id_professor")));
 				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setDataProva(Date.valueOf(rs.getString("data_prova")));
-				
+				aux.setStatus(StatusSegundaChamada.getStatus(rs.getInt("status")));
 				
 				listaSegundaChamada.add(aux);
 			}
@@ -111,13 +111,14 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 			
 			while(rs.next()) {
 				SegundaChamada aux = new SegundaChamada();
-				
 				aux.setIdSegundaChamada(rs.getInt("id_segunda_chamada"));
 				aux.setAluno(aludao.buscarPorId(rs.getInt("id_aluno")));
 				aux.setProfessor(profdao.buscarPorId(rs.getInt("id_professor")));
 				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setDataProva(Date.valueOf(rs.getString("data_prova")));
+				aux.setStatus(StatusSegundaChamada.getStatus(rs.getInt("status")));
+				
 				
 				
 				listaSegundaChamada.add(aux);
@@ -133,7 +134,7 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 
 	@Override
 	public List<SegundaChamada> listar(Professor professor, int limitInf, int limitSup) {
-		String sql = "select * from academus.segunda_chamada WHERE id_professor= ? order by id_segunda_chamada offset ? limit ?; ";
+		String sql = "select * from academus.segunda_chamada WHERE id_professor= ?  order by id_segunda_chamada offset ? limit ?; ";
 		List<SegundaChamada> listaSegundaChamada = new ArrayList<SegundaChamada>();
 		
 		Connection conn = ConnectionPool.getConnection();
@@ -160,6 +161,7 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setDataProva(Date.valueOf(rs.getString("data_prova")));
+				aux.setStatus(StatusSegundaChamada.getStatus(rs.getInt("status")));
 				
 				
 				listaSegundaChamada.add(aux);
@@ -182,6 +184,7 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 		
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
+			
 			ps.setInt(1, professor.getId());
 			ps.setInt(2, professor.getCurso().getIdCurso());
 			ps.setInt(3, limitInf);
@@ -203,9 +206,12 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setDataProva(Date.valueOf(rs.getString("data_prova")));
+				aux.setStatus(StatusSegundaChamada.getStatus(rs.getInt("status")));
+				
 				
 				
 				listaSegundaChamada.add(aux);
+				
 			}
 			
 		} catch (Exception e) {
@@ -240,6 +246,7 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 				aux.setDisciplina(discdao.buscarPorId(rs.getString("id_disciplina")));
 				aux.setJustificativa(rs.getString("justificativa"));
 				aux.setDataProva(Date.valueOf(rs.getString("data_prova")));
+				aux.setStatus(StatusSegundaChamada.getStatus(rs.getInt("status")));
 				
 			}
 						
@@ -258,7 +265,7 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 	@Override
 	public SegundaChamada editar(SegundaChamada segundaChamada) {
 
-		String sql = "UPDATE academus.segunda_chamada SET id_aluno = ?, id_professor = ?, id_disciplina = ?, justificativa = ?, data_prova = ? WHERE id_segunda_chamada = ?;";
+		String sql = "UPDATE academus.segunda_chamada SET id_aluno = ?, id_professor = ?, id_disciplina = ?, justificativa = ?, data_prova = ?, status=? WHERE id_segunda_chamada = ?;";
 		Connection conn = ConnectionPool.getConnection();
 		
 		try{
@@ -270,7 +277,9 @@ public class JDBCSegundaChamada implements SegundaChamadaDAO {
 			update.setString(3, segundaChamada.getDisciplina().getId());
 			update.setString(4, segundaChamada.getJustificativa());
 			update.setDate(5, segundaChamada.getDataProva());
-			update.setInt(6, segundaChamada.getIdSegundaChamada());
+			update.setInt(6,StatusSegundaChamada.getCodigo(segundaChamada.getStatus()));
+			update.setInt(7, segundaChamada.getIdSegundaChamada());
+			
 			
 			update.executeUpdate();
 			update.close();
