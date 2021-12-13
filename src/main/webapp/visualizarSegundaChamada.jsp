@@ -172,14 +172,12 @@
 							<form method="POST" action="GerarPDF" id="pdf<%=(String)request.getAttribute("idSegundaChamada")%>">
 								<input type="hidden" name="tipo" value="segundaChamada">
 								<button class="btn btn-primary btn-sm" form="pdf<%=(String)request.getAttribute("idSegundaChamada")%>" 
-									style="height: 30px;" type="submit" name="id" value="<%=(String)request.getAttribute("idSegundaChamada")%>"> Gerar PDF
+									type="submit" name="id" value="<%=(String)request.getAttribute("idSegundaChamada")%>"> Gerar PDF
 								</button>
 								
-									<div id="botoes" class="controls">
-										<a href="HistoricoSegundaChamada" class="btn btn-primary btn-sm">Voltar</a>
-										<!-- <button type="submit" class="btn btn-primary btn-sm">Confirmar</button> -->
-									</div>
-								
+								 <button type="button" class="btn btn-primary btn-sm" onclick="funcaoVoltarHistorico()">
+								 Voltar
+								 </button>
 							</form>
 						</div>
 					</div>
@@ -271,6 +269,16 @@
 				minimumInputLength: 2
 			});
 		});
+		
+		function funcaoVoltarHistorico(){
+			if(modificado === 1){
+				$(document).ready(function(){
+		            $("#Voltar").modal();
+		        });
+			} else{
+				window.location.href = "HistoricoSegundaChamada";
+			}
+		}
 		
 	</script>
 </html>
